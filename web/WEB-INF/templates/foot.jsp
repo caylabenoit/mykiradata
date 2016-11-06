@@ -23,4 +23,9 @@
 
 <!-- End of Includes directives -->      
 
+<script>
+$(document).ready(function() {
+    $("#side-menu").metisMenu();
+});  
+</script>
 

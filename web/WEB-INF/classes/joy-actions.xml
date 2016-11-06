@@ -231,7 +231,7 @@ and open the template in the editor.
         <objecttype>form</objecttype>
         <action>com.dgm.form.analytics.bg.ReportByTerm</action>
         <redirects>
-            <redirect tag="SEARCH">./WEB-INF/analytics/search/term_search.jsp</redirect>
+            <redirect tag="SEARCH">./WEB-INF/analytics/bg/byterm_request.jsp</redirect>
             <redirect tag="DISPLAY">./WEB-INF/analytics/bg/byterm_data_display.jsp</redirect>
             <redirect tag="NODATA">./WEB-INF/analytics/bg/byterm_nodata_display.jsp</redirect>
         </redirects>
@@ -304,7 +304,7 @@ and open the template in the editor.
         <objecttype>form</objecttype>
         <action>com.dgm.form.analytics.maps.MapForRelatedTerms</action>
         <redirects>
-            <redirect tag="SEARCH">./WEB-INF/analytics/search/term_search.jsp</redirect>
+            <redirect tag="SEARCH">./WEB-INF/analytics/maps/mapByterm_request.jsp</redirect>
             <redirect tag="DISPLAY">./WEB-INF/analytics/maps/mapByTerm_display.jsp</redirect>
         </redirects>
     </actionRequest>
