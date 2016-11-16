@@ -9,6 +9,20 @@
     <joy-table name="LND_METRIC" />
     <joy-table name="LND_SCORECARD" />
     <joy-table name="LND_SCORECARD_GROUP" />
+
+    <joy-composite name = "List - Landing Glossary" distinct="yes">
+        <joy-entity alias="T">LND_GLOSSARY</joy-entity>
+        <joy-field as="STATUS">case when(GLO_ID IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field alias="T">GLOSSARY_DESCRIPTION</joy-field>
+        <joy-field alias="T">GLOSSARY_NAME</joy-field>
+        <joy-field alias="T">JOYLOADDATE</joy-field>
+        <joy-field alias="T">JOYSTATUS</joy-field>
+        <joy-field alias="T">JOYFUNCKEY</joy-field>
+        <joy-join type="LEFT OUTER">
+            <joy-entity alias="C">DIM_GLOSSARY</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="GLO_ID" />
+        </joy-join>
+    </joy-composite>    
     
     <!-- Used for Landing mappings (sources) -->
     <joy-composite name = "Load - get Terms type" distinct="yes">
@@ -120,6 +134,8 @@
         <joy-entity alias="X">LND_METRIC</joy-entity>
         <joy-sort alias="X" field="MET_NAME" desc="no" />
     </joy-composite>
+
+
 
     <joy-customquery name="Load - Facts from landing">
         SELECT TIM_PK, TRM_PK, MET_PK, DQX_PK, DSO_PK, CON_PK, ORI_PK,

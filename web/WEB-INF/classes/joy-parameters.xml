@@ -49,6 +49,8 @@
 
     <!-- custom application parameters -->
     
+    <app-parameter name="logo" type="value">./images/logo.png</app-parameter>
+    
     <!-- Dashboards config here-->
     <app-parameter name="dashboardconfig" type="value">dashboard/joy-dashboard-personnal.xml</app-parameter>
     

@@ -56,6 +56,7 @@
                                             <tr>
                                                 <th>Key</th>
                                                 <th>Name</th>
+                                                <th>Action</th>
                                                 <th>Description</th>
                                                 <th style="text-align:center;">Manage</th>
                                             </tr>
@@ -65,6 +66,7 @@
                                             <tr>
                                                 <td><joy:ActionMatrixByRowTag name="JOYFUNCKEY" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="GLOSSARY_NAME" /></td>
+                                                <td><joy:ActionMatrixByRowTag name="STATUS" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="GLOSSARY_DESCRIPTION" /></td>
                                                 <td align="center">
                                                     <button type="button" class="btn btn-primary btn-circle" onclick="window.open('<joy:JoyBasicURL object="lndglossary" actiontype="edit" />&NEW=no&JOYFUNCKEY=<joy:ActionMatrixByRowTag name="JOYFUNCKEY" />', '_self');"><i class="fa fa-edit"></i></button>

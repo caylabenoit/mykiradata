@@ -36,6 +36,15 @@ and open the template in the editor.
             <redirect tag="DISPLAY">./WEB-INF/home.jsp</redirect>
         </redirects>
     </actionRequest>
+
+    <actionRequest>
+        <object>about</object>
+        <objecttype>form</objecttype>
+        <action>com.dgm.form.AboutAction</action>
+        <redirects>
+            <redirect tag="DISPLAY">./WEB-INF/about.jsp</redirect>
+        </redirects>
+    </actionRequest>
     
     <actionRequest>
         <object>termtype</object>

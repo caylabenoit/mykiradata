@@ -23,6 +23,7 @@
                     <joy:NaviTopRightUserMgtMenuTag />
                 </joy:NaviTopRightMenu>
             </joy:NaviTopMenuTag>
+            <joy:NaviLeftMenuTag xmlconfig="joy-menu-admin.xml" activemenuid="ADM06"  />
         </nav>
 
         <!-- Page Content -->

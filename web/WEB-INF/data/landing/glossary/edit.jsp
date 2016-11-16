@@ -56,6 +56,10 @@
                                                 <span class="input-group-addon " id="basic-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span>
                                                 <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="10" placeholder="Unique Identifier" ariadescribedby="basic-addon2" />
                                             </div>
+                                            <label>Import Status</label>
+                                            <div class="input-group">
+                                                <joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -104,6 +108,10 @@
         $( "#btn1" ).button();
         $( "#btn2" ).button();
         $( "#btn3" ).button();
+        $( '#JOYSTATUS' ).select2({
+            allowClear: false,
+            placeholder: "Select an Status"
+        });
     });
 </SCRIPT>
 </body>

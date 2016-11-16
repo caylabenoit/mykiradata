@@ -20,11 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <joy-menu>
-
     <joy-menu class="fa fa-star fa-fw" id="Analytics" name="Analytics" object="home"  actiontype="display" />
-    
     <joy-menu class="fa fa-th fa-fw" id="Data" name="Data" object="landing" actiontype="list" />
-    
     <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM01" name="Admin"> 
         <joy-menu class="fa fa-random fa-fw" id="ADM02" name="Informatica Gateway" object="infainterface" actiontype="list" />
         <joy-menu class="fa fa-random fa-fw" id="ADM03" name="Import Process" object="landinginterface"  actiontype="list" />
@@ -33,7 +30,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM06" name="Parameters" object="parameters" actiontype="list" />
         <joy-menu class="fa fa-random fa-fw" id="ADM07" name="Tasks" object="tasks" />
     </joy-menu>
-
     <joy-menu id="CONFIG01" class="fa  fa-wrench fa-fw" name="Config"> 
         <joy-menu class="fa fa-gears fa-fw" id="CONFIG02" name="Quality Dimensions" object="dqaxis" actiontype="list" />
         <joy-menu class="fa fa-gears fa-fw" id="CONFIG03" name="Contexts" object="context" actiontype="list" />
@@ -41,5 +37,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <joy-menu class="fa fa-gears fa-fw" id="CONFIG05" name="Contexts and Scorecards" object="relsccontext" actiontype="list" />
         <joy-menu class="fa fa-gears fa-fw" id="CONFIG06" name="Metrics and Terms" object="reltermmetric" actiontype="list" shortcut="true" />
     </joy-menu>
-    
 </joy-menu>

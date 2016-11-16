@@ -14,26 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.form.data;
+package com.dgm.form;
 
-import com.joy.bo.IEntity;
+import com.joy.Joy;
+import com.joy.mvc.actionTypes.ActionTypeForm;
+
 
 /**
- *
- * @author Benoit CAYLA (benoit@famillecayla.fr)
+ * This class manage the About page display
+ * @author Benoit CAYLA (benoit@famillecayla.fr) 
  */
-public class LNDGlossaryAction extends LNDCommonAction {
+public class AboutAction extends ActionTypeForm {
 
-    public LNDGlossaryAction() {
-        this.LandingKeyName = "JOYFUNCKEY";
-        this.LandingTableName = "LND_GLOSSARY";
-        this.ListEntityName = "List - Landing Glossary";
+
+    @Override
+    public String display() {
+        this.addFormSingleEntry("APPLICATION", Joy.parameters().getApplicationName() + " v" + Joy.parameters().getVersion());
+        this.addFormSingleEntry("LOGO", Joy.parameters().getParameter("logo").getValue().toString());
+        return super.display(); 
     }
     
-    @Override
-    public void updateSpecific(IEntity Entity) {
-        Entity.field("GLOSSARY_NAME").setValue(getStrArgumentValue("GLOSSARY_NAME"));
-        Entity.field("GLOSSARY_DESCRIPTION").setValue(getStrArgumentValue("GLOSSARY_DESCRIPTION"));
-    }
-
 }

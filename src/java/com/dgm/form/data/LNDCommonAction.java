@@ -20,6 +20,7 @@ import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
 import java.sql.ResultSet;
 import com.joy.bo.IEntity;
+import com.joy.mvc.formbean.JoyFormVectorEntry;
 
 /**
  *
@@ -29,6 +30,7 @@ public class LNDCommonAction extends ActionTypeForm {
 
     protected String LandingTableName;
     protected String LandingKeyName;
+    protected String ListEntityName;
 
     protected void editSpecific (ResultSet rs) {}
     protected void addSpecific () {}
@@ -40,10 +42,11 @@ public class LNDCommonAction extends ActionTypeForm {
      */
     @Override
     public String list() {
+        String myEntity = (ListEntityName == null ? LandingTableName : ListEntityName);
         int i = this.getIntArgumentValue("LIMIT");
         
         // Load the data table result
-        IEntity entity = this.getBOFactory().getEntity(LandingTableName);
+        IEntity entity = this.getBOFactory().getEntity(myEntity);
         entity.addSort(LandingKeyName);
         if (i != 0)
             entity.setLimitRecords(i);
@@ -56,6 +59,7 @@ public class LNDCommonAction extends ActionTypeForm {
         return super.list(); 
     }
 
+
     @Override
     public String edit() {
         String uid = getStrArgumentValue(this.LandingKeyName);
@@ -65,13 +69,22 @@ public class LNDCommonAction extends ActionTypeForm {
                 Entity.reset();
                 Entity.field(this.LandingKeyName).setKeyValue(uid);
                 ResultSet rs = Entity.select();
-
+                
                 this.loadSingle(rs);
+                
+                // add the joy status
+                JoyFormVectorEntry vector = new JoyFormVectorEntry();
+                vector.addValue("Load", "L");
+                vector.addValue("Ignore", "I");
+                vector.addValue("Not speficied", "");
+                vector.setSelected(rs.getString("JOYSTATUS"));
+                this.addFormVectorEntry("JOYSTATUS", vector);
+                
                 editSpecific(rs);
                 this.getBOFactory().closeResultSet(rs);
 
             } catch (Exception e) {
-                Joy.log().error(  e);
+                Joy.log().error(e);
             }
         }
         return super.edit(); //To change body of generated methods, choose Tools | Templates.
@@ -102,6 +115,8 @@ public class LNDCommonAction extends ActionTypeForm {
         
     	try {
             IEntity Entity = this.getBOFactory().getEntity(this.LandingTableName);
+            Entity.field("JOYSTATUS").setValue(getStrArgumentValue("JOYSTATUS"));
+            Entity.field("JOYLOADDATE").setValue(Joy.getDate());
             updateSpecific(Entity);
 
             if (isNew) {

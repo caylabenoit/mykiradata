@@ -88,6 +88,17 @@ body {
     left: auto;
 }
 
+@media (min-width: 768px) {
+    .navbar-header {
+        margin-top: @margintopapplication;
+    }
+}
+
+.navbar-top-links {
+    margin-right: 0;
+    margin-top: @margintopapplication;
+}
+
 // --Sidebar
 
 .sidebar {
@@ -553,10 +564,29 @@ ul.nav.navbar-nav > li:hover {
     margin-top: 2px;
 }
 
+.navbar-nav > li {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: @margintopapplication;
+}
+
 .select2 select2-container {
     width: 100%;
 }
 
 .breadcrumb {
     margin-bottom: 0px; 
+}
+
+.logomenu {
+    height: 45px;
+}
+
+.logobloc {
+    margin-right: 20px;
+}
+
+.sidebar-title {
+    float: left;
+    width: 100%;
 }
