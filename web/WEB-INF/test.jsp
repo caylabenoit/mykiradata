@@ -22,7 +22,7 @@
                 <joy:NaviTopRightTasksMenuTag />
                 <joy:NaviTopRightUserMgtMenuTag />
             </joy:NaviTopRightMenu>
-            <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Home" />
+            <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Analytics" />
         </nav>
 
         <!-- Page Content -->

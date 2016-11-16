@@ -15,13 +15,15 @@
 
         <!-- Navigation -->
         <nav class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <joy:NaviTopLeftMenuTag />
-            <joy:NaviTopRightMenu>
-                <joy:NaviTopRightShortcutsMenuTag xmlconfig="joy-menu.xml" />
-                <joy:NaviTopRightTasksMenuTag />
-                <joy:NaviTopRightUserMgtMenuTag />
-            </joy:NaviTopRightMenu>
-            <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Management-AC-GI" />
+            <joy:NaviTopMenuTag>
+                <joy:NaviTopLeftMenuTag xmlconfig="joy-menu-topleft.xml" activemenuid="CONFIG04" />
+                <joy:NaviTopRightMenu>
+                    <joy:NaviTopRightShortcutsMenuTag xmlconfig="joy-menu.xml" />
+                    <joy:NaviTopRightTasksMenuTag />
+                    <joy:NaviTopRightUserMgtMenuTag />
+                </joy:NaviTopRightMenu>
+            </joy:NaviTopMenuTag>
+            <joy:NaviLeftMenuTag xmlconfig="joy-menu-config.xml" activemenuid="CONFIG04"  />
         </nav>
 
         <!-- Page Content -->

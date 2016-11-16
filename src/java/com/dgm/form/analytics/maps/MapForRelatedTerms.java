@@ -63,7 +63,9 @@ public class MapForRelatedTerms extends ActionTypeForm {
         String Nodes = "", Relationships = "";
         
         try { Term = this.getIntArgumentValue("term"); } catch (Exception e) { Term = 0;}
-        try { nbHops = this.getIntArgumentValue("nbhops"); } catch (Exception e) { nbHops = DEFAULT_NB_HOP;}
+        try { 
+            nbHops = (this.getIntArgumentValue("nbhops") == 0 ? DEFAULT_NB_HOP : this.getIntArgumentValue("nbhops")); 
+        } catch (Exception e) { nbHops = DEFAULT_NB_HOP;}
         
         // récupère l'arbre à partir du terme
         //TermBean treefromRequestedTerm = getRelationShipTree(Term, 1, nbHops);

@@ -82,8 +82,6 @@ public class TermBean {
         this.key = Key;
     }
     
-
-
     public String getTermType() {
         return type;
     }
@@ -117,7 +115,6 @@ public class TermBean {
         node.put("label", curTerm.name);
         node.put("termtype", curTerm.type);
         node.put("title", "Type: " + curTerm.type);
-        
         node.put("shape", "image");
         node.put("image", "./images/glossary/" + Utils.getTermTypeIcon(entities, curTerm.type));
         _allNodes.add(node);

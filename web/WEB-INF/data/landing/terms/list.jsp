@@ -16,13 +16,15 @@
 
         <!-- Navigation -->
         <nav class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <joy:NaviTopLeftMenuTag />
-            <joy:NaviTopRightMenu>
-                <joy:NaviTopRightShortcutsMenuTag xmlconfig="joy-menu.xml" />
-                <joy:NaviTopRightTasksMenuTag />
-                <joy:NaviTopRightUserMgtMenuTag />
-            </joy:NaviTopRightMenu>
-            <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Data-Landing" />
+            <joy:NaviTopMenuTag>
+                <joy:NaviTopLeftMenuTag xmlconfig="joy-menu-topleft.xml" activemenuid="Data" />
+                <joy:NaviTopRightMenu>
+                    <joy:NaviTopRightShortcutsMenuTag xmlconfig="joy-menu.xml" />
+                    <joy:NaviTopRightTasksMenuTag />
+                    <joy:NaviTopRightUserMgtMenuTag />
+                </joy:NaviTopRightMenu>
+            </joy:NaviTopMenuTag>
+            <joy:NaviLeftMenuTag xmlconfig="joy-menu-data.xml" activemenuid="DATA02"  />
         </nav>
 
         <!-- Page Content -->

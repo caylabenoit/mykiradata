@@ -16,15 +16,37 @@
 
         <!-- Navigation -->
         <nav class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <joy:NaviTopMenuTag>
-                <joy:NaviTopLeftMenuTag xmlconfig="joy-menu-topleft.xml" activemenuid="Analytics" />
+            <joy:NaviTopLeftMenuTag />
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Analytics</a></li>
+                    <li><a href="#">Data</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
+                      <ul class="dropdown-menu dropdown-shortcuts">
+                          <li><a href="#">Action</a></li>
+                          <li><a href="#">Separated link</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li><a href="#">One more separated link</a></li>
+                      </ul>
+                    </li>
+                </ul>
+                
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+
                 <joy:NaviTopRightMenu>
                     <joy:NaviTopRightShortcutsMenuTag xmlconfig="joy-menu.xml" />
                     <joy:NaviTopRightTasksMenuTag />
                     <joy:NaviTopRightUserMgtMenuTag />
                 </joy:NaviTopRightMenu>
-            </joy:NaviTopMenuTag>
-            <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Analytics"  />
+                <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Analytics"  />
+            </div><!-- /.navbar-collapse -->
         </nav>
 
         <!-- Page Content -->

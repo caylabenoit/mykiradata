@@ -124,7 +124,7 @@ public class TermTree {
             return ars;
             
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.log().error(e);
         }
         return ars;
     }

@@ -140,7 +140,7 @@ body {
         z-index: 1;
         position: absolute;
         width: 250px;
-        margin-top: 51px;
+        margin-top: 2px;
     }
 
     .navbar-top-links .dropdown-messages,
@@ -373,14 +373,18 @@ table.dataTable thead .sorting:after {
 	width: 100%;
 	padding: 0px 0px 0px 0px;
 	z-index: 999;}
+
 .navdgm .navbar-brand { color: @navtoptexts; }
+
 .dropdown-toggle { color: @navtoptexts; }
+
 .page-header { 
     font-size: 20px;
     margin: 80px 0 20px;
     padding-top: 30px;
     border-bottom-width: 1px;
 }
+
 @media(min-width:768px) {
     .page-header { 
         padding-top: 10px;
@@ -397,6 +401,7 @@ table.dataTable thead .sorting:after {
     background-color: @mybackground;
     text-align: right;
     padding: 0px;
+    padding-top: 5px;
 }
 
 .navbar-default {  background-color: @mybackground; }
@@ -510,13 +515,48 @@ table.dataTable thead .sorting:after {
     width: 100%;
 }
 
-.navbar-default .navbar-nav > .active > a {
+ul.nav.navbar-nav > li {
     background-color: #fff;
-    border-top-color: #dede1d;
-    border-top-width: 3px;
-    border-top-style: solid;
+}
+
+ul.nav.navbar-nav > li:hover {
+    border-top-left-radius: 0.5em; 
+    border-top-right-radius: 0.5em; 
+    background-color: @gray-lighter;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    border-top-left-radius: 0.5em; 
+    border-top-right-radius: 0.5em; 
+    background-color: @gray-lighter;
+
 }
 
 .navbar-nav > li > a {
-    padding-top: 13px;
+    padding-top: 15px;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #000;
+    border-top-left-radius: 0.5em; 
+    border-top-right-radius: 0.5em; 
+    background-color: @menuselection;
+}
+
+.navbar-default {
+    background-color: #fff;
+    border-bottom-color: @menuselection;
+    border-bottom-width: 2px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 2px;
+}
+
+.select2 select2-container {
+    width: 100%;
+}
+
+.breadcrumb {
+    margin-bottom: 0px; 
 }

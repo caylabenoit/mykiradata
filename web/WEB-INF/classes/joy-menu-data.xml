@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <joy-menu>
-    <joy-menu class="fa fa-star fa-fw" id="Data-DataMart-LM" name="Last Metrics" object="dtmlist" actiontype="list" pn1="list" pv1="last" shortcut="true"/>
-    <joy-menu class="fa fa-star fa-fw" id="Data-DataMart-AM" name="All Metrics" object="dtmlist" actiontype="list" pn1="list" pv1="all"/>
-    <joy-menu class="fa fa-th fa-fw" id="Data-Landing" name="Landing" object="landing" actiontype="list" />
+    <joy-menu class="fa fa-star fa-fw" id="DATA01" name="All Metrics" object="dtmlist" actiontype="list" pn1="list" pv1="all"/>
+    <joy-menu class="fa fa-th fa-fw" id="DATA02" name="Landing" object="landing" actiontype="list" />
 </joy-menu>
