@@ -119,10 +119,14 @@ public class ReportByCategory extends ReportCommonConsolidated {
                 JoyFormVectorEntry columns = new JoyFormVectorEntry();
                 columns.addValue("CAT_PK", rs.getInt("CAT_PK")); 
                 columns.addValue("CAT_NAME", rs.getString("CAT_NAME"));
-                columns.addValue("CAT_ID", rs.getString("CAT_ID"));
-                columns.addValue("CAT_PARENT_ID", rs.getString("CAT_PARENT_ID"));
+                columns.addValue("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
+                columns.addValue("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
                 columns.addValue("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
                 columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
+                if (rs.getString("ASLINK").equalsIgnoreCase("Y")) 
+                    columns.addValue("LINK", Joy.href("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
+                else
+                    columns.addValue("LINK", rs.getString("CAT_NAME"));
                 matrix.addRow(columns);
             }
             getBOFactory().closeResultSet(rs);
@@ -153,8 +157,8 @@ public class ReportByCategory extends ReportCommonConsolidated {
                 JoyFormVectorEntry columns = new JoyFormVectorEntry();
                 columns.addValue("CAT_PK", rs.getInt("CAT_PK")); 
                 columns.addValue("CAT_NAME", rs.getString("CAT_NAME"));
-                columns.addValue("CAT_ID", rs.getString("CAT_ID"));
-                columns.addValue("CAT_PARENT_ID", rs.getString("CAT_PARENT_ID"));
+                columns.addValue("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
+                columns.addValue("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
                 columns.addValue("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
                 columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
                 if (rs.getString("ASLINK").equalsIgnoreCase("Y")) 

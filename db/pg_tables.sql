@@ -5,7 +5,7 @@
 -- Dumped from database version 9.4.5
 -- Dumped by pg_dump version 9.5.1
 
--- Started on 2016-10-21 12:03:41
+-- Started on 2016-11-24 15:46:56
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -24,7 +24,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2185 (class 0 OID 0)
+-- TOC entry 2188 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -77,7 +77,7 @@ CREATE FUNCTION round(double precision, integer) RETURNS numeric
 ALTER FUNCTION public.round(double precision, integer) OWNER TO postgres;
 
 --
--- TOC entry 674 (class 1255 OID 17476)
+-- TOC entry 677 (class 1255 OID 17476)
 -- Name: first(anyelement); Type: AGGREGATE; Schema: public; Owner: postgres
 --
 
@@ -90,7 +90,7 @@ CREATE AGGREGATE first(anyelement) (
 ALTER AGGREGATE public.first(anyelement) OWNER TO postgres;
 
 --
--- TOC entry 675 (class 1255 OID 17477)
+-- TOC entry 678 (class 1255 OID 17477)
 -- Name: last(anyelement); Type: AGGREGATE; Schema: public; Owner: postgres
 --
 
@@ -131,8 +131,8 @@ ALTER TABLE app_params OWNER TO postgres;
 CREATE TABLE dim_category (
     cat_pk integer NOT NULL,
     cat_name character varying(255),
-    cat_id character varying(255),
-    cat_parent_id character varying(255),
+    cat_funckey character varying(500),
+    cat_parent_funckey character varying(500),
     cat_datetime_load timestamp(6) without time zone DEFAULT ('now'::text)::date,
     cat_description character varying(4000),
     cat_fullpath character varying(1000)
@@ -182,7 +182,7 @@ CREATE TABLE dim_dqaxis (
     dqx_status integer,
     dqx_datetime_load timestamp(6) without time zone DEFAULT ('now'::text)::date,
     dqx_name character varying(25),
-    dqx_code character varying(10),
+    dqx_funckey character varying(500),
     dqx_weight integer DEFAULT 1
 );
 
@@ -199,7 +199,7 @@ CREATE TABLE dim_glossary (
     glo_datetime_load timestamp(6) without time zone DEFAULT ('now'::text)::date,
     glo_name character varying(250),
     glo_description character varying(4000),
-    glo_id character varying(255)
+    glo_funckey character varying(255)
 );
 
 
@@ -248,7 +248,8 @@ ALTER TABLE dim_metric OWNER TO postgres;
 CREATE TABLE dim_metrictype (
     mty_pk integer NOT NULL,
     mty_name character varying(255),
-    mty_datetime_load timestamp(6) without time zone DEFAULT ('now'::text)::date
+    mty_datetime_load timestamp(6) without time zone DEFAULT ('now'::text)::date,
+    mty_funckey character varying(500)
 );
 
 
@@ -342,7 +343,8 @@ ALTER TABLE dim_term OWNER TO postgres;
 CREATE TABLE dim_term_relationship (
     rel_pk integer,
     rel_name character varying(100),
-    rel_description character varying(500)
+    rel_description character varying(500),
+    rel_funckey character varying(500)
 );
 
 
@@ -357,7 +359,8 @@ CREATE TABLE dim_term_rellinks (
     trl_pk integer,
     object_id_source character varying(255),
     object_id_target character varying(255),
-    rel_fk integer
+    rel_fk integer,
+    trl_funckey character varying(500)
 );
 
 
@@ -372,7 +375,8 @@ CREATE TABLE dim_term_type (
     trt_pk integer,
     trt_name character varying(200),
     trt_description character varying(4000),
-    trt_datetime_load timestamp(6) without time zone
+    trt_datetime_load timestamp(6) without time zone,
+    trt_funckey character varying(500)
 );
 
 
@@ -392,7 +396,8 @@ CREATE TABLE dim_time (
     tim_year_num integer,
     tim_sequence_order integer,
     tim_day_num integer,
-    tim_month_num integer
+    tim_month_num integer,
+    tim_funckey character varying(500)
 );
 
 
@@ -622,7 +627,7 @@ ALTER TABLE src_context OWNER TO postgres;
 --
 
 CREATE TABLE src_dqaxis (
-    dqx_code character varying(10),
+    dqx_funckey character varying(10),
     dqx_label character varying(250),
     dqx_description character varying(4000),
     dqx_status character varying(1),
@@ -648,7 +653,7 @@ CREATE TABLE src_termtype (
 ALTER TABLE src_termtype OWNER TO postgres;
 
 --
--- TOC entry 2052 (class 1259 OID 17730)
+-- TOC entry 2055 (class 1259 OID 17730)
 -- Name: dim_category_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -656,7 +661,7 @@ CREATE UNIQUE INDEX dim_category_pk ON dim_category USING btree (cat_pk);
 
 
 --
--- TOC entry 2053 (class 1259 OID 17731)
+-- TOC entry 2056 (class 1259 OID 17731)
 -- Name: dim_context_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -664,7 +669,7 @@ CREATE UNIQUE INDEX dim_context_pk ON dim_context USING btree (con_pk);
 
 
 --
--- TOC entry 2054 (class 1259 OID 17732)
+-- TOC entry 2057 (class 1259 OID 17732)
 -- Name: dim_datasource_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -672,7 +677,7 @@ CREATE UNIQUE INDEX dim_datasource_pk ON dim_datasource USING btree (dso_pk);
 
 
 --
--- TOC entry 2051 (class 1259 OID 17608)
+-- TOC entry 2054 (class 1259 OID 17608)
 -- Name: dim_dqdimension_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -680,7 +685,7 @@ CREATE UNIQUE INDEX dim_dqdimension_pk ON dim_dqaxis USING btree (dqx_pk);
 
 
 --
--- TOC entry 2055 (class 1259 OID 17733)
+-- TOC entry 2058 (class 1259 OID 17733)
 -- Name: dim_glossary_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -688,7 +693,7 @@ CREATE UNIQUE INDEX dim_glossary_pk ON dim_glossary USING btree (glo_pk);
 
 
 --
--- TOC entry 2056 (class 1259 OID 17734)
+-- TOC entry 2059 (class 1259 OID 17734)
 -- Name: dim_job_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -696,7 +701,7 @@ CREATE UNIQUE INDEX dim_job_pk ON dim_job USING btree (job_pk);
 
 
 --
--- TOC entry 2058 (class 1259 OID 17735)
+-- TOC entry 2061 (class 1259 OID 17735)
 -- Name: dim_metrictype_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -704,7 +709,7 @@ CREATE UNIQUE INDEX dim_metrictype_pk ON dim_metrictype USING btree (mty_pk);
 
 
 --
--- TOC entry 2059 (class 1259 OID 17736)
+-- TOC entry 2062 (class 1259 OID 17736)
 -- Name: dim_origine_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -712,7 +717,7 @@ CREATE UNIQUE INDEX dim_origine_pk ON dim_origine USING btree (ori_pk);
 
 
 --
--- TOC entry 2057 (class 1259 OID 17737)
+-- TOC entry 2060 (class 1259 OID 17737)
 -- Name: dim_rules_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -720,7 +725,7 @@ CREATE UNIQUE INDEX dim_rules_pk ON dim_metric USING btree (met_pk);
 
 
 --
--- TOC entry 2060 (class 1259 OID 17738)
+-- TOC entry 2063 (class 1259 OID 17738)
 -- Name: dim_scorecard_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -728,7 +733,7 @@ CREATE UNIQUE INDEX dim_scorecard_pk ON dim_scorecard USING btree (sco_pk);
 
 
 --
--- TOC entry 2062 (class 1259 OID 17739)
+-- TOC entry 2065 (class 1259 OID 17739)
 -- Name: dim_term_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -736,7 +741,7 @@ CREATE UNIQUE INDEX dim_term_pk ON dim_term USING btree (trm_pk);
 
 
 --
--- TOC entry 2063 (class 1259 OID 17740)
+-- TOC entry 2066 (class 1259 OID 17740)
 -- Name: dim_term_relationship_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -744,7 +749,7 @@ CREATE UNIQUE INDEX dim_term_relationship_pk ON dim_term_relationship USING btre
 
 
 --
--- TOC entry 2064 (class 1259 OID 17745)
+-- TOC entry 2067 (class 1259 OID 17745)
 -- Name: dim_time_index5; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -752,7 +757,7 @@ CREATE INDEX dim_time_index5 ON dim_time USING btree (tim_year_num);
 
 
 --
--- TOC entry 2065 (class 1259 OID 17750)
+-- TOC entry 2068 (class 1259 OID 17750)
 -- Name: dim_time_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -760,7 +765,7 @@ CREATE UNIQUE INDEX dim_time_pk ON dim_time USING btree (tim_pk);
 
 
 --
--- TOC entry 2067 (class 1259 OID 17765)
+-- TOC entry 2070 (class 1259 OID 17765)
 -- Name: fact_gvresult_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -768,7 +773,7 @@ CREATE UNIQUE INDEX fact_gvresult_pk ON fact_governance USING btree (frs_pk);
 
 
 --
--- TOC entry 2066 (class 1259 OID 17751)
+-- TOC entry 2069 (class 1259 OID 17751)
 -- Name: src_dqaxis_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -776,7 +781,7 @@ CREATE UNIQUE INDEX src_dqaxis_pk ON src_dqaxis USING btree (dqx_pk);
 
 
 --
--- TOC entry 2061 (class 1259 OID 17752)
+-- TOC entry 2064 (class 1259 OID 17752)
 -- Name: table_11_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -784,7 +789,7 @@ CREATE UNIQUE INDEX table_11_pk ON dim_scorecard_group USING btree (scg_pk);
 
 
 --
--- TOC entry 2068 (class 1259 OID 17808)
+-- TOC entry 2071 (class 1259 OID 17808)
 -- Name: trt_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -792,7 +797,7 @@ CREATE UNIQUE INDEX trt_pk ON dim_term_type USING btree (trt_pk);
 
 
 --
--- TOC entry 2184 (class 0 OID 0)
+-- TOC entry 2187 (class 0 OID 0)
 -- Dependencies: 7
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -803,7 +808,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-10-21 12:03:41
+-- Completed on 2016-11-24 15:46:56
 
 --
 -- PostgreSQL database dump complete

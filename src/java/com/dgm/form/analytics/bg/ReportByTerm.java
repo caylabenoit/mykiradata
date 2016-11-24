@@ -232,7 +232,7 @@ public class ReportByTerm extends ReportCommonAction {
                 if (displayInfa) {
                     String mmURL = myParam.getParamValue("infammurl").getStrValue();
                     this.addFormSingleEntry("INFA_MM_LINK",  getMetaManagerURLLink(false, mmURL, rs.getString("GLO_NAME"), rs.getString("TRM_NAME")));
-                    this.addFormSingleEntry("INFA_DIRECT_LINK",  getBGTermURLLink(rs.getString("OBJECT_ID")));
+                    this.addFormSingleEntry("INFA_DIRECT_LINK",  getBGTermURLLink(rs.getString("TRM_FUNCKEY")));
                 }
                 
                 if (rs.getString("TRM_CLUSTER_ID") != null)

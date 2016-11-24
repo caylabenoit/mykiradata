@@ -45,25 +45,28 @@
                     
                     <div class="col-lg-10">
                         <div class="panel panel-default">
-                            <div class="panel-heading">Business Category Landing data</div>
-                            
+                            <div class="panel-heading">Manage Category</div>
                             <div class="row">
-                                <div class="col-lg-12">  
+                                <div class="col-lg-3">
                                     <div class="panel-body">
-                                        <div class="form-group">
+                                        <div class="divjoyfieldsbloc">
+                                            <p><B>Date : </B></p><P><joy:ActionValueTag name="JOYLOADDATE" /></p>
+                                            <p><B>Status :</B><joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" /></p>
                                             <label>Identifier</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span>
                                                 <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="10" placeholder="Unique Identifier" ariadescribedby="basic-addon2" />
                                             </div>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                                    
-                            <div class="row">
-                                <div class="col-lg-12">
+                                        
+                                <div class="col-lg-9">
                                     <div class="panel-body">
+                                        <div class='alert alert-success'>
+                                            <joy:ActionValueTag name="STATUS" />
+                                        </div>
                                         <div class="form-group">
                                             <label>Name</label>
                                             <joy:ActionInputTextTag name="CATEGORY_NAME" CSSClass="form-control" placeholder="Category Name" />
@@ -82,18 +85,19 @@
                                                 <div class="col-lg-5">
                                                     <joy:ActionComboBoxTag name="CATEGORY_PARENT_KEY_CBO" CSSClass="combobox form-control" id="CATEGORY_PARENT_KEY_CBO" />
                                                 </div>  
-                                                <div class="col-lg-1">
+                                                <div class="col-lg-2">
                                                     <joy:JoyFormButtonTag id="btnselect" label="Select >" CSSClass="btn btn-default largeinput" onclick="document.getElementById('CATEGORY_PARENT_KEY').value = document.getElementById('CATEGORY_PARENT_KEY_CBO').value;" />
                                                 </div>  
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-5">
                                                     <joy:ActionInputTextTag name="CATEGORY_PARENT_KEY" CSSClass="form-control" CSSId="CATEGORY_PARENT_KEY" placeholder="Parent Category Identifier" />
                                                 </div> 
                                             </div> 
                                         </div> 
                                     </DIV>
-                                </div>    
-                            </div>
+                                </div>
                                         
+                            </div>
+
                             <div class="row">
                                 <div class="col-lg-12">  
                                     <div class="panel-body">
@@ -124,6 +128,10 @@
         $( '#CATEGORY_PARENT_KEY_CBO' ).select2({
             allowClear: true,
             placeholder: "Select an category"
+        });
+        $( '#JOYSTATUS' ).select2({
+            allowClear: false,
+            placeholder: "Select an Status"
         });
     });
 </SCRIPT>

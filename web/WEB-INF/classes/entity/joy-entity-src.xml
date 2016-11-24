@@ -17,27 +17,27 @@
             <joy-join-key master="MET_NAME" slave="MET_NAME" />
         </joy-join>
         <joy-filter alias="SC1" field="MET_NAME" operator="IS">NULL</joy-filter>
-        <joy-sort alias="AT1" field="MET_NAME" desc="no" />
+        <joy-sort alias="AT1" desc="no">MET_NAME</joy-sort>
     </joy-composite>
 
     <joy-composite name = "Available Terms" distinct="yes">
         <joy-field alias="X">TERM_NAME</joy-field>
         <joy-entity alias="X">LND_TERM</joy-entity>
         <joy-filter alias="X" field="TERM_NAME" operator="NOT IN">(select distinct trm_name from rel_term_metric)</joy-filter>
-        <joy-sort alias="X" field="TERM_NAME" desc="no" />
+        <joy-sort alias="X" desc="no">TERM_NAME</joy-sort>
     </joy-composite>
     
     <joy-composite name = "Metric Condidate for autolink" distinct="no">
         <joy-field alias="AT1">TRM_NAME</joy-field>
         <joy-field alias="AT1">DQX_NAME</joy-field>
-        <joy-field alias="SC1">DQX_CODE</joy-field>
+        <joy-field alias="SC1">DQX_FUNCKEY</joy-field>
         <joy-entity alias="AT1">REL_TERM_METRIC</joy-entity>
         <joy-join type="LEFT">
             <joy-entity alias="SC1">SRC_DQAXIS</joy-entity>
             <joy-join-key master="DQX_NAME" slave="DQX_LABEL" />
         </joy-join>
         <joy-filter alias="AT1" field="MET_NAME" operator="IS">NULL</joy-filter>
-        <joy-sort alias="AT1" field="MET_NAME" desc="no" />
+        <joy-sort alias="AT1" desc="no">MET_NAME</joy-sort>
     </joy-composite>
 
     <joy-composite name = "Rel Term Metric List" distinct="yes">
@@ -64,7 +64,7 @@
         <joy-entity alias="X">DIM_DQAXIS</joy-entity>
         <joy-join type="LEFT">
             <joy-entity alias="Y">SRC_DQAXIS</joy-entity>
-            <joy-join-key master="DQX_CODE" slave="DQX_CODE" />
+            <joy-join-key master="DQX_FUNCKEY" slave="DQX_FUNCKEY" />
         </joy-join>
     </joy-composite>
 

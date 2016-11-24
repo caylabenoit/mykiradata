@@ -41,7 +41,7 @@ for the custom queries :
     <joy-join type="INNER/LEFT/RIGHT [Single JOIN by default]">
         <joy-entity alias="[Right Table Alias]">[Right IEntity]</joy-entity>
         <joy-join-key master="[Left field Key]" slave="[Right field Key]" />
-   </joy-join>
+    </joy-join>
     <joy-join type="...">
         ...
     </joy-join>
@@ -49,11 +49,12 @@ for the custom queries :
     <joy-filter alias="[Table Alias for filter field]" field="[Filter field]" operator="&lt;&gt;[Or anything else]">[Filter]</joy-filter>
     <joy-filter>...</joy-filter>
   
-    <joy-sort alias="[Alias Sort field]" field="[Sort field]" desc="[no/yes]" />
+    <joy-sort alias="[Alias Sort field]" desc="[no/yes]" />[sort field]</joy-sort>
     <joy-sort ... />
   
     <joy-group alias="[Table Alias for grouped field]">[Group Field]</joy-group>
-  
+    <joy-group ... />
+    
  </joy-composite>
     
 </joy-entities>

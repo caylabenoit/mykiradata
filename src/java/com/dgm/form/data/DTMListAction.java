@@ -28,7 +28,7 @@ public class DTMListAction extends ActionTypeForm {
 
     /**
      * Load the Datamart data : "FRS_PK", "FRS_VALID_ROWS", "FRS_INVALID_ROWS","FRS_TOTALROWS", "FRS_KPI_SCORE", 
-     *                          "DQX_NAME", "TRM_NAME", "FRS_WEIGHT", "FRS_COST", "MET_NAME", "TRM_FK", "DQX_CODE",
+     *                          "DQX_NAME", "TRM_NAME", "FRS_WEIGHT", "FRS_COST", "MET_NAME", "TRM_FK", "DQX_FUNCKEY",
      *                          "MET_FK", "FRS_DATETIME_LOAD", "SCG_NAME", "SCO_NAME", "TIM_CALENDAR_DATE"
      * @return 
      */

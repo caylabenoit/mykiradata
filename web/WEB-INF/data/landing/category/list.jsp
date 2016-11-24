@@ -55,6 +55,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Key</th>
+                                                <th>Action</th>
                                                 <th>Name</th>
                                                 <th>Description</th>
                                                 <th style="text-align:center;">Manage</th>
@@ -64,6 +65,7 @@
                                             <joy:ActionMatrixRowLoopTag name="LIST">
                                             <tr>
                                                 <td><joy:ActionMatrixByRowTag name="JOYFUNCKEY" /></td>
+                                                <td><joy:ActionMatrixByRowTag name="STATUS" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="CATEGORY_NAME" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="CATEGORY_DESCRIPTION" /></td>
                                                 <td align="center">

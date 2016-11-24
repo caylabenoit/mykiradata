@@ -44,7 +44,7 @@
                             <div class="panel-body">
                                 <div class="dataTable_wrapper">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-warning" onclick="loadJSON('./task/infawf/wf_Landing', 'wf_Landing');"><i class="fa fa-arrow-circle-right "></i>&nbsp;Collect IDQ Scorecards</button><p>
+                                        <button type="button" class="btn btn-warning" onclick="loadInformatica();"><i class="fa fa-arrow-circle-right "></i>&nbsp;Collect IDQ Scorecards</button><p>
                                         <p><code>This tasks collects all the scorecards metrics and push them directly into the datamart</code>
                                     </div>
                                     <div class="form-group">
@@ -83,8 +83,8 @@
                                             <joy:ActionInputTextTag name="USER" CSSClass="form-control" readonly="true"  />
                                         </div>
                                         <div class="form-group">
-                                            <label>Informatica Password: </label>
-                                            <joy:ActionInputTextTag name="PWD" CSSClass="form-control" readonly="true"  />
+                                            <label>Informatica Workflow: </label>
+                                            <joy:ActionInputTextTag CSSId="WF" name="WF" CSSClass="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <joy:JoyFormButtonTag id="btn1" label="Modify parameters"  CSSClass="btn btn-default" link="true" object="parameters" actiontype="list" />
@@ -104,11 +104,17 @@
 <script>
     function callbackSuccess(content, tag) {
         switch(tag) {
-            case 'wf_Landing':
+            case document.getElementById('WF').value:
                 bootbox.alert('Informatica Workflow for refreshing scorecards launched sucessfully in background.', null);
                 break;
             default:
         }
+    }
+    
+    function loadInformatica() {
+        var tag = document.getElementById("WF").value;
+        var url = "./task/infawf/" + tag;
+        loadJSON(url, tag);
     }
 </script>
 </body>

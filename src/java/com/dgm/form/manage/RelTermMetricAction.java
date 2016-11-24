@@ -322,12 +322,12 @@ public class RelTermMetricAction extends ActionTypeForm {
     private class RelationShip {
         public String TRM_NAME;
         public String DQX_NAME;
-        public String DQX_CODE;
+        public String DQX_FUNCKEY;
 
-        public RelationShip(String TRM_NAME, String DQX_NAME, String DQX_CODE) {
+        public RelationShip(String TRM_NAME, String DQX_NAME, String DQX_FUNCKEY) {
             this.TRM_NAME = TRM_NAME;
             this.DQX_NAME = DQX_NAME;
-            this.DQX_CODE = DQX_CODE;
+            this.DQX_FUNCKEY = DQX_FUNCKEY;
         }
 
     }
@@ -357,7 +357,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             ResultSet rs = entity.select();
             
             while (rs.next()) {                 
-                RelationShip rel = new RelationShip(rs.getString("TRM_NAME"), rs.getString("DQX_NAME"), rs.getString("DQX_CODE"));
+                RelationShip rel = new RelationShip(rs.getString("TRM_NAME"), rs.getString("DQX_NAME"), rs.getString("DQX_FUNCKEY"));
                 tab.add(rel);
             }
             this.getBOFactory().closeResultSet(rs);
@@ -400,7 +400,7 @@ public class RelTermMetricAction extends ActionTypeForm {
                 for (RelationShip candidat : candidates) { // parcours les metrics
                     String trm = PrepareToComparison(candidat.TRM_NAME);
                     String metric = PrepareToComparison(rs.getString("MET_NAME"));
-                    if (myContain(metric, trm) && (myContain(metric, candidat.DQX_CODE) || myContain(metric, candidat.DQX_NAME)) )  { // la metrique contien le nom du terme & l'axe
+                    if (myContain(metric, trm) && (myContain(metric, candidat.DQX_FUNCKEY) || myContain(metric, candidat.DQX_NAME)) )  { // la metrique contien le nom du terme & l'axe
                         // Mise à jour !
                         BOEntityReadWrite maj = (BOEntityReadWrite)this.getBOFactory().getEntity("REL_TERM_METRIC");
                         maj.field("TRM_CLUSTER_ID").doNotUseThisField();
@@ -529,7 +529,7 @@ public class RelTermMetricAction extends ActionTypeForm {
 
     /**
      * Tente de créer une relation auto pour les termes sélectionnée règle de match :
-     *       -> Si DQX_CODE, DQX_NAME dans la chaine metric
+     *       -> Si DQX_FUNCKEY, DQX_NAME dans la chaine metric
      *       -> Si TRM_NAME (avec tous les espaces retirés) dans la chaine metric
      * @param ActionType si AUTOLINK --> process d'auto link
      *                   si REFRESHLINKAGE --> process de rafraichissement du linkage (FACTs)

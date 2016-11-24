@@ -46,28 +46,26 @@
                     <div class="col-lg-10">
                         <div class="panel panel-default">
                             <div class="panel-heading">Manage Glossary</div>
-                            
                             <div class="row">
-                                <div class="col-lg-12">  
+                                <div class="col-lg-3">
                                     <div class="panel-body">
-                                        <div class="form-group">
+                                        <div class="divjoyfieldsbloc">
+                                            <p><B>Date : </B></p><P><joy:ActionValueTag name="JOYLOADDATE" /></p>
+                                            <p><B>Status :</B><joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" /></p>
                                             <label>Identifier</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span>
                                                 <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="10" placeholder="Unique Identifier" ariadescribedby="basic-addon2" />
                                             </div>
-                                            <label>Import Status</label>
-                                            <div class="input-group">
-                                                <joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" />
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                                    
-                            <div class="row">
-                                <div class="col-lg-6">
+                                        
+                                <div class="col-lg-9">
                                     <div class="panel-body">
+                                        <div class='alert alert-success'>
+                                            <joy:ActionValueTag name="STATUS" />
+                                        </div>
                                         <div class="form-group">
                                             <label>Name</label>
                                             <joy:ActionInputTextTag name="GLOSSARY_NAME" CSSClass="form-control" placeholder="Glossary Name" />
@@ -76,7 +74,6 @@
                                             <label>Description</label>
                                             <joy:ActionInputTextTag name="GLOSSARY_DESCRIPTION"   CSSClass="form-control" placeholder="Glossary Description" />
                                         </div>
-
                                     </DIV>
                                 </div>
                                         

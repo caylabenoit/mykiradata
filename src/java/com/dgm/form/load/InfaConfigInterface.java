@@ -16,6 +16,7 @@
  */
 package com.dgm.form.load;
 
+import com.dgm.common.Constants;
 import com.joy.mvc.actionTypes.ActionTypeForm;
 import com.dgm.common.providers.ParamProvider;
 
@@ -25,6 +26,8 @@ import com.dgm.common.providers.ParamProvider;
  */
 public class InfaConfigInterface extends ActionTypeForm {
     @Override
+    
+    
     public String list() {
         ParamProvider params = new ParamProvider(this.getBOFactory());
         this.addFormSingleEntry("CMD", params.getParamValue("infacmd").getStrValue());
@@ -33,6 +36,7 @@ public class InfaConfigInterface extends ActionTypeForm {
         this.addFormSingleEntry("USER", params.getParamValue("infauser").getStrValue());
         this.addFormSingleEntry("PWD", params.getParamValue("infapwd").getStrValue());
         this.addFormSingleEntry("APP", params.getParamValue("infaapp").getStrValue());
+        this.addFormSingleEntry("WF", Constants.DEFAULT_INFA_LANDINGWF);
         return super.list();
     }
 

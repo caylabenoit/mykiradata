@@ -10,9 +10,10 @@
     <joy-table name="LND_SCORECARD" />
     <joy-table name="LND_SCORECARD_GROUP" />
 
+    <!-- Landing List -->
     <joy-composite name = "List - Landing Glossary" distinct="yes">
         <joy-entity alias="T">LND_GLOSSARY</joy-entity>
-        <joy-field as="STATUS">case when(GLO_ID IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field as="STATUS">CASE WHEN(GLO_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
         <joy-field alias="T">GLOSSARY_DESCRIPTION</joy-field>
         <joy-field alias="T">GLOSSARY_NAME</joy-field>
         <joy-field alias="T">JOYLOADDATE</joy-field>
@@ -20,9 +21,66 @@
         <joy-field alias="T">JOYFUNCKEY</joy-field>
         <joy-join type="LEFT OUTER">
             <joy-entity alias="C">DIM_GLOSSARY</joy-entity>
-            <joy-join-key master="JOYFUNCKEY" slave="GLO_ID" />
+            <joy-join-key master="JOYFUNCKEY" slave="GLO_FUNCKEY" />
         </joy-join>
     </joy-composite>    
+
+    <joy-composite name = "List - Landing Category" distinct="yes">
+        <joy-entity alias="X">LND_CATEGORY</joy-entity>
+        <joy-field as="STATUS">CASE WHEN(CAT_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field alias="X">CATEGORY_NAME</joy-field>
+        <joy-field alias="X">CATEGORY_DESCRIPTION</joy-field>
+        <joy-field alias="X">JOYLOADDATE</joy-field>
+        <joy-field alias="X">JOYSTATUS</joy-field>
+        <joy-field alias="X">JOYFUNCKEY</joy-field>
+        <joy-field alias="X">CATEGORY_FULLPATH</joy-field>
+        <joy-field alias="X">CATEGORY_PARENT_KEY</joy-field>
+        <joy-join type="LEFT OUTER">
+            <joy-entity alias="C">DIM_CATEGORY</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="CAT_FUNCKEY" />
+        </joy-join>
+    </joy-composite>  
+    
+    <joy-composite name = "List - Landing Term" distinct="yes">
+        <joy-entity alias="X">LND_TERM</joy-entity>
+        <joy-field as="STATUS">CASE WHEN(TRM_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field alias="X">JOYFUNCKEY</joy-field>
+        <joy-field alias="X">JOYLOADDATE</joy-field>
+        <joy-field alias="X">JOYSTATUS</joy-field>
+        <joy-field alias="X">TERM_STATUS</joy-field>
+        <joy-field alias="X">TERM_TYPE</joy-field>
+        <joy-field alias="X">TERM_NAME</joy-field>
+        <joy-field alias="X">TERM_FUNCKEY</joy-field>
+        <joy-field alias="X">TERM_DESCRIPTION</joy-field>
+        <joy-field alias="X">TERM_USAGE</joy-field>
+        <joy-field alias="X">TERM_EXAMPLE</joy-field>
+        <joy-field alias="X">TERM_PHASE</joy-field>
+        <joy-field alias="X">TERM_OWNER</joy-field>
+        <joy-field alias="X">TERM_STEWARD</joy-field>
+        <joy-field alias="X">TERM_OWNER_EMAIL</joy-field>
+        <joy-field alias="X">TERM_STEWARD_EMAIL</joy-field>
+        <joy-field alias="X">GLOSSARY_KEY</joy-field>
+        <joy-field alias="X">CATEGORY_KEY</joy-field>
+        <joy-join type="LEFT OUTER">
+            <joy-entity alias="C">DIM_TERM</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="TRM_FUNCKEY" />
+        </joy-join>
+    </joy-composite>  
+    
+    <!--
+    <joy-composite name = "List - Landing Relationship" distinct="yes">
+        <joy-entity alias="T">LND_TERM_RELATIONSHIPS</joy-entity>
+        <joy-field as="STATUS">CASE WHEN(GLO_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field alias="X">REL_KEY_TERM_SOURCE</joy-field>
+        <joy-field alias="X">REL_KEY_TERM_TARGET</joy-field>
+        <joy-field alias="X">REL_NAME</joy-field>
+        <joy-field alias="X">JOYSTATUS</joy-field>
+        <joy-join type="LEFT OUTER">
+            <joy-entity alias="C">DIM_GLOSSARY</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="GLO_FUNCKEY" />
+        </joy-join>
+    </joy-composite>  
+    -->
     
     <!-- Used for Landing mappings (sources) -->
     <joy-composite name = "Load - get Terms type" distinct="yes">
@@ -43,6 +101,7 @@
         <joy-field alias="X">REL_KEY_TERM_TARGET</joy-field>
         <joy-field alias="X">REL_NAME</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
+        <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-entity alias="X">LND_TERM_RELATIONSHIPS</joy-entity>
     </joy-composite>
     
@@ -132,10 +191,8 @@
         <joy-field alias="X">SCORECARDGRP_KEY</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-entity alias="X">LND_METRIC</joy-entity>
-        <joy-sort alias="X" field="MET_NAME" desc="no" />
+        <joy-sort alias="X" desc="no">MET_NAME</joy-sort>
     </joy-composite>
-
-
 
     <joy-customquery name="Load - Facts from landing">
         SELECT TIM_PK, TRM_PK, MET_PK, DQX_PK, DSO_PK, CON_PK, ORI_PK,

@@ -21,6 +21,7 @@ import com.joy.mvc.actionTypes.ActionTypeForm;
 import java.sql.ResultSet;
 import com.joy.bo.IEntity;
 import com.joy.mvc.formbean.JoyFormVectorEntry;
+import java.sql.SQLException;
 
 /**
  *
@@ -59,13 +60,30 @@ public class LNDCommonAction extends ActionTypeForm {
         return super.list(); 
     }
 
-
+    /**
+     * add the joy status combobox data
+     * @param rs data resultset
+     */
+    protected void addComboAction(ResultSet rs) {
+        // add the joy status
+        JoyFormVectorEntry vector = new JoyFormVectorEntry();
+        vector.addValue("Load", "L",  "Load");
+        vector.addValue("Ignore", "I", "Ignore");
+        vector.addValue("Purge", "P", "Purge");
+        vector.addValue("Not speficied", "", "Not speficied");
+        try {
+            vector.setSelected(rs.getString("JOYSTATUS"));
+        } catch (SQLException ex) {}
+        this.addFormVectorEntry("JOYSTATUS", vector);
+    }
+    
     @Override
     public String edit() {
         String uid = getStrArgumentValue(this.LandingKeyName);
         if (!uid.equalsIgnoreCase("")) {
             try {
-                IEntity Entity = this.getBOFactory().getEntity(this.LandingTableName);
+                String myEntity = (ListEntityName == null ? LandingTableName : ListEntityName);
+                IEntity Entity = this.getBOFactory().getEntity(myEntity);
                 Entity.reset();
                 Entity.field(this.LandingKeyName).setKeyValue(uid);
                 ResultSet rs = Entity.select();
@@ -73,13 +91,7 @@ public class LNDCommonAction extends ActionTypeForm {
                 this.loadSingle(rs);
                 
                 // add the joy status
-                JoyFormVectorEntry vector = new JoyFormVectorEntry();
-                vector.addValue("Load", "L");
-                vector.addValue("Ignore", "I");
-                vector.addValue("Not speficied", "");
-                vector.setSelected(rs.getString("JOYSTATUS"));
-                this.addFormVectorEntry("JOYSTATUS", vector);
-                
+                addComboAction(rs);
                 editSpecific(rs);
                 this.getBOFactory().closeResultSet(rs);
 

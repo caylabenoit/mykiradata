@@ -74,7 +74,7 @@
         <joy-filter alias="X" field="TRM_FK" operator="&gt;">0</joy-filter>
         <joy-group alias="X">TRM_FK</joy-group>
         <joy-group alias="T">TRM_NAME</joy-group>
-        <joy-sort field="GLOBALSCORE" desc="yes" />
+        <joy-sort desc="yes">GLOBALSCORE</joy-sort>
     </joy-composite>
 
     <joy-composite name = "Home - Worse terms">  <!-- Worse terms scores -->
@@ -93,6 +93,6 @@
         <joy-filter alias="X" field="TRM_FK" operator="&gt;">0</joy-filter>
         <joy-group alias="X">TRM_FK</joy-group>
         <joy-group alias="T">TRM_NAME</joy-group>
-        <joy-sort field="GLOBALSCORE" desc="no" />
+        <joy-sort desc="no">GLOBALSCORE</joy-sort>
     </joy-composite> 
 </joy-entities>

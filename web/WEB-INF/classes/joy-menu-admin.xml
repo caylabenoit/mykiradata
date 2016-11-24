@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <joy-menu>
-    <joy-menu class="fa fa-random fa-fw" id="ADM02" name="Informatica Gateway" object="infainterface" actiontype="list" />
-    <joy-menu class="fa fa-random fa-fw" id="ADM03" name="Import Process" object="landinginterface"  actiontype="list" />
-    <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM04" name="Check Application" object="checkapp" />
+    <joy-menu class="fa fa-random fa-fw" id="ADM02" name="Informatica gateway" object="infainterface" actiontype="list" />
+    <joy-menu class="fa fa-random fa-fw" id="ADM03" name="Import data" object="landinginterface"  actiontype="list" />
+    <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM04" name="Check application" object="checkapp" />
     <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM05" name="Backup configuration" object="import" actiontype="list" />
     <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM06" name="Parameters" object="parameters" actiontype="list" />
     <joy-menu class="fa fa-random fa-fw" id="ADM07" name="Tasks" object="tasks" />

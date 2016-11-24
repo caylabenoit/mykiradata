@@ -55,7 +55,7 @@
                                     <tbody>
                                     <joy:ActionMatrixRowLoopTag name="LIST">    
                                         <tr>
-                                            <td><joy:ActionMatrixByRowTag name="DQX_CODE" /></td>
+                                            <td><joy:ActionMatrixByRowTag name="DQX_FUNCKEY" /></td>
                                             <td><joy:ActionMatrixByRowTag name="DQX_LABEL" /></td>
                                             <td><joy:ActionMatrixByRowTag name="DQX_DESCRIPTION" /></td>
                                             <td><joy:ActionMatrixByRowTag name="DQX_WEIGHT" /></td>

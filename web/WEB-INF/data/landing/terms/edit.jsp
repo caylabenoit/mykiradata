@@ -48,24 +48,35 @@
                             <div class="panel-heading">Manage Business Term</div>
                             
                             <div class="row">
-                                <div class="col-lg-12">  
+                                <div class="col-lg-4">
                                     <div class="panel-body">
-                                        <div class="form-group">
-                                            <div class="help-block with-errors"></div>
+                                        <div class="divjoyfieldsbloc">
+                                            <p><B>Date : </B></p><P><joy:ActionValueTag name="JOYLOADDATE" /></p>
+                                            <p><B>Status :</B><joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" /></p>
                                             <label>Identifier</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span>
                                                 <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="10" placeholder="Unique Identifier" ariadescribedby="basic-addon2" />
                                             </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div class="col-lg-8">   
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <div class="help-block with-errors"></div>
+                                        <div class='alert alert-success'>
+                                            <joy:ActionValueTag name="STATUS" />
+                                        </div>
                                             <label>Glossary</label>
                                             <div class="row">
                                                 <div class="col-lg-5">
                                                     <joy:ActionComboBoxTag name="GLOSSARY_CBO" CSSClass="combobox form-control" id="GLOSSARY_CBO" />
                                                 </div>  
-                                                <div class="col-lg-1">
+                                                <div class="col-lg-2">
                                                     <joy:JoyFormButtonTag id="btnselect1" label="Select >" CSSClass="btn btn-default largeinput" onclick="document.getElementById('GLOSSARY_KEY').value = document.getElementById('GLOSSARY_CBO').value;" />
                                                 </div>  
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-5">
                                                     <joy:ActionInputTextTag name="GLOSSARY_KEY" CSSClass="form-control" CSSId="GLOSSARY_KEY" placeholder="Glossary Identifier" />
                                                 </div> 
                                             </div>
@@ -74,10 +85,10 @@
                                                 <div class="col-lg-5">
                                                     <joy:ActionComboBoxTag name="CATEGORY_CBO" CSSClass="combobox form-control" id="CATEGORY_CBO" />
                                                 </div>  
-                                                <div class="col-lg-1">
+                                                <div class="col-lg-2">
                                                     <joy:JoyFormButtonTag id="btnselect2" label="Select >" CSSClass="btn btn-default largeinput" onclick="document.getElementById('CATEGORY_KEY').value = document.getElementById('CATEGORY_CBO').value;" />
                                                 </div>  
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-5">
                                                     <joy:ActionInputTextTag name="CATEGORY_KEY" CSSClass="form-control" CSSId="CATEGORY_KEY" placeholder="Category Identifier" />
                                                 </div> 
                                             </div>

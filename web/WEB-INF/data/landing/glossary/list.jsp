@@ -49,14 +49,14 @@
                             <div class="panel-body">
                                 <div class="dataTable_wrapper"> 
                                     <joy:JoyFormTag object="lndglossary" actiontype="list">  
-                                        Row Max to retrieve&nbsp;<joy:ActionInputTextTag name="LIMIT" CSSClass="inputtext" />&nbsp;<joy:JoyFormButtonTag id="Refresh" label="Refresh" submit="true" CSSClass="btn btn-warning" /><P>
+                                        Row Max to retrieve&nbsp;<joy:ActionInputTextTag name="LIMIT" CSSClass="inputtext form-control" />&nbsp;<joy:JoyFormButtonTag id="Refresh" label="Refresh" submit="true" CSSClass="btn btn-warning" /><P>
                                     </joy:JoyFormTag>
                                     <table id="matablelist" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">   
                                         <thead>
                                             <tr>
                                                 <th>Key</th>
-                                                <th>Name</th>
                                                 <th>Action</th>
+                                                <th>Name</th>
                                                 <th>Description</th>
                                                 <th style="text-align:center;">Manage</th>
                                             </tr>
@@ -65,8 +65,8 @@
                                             <joy:ActionMatrixRowLoopTag name="LIST">
                                             <tr>
                                                 <td><joy:ActionMatrixByRowTag name="JOYFUNCKEY" /></td>
-                                                <td><joy:ActionMatrixByRowTag name="GLOSSARY_NAME" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="STATUS" /></td>
+                                                <td><joy:ActionMatrixByRowTag name="GLOSSARY_NAME" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="GLOSSARY_DESCRIPTION" /></td>
                                                 <td align="center">
                                                     <button type="button" class="btn btn-primary btn-circle" onclick="window.open('<joy:JoyBasicURL object="lndglossary" actiontype="edit" />&NEW=no&JOYFUNCKEY=<joy:ActionMatrixByRowTag name="JOYFUNCKEY" />', '_self');"><i class="fa fa-edit"></i></button>

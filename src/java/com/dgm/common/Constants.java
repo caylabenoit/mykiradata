@@ -39,4 +39,6 @@ public class Constants {
     public static String PARAM_WORKFLOW_INIT = "wf_Init";
     
     public static String FORMAT_FLOAT = "%.1f";
+    
+    public static String DEFAULT_INFA_LANDINGWF = "wf_Landing";
 }

@@ -68,7 +68,7 @@ public class ReportCommonAction extends ActionTypeForm {
                 columns.addValue("FRS_COST", rs.getString("FRS_COST"));
                 columns.addValue("MET_NAME", rs.getString("MET_NAME"));
                 columns.addValue("TRM_FK", rs.getString("TRM_FK"));
-                columns.addValue("DQX_CODE", rs.getString("DQX_CODE"));
+                columns.addValue("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
                 columns.addValue("MET_FK", rs.getString("MET_FK"));
                 columns.addValue("FRS_DATETIME_LOAD", rs.getString("FRS_DATETIME_LOAD"));
                 columns.addValue("SCG_NAME", rs.getString("SCG_NAME"));
@@ -142,7 +142,7 @@ public class ReportCommonAction extends ActionTypeForm {
                 columns.addValue("DQX_NAME", rs.getString("DQX_NAME"));
                 columns.addValue("TRM_NAME", rs.getString("TRM_NAME"));
                 columns.addValue("TRM_FK", rs.getString("TRM_FK"));
-                columns.addValue("DQX_CODE", rs.getString("DQX_CODE"));
+                columns.addValue("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
                 matrix.addRow(columns);
             }
             this.addFormMatrixEntry("TERM_LIST", matrix);
@@ -175,8 +175,8 @@ public class ReportCommonAction extends ActionTypeForm {
                 JoyFormVectorEntry columns = new JoyFormVectorEntry();
                 columns.addValue("CAT_PK", rs.getInt("CAT_PK"));
                 columns.addValue("CAT_NAME", rs.getString("CAT_NAME"));
-                columns.addValue("CAT_ID", rs.getString("CAT_ID"));
-                columns.addValue("CAT_PARENT_ID", rs.getString("CAT_PARENT_ID"));
+                columns.addValue("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
+                columns.addValue("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
                 columns.addValue("CAT_DATETIME_LOAD", rs.getString("CAT_DATETIME_LOAD"));
                 columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
                 matrix.addRow(columns);
@@ -212,8 +212,6 @@ public class ReportCommonAction extends ActionTypeForm {
         
         try {
             IEntity entity = getBOFactory().getEntity(ViewName);
-            if (entity == null)
-                entity = getBOFactory().getEntity(ViewName);
             entity.field(KeyName).setKeyValue(key);
             entity.addSort("DQX_NAME", "RUNDATE DESC");
             ResultSet rs = entity.select();

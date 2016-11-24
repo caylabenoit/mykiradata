@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Code</label>
-                                    <joy:ActionInputTextTag name="DQX_CODE" CSSClass="form-control"/>
+                                    <joy:ActionInputTextTag name="DQX_FUNCKEY" CSSClass="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Label</label>

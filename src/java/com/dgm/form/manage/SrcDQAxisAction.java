@@ -43,7 +43,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
                 columns.addValue("DQX_PK", rs.getInt("DQX_PK"));
                 columns.addValue("DQX_DESCRIPTION", rs.getString("DQX_DESCRIPTION"));
                 columns.addValue("DQX_LABEL", rs.getString("DQX_LABEL"));
-                columns.addValue("DQX_CODE", rs.getString("DQX_CODE"));
+                columns.addValue("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
                 columns.addValue("DQX_WEIGHT", rs.getString("DQX_WEIGHT"));
                 matrix.addRow(columns);
             }
@@ -69,7 +69,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
                     this.addFormSingleEntry("DQX_PK", rs.getString("DQX_PK"));
                     this.addFormSingleEntry("DQX_DESCRIPTION", rs.getString("DQX_DESCRIPTION"));
                     this.addFormSingleEntry("DQX_LABEL", rs.getString("DQX_LABEL"));
-                    this.addFormSingleEntry("DQX_CODE", rs.getString("DQX_CODE"));
+                    this.addFormSingleEntry("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
                     this.addFormSingleEntry("DQX_WEIGHT", rs.getString("DQX_WEIGHT"));
                 }
                 this.getBOFactory().closeResultSet(rs);
@@ -91,7 +91,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
         this.addFormSingleEntry("DQX_PK", "0");
         this.addFormSingleEntry("DQX_DESCRIPTION", "");
         this.addFormSingleEntry("DQX_LABEL", "");
-        this.addFormSingleEntry("DQX_CODE", "");
+        this.addFormSingleEntry("DQX_FUNCKEY", "");
         this.addFormSingleEntry("DQX_WEIGHT", "1");
         return super.add();
     }
@@ -213,7 +213,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
             Entity.field("DQX_STATUS").doNotUseThisField();
             Entity.field("DQX_DESCRIPTION").setValue(getStrArgumentValue("DQX_DESCRIPTION"));
             Entity.field("DQX_LABEL").setValue(getStrArgumentValue("DQX_LABEL"));
-            Entity.field("DQX_CODE").setValue(getStrArgumentValue("DQX_CODE"));
+            Entity.field("DQX_FUNCKEY").setValue(getStrArgumentValue("DQX_FUNCKEY"));
             Entity.field("DQX_WEIGHT").setValue(getStrArgumentValue("DQX_WEIGHT"));
             if (uid == 0) {
                 Entity.field("DQX_PK").setNextIDValue();
@@ -227,7 +227,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
             // update DIM_DQAXIS
             Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("DIM_DQAXIS");
             Entity.doNotUseTheseFields("DQX_PK", "DQX_STATUS");
-            Entity.field("DQX_CODE").setKeyValue(getStrArgumentValue("DQX_CODE"));
+            Entity.field("DQX_FUNCKEY").setKeyValue(getStrArgumentValue("DQX_FUNCKEY"));
             Entity.field("DQX_WEIGHT").setValue(getStrArgumentValue("DQX_WEIGHT"));
             Entity.field("DQX_NAME").setValue(getStrArgumentValue("DQX_LABEL"));
             Entity.field("DQX_DATETIME_LOAD").setValue(new Date());

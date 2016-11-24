@@ -18,7 +18,7 @@ for the custom queries :
 <!-- Analytics queries here -->
 
     <joy-customquery name="Analytics - Global by DQ Axis"> <!-- Replace lastonly_cost_ir_byaxis -->
-        SELECT DIM_DQAXIS.dqx_name, DIM_DQAXIS.dqx_code, sum(lastonly_knownterms_by_axis.frs_cost) AS costbyterm, 
+        SELECT DIM_DQAXIS.dqx_name, DIM_DQAXIS.DQX_FUNCKEY, sum(lastonly_knownterms_by_axis.frs_cost) AS costbyterm, 
                sum(lastonly_knownterms_by_axis.frs_totalrows - lastonly_knownterms_by_axis.frs_valid_rows) AS invalidrowsbyterm
         FROM (select * 
               from FACT_GOVERNANCE, (select distinct FIRST_VALUE(frs_pk) OVER(PARTITION BY TRM_FK, MET_FK, DQX_FK, ORI_FK, CON_FK, DSO_FK ORDER BY JOB_FK DESC) As frs_pk 
@@ -27,7 +27,7 @@ for the custom queries :
               DIM_DQAXIS
        Where DIM_DQAXIS.dqx_PK = lastonly_knownterms_by_axis.DQX_FK
        And trm_fk > 0
-       GROUP BY DIM_DQAXIS.dqx_name, DIM_DQAXIS.dqx_code
+       GROUP BY DIM_DQAXIS.dqx_name, DIM_DQAXIS.DQX_FUNCKEY
     </joy-customquery>
     
     <joy-customquery name="Analytics - Global by Context"> <!-- Replace lastonly_cost_ir_bycontext -->

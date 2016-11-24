@@ -30,6 +30,7 @@ public class LNDTermAction extends LNDCommonAction {
     public LNDTermAction() {
         this.LandingKeyName = "JOYFUNCKEY";
         this.LandingTableName = "LND_TERM";
+        this.ListEntityName = "List - Landing Term";
     }
     
     @Override
@@ -71,7 +72,7 @@ public class LNDTermAction extends LNDCommonAction {
             IEntity entity = this.getBOFactory().getEntity("DIM_GLOSSARY");
             entity.addSort("GLO_NAME");
             ResultSet rs = entity.select();
-            this.loadVector(rs, "GLO_ID",  "GLO_NAME", "GLOSSARY_CBO", PKSelected);
+            this.loadVector(rs, "GLO_FUNCKEY",  "GLO_NAME", "GLOSSARY_CBO", PKSelected);
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
@@ -85,7 +86,7 @@ public class LNDTermAction extends LNDCommonAction {
             IEntity entity = this.getBOFactory().getEntity("DIM_CATEGORY");
             entity.addSort("CAT_NAME");
             ResultSet rs = entity.select();
-            this.loadVector(rs, "CAT_ID",  "CAT_NAME", "CATEGORY_CBO", PKSelected);
+            this.loadVector(rs, "CAT_FUNCKEY",  "CAT_NAME", "CATEGORY_CBO", PKSelected);
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {

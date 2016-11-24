@@ -30,6 +30,7 @@ public class LNDCategoryAction extends LNDCommonAction {
     public LNDCategoryAction() {
         this.LandingKeyName = "JOYFUNCKEY";
         this.LandingTableName = "LND_CATEGORY";
+        this.ListEntityName = "List - Landing Category";
     }
     
     @Override
@@ -60,7 +61,7 @@ public class LNDCategoryAction extends LNDCommonAction {
             IEntity entity = this.getBOFactory().getEntity("DIM_CATEGORY");
             entity.addSort("CAT_NAME");
             ResultSet rs = entity.select();
-            this.loadVector(rs, "CAT_ID",  "CAT_NAME", "CATEGORY_PARENT_KEY_CBO", PKSelected);
+            this.loadVector(rs, "CAT_FUNCKEY",  "CAT_NAME", "CATEGORY_PARENT_KEY_CBO", PKSelected);
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {

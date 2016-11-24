@@ -12,7 +12,7 @@
     <!-- Data Quality Dimension -->
     <joy-mapping id="DQ Axis Source" entity-from="SRC_DQAXIS" entity-to="DIM_DQAXIS">
         <map to="DQX_PK" key="yes" />
-        <map to="DQX_CODE" from="DQX_CODE" check-if-exist="yes"/>
+        <map to="DQX_FUNCKEY" from="DQX_FUNCKEY" check-if-exist="yes"/>
         <map to="DQX_NAME" from="DQX_LABEL"/>
         <map to="DQX_STATUS" from="DQX_STATUS" />
         <map to="DQX_WEIGHT" from="DQX_WEIGHT" />
@@ -30,7 +30,8 @@
     <!-- Term Type -->
     <joy-mapping id="Terms Type landing" entity-from="Load - get Terms type" entity-to="DIM_TERM_TYPE" filter="JOYSTATUS='L'">
         <map to="TRT_PK" key="yes" />
-        <map to="TRT_NAME" from="TERM_TYPE" check-if-exist="yes"/>
+        <map to="TRT_FUNCKEY" from="TERM_TYPE" check-if-exist="yes" />
+        <map to="TRT_NAME" from="TERM_TYPE"/>
         <map to="TRT_DESCRIPTION" from="TERM_TYPE"/>
         <map to="TRT_DATETIME_LOAD" value="sysdate" />
     </joy-mapping>
@@ -38,12 +39,14 @@
     <!-- Terms relationships -->
     <joy-mapping id="Term RelationShips Names Landing" entity-from="Load - get Relationship name" entity-to="DIM_TERM_RELATIONSHIP" filter="JOYSTATUS='L'">
         <map to="REL_PK" key="yes" />
-        <map to="REL_NAME" from="REL_NAME" check-if-exist="yes"/>
+        <map to="REL_FUNCKEY" from="REL_NAME" check-if-exist="yes"/>
+        <map to="REL_NAME" from="REL_NAME"/>
         <map to="REL_DESCRIPTION" from="REL_DESCRIPTION" />
     </joy-mapping>
     
     <joy-mapping id="Term RelationShips Landing" entity-from="Load - get Relationship" entity-to="DIM_TERM_RELLINKS" filter="JOYSTATUS='L'">
         <map to="TRL_PK" key="yes" />
+        <map to="TRL_FUNCKEY" from="JOYFUNCKEY" check-if-exist="yes"/>
         <map to="OBJECT_ID_SOURCE" from="REL_KEY_TERM_SOURCE"/>
         <map to="OBJECT_ID_TARGET" from="REL_KEY_TERM_TARGET" />
         <map-lookup to="REL_FK">
@@ -55,7 +58,7 @@
     
     <!-- Glossary -->
     <joy-mapping id="Glossary Landing" entity-from="Load - get Glossary" entity-to="DIM_GLOSSARY" filter="JOYSTATUS='L'">
-        <map to="GLO_ID" from="JOYFUNCKEY" check-if-exist="yes" />
+        <map to="GLO_FUNCKEY" from="JOYFUNCKEY" check-if-exist="yes" />
         <map to="GLO_DATETIME_LOAD" from="JOYLOADDATE" />
         <map to="GLO_PK" key="yes" />
         <map to="GLO_NAME" from="glossary_name"/>
@@ -64,18 +67,18 @@
     
     <!-- Category -->
     <joy-mapping id="Category Landing" entity-from="Load - get Category" entity-to="DIM_CATEGORY" filter="JOYSTATUS='L'">
-        <map to="CAT_ID" from="JOYFUNCKEY" check-if-exist="yes" />
+        <map to="CAT_FUNCKEY" from="JOYFUNCKEY" check-if-exist="yes" />
         <map to="CAT_DATETIME_LOAD" from="JOYLOADDATE" />
         <map to="CAT_PK" key="yes" />
         <map to="CAT_NAME" from="category_name" />
         <map to="CAT_DESCRIPTION" from="category_description" />
         <map to="CAT_FULLPATH" from="category_fullpath" />
-        <map to="CAT_PARENT_ID" from="category_parent_key" />
+        <map to="CAT_PARENT_FUNCKEY" from="category_parent_key" />
     </joy-mapping>
     
     <!-- Terms -->
     <joy-mapping id="Term Landing" entity-from="Load - get Term" entity-to="DIM_TERM" filter="JOYSTATUS='L'">
-        <map to="OBJECT_ID" from="JOYFUNCKEY" check-if-exist="yes"/>
+        <map to="TRM_FUNCKEY" from="JOYFUNCKEY" check-if-exist="yes"/>
         <map to="TRM_DATETIME_LOAD" from="JOYLOADDATE" />
         <map to="TRM_PK" key="yes" />
         <map to="TRM_STATUS" from="TERM_STATUS" />
@@ -92,12 +95,12 @@
         <map-lookup to="GLO_FK">
             <entity-lookup>DIM_GLOSSARY</entity-lookup> <!-- external entity -->
             <entity-lookup-key>GLO_PK</entity-lookup-key> <!-- lookup key to retreive and to match with GLO_FK -->
-            <lookup-condition lookup-key="GLO_ID" from="glossary_key"/> <!-- lookup conditions -->
+            <lookup-condition lookup-key="GLO_FUNCKEY" from="glossary_key"/> <!-- lookup conditions -->
         </map-lookup>
         <map-lookup to="CAT_FK">
             <entity-lookup>DIM_CATEGORY</entity-lookup> 
             <entity-lookup-key>CAT_PK</entity-lookup-key>
-            <lookup-condition lookup-key="CAT_ID" from="category_key"/>
+            <lookup-condition lookup-key="CAT_FUNCKEY" from="category_key"/>
         </map-lookup>
         <map-lookup to="TRT_FK">
             <entity-lookup>DIM_TERM_TYPE</entity-lookup> 

@@ -47,7 +47,7 @@ for the custom queries :
          <joy-init-record>
             <joy-field name="DQX_PK">0</joy-field>
             <joy-field name="DQX_NAME">Unknown</joy-field>
-            <joy-field name="DQX_CODE">UNKN</joy-field>
+            <joy-field name="DQX_FUNCKEY">UNKN</joy-field>
         </joy-init-record>
     </joy-table>
     <joy-table name="DIM_CONTEXT">
@@ -106,6 +106,7 @@ for the custom queries :
             <joy-field name="CAT_PK">0</joy-field>
             <joy-field name="CAT_NAME">Unknown</joy-field>
             <joy-field name="CAT_DESCRIPTION">UNKN</joy-field>
+            <joy-field name="CAT_FUNCKEY">UNKN</joy-field>
         </joy-init-record>
     </joy-table>
     <joy-table name="DIM_GLOSSARY">
@@ -113,18 +114,21 @@ for the custom queries :
             <joy-field name="GLO_PK">0</joy-field>
             <joy-field name="GLO_NAME">Unknown</joy-field>
             <joy-field name="GLO_DESCRIPTION">UNKN</joy-field>
+            <joy-field name="GLO_FUNCKEY">UNKN</joy-field>
         </joy-init-record>
     </joy-table>
     <joy-table name="DIM_TERM_RELATIONSHIP">
          <joy-init-record>
             <joy-field name="REL_PK">0</joy-field>
             <joy-field name="REL_NAME">Unknown</joy-field>
+            <joy-field name="REL_FUNCKEY">Unknown</joy-field>
         </joy-init-record>
     </joy-table>
     <joy-table name="DIM_TERM_RELLINKS">
          <joy-init-record>
             <joy-field name="TRL_PK">0</joy-field>
             <joy-field name="REL_FK">0</joy-field>
+            <joy-field name="TRL_FUNCKEY">UNKN</joy-field>
         </joy-init-record>
     </joy-table>
     <joy-table name="DIM_TERM_TYPE">
@@ -132,6 +136,7 @@ for the custom queries :
             <joy-field name="TRT_PK">0</joy-field>
             <joy-field name="TRT_NAME">Unknown</joy-field>
             <joy-field name="TRT_DESCRIPTION">UNKN</joy-field>
+            <joy-field name="TRT_FUNCKEY">UNKN</joy-field>
         </joy-init-record>
     </joy-table>
     <joy-table name="DIM_METRICTYPE">
