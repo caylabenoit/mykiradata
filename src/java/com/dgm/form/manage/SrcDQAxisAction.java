@@ -50,7 +50,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
             this.addFormMatrixEntry("LIST", matrix);
             this.getBOFactory().closeResultSet(rs);
         } catch (SQLException e) {
-            Joy.log().error(  e);
+            Joy.LOG().error(  e);
         }
         return super.list(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -75,7 +75,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
                 this.getBOFactory().closeResultSet(rs);
 
             } catch (SQLException e) {
-                Joy.log().error(  e);
+                Joy.LOG().error(  e);
             }
         }
         return super.edit(); //To change body of generated methods, choose Tools | Templates.
@@ -114,7 +114,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
         }
         return ret;
     }
@@ -157,7 +157,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
                 }
                 this.getBOFactory().closeResultSet(rs);
             } catch (SQLException ex) {
-                Joy.log().error( ex);
+                Joy.LOG().error( ex);
             }
         }
     }
@@ -180,7 +180,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
             return true;
             
         } catch (SQLException ex) {
-            Joy.log().error(ex);
+            Joy.LOG().error(ex);
             return false;
         }
     }
@@ -234,7 +234,7 @@ public class SrcDQAxisAction extends ActionTypeForm {
             Entity.update();
             
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         return this.list();
     }

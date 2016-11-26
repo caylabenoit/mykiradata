@@ -76,7 +76,7 @@ public class RelTermMetricAction extends ActionTypeForm {
                 this.addFormSingleEntry("TERM_LINK", termlink);
 
             } catch (SQLException e) {
-                Joy.log().error( e);
+                Joy.LOG().error( e);
             }
         }
         this.addFormMatrixEntry("LIST", matrix);
@@ -85,7 +85,7 @@ public class RelTermMetricAction extends ActionTypeForm {
     }
     
     private String getTermLink(String TRM_PK, String TRM_NAME) {
-        return Joy.href("byterm", "display", TRM_NAME, "term", String.valueOf(TRM_PK));
+        return Joy.HREF("byterm", "display", TRM_NAME, "term", String.valueOf(TRM_PK));
     } 
     
     /**
@@ -115,7 +115,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             }
             this.getBOFactory().closeResultSet(rs);
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
         this.addFormMatrixEntry("LIST", matrix);
         
@@ -155,7 +155,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             return true;
             
         } catch (Exception ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
             return false;
         }
     }
@@ -195,7 +195,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             entity.update();
             
         } catch (Exception  e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return false;
         }
         return true;
@@ -226,7 +226,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             }
             
         } catch (NumberFormatException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return false;
         }
         return true;
@@ -278,7 +278,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
 
         this.addFormSingleEntry("AVAILABLE_METRICS", line);
@@ -311,7 +311,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             return iCluster;
             
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
             return 0;
         }
     }
@@ -364,7 +364,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             return tab;
             
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
             return new ArrayList();
         }
     }
@@ -419,7 +419,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
             this.addDisplayMessageError("00_UPDATED_RELTERMMETRIC_KO");
         }
     }
@@ -442,7 +442,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
         }
         return PK;
     }
@@ -464,7 +464,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
         }
         return PK;
     }
@@ -481,7 +481,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
         }
         return PK;
     }

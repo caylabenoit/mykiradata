@@ -190,7 +190,7 @@ public class TermBean {
         }
         
         itemChildren.put("text", "[" + type + "] " + this.name);
-        itemChildren.put("href", Joy.url("byterm", "display", "term",  String.valueOf(key)));
+        itemChildren.put("href", Joy.URL("byterm", "display", "term",  String.valueOf(key)));
         return itemChildren;
     }
 }

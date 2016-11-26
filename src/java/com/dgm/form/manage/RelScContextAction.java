@@ -48,7 +48,7 @@ public class RelScContextAction  extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         this.addFormMatrixEntry("LIST", matrix);
         return super.list(); //To change body of generated methods, choose Tools | Templates.
@@ -73,7 +73,7 @@ public class RelScContextAction  extends ActionTypeForm {
                 this.getBOFactory().closeResultSet(rs);
 
             } catch (SQLException e) {
-                Joy.log().error( e);
+                Joy.LOG().error( e);
             }
         }
         
@@ -128,7 +128,7 @@ public class RelScContextAction  extends ActionTypeForm {
             } 
             
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         return this.list();
     }
@@ -147,7 +147,7 @@ public class RelScContextAction  extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         this.addFormVectorEntry("CON_DESCRIPTION", columns);
     }
@@ -170,7 +170,7 @@ public class RelScContextAction  extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         this.addFormVectorEntry("SCO_NAME", columns);
     }

@@ -12,11 +12,11 @@
 <%@attribute name="classbloc"%> <!-- example: col-lg-3 col-md-6 -->
 <%
     try {
-        Action actionform = (Action)Joy.currentAction(request);
+        Action actionform = (Action)Joy.CURRENT_ACTION(request);
         UITaglibSpotData spotdata = (UITaglibSpotData)actionform.getFormSingleEntry(tag).getValue();
         
         String myglyphe = "";
-        JoyParameter glypheParam = Joy.parameters().getParameter("ApplicationIconsBSGlyphe").get(panelicon);
+        JoyParameter glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get(panelicon);
         if (glypheParam != null) 
             myglyphe = (String)glypheParam.getValue();
 %>

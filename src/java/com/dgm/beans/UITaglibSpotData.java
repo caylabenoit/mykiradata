@@ -51,7 +51,7 @@ public class UITaglibSpotData {
     }
 
     public void setLinkURL(String object, String actiontype) {
-        this.linkURL = Joy.basicURL(object, actiontype);
+        this.linkURL = Joy.URL(object, actiontype);
     }
 
     public String getPanelcolor() {

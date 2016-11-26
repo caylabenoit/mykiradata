@@ -48,9 +48,11 @@
                             <div class="panel-heading">Manage Scorecard Groups</div>
                             
                             <div class="row">
-                                <div class="col-lg-12">  
+                                <div class="col-lg-3">
                                     <div class="panel-body">
-                                        <div class="form-group">
+                                        <div class="divjoyfieldsbloc">
+                                            <p><B>Date : </B></p><P><joy:ActionValueTag name="JOYLOADDATE" /></p>
+                                            <p><B>Status :</B><joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" /></p>
                                             <label>Identifier</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span>
@@ -58,12 +60,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                                    
-                            <div class="row">
-                                <div class="col-lg-6">
+                                </div>    
+                                <div class="col-lg-9">
                                     <div class="panel-body">
+                                        <div class='alert alert-success'>
+                                            <joy:ActionValueTag name="STATUS" />
+                                        </div>
                                         <div class="form-group">
                                             <label>Name</label>
                                             <joy:ActionInputTextTag name="SCGROUP_NAME" CSSClass="form-control" placeholder="Group Name" />
@@ -74,9 +76,10 @@
                                         </div>
 
                                     </DIV>
-                                </div>
-                                        
+                                </div>       
+                                            
                             </div>
+                                    
                                         
                             <div class="row">
                                 <div class="col-lg-12">  

@@ -63,7 +63,7 @@ public class RESTChart extends RESTDataCommon {
             if (entity == null) return "";
             ResultSet rs = entity.select();
 
-            ChartWithDataset chartbar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString());   
+            ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());   
             while (rs.next()) {
                 chartbar.add(rs.getString(1), 
                              rs.getString(2), 
@@ -73,7 +73,7 @@ public class RESTChart extends RESTDataCommon {
             return chartbar.getChartData();
             
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
         return "";
     }
@@ -90,8 +90,8 @@ public class RESTChart extends RESTDataCommon {
         if (this.getStrArgumentValue("P2").isEmpty())
             return "";
         
-        ChartWithDataset chart = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), 
-                                                      Joy.parameters().getParameter("transparency").getValue().toString());
+        ChartWithDataset chart = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), 
+                                                      Joy.PARAMETERS().getParameter("transparency").getValue().toString());
         IEntity entity = this.getEntityFromPOST(2);
         if (entity == null) return "";
         ResultSet rs = entity.select();
@@ -103,7 +103,7 @@ public class RESTChart extends RESTDataCommon {
             return chart.getChartData();
             
         } catch (Exception ex) {
-            Joy.log().error(ex);
+            Joy.LOG().error(ex);
             this.getBOFactory().getDB().closeResultSet(rs);
         }
         return "";

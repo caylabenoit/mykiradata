@@ -5,7 +5,7 @@
 <%@attribute name="trends"%>
 <%
     try {
-        Action actionform = (Action)Joy.currentAction(request);
+        Action actionform = (Action)Joy.CURRENT_ACTION(request);
         JoyFormMatrixEntry matrix = (JoyFormMatrixEntry)actionform.getFormMatrixEntry(dqaxis); 
         int i = matrix.getMatrix().size();
         
@@ -43,17 +43,17 @@
         
         for (JoyFormVectorEntry axis : matrixtrends.getMatrix()) {
             if (axis.getVectorValue("TREND").equalsIgnoreCase("UP")) {
-               glypheParam = Joy.parameters().getParameter("ApplicationIconsBSGlyphe").get("trend-up");
-               mycolor = "style=\"color:" + Joy.rgba(Joy.parameters().getParameter("ColorGood").getValue().toString(), "1") + "\"";
+               glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get("trend-up");
+               mycolor = "style=\"color:" + Joy.rgba(Joy.PARAMETERS().getParameter("ColorGood").getValue().toString(), "1") + "\"";
             } else if (axis.getVectorValue("TREND").equalsIgnoreCase("DOWN")) {
-               glypheParam = Joy.parameters().getParameter("ApplicationIconsBSGlyphe").get("trend-down");
-               mycolor = "style=\"color:" + Joy.rgba(Joy.parameters().getParameter("ColorBad").getValue().toString(), "1") + "\"";
+               glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get("trend-down");
+               mycolor = "style=\"color:" + Joy.rgba(Joy.PARAMETERS().getParameter("ColorBad").getValue().toString(), "1") + "\"";
             } else if (axis.getVectorValue("TREND").equalsIgnoreCase("EQUAL")) {
-               glypheParam = Joy.parameters().getParameter("ApplicationIconsBSGlyphe").get("trend-stable");
-               mycolor = "style=\"color:" + Joy.rgba(Joy.parameters().getParameter("ColorNoMove").getValue().toString(), "1") + "\"";
+               glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get("trend-stable");
+               mycolor = "style=\"color:" + Joy.rgba(Joy.PARAMETERS().getParameter("ColorNoMove").getValue().toString(), "1") + "\"";
             } else {
-               glypheParam = Joy.parameters().getParameter("ApplicationIconsBSGlyphe").get("trend-new");
-               mycolor = "style=\"color:" + Joy.rgba(Joy.parameters().getParameter("ColorNoMove").getValue().toString(), "1") + "\"";
+               glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get("trend-new");
+               mycolor = "style=\"color:" + Joy.rgba(Joy.PARAMETERS().getParameter("ColorNoMove").getValue().toString(), "1") + "\"";
             }
             if (glypheParam != null) 
                 myglyphe = (String)glypheParam.getValue();

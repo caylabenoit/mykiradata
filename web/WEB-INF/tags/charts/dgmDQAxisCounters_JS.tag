@@ -5,7 +5,7 @@
 
 <%
     try {
-        Action actionform = (Action)Joy.currentAction(request);
+        Action actionform = (Action)Joy.CURRENT_ACTION(request);
         JoyFormMatrixEntry matrix = (JoyFormMatrixEntry)actionform.getFormMatrixEntry(dqaxis); 
 
         for (JoyFormVectorEntry axis : matrix.getMatrix()) {

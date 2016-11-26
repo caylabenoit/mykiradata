@@ -33,16 +33,16 @@ import org.jdom2.Element;
  * Taglib d'affichage d'un menu :
  * 
  *    Chaque element de menu est placé dans un tag <joy-menu></joy-menu>
- *    Attributs du tag:
- *    - name (obligatoire) : nom du menu
- *    [choix]
- *    - url (obligatoire): URL du menu (http://)
- *    Ou
- *    - object (obligatoire) nom du tag Object (joy)
- *    - actiontype (facultatif) nom de l'actiontype (joy)
- *    - parametres (entier x de 1 à ...)
- *        - pnx= Nom du parametre x
- *        - pnv= Valeur du parametre x
+    Attributs du tag:
+    - name (obligatoire) : nom du menu
+    [choix]
+    - URL (obligatoire): JOYURL du menu (http://)
+    Ou
+    - object (obligatoire) nom du tag Object (joy)
+    - actiontype (facultatif) nom de l'actiontype (joy)
+    - parametres (entier x de 1 à ...)
+        - pnx= Nom du parametre x
+        - pnv= Valeur du parametre x
  * 
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
@@ -85,7 +85,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
     }
     
     /**
-     * Construit un morceau d'url avec les parametres seulement (x étant un chiffre)
+     * Construit un morceau d'URL avec les parametres seulement (x étant un chiffre)
  PNx : Nom du parametre
  PVx : Valeur du parametre
      * @param element
@@ -102,7 +102,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
     }
     
     /**
-     * Buil a href hyperlink
+     * Buil a HREF hyperlink
      * @param liURL
      * @param liObject
      * @param liActionType
@@ -119,7 +119,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
 
         if (liURL == null) {
             if (liObject != null) {
-                menu += "<A href='." + Joy.parameters().getJoyDefaultURLPattern() + "?";
+                menu += "<A href='." + Joy.PARAMETERS().getJoyDefaultURLPattern() + "?";
                 if (liObject != null)
                     menu += C.ACTION_TAG_OBJECT + "=" + liObject + "&";
                 if (liActionType!= null)
@@ -240,7 +240,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
                 topMenu(out);
             
         } catch (IOException ex) {
-            Joy.log().debug ( ex.toString());
+            Joy.LOG().debug ( ex.toString());
             out.println("No menu defined.");
         }
     }
@@ -258,7 +258,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
             Element racine;
             String sMenu ="";
 
-            document = Joy.openXMLConfig(Joy.parameters().getConfigFolder() + getMenuFile());
+            document = Joy.OPEN_XML(Joy.PARAMETERS().getConfigFolder() + getMenuFile());
             racine = document.getRootElement();
             
             List root = racine.getChildren("joy-menu");
@@ -273,7 +273,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
             out.println("<!-- Joy Menu -->");
             
         } catch (Exception ex) {
-            Joy.log().debug ( ex.toString());
+            Joy.LOG().debug ( ex.toString());
             out.println("No menu defined.");
         }
     }
@@ -312,7 +312,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
                     CurrentBloc += "<LI class=" + styleActive + (hasChild ? "has-sub" : "") + ">"; 
                     if (liURL == null) {
                         if (liObject != null) {
-                            CurrentBloc += "<A href='." + Joy.parameters().getJoyDefaultURLPattern() + "?";
+                            CurrentBloc += "<A href='." + Joy.PARAMETERS().getJoyDefaultURLPattern() + "?";
                             if (liObject != null)
                                 CurrentBloc += C.ACTION_TAG_OBJECT + "=" + liObject + "&";
                             if (liActionType!= null)
@@ -346,7 +346,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
             Element racine;
             String sMenu ="";
 
-            document = Joy.openXMLConfig(Joy.parameters().getConfigFolder() + getMenuFile());
+            document = Joy.OPEN_XML(Joy.PARAMETERS().getConfigFolder() + getMenuFile());
             racine = document.getRootElement();
             List root = racine.getChildren("joy-menu");
             sMenu = buildLeftMenuBloc(root, sMenu);
@@ -358,7 +358,7 @@ public class JoyMenuMegaTag extends SimpleTagSupport {
             out.println("</DIV>");
                 
         } catch (Exception ex) {
-            Joy.log().debug ( ex.toString());
+            Joy.LOG().debug ( ex.toString());
             out.println("No menu defined.");
         }
     }

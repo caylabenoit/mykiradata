@@ -50,7 +50,7 @@ public class SrcTermTypeAction extends ActionTypeForm {
             this.addFormMatrixEntry("LIST", matrix);
             
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         return super.list(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -73,7 +73,7 @@ public class SrcTermTypeAction extends ActionTypeForm {
                 this.getBOFactory().closeResultSet(rs);
 
             } catch (SQLException e) {
-                Joy.log().error( e);
+                Joy.LOG().error( e);
             }
         }
         
@@ -124,13 +124,13 @@ public class SrcTermTypeAction extends ActionTypeForm {
             } 
             
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         return this.list();
     }
     
     private void loadCBOAvailableIcons(String PKSelected) {
-        List<JoyParameter> icons = Joy.parameters().getParameter("TermTypeIcons").getList();
+        List<JoyParameter> icons = Joy.PARAMETERS().getParameter("TermTypeIcons").getList();
         JoyFormVectorEntry columns = new JoyFormVectorEntry();
         
         for (JoyParameter param : icons) {
@@ -156,7 +156,7 @@ public class SrcTermTypeAction extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         this.addFormVectorEntry("GIO_TERMTYPE_NAME", columns);
     }

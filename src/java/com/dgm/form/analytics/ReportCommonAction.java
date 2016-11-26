@@ -74,9 +74,9 @@ public class ReportCommonAction extends ActionTypeForm {
                 columns.addValue("SCG_NAME", rs.getString("SCG_NAME"));
                 columns.addValue("SCO_NAME", rs.getString("SCO_NAME"));
                 
-                columns.addValue("METRIC_LINK", Joy.href("bymetric", "display", rs.getString("MET_NAME"), "metric",  rs.getString("MET_FK")));
-                columns.addValue("AXIS_LINK", Joy.href("bydqaxis", "display", rs.getString("DQX_NAME"), "dqaxis",  rs.getString("DQX_FK")));
-                columns.addValue("TERM_LINK", Joy.url("byterm", "display", "term",  rs.getString("TRM_FK")));
+                columns.addValue("METRIC_LINK", Joy.HREF("bymetric", "display", rs.getString("MET_NAME"), "metric",  rs.getString("MET_FK")));
+                columns.addValue("AXIS_LINK", Joy.HREF("bydqaxis", "display", rs.getString("DQX_NAME"), "dqaxis",  rs.getString("DQX_FK")));
+                columns.addValue("TERM_LINK", Joy.URL("byterm", "display", "term",  rs.getString("TRM_FK")));
                 columns.addValue("SCORECARD_REF", (rs.getString("SCO_NAME")==null ? "N.A." : rs.getString("SCO_NAME") + "/" + rs.getString("SCG_NAME")));
 
                 matrix.addRow(columns);
@@ -84,7 +84,7 @@ public class ReportCommonAction extends ActionTypeForm {
             getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         this.addFormMatrixEntry("METRIC_LIST", matrix);
     }
@@ -103,7 +103,7 @@ public class ReportCommonAction extends ActionTypeForm {
             entity.field(KeyName).setKeyValue(KeyValue);
             ResultSet rs = entity.select();
 
-            ChartWithDataset chartbar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString());    
+            ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());    
             while (rs.next()) {
                 chartbar.add("Job run (" + rs.getDate("RUNDATE").toString() + ")", 
                              rs.getString("DQX_NAME"), 
@@ -114,7 +114,7 @@ public class ReportCommonAction extends ActionTypeForm {
             this.addFormSingleEntry(TAG_LASTRUNS, chartbar.getChartData());
 
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
     
@@ -149,7 +149,7 @@ public class ReportCommonAction extends ActionTypeForm {
             getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.log().error(  e);
+            Joy.LOG().error(  e);
         }
     }
     
@@ -185,7 +185,7 @@ public class ReportCommonAction extends ActionTypeForm {
             this.addFormMatrixEntry("CATEGORY_LIST", matrix);
             
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
 
@@ -206,9 +206,9 @@ public class ReportCommonAction extends ActionTypeForm {
         List<String> Axis = new ArrayList();
         List<Float> Values = new ArrayList();
         JoyFormMatrixEntry matrixTrends = new JoyFormMatrixEntry();
-        ChartWithDataset radar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString());
+        ChartWithDataset radar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());
         JoyFormMatrixEntry matrixLastValues = new JoyFormMatrixEntry();
-        ChartWithDataset chartbar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString()); 
+        ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString()); 
         
         try {
             IEntity entity = getBOFactory().getEntity(ViewName);
@@ -280,8 +280,8 @@ public class ReportCommonAction extends ActionTypeForm {
                 ChartCounterData myChart = new ChartCounterData(last,  Axis.get(i),  Axis.get(i));
                 myChart = setCounterOptions(myChart);
                 try {
-                    myChart.setThresolds(Integer.parseInt(Joy.parameters().getParameter("thresold_bad").getValue().toString()), 
-                                         Integer.parseInt(Joy.parameters().getParameter("thresold_good").getValue().toString()));
+                    myChart.setThresolds(Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString()), 
+                                         Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString()));
                 } catch (Exception e) {}
                 
                 lastValVector.addValue(TAG_COUNTER_NAME, Axis.get(i));
@@ -305,7 +305,7 @@ public class ReportCommonAction extends ActionTypeForm {
             }
             
         } catch (SQLException ex) {
-            Joy.log().error( ex);
+            Joy.LOG().error( ex);
         }
         
         // Add data into the result form
@@ -316,13 +316,13 @@ public class ReportCommonAction extends ActionTypeForm {
     
     private ChartCounterData setCounterOptions(ChartCounterData myChart) {
         try {
-            myChart.setThresolds(Integer.valueOf(Joy.parameters().getParameter("ThresoldBadToWarn").getValue().toString()), 
-                                 Integer.valueOf(Joy.parameters().getParameter("ThresoldwarningToGood").getValue().toString()));
-            myChart.setColors(Joy.rgba(Joy.parameters().getParameter("ColorBad").getValue().toString(), "1"), 
-                              Joy.rgba(Joy.parameters().getParameter("ColorWarning").getValue().toString(), "1"), 
-                              Joy.rgba(Joy.parameters().getParameter("ColorGood").getValue().toString(), "1"));
+            myChart.setThresolds(Integer.valueOf(Joy.PARAMETERS().getParameter("ThresoldBadToWarn").getValue().toString()), 
+                                 Integer.valueOf(Joy.PARAMETERS().getParameter("ThresoldwarningToGood").getValue().toString()));
+            myChart.setColors(Joy.RGBA(Joy.PARAMETERS().getParameter("ColorBad").getValue().toString(), "1"), 
+                              Joy.RGBA(Joy.PARAMETERS().getParameter("ColorWarning").getValue().toString(), "1"), 
+                              Joy.RGBA(Joy.PARAMETERS().getParameter("ColorGood").getValue().toString(), "1"));
         } catch (Exception e) {
-            Joy.log().warn(e);
+            Joy.LOG().warn(e);
         }
         return myChart;
     }

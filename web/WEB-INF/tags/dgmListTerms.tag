@@ -13,12 +13,12 @@
     int EOF_BAD = 30;
     int EOF_WARNING = 50;
     try {
-        Action actionform = (Action)Joy.currentAction(request);
+        Action actionform = (Action)Joy.CURRENT_ACTION(request);
         JoyFormMatrixEntry matrix = actionform.getFormMatrixEntry(matrixname);
-        JoyParameter glypheParam = Joy.parameters().getParameter("ApplicationIconsBSGlyphe").get("term");
+        JoyParameter glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get("term");
         try {
-            EOF_BAD = (Joy.parameters().getParameter("thresold_bad") == null ? 30 : Integer.parseInt(Joy.parameters().getParameter("thresold_bad").getValue().toString()));
-            EOF_WARNING = (Joy.parameters().getParameter("thresold_good") == null ? 50 : Integer.parseInt(Joy.parameters().getParameter("thresold_good").getValue().toString()));
+            EOF_BAD = (Joy.PARAMETERS().getParameter("thresold_bad") == null ? 30 : Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString()));
+            EOF_WARNING = (Joy.PARAMETERS().getParameter("thresold_good") == null ? 50 : Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString()));
         } catch (Exception e) {}
         
         for (JoyFormVectorEntry myLine : matrix.getMatrix()) {
@@ -29,7 +29,7 @@
             else if (score >= EOF_WARNING)
                 color = "progress-bar-success";
             
-            String url = Joy.basicURL("byterm", "display");
+            String url = Joy.URL("byterm", "display");
             url += "&term=" + myLine.getVectorValue(termkey);
 %>
             <div>

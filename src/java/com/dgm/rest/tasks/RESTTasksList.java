@@ -33,9 +33,9 @@ public class RESTTasksList extends ActionTypeREST {
         } catch (Exception e) {}
         
         try {
-            return Joy.taskManager().getJSONTasksDesc(limit); 
+            return Joy.TASKS().getJSONTasksDesc(limit); 
         } catch (Exception e) {
-            Joy.log().fatal(e);
+            Joy.LOG().fatal(e);
             return "";
         }
     }

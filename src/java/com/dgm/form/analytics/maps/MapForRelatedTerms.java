@@ -53,7 +53,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
     }
     
@@ -94,7 +94,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
     }
     
@@ -117,7 +117,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
             getBOFactory().closeResultSet(rs);
             
         } catch (Exception e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
         
         // load the Nb hops Combobox
@@ -157,7 +157,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
             return trm;
             
         } catch (SQLException ex) {
-            Joy.log().error(ex);
+            Joy.LOG().error(ex);
             return new TermBean(getBOFactory());
         }
         

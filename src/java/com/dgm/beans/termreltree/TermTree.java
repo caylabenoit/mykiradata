@@ -58,7 +58,7 @@ public class TermTree {
             return trm;
             
         } catch (SQLException ex) {
-            Joy.log().info( ex);
+            Joy.LOG().info( ex);
             return new TermBean(entities);
         }
         
@@ -81,12 +81,12 @@ public class TermTree {
         try {
             TermBean currentTerm = getTermInfo(myTerm, currentLevel);
             if (currentLevel == levelMax) { // fin de la récusrivité !
-                Joy.log().debug( "End of Term recursivity at level " + String.valueOf(currentLevel));
+                Joy.LOG().debug( "End of Term recursivity at level " + String.valueOf(currentLevel));
                 return currentTerm;
             }
             
             // Récupère les relations
-            Joy.log().debug("Get relationships for  " + String.valueOf(myTerm));
+            Joy.LOG().debug("Get relationships for  " + String.valueOf(myTerm));
             IEntity entity = entities.getEntity("Analytics - Rel Term Relationships");
             entity.field("TERM_PK_SOURCE").setKeyValue(myTerm);
             entity.addSort("REL_NAME");
@@ -102,7 +102,7 @@ public class TermTree {
                 if (!rupture.equalsIgnoreCase(rs.getString("REL_NAME")) || currentFolder == null) {
                     // création d'un folder + term
                     rupture = rs.getString("REL_NAME");
-                    Joy.log().debug( "Add relationship for  " + rupture);
+                    Joy.LOG().debug( "Add relationship for  " + rupture);
                     currentFolder = new RelationshipBean(rs.getString("REL_NAME"), 
                                                      rs.getInt("REL_FK"),
                                                      myTerm);
@@ -111,7 +111,7 @@ public class TermTree {
                     
                 } else {
                     // création d'un terme seul (dans le folder courant)
-                    Joy.log().debug( "Add Term for  " + rs.getInt("TERM_PK_TARGET"));
+                    Joy.LOG().debug( "Add Term for  " + rs.getInt("TERM_PK_TARGET"));
                     currentFolder.addRelatedTerm(build(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax));
                 }
             }
@@ -124,7 +124,7 @@ public class TermTree {
             return ars;
             
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
         return ars;
     }

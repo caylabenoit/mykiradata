@@ -82,7 +82,7 @@ public class ParamProvider {
             entities.closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.log().error("Issue while getting parameter " + _Name + " Error is -> " +  e);
+            Joy.LOG().error("Issue while getting parameter " + _Name + " Error is -> " +  e);
         }
         return result;
     }
@@ -99,7 +99,7 @@ public class ParamProvider {
             return true;
             
         } catch (Exception e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return false;
         }
     }

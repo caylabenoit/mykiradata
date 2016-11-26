@@ -39,21 +39,21 @@ public class BatchScheduler extends ListenerBasic  {
             if (schedulerActive.equalsIgnoreCase("true")) {
                 int timer = 10;
                 try {
-                    Joy.log().debug( "Get timeout information");
+                    Joy.LOG().debug( "Get timeout information");
                     timer = 30;
-                    Joy.log().debug("Timeout is defined to " + timer + " minutes");
+                    Joy.LOG().debug("Timeout is defined to " + timer + " minutes");
 
                     scheduler = Executors.newSingleThreadScheduledExecutor();
                     scheduler.scheduleAtFixedRate(new BatchRefresh(), 0, timer, TimeUnit.MINUTES);
-                    Joy.log().info("Scheduler Initialized");
+                    Joy.LOG().info("Scheduler Initialized");
                     
                 } catch (Exception e) {
-                    Joy.log().fatal(e);
+                    Joy.LOG().fatal(e);
                 }
             }else
-                Joy.log().info( "scheduler entry in not set to true, scheduler is not actived.");
+                Joy.LOG().info( "scheduler entry in not set to true, scheduler is not actived.");
         } else
-            Joy.log().error("scheduler entry in web.xml was not found, scheduler is not actived.");
+            Joy.LOG().error("scheduler entry in web.xml was not found, scheduler is not actived.");
     }
 
     @Override

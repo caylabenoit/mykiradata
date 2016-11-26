@@ -39,7 +39,7 @@ public class LNDTermAction extends LNDCommonAction {
             loadCBOGlossaries(rs.getString("GLOSSARY_KEY"));
             loadCBOCategories(rs.getString("CATEGORY_KEY"));
         } catch (SQLException ex) {
-            Joy.log().error(ex);
+            Joy.LOG().error(ex);
         }
     }
     
@@ -76,7 +76,7 @@ public class LNDTermAction extends LNDCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
     
@@ -90,7 +90,7 @@ public class LNDTermAction extends LNDCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
 }

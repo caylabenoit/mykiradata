@@ -124,10 +124,10 @@ public class TASKCommonRAZ extends ActionTypeTASK {
         
         // Calendar initialization
         try {
-            int iYear = Integer.parseInt(Joy.parameters().getParameter("dimtime_year_begin").getValue().toString());
-            int iMonth = Integer.parseInt(Joy.parameters().getParameter("dimtime_month_begin").getValue().toString());
-            int iDay = Integer.parseInt(Joy.parameters().getParameter("dimtime_day_begin").getValue().toString());
-            iNbRecords = Integer.parseInt(Joy.parameters().getParameter("dimtime_nb_records").getValue().toString());
+            int iYear = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_year_begin").getValue().toString());
+            int iMonth = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_month_begin").getValue().toString());
+            int iDay = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_day_begin").getValue().toString());
+            iNbRecords = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_nb_records").getValue().toString());
             cal.set(iYear, iMonth, iDay);
         } catch (NumberFormatException e) { 
             cal.set(2010, 00, 01);
@@ -138,14 +138,14 @@ public class TASKCommonRAZ extends ActionTypeTASK {
             Date myDate = cal.getTime();
             
             IEntity dimTime = this.getEntities().getEntity("DIM_TIME");
-            dimTime.field("TIM_PK").setValue(Integer.parseInt(Joy.formatDate(myDate, "yyyyMMdd")));
-            dimTime.field("TIM_DATETIME_LOAD").setValue(Joy.getDate());
+            dimTime.field("TIM_PK").setValue(Integer.parseInt(Joy.DATE_FORMAT(myDate, "yyyyMMdd")));
+            dimTime.field("TIM_DATETIME_LOAD").setValue(Joy.CURRENT_DATE());
             dimTime.field("TIM_CALENDAR_DATE").setValue(myDate);
-            dimTime.field("TIM_DAY_IN_WEEK_NAME").setValue(Joy.formatDate(myDate, "E"));
-            dimTime.field("TIM_MONTH_NAME").setValue(Joy.formatDate(myDate, "MMM"));
-            dimTime.field("TIM_YEAR_NUM").setValue(Joy.formatDate(myDate, "yyyy"));
-            dimTime.field("TIM_MONTH_NUM").setValue(Joy.formatDate(myDate, "MM"));
-            dimTime.field("TIM_DAY_NUM").setValue(Joy.formatDate(myDate, "ddd"));
+            dimTime.field("TIM_DAY_IN_WEEK_NAME").setValue(Joy.DATE_FORMAT(myDate, "E"));
+            dimTime.field("TIM_MONTH_NAME").setValue(Joy.DATE_FORMAT(myDate, "MMM"));
+            dimTime.field("TIM_YEAR_NUM").setValue(Joy.DATE_FORMAT(myDate, "yyyy"));
+            dimTime.field("TIM_MONTH_NUM").setValue(Joy.DATE_FORMAT(myDate, "MM"));
+            dimTime.field("TIM_DAY_NUM").setValue(Joy.DATE_FORMAT(myDate, "ddd"));
             dimTime.field("TIM_SEQUENCE_ORDER").setValue(i);
             
             dimTime.insert();

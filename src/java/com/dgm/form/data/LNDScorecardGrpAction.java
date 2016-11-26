@@ -27,6 +27,7 @@ public class LNDScorecardGrpAction extends LNDCommonAction {
     public LNDScorecardGrpAction() {
         this.LandingKeyName = "JOYFUNCKEY";
         this.LandingTableName = "LND_SCORECARD_GROUP";
+        this.ListEntityName = "List - Landing Scorecard Group";
     }
     
     @Override

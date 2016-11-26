@@ -166,6 +166,10 @@
       <name>name</name>
       <required>true</required>
     </attribute>
+    <attribute>
+      <name>maxlength</name>
+      <required>false</required>
+    </attribute>
   </tag> 
 
   <tag>

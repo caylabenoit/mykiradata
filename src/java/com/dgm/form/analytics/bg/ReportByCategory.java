@@ -90,12 +90,12 @@ public class ReportByCategory extends ReportCommonConsolidated {
                 this.addFormSingleEntry("CAT_PK", rs.getString("GLO_NAME"));
                 this.addFormSingleEntry("GLO_DESCRIPTION", rs.getString("GLO_DESCRIPTION"));
                 this.addFormSingleEntry("GLO_PK", rs.getInt("GLO_PK"));
-                this.addFormSingleEntry("GLO_LINK", Joy.href("byglossary", "display", rs.getString("GLO_DESCRIPTION"), "glossary", rs.getString("GLO_PK")));
+                this.addFormSingleEntry("GLO_LINK", Joy.HREF("byglossary", "display", rs.getString("GLO_DESCRIPTION"), "glossary", rs.getString("GLO_PK")));
             }
             getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
     }
     
@@ -124,7 +124,7 @@ public class ReportByCategory extends ReportCommonConsolidated {
                 columns.addValue("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
                 columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
                 if (rs.getString("ASLINK").equalsIgnoreCase("Y")) 
-                    columns.addValue("LINK", Joy.href("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
+                    columns.addValue("LINK", Joy.HREF("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
                 else
                     columns.addValue("LINK", rs.getString("CAT_NAME"));
                 matrix.addRow(columns);
@@ -132,7 +132,7 @@ public class ReportByCategory extends ReportCommonConsolidated {
             getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
         this.addFormMatrixEntry("PARENTS", matrix);
     }
@@ -162,7 +162,7 @@ public class ReportByCategory extends ReportCommonConsolidated {
                 columns.addValue("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
                 columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
                 if (rs.getString("ASLINK").equalsIgnoreCase("Y")) 
-                    columns.addValue("LINK", Joy.href("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
+                    columns.addValue("LINK", Joy.HREF("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
                 else
                     columns.addValue("LINK", rs.getString("CAT_NAME"));
                 matrix.addRow(columns);
@@ -170,7 +170,7 @@ public class ReportByCategory extends ReportCommonConsolidated {
             getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
         this.addFormMatrixEntry("CHILDS", matrix);
     }

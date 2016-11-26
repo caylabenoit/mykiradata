@@ -43,7 +43,7 @@ public class TASKLandingPurge extends TASKCommonRAZ {
             this.setMessage("Landing tables purged.");
             
         } catch (Exception e) {
-            Joy.log().fatal(e);
+            Joy.LOG().fatal(e);
             this.setMessage(e.toString());
             return JoyTaskStatus.Failed;
         }

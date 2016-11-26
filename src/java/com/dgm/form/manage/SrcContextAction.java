@@ -48,7 +48,7 @@ public class SrcContextAction extends ActionTypeForm {
             this.addFormMatrixEntry("CONTEXTLIST", matrix);
             
         } catch (SQLException e) {
-            Joy.log().error(  e);
+            Joy.LOG().error(  e);
         }
         return super.list(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -71,7 +71,7 @@ public class SrcContextAction extends ActionTypeForm {
                 this.getBOFactory().closeResultSet(rs);
 
             } catch (SQLException e) {
-                Joy.log().error(  e);
+                Joy.LOG().error(  e);
             }
         }
         return super.edit();
@@ -120,7 +120,7 @@ public class SrcContextAction extends ActionTypeForm {
             } 
             
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         return this.list();
     }

@@ -27,6 +27,7 @@ public class LNDScorecardAction extends LNDCommonAction {
     public LNDScorecardAction() {
         this.LandingKeyName = "JOYFUNCKEY";
         this.LandingTableName = "LND_SCORECARD";
+        this.ListEntityName = "List - Landing Scorecard";
     }
     
     @Override

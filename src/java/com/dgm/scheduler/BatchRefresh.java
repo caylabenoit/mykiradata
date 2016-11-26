@@ -31,7 +31,7 @@ public class BatchRefresh implements Runnable  {
     
     @Override
     public void run() {
-        Joy.log().info("*** TIMEOUT : Refreshing DQ Governance DataMart in delta mode ***");
+        Joy.LOG().info("*** TIMEOUT : Refreshing DQ Governance DataMart in delta mode ***");
         refreshDeltaMode();
     }
 
@@ -39,7 +39,7 @@ public class BatchRefresh implements Runnable  {
         ParamProvider myParams = new ParamProvider(null);
         //if (!ParamProvider.isSchedulerActivated()) {
         if (true) {
-            Joy.log().info("Treatment is deactivated !");
+            Joy.LOG().info("Treatment is deactivated !");
             return;
         }
             
@@ -58,34 +58,34 @@ public class BatchRefresh implements Runnable  {
                 cmd += " -w true";
                 
                 if (!cmd.equalsIgnoreCase("")) {
-                    Joy.log().info("Launching command line : " + cmd);
+                    Joy.LOG().info("Launching command line : " + cmd);
                     Process p = Runtime.getRuntime().exec(cmd) ;  
                     try {
                         JoyReadStream s1 = new JoyReadStream("stdin", p.getInputStream ());
                         JoyReadStream s2 = new JoyReadStream("stderr", p.getErrorStream ());
                         s1.start ();
                         s2.start ();
-                        Joy.log().info("Waiting ....");
+                        Joy.LOG().info("Waiting ....");
                         p.waitFor(); 
-                        Joy.log().debug ( "Returning -> " + s1.getCmdreturn());
+                        Joy.LOG().debug ( "Returning -> " + s1.getCmdreturn());
                         
                     } catch (Exception e) {  
-                        Joy.log().info( e.toString());
+                        Joy.LOG().info( e.toString());
 
                     } finally {
                         if(p != null)
                             p.destroy();
                     }
-                    Joy.log().info( "End of treatment");
+                    Joy.LOG().info( "End of treatment");
                     myParams.unlockWorkflow();
                 }
 
             } else {
-                Joy.log().warn( "Treatment already running, must wait for its end !");
+                Joy.LOG().warn( "Treatment already running, must wait for its end !");
             }
             
         } catch (IOException ex) {
-            Joy.log().error( ex.getMessage());
+            Joy.LOG().error( ex.getMessage());
         }  
     }
     

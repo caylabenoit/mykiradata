@@ -91,7 +91,7 @@ public class ReportCommonConsolidated extends ReportCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         this.addFormVectorEntry(tagDimensionRequest, columns);
     }

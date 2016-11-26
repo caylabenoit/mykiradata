@@ -10,7 +10,7 @@
 <%@attribute name="color"%>
 <%@attribute name="size"%>
 <%
-    JoyParameter glypheParam = Joy.parameters().getParameter("ApplicationIconsBSGlyphe").get(name);
+    JoyParameter glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get(name);
     String myglyphe = "";
     String mycolor = "";
     String mysize = "";

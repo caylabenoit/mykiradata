@@ -30,6 +30,7 @@ public class LNDTermsRel extends LNDCommonAction {
     public LNDTermsRel() {
         this.LandingKeyName = "JOYFUNCKEY";
         this.LandingTableName = "LND_TERM_RELATIONSHIPS";
+        this.ListEntityName = "List - Landing Relationship";
     }
     
     @Override
@@ -46,7 +47,7 @@ public class LNDTermsRel extends LNDCommonAction {
             loadCBOTerm(rs.getString("rel_key_term_source"), "TERM_CBO_SOURCE");
             loadCBOTerm(rs.getString("rel_key_term_target"), "TERM_CBO_TARGET");
         } catch (SQLException ex) {
-            Joy.log().error(ex);
+            Joy.LOG().error(ex);
         }
     }
     
@@ -66,7 +67,7 @@ public class LNDTermsRel extends LNDCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
     

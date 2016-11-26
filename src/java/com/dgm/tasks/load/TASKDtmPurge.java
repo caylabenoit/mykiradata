@@ -42,7 +42,7 @@ public class TASKDtmPurge extends TASKCommonRAZ {
             this.setMessage("DataMart reinitialized successfully");
             
         } catch (Exception e) {
-            Joy.log().fatal(e);
+            Joy.LOG().fatal(e);
             this.setMessage(e.toString());
             return JoyTaskStatus.Failed;
         }

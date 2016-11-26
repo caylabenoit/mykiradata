@@ -32,7 +32,7 @@ public class DashboardAction  extends ActionTypeForm {
     public String display() {
         String dashbSelected = this.getStrArgumentValue("CBO_DASHBOARDS");
         Dashboards dashbs = new Dashboards();
-        dashbs.init(Joy.parameters().getParameter("dashboardconfig").getValue().toString()); 
+        dashbs.init(Joy.PARAMETERS().getParameter("dashboardconfig").getValue().toString()); 
 
         if (!dashbSelected.isEmpty())
             this.addFormSingleEntry("DASHBOARD", dashbs.getDashboard(dashbSelected));

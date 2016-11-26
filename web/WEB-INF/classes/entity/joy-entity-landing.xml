@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE joy-entities SYSTEM "joy-entity.dtd"> -->
 
 <joy-entities>
     <!-- Landing tables -->
@@ -67,20 +68,75 @@
         </joy-join>
     </joy-composite>  
     
-    <!--
     <joy-composite name = "List - Landing Relationship" distinct="yes">
-        <joy-entity alias="T">LND_TERM_RELATIONSHIPS</joy-entity>
-        <joy-field as="STATUS">CASE WHEN(GLO_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-entity alias="X">LND_TERM_RELATIONSHIPS</joy-entity>
+        <joy-field alias="X">JOYFUNCKEY</joy-field>
+        <joy-field alias="X">JOYLOADDATE</joy-field>
+        <joy-field as="STATUS">CASE WHEN(TRL_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
         <joy-field alias="X">REL_KEY_TERM_SOURCE</joy-field>
         <joy-field alias="X">REL_KEY_TERM_TARGET</joy-field>
         <joy-field alias="X">REL_NAME</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-join type="LEFT OUTER">
-            <joy-entity alias="C">DIM_GLOSSARY</joy-entity>
-            <joy-join-key master="JOYFUNCKEY" slave="GLO_FUNCKEY" />
+            <joy-entity alias="C">DIM_TERM_RELLINKS</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="TRL_FUNCKEY" />
         </joy-join>
     </joy-composite>  
-    -->
+
+    <joy-composite name = "List - Landing Scorecard" distinct="yes">
+        <joy-entity alias="X">LND_SCORECARD</joy-entity>
+        <joy-field alias="X">JOYFUNCKEY</joy-field>
+        <joy-field alias="X">JOYLOADDATE</joy-field>
+        <joy-field as="STATUS">CASE WHEN(SCO_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field alias="X">SCO_NAME</joy-field>
+        <joy-field alias="X">SCO_DESCRIPTION</joy-field>
+        <joy-field alias="X">SCO_LASTRUN</joy-field>
+        <joy-field alias="X">JOYSTATUS</joy-field>
+        <joy-join type="LEFT OUTER">
+            <joy-entity alias="C">DIM_SCORECARD</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="SCO_FUNCKEY" />
+        </joy-join>
+    </joy-composite>
+    
+    <joy-composite name = "List - Landing Scorecard Group" distinct="yes">
+        <joy-entity alias="X">LND_SCORECARD_GROUP</joy-entity>
+        <joy-field alias="X">JOYFUNCKEY</joy-field>
+        <joy-field alias="X">JOYLOADDATE</joy-field>
+        <joy-field as="STATUS">CASE WHEN(SCG_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field alias="X">SCGROUP_NAME</joy-field>
+        <joy-field alias="X">SCORECARD_KEY</joy-field>
+        <joy-field alias="X">JOYSTATUS</joy-field>
+        <joy-join type="LEFT OUTER">
+            <joy-entity alias="C">DIM_SCORECARD_GROUP</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="SCG_FUNCKEY" />
+        </joy-join>
+    </joy-composite>
+    
+    <joy-composite name = "List - Landing Metric" distinct="yes">
+        <joy-entity alias="X">LND_METRIC</joy-entity>
+        <joy-field as="STATUS">CASE WHEN(FRS_METRIC_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
+        <joy-field alias="X">JOYFUNCKEY</joy-field>
+        <joy-field alias="X">JOYLOADDATE</joy-field>
+        <joy-field alias="X">JOYSTATUS</joy-field>
+        <joy-field alias="X">MET_NAME</joy-field>
+        <joy-field alias="X">MET_DESCRIPTION</joy-field>
+        <joy-field alias="X">MET_WEIGHT</joy-field>
+        <joy-field alias="X">FRS_VALID_ROWS</joy-field>
+        <joy-field alias="X">FRS_TOTALROWS</joy-field>
+        <joy-field alias="X">FRS_COST</joy-field>
+        <joy-field alias="X">SCORECARD_KEY</joy-field>
+        <joy-field alias="X">SCORECARDGRP_KEY</joy-field>
+        <joy-field alias="X">MET_SCORE</joy-field>
+        <joy-field alias="X">MET_CONNECTION</joy-field>
+        <joy-field alias="X">MET_SOURCENAME</joy-field>
+        <joy-field alias="X">FRS_COSTUNIT</joy-field>
+        <joy-field alias="X">FRS_CALCULATION_DATE</joy-field>
+        <joy-field alias="X">ORI_NAME</joy-field>
+        <joy-join type="LEFT OUTER">
+            <joy-entity alias="C">FACT_GOVERNANCE</joy-entity>
+            <joy-join-key master="JOYFUNCKEY" slave="FRS_METRIC_FUNCKEY" />
+        </joy-join>
+    </joy-composite>
     
     <!-- Used for Landing mappings (sources) -->
     <joy-composite name = "Load - get Terms type" distinct="yes">

@@ -197,6 +197,10 @@
             allowClear: true,
             placeholder: "Select an category"
         });
+        $( '#JOYSTATUS' ).select2({
+            allowClear: false,
+            placeholder: "Select an Status"
+        });
     });
 </SCRIPT>
 </body>

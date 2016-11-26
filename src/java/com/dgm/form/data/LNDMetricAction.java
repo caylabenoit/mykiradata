@@ -30,14 +30,24 @@ public class LNDMetricAction extends LNDCommonAction {
     public LNDMetricAction() {
         this.LandingKeyName = "JOYFUNCKEY";
         this.LandingTableName = "LND_METRIC";
+        this.ListEntityName = "List - Landing Metric";
     }
     
     @Override
     public void updateSpecific(IEntity Entity) {
-        Entity.field("MET_NAME").setValue(getStrArgumentValue("MET_NAME"));
-        Entity.field("SCORECARD_KEY").setValue(getStrArgumentValue("SCORECARD_KEY"));
-        Entity.field("SCORECARDGRP_KEY").setValue(getStrArgumentValue("SCORECARDGRP_KEY"));
-        Entity.field("MET_SCORE").setValue(getStrArgumentValue("MET_SCORE"));
+        setStrEntityField(Entity, "MET_NAME");
+        setStrEntityField(Entity, "SCORECARD_KEY");
+        setStrEntityField(Entity, "SCORECARDGRP_KEY");
+        setStrEntityField(Entity, "MET_DESCRIPTION");
+        setFltEntityField(Entity, "MET_SCORE");
+        setIntEntityField(Entity, "MET_WEIGHT");
+        setIntEntityField(Entity, "FRS_VALID_ROWS");
+        setIntEntityField(Entity, "FRS_TOTALROWS");
+        setFltEntityField(Entity, "FRS_COST");
+        setStrEntityField(Entity, "MET_CONNECTION");
+        setStrEntityField(Entity, "MET_SOURCENAME");
+        setStrEntityField(Entity, "FRS_COSTUNIT");
+        setDatEntityField(Entity, "FRS_CALCULATION_DATE");
     }
 
     @Override
@@ -46,7 +56,7 @@ public class LNDMetricAction extends LNDCommonAction {
             loadCBOScorecard(rs.getString("SCORECARD_KEY"));
             loadCBOScorecardGroup(rs.getString("SCORECARDGRP_KEY"));
         } catch (SQLException ex) {
-            Joy.log().error(ex);
+            Joy.LOG().error(ex);
         }
     }
     
@@ -66,7 +76,7 @@ public class LNDMetricAction extends LNDCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
     
@@ -80,7 +90,7 @@ public class LNDMetricAction extends LNDCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
 }

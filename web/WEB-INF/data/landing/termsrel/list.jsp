@@ -55,6 +55,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Key</th>
+                                                <th>Action</th>
                                                 <th>Term Source</th>
                                                 <th>Term Target</th>
                                                 <th>Rel. Name</th>
@@ -65,7 +66,8 @@
                                         <tbody>
                                             <joy:ActionMatrixRowLoopTag name="LIST">
                                             <tr>
-                                                <td><joy:ActionMatrixByRowTag name="JOYFUNCKEY" /></td>
+                                                <td><joy:ActionMatrixByRowTag name="JOYFUNCKEY" maxlength="30" /></td>
+                                                <td><joy:ActionMatrixByRowTag name="STATUS" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="REL_KEY_TERM_SOURCE" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="REL_KEY_TERM_TARGET" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="REL_NAME" /></td>

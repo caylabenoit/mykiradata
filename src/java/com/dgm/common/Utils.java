@@ -56,7 +56,7 @@ public class Utils {
                                                            String infaapp,
                                                            String workflow) {
         String cmd  = "";
-        Joy.log().debug ("Action type=Workflow");
+        Joy.LOG().debug ("Action type=Workflow");
 
         // infacmd.bat wfs startWorkflow -dn Domain_WIN2K8 -sn DIS -un Administrator -pd Administrator -a App_Governance_Framework -wf wf_Full_Delta -w true
         cmd += infacmd + " wfs startWorkflow";
@@ -87,14 +87,14 @@ public class Utils {
             if (rs.next()) 
                 result = rs.getString("GIO_ICON_PATHNAME");
             else
-                result =  Joy.parameters().getParameter("DefaultTermTypeIcon").getValue().toString();
+                result =  Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString();
             
             entities.closeResultSet(rs);
             return result;
             
         } catch (SQLException e) {
-            Joy.log().error(e);
-            return Joy.parameters().getParameter("DefaultTermTypeIcon").getValue().toString();
+            Joy.LOG().error(e);
+            return Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString();
         }
     } 
     

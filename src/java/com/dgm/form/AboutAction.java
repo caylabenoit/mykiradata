@@ -29,8 +29,8 @@ public class AboutAction extends ActionTypeForm {
 
     @Override
     public String display() {
-        this.addFormSingleEntry("APPLICATION", Joy.parameters().getApplicationName() + " v" + Joy.parameters().getVersion());
-        this.addFormSingleEntry("LOGO", Joy.parameters().getParameter("logo").getValue().toString());
+        this.addFormSingleEntry("APPLICATION", Joy.PARAMETERS().getApplicationName() + " v" + Joy.PARAMETERS().getVersion());
+        this.addFormSingleEntry("LOGO", Joy.PARAMETERS().getParameter("logo").getValue().toString());
         return super.display(); 
     }
     

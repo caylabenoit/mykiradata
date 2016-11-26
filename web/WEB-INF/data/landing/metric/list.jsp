@@ -55,9 +55,9 @@
                                         <thead>
                                             <tr>
                                                 <th>Key</th>
+                                                <th>Action</th>
                                                 <th>Metric Name</th>
                                                 <th>Current Score</th>
-                                                <th>Scorecard</th>
                                                 <th>Scorecard Group</th>
                                                 <th style="text-align:center;">Manage</th>
                                             </tr>
@@ -65,10 +65,10 @@
                                         <tbody>
                                             <joy:ActionMatrixRowLoopTag name="LIST">
                                             <tr>
-                                                <td><joy:ActionMatrixByRowTag name="JOYFUNCKEY" /></td>
+                                                <td><joy:ActionMatrixByRowTag name="JOYFUNCKEY"  maxlength="30"/></td>
+                                                <td><joy:ActionMatrixByRowTag name="STATUS" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="MET_NAME" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="MET_SCORE" /></td>
-                                                <td><joy:ActionMatrixByRowTag name="SCORECARD_KEY" /></td>
                                                 <td><joy:ActionMatrixByRowTag name="SCORECARDGRP_KEY" /></td>
                                                 <td align="center">
                                                     <button type="button" class="btn btn-primary btn-circle" onclick="window.open('<joy:JoyBasicURL object="lndmetric" actiontype="edit" />&NEW=no&JOYFUNCKEY=<joy:ActionMatrixByRowTag name="JOYFUNCKEY" />', '_self');"><i class="fa fa-edit"></i></button>

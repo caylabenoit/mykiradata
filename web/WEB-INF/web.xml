@@ -28,7 +28,6 @@
         <param-name>scheduler</param-name>
         <param-value>false</param-value>
     </context-param>
-    
     <filter>
         <filter-name>restFilter</filter-name>
         <filter-class>com.joy.mvc.filters.FilterREST</filter-class>
@@ -38,7 +37,6 @@
         <url-pattern>/rest/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
     <filter>
         <filter-name>taskFilter</filter-name>
         <filter-class>com.joy.mvc.filters.FilterTASK</filter-class>
@@ -48,16 +46,15 @@
         <url-pattern>/task/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-<!--    
+    <!--    
     <listener>
         <listener-class>com.dgm.governance.scheduler.batchScheduler</listener-class>
     </listener>
--->    
+-->
     <error-page>
         <exception-type>Exception</exception-type>
-        <location>/error.jsp</location>
+        <location>/404.jsp</location>
     </error-page>
-
     <resource-ref>
         <description>jdbc/GOVERNANCE</description>
         <res-ref-name>jdbc/GOVERNANCE</res-ref-name>

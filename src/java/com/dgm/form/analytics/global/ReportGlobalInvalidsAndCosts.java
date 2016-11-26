@@ -47,7 +47,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             IEntity entity = this.getBOFactory().getEntity("Analytics - Global by DQ Axis"); 
             ResultSet rs = entity.select();
 
-            ChartWithDataset chartbar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString());   
+            ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());   
             while (rs.next()) {
                 chartbar.add(rs.getString("DQX_NAME"), "data", 
                              rs.getFloat(fieldValue));
@@ -56,7 +56,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             return chartbar.getChartData();
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return null;
         }
     }
@@ -67,7 +67,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             IEntity entity = this.getBOFactory().getEntity("Analytics - Global by Datasource");
             ResultSet rs = entity.select();
 
-            ChartWithDataset chartbar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString());   
+            ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());   
             while (rs.next()) {
                 chartbar.add((rs.getString("DSO_SOURCENAME") == null ? "Unknown" : rs.getString("DSO_SOURCENAME")), 
                              "data", 
@@ -77,7 +77,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             return chartbar.getChartData();
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return null;
         }
     }
@@ -88,7 +88,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             IEntity entity = this.getBOFactory().getEntity("Analytics - Global by Context"); 
             ResultSet rs = entity.select();
 
-            ChartWithDataset chartbar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString());   
+            ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());   
             while (rs.next()) {
                 chartbar.add(rs.getString("CON_DESCRIPTION"), "data", 
                              rs.getFloat(fieldValue));
@@ -97,7 +97,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             return chartbar.getChartData();
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return "";
         }
     }
@@ -108,7 +108,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             IEntity entity = this.getBOFactory().getEntity("Analytics - Global by Term"); 
             ResultSet rs = entity.select();
 
-            ChartWithDataset chartbar = new ChartWithDataset(Joy.parameters().getParameter("ChartsColors").getList(), Joy.parameters().getParameter("transparency").getValue().toString());   
+            ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());   
             while (rs.next()) {
                 String s = rs.getString("TRM_NAME");
                 String res = s;
@@ -122,7 +122,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
             return chartbar.getChartData();
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return "";
         }
     }

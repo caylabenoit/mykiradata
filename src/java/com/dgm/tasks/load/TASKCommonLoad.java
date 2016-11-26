@@ -35,7 +35,7 @@ public class TASKCommonLoad extends ActionTypeTASK {
     
     private void trace (String msg) {
         this.addTrace(msg);
-        Joy.log().info(msg);
+        Joy.LOG().info(msg);
     }
     
     /**
@@ -57,13 +57,13 @@ public class TASKCommonLoad extends ActionTypeTASK {
                                                                         myParams.getParamValue("infaapp").getStrValue(),
                                                                         wfName);
             trace("Launch command line: " + cmdLine);
-            result = Joy.executeCommandLine(cmdLine);
+            result = Joy.EXECUTE_CMD(cmdLine);
             trace("Result : " + result);
             this.setMessage(result);
             
         } catch (Exception e) {
             this.addTrace("Exception while launching workflow : " + e);
-            Joy.log().fatal(e);
+            Joy.LOG().fatal(e);
             this.setMessage(e.toString());
             return JoyTaskStatus.Failed;
         }
@@ -110,21 +110,21 @@ public class TASKCommonLoad extends ActionTypeTASK {
             MappingSpecification mapping;
 
             MappingFactory maps = new MappingFactory();
-            maps.init(Joy.parameters().getMapping("landing"));
+            maps.init(Joy.PARAMETERS().getMapping("landing"));
 
             // Execute the mappings for the dimensions...
             this.resetMessages();
             int i=0;
             for (i=0; i < mappings.length; i++) {
-                Joy.log().info("Load mapping: " + mappings[i]);
+                Joy.LOG().info("Load mapping: " + mappings[i]);
                 mapping = maps.getMapping(mappings[i]);
                 stat[i] = mapping.process(this.getEntities());
-                Joy.log().info(concepts[i] + " loaded with " + stat[i].getRowsInserted() + " (inserts), " + stat[i].getRowsUpdated() + " (updates).");
+                Joy.LOG().info(concepts[i] + " loaded with " + stat[i].getRowsInserted() + " (inserts), " + stat[i].getRowsUpdated() + " (updates).");
                 this.addMessage("<B>" + concepts[i] + ":</B> " + stat[i].getRowsInserted() + " (inserts), " + stat[i].getRowsUpdated() + " (updates).<BR>");
             }
             
             // Create a new JOB
-            Joy.log().info("Create a new Job ");
+            Joy.LOG().info("Create a new Job ");
             BOEntityReadWrite job = (BOEntityReadWrite)this.getEntities().getEntity("DIM_JOB");
             int newJobID = job.field("JOB_PK").getNextID();
             job.field("JOB_PK").setValue(newJobID);
@@ -132,16 +132,16 @@ public class TASKCommonLoad extends ActionTypeTASK {
             job.field("JOB_DATETIME_LOAD").setValue(new Date());
             job.field("JOB_FUNCKEY").setValue("JOB" + String.valueOf(newJobID));
             job.insert();
-            Joy.log().info("New Job created with ID = " + newJobID);
+            Joy.LOG().info("New Job created with ID = " + newJobID);
             
             // Load the Fact table
             mapping = maps.getMapping("Facts Landing");
             StatMap fctStat = mapping.process(this.getEntities(), newJobID);
-            Joy.log().info("Facts loaded with " + fctStat.getRowsInserted() + " (inserts), " + fctStat.getRowsUpdated() + " (updates).");
+            Joy.LOG().info("Facts loaded with " + fctStat.getRowsInserted() + " (inserts), " + fctStat.getRowsUpdated() + " (updates).");
             this.addMessage("<B>Facts:</B> " + fctStat.getRowsInserted() + " (inserts), " + fctStat.getRowsUpdated() + " (updates).<BR>");
             
         } catch (Exception e) {
-            Joy.log().fatal("Fatal Error while loading datamart: " + e);
+            Joy.LOG().fatal("Fatal Error while loading datamart: " + e);
             return JoyTaskStatus.Failed;
         }
         return JoyTaskStatus.Success;

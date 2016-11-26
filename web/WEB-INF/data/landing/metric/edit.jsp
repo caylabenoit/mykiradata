@@ -49,12 +49,16 @@
                             
                             <div class="row">
                                 <div class="col-lg-12">  
+
                                     <div class="panel-body">
                                         <div class="form-group">
+                                            <div class='alert alert-success'>
+                                                <joy:ActionValueTag name="STATUS" />
+                                            </div>
                                             <label>Identifier</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span>
-                                                <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="10" placeholder="Unique Identifier" ariadescribedby="basic-addon2" />
+                                                <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="500" placeholder="Unique Identifier" ariadescribedby="basic-addon2" />
                                             </div>
                                             <label>Scorecard</label>
                                             <div class="row">
@@ -94,7 +98,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Description</label>
-                                            <joy:ActionInputTextTag name="MET_DESRIPTION"   CSSClass="form-control" placeholder="Metric Description" />
+                                            <joy:ActionInputTextTag name="MET_DESCRIPTION"   CSSClass="form-control" placeholder="Metric Description" />
                                         </div>
                                         <div class="form-group">
                                             <label>Weight</label>

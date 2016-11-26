@@ -33,7 +33,7 @@ public class TASKInfaSCRefresh extends ActionTypeTASK {
             ParamProvider myParams = new ParamProvider(this.getEntities());
             String scName = this.getTaskName();
             String result = "";
-            Joy.log().info("Informatica Scorecard Refresh : " + scName);
+            Joy.LOG().info("Informatica Scorecard Refresh : " + scName);
 
             String cmd = "";
             cmd += "infacmd.bat ps Execute";
@@ -46,11 +46,11 @@ public class TASKInfaSCRefresh extends ActionTypeTASK {
             cmd += " -opn " + scName;
             cmd += " -w true";
             
-            result = Joy.executeCommandLine(cmd);
+            result = Joy.EXECUTE_CMD(cmd);
             this.setMessage(result);
             
         } catch (Exception e) {
-            Joy.log().fatal(e);
+            Joy.LOG().fatal(e);
             this.setMessage(e.toString());
             return JoyTaskStatus.Failed;
         }

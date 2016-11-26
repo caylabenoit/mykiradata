@@ -46,7 +46,7 @@ public class LNDCategoryAction extends LNDCommonAction {
         try {
             loadCBOCategories(rs.getString("CATEGORY_PARENT_KEY"));
         } catch (SQLException ex) {
-            Joy.log().error(ex);
+            Joy.LOG().error(ex);
         }
     }
     
@@ -65,7 +65,7 @@ public class LNDCategoryAction extends LNDCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
     }
 }

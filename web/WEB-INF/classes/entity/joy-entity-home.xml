@@ -61,7 +61,7 @@
     <joy-composite name = "Home - Best terms">  <!-- Best terms scores -->
         <joy-field alias="X">TRM_FK</joy-field>
         <joy-field alias="T">TRM_NAME</joy-field>
-        <joy-field as="GLOBALSCORE">round(sum(FRS_KPI_SCORE*DQX_WEIGHT)/max((Select sum(DQX_WEIGHT) SC from DIM_DQAXIS)), 2)</joy-field>
+        <joy-field as="GLOBALSCORE">ROUND(SUM(FRS_KPI_SCORE*DQX_WEIGHT)/MAX((SELECT SUM(DQX_WEIGHT) SC FROM DIM_DQAXIS)), 2)</joy-field>
         <joy-entity alias="X">Last Facts Only</joy-entity>
         <joy-join type="INNER">
             <joy-entity alias="Q">DIM_DQAXIS</joy-entity>

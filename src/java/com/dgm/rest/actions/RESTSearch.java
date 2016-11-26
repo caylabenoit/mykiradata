@@ -75,11 +75,11 @@ public class RESTSearch extends RESTPairMgtCommon {
                 }
 
             }
-            Joy.log().info("REST search successful. Return JSON data.");
+            Joy.LOG().info("REST search successful. Return JSON data.");
             return entityTerm.exp().toString();
             
         } catch (Exception e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
             return C.JSON_EMPTY;
         }
     }

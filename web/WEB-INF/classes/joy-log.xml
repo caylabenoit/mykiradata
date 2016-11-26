@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 <joy-log>
-    <joy-logfilename dateprefix="yes">dgm_0.1.4.0.log</joy-logfilename>
+    <joy-logfilename dateprefix="yes" versionprefix="yes">dgm.log</joy-logfilename>
     <joy-logdirectory>C:\temp</joy-logdirectory>
     <joy-loglevels>
         <joy-loglevel active="yes">DEBUG</joy-loglevel>

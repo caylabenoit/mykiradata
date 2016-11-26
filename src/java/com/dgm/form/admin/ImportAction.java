@@ -36,9 +36,9 @@ public class ImportAction extends ActionTypeForm {
             String stringContent = "";
             try {
                 // importe les fichiers attachés et récupère le contenu dans un String
-                stringContent = Joy.convertInputStreamToString(this.attachedFile(0));
+                stringContent = Joy.STREAM_TO_STRING(this.attachedFile(0));
             } catch (IOException ex) {
-                Joy.log().error(ex);
+                Joy.LOG().error(ex);
             }
             
             if (!stringContent.isEmpty()) {
@@ -47,7 +47,7 @@ public class ImportAction extends ActionTypeForm {
                 Collection<ActionLogReport> logs = entity.imp(jsonContent, false);
 
             } else {
-                Joy.log().info("The imported file is empty");
+                Joy.LOG().info("The imported file is empty");
             }
         }
         return super.list(); //To change body of generated methods, choose Tools | Templates.

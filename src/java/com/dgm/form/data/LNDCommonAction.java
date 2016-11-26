@@ -96,7 +96,7 @@ public class LNDCommonAction extends ActionTypeForm {
                 this.getBOFactory().closeResultSet(rs);
 
             } catch (Exception e) {
-                Joy.log().error(e);
+                Joy.LOG().error(e);
             }
         }
         return super.edit(); //To change body of generated methods, choose Tools | Templates.
@@ -121,6 +121,37 @@ public class LNDCommonAction extends ActionTypeForm {
         return this.list();
     }
 
+    protected void setStrEntityField(IEntity entity, 
+                                     String fieldName) {
+        try {
+            entity.field(fieldName).setValue(getStrArgumentValue(fieldName));
+        } catch (Exception e) {}
+    }
+    
+    protected void setFltEntityField(IEntity entity, 
+                                     String fieldName) {
+        try {
+            String val = getStrArgumentValue(fieldName);
+            entity.field(fieldName).setValue(Float.valueOf(val));
+        } catch (Exception e) {}
+    }
+    
+    protected void setIntEntityField(IEntity entity, 
+                                     String fieldName) {
+        try {
+            String val = getStrArgumentValue(fieldName);
+            entity.field(fieldName).setValue(Integer.valueOf(val));
+        } catch (Exception e) {}
+    }
+    
+    protected void setDatEntityField(IEntity entity, 
+                                     String fieldName) {
+        try {
+            String val = getStrArgumentValue(fieldName);
+            entity.field(fieldName).setValue(Joy.STRING_TO_DATE(getStrArgumentValue(fieldName), Joy.PARAMETERS().getJoyDefaultDateFormat()));
+        } catch (Exception e) {}
+    }
+    
     @Override
     public String update() {
         boolean isNew = (getStrArgumentValue("NEW").equalsIgnoreCase("yes")); 
@@ -128,7 +159,7 @@ public class LNDCommonAction extends ActionTypeForm {
     	try {
             IEntity Entity = this.getBOFactory().getEntity(this.LandingTableName);
             Entity.field("JOYSTATUS").setValue(getStrArgumentValue("JOYSTATUS"));
-            Entity.field("JOYLOADDATE").setValue(Joy.getDate());
+            Entity.field("JOYLOADDATE").setValue(Joy.CURRENT_DATE());
             updateSpecific(Entity);
 
             if (isNew) {
@@ -140,7 +171,7 @@ public class LNDCommonAction extends ActionTypeForm {
             } 
             
         } catch (Exception e) {
-            Joy.log().error( e);
+            Joy.LOG().error( e);
         }
         return this.list();
     }    

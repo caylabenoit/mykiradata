@@ -161,7 +161,7 @@ public class ReportByTerm extends ReportCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (Exception e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
     }
     
@@ -186,7 +186,7 @@ public class ReportByTerm extends ReportCommonAction {
             this.getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
         this.addFormVectorEntry("term", columns);
     }
@@ -221,11 +221,11 @@ public class ReportByTerm extends ReportCommonAction {
                 // Term icon
                 String icon = Utils.getTermTypeIcon(this.getBOFactory(), rs.getString("TRT_NAME"));
                 this.addFormSingleEntry("ICON", icon);
-                this.addFormSingleEntry("IMGICO", (rs.getString("TRT_NAME").isEmpty() ? Joy.parameters().getParameter("DefaultTermTypeIcon").getValue().toString() : icon));
+                this.addFormSingleEntry("IMGICO", (rs.getString("TRT_NAME").isEmpty() ? Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString() : icon));
                 // Glossary link
-                this.addFormSingleEntry("GLOSSARY_LINK", Joy.href("byglossary", "display", rs.getString("GLO_NAME"), "glossary", String.valueOf(rs.getString("GLO_PK"))));
+                this.addFormSingleEntry("GLOSSARY_LINK", Joy.HREF("byglossary", "display", rs.getString("GLO_NAME"), "glossary", String.valueOf(rs.getString("GLO_PK"))));
                 // Category link
-                this.addFormSingleEntry("CATEGORY_LINK", Joy.href("bycategory", "display", rs.getString("CAT_NAME"), "category", String.valueOf(rs.getString("CAT_PK"))));
+                this.addFormSingleEntry("CATEGORY_LINK", Joy.HREF("bycategory", "display", rs.getString("CAT_NAME"), "category", String.valueOf(rs.getString("CAT_PK"))));
                 
                 // Informatica specifics
                 this.addFormSingleEntry("INFORMATICA", displayInfa);
@@ -236,21 +236,21 @@ public class ReportByTerm extends ReportCommonAction {
                 }
                 
                 if (rs.getString("TRM_CLUSTER_ID") != null)
-                    this.addFormSingleEntry("CONFIG_TERM_LINK",  Joy.url("reltermmetric", "EDIT", "TRM_CLUSTER_ID", rs.getString("TRM_CLUSTER_ID")));
+                    this.addFormSingleEntry("CONFIG_TERM_LINK",  Joy.URL("reltermmetric", "EDIT", "TRM_CLUSTER_ID", rs.getString("TRM_CLUSTER_ID")));
                 else 
-                    this.addFormSingleEntry("CONFIG_TERM_LINK", Joy.url("reltermmetric", "ADD", "TERM_NAME", rs.getString("TRM_NAME")));
-                this.addFormSingleEntry("REL_MAP_LINK",  Joy.basicURL("report", "display") + "&report=relationshipmap&term=" + rs.getString("TRM_PK") + "&hops=3");
+                    this.addFormSingleEntry("CONFIG_TERM_LINK", Joy.URL("reltermmetric", "ADD", "TERM_NAME", rs.getString("TRM_NAME")));
+                this.addFormSingleEntry("REL_MAP_LINK",  Joy.URL("report", "display") + "&report=relationshipmap&term=" + rs.getString("TRM_PK") + "&hops=3");
                 
             }
             this.getBOFactory().closeResultSet(rs);
 
         } catch (SQLException e) {
-            Joy.log().error(e);
+            Joy.LOG().error(e);
         }
     }
     
    /**
-    * Build the Informatica Matedata Manager url like this
+    * Build the Informatica Matedata Manager URL like this
   http://win2k8:10250/mm/lineage?objectPath=MM/Data Governance Glossary/Account&mode=lineage
     * @param _detail
     * @param URL
@@ -272,7 +272,7 @@ public class ReportByTerm extends ReportCommonAction {
    }
    
    /**
-    * replace the url by "http://infaw2k12:8085/analyst/?wstate=(%27$obj%27:%27" + ObjectID + "@com.informatica.bg.core.models.BGTermInfo%27,%27$ws%27:bgRequirementsWS)";  
+    * replace the URL by "http://infaw2k12:8085/analyst/?wstate=(%27$obj%27:%27" + ObjectID + "@com.informatica.bg.core.models.BGTermInfo%27,%27$ws%27:bgRequirementsWS)";  
     * @param ObjectID
     * @return 
     */
