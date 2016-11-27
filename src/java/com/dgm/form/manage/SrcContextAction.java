@@ -107,12 +107,13 @@ public class SrcContextAction extends ActionTypeForm {
         int uid = getIntArgumentValue("CON_PK"); 
         
     	try {
-            BOEntityReadWrite Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("SRC_CONTEXT");
+            IEntity Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("SRC_CONTEXT");
             Entity.reset();
             Entity.field("CON_DESCRIPTION").setValue(getStrArgumentValue("CON_DESCRIPTION"));
             Entity.field("CON_FUNCKEY").setValue(getStrArgumentValue("CON_FUNCKEY"));
             if (uid == 0) {
-                Entity.field("CON_PK").setNextIDValue();
+                int newid = Entity.getNewIDForField("CON_PK");
+                Entity.field("CON_PK").setValue(newid);
                 Entity.insert();
             } else {
                 Entity.field("CON_PK").setKeyValue(uid);

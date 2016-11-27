@@ -94,7 +94,7 @@ and open the template in the editor.
         <objecttype>form</objecttype>
         <action>com.dgm.form.load.InfaConfigInterface</action>
         <redirects>
-            <redirect tag="LIST">./WEB-INF/admin/infa_import.jsp</redirect>
+            <redirect tag="LIST">./WEB-INF/data/import/infa_import.jsp</redirect>
         </redirects>
     </actionRequest>
     
@@ -103,7 +103,7 @@ and open the template in the editor.
         <objecttype>form</objecttype>
         <action>com.dgm.form.load.LandingConfigInterface</action>
         <redirects>
-            <redirect tag="LIST">./WEB-INF/admin/landing_import.jsp</redirect>
+            <redirect tag="LIST">./WEB-INF/data/import/landing_import.jsp</redirect>
         </redirects>
     </actionRequest>
     

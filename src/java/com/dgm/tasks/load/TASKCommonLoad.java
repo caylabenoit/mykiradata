@@ -20,6 +20,7 @@ import com.dgm.common.Utils;
 import com.dgm.common.providers.ParamProvider;
 import com.joy.Joy;
 import com.joy.bo.BOEntityReadWrite;
+import com.joy.bo.IEntity;
 import com.joy.etl.MappingSpecification;
 import com.joy.etl.MappingFactory;
 import com.joy.etl.StatMap;
@@ -125,8 +126,8 @@ public class TASKCommonLoad extends ActionTypeTASK {
             
             // Create a new JOB
             Joy.LOG().info("Create a new Job ");
-            BOEntityReadWrite job = (BOEntityReadWrite)this.getEntities().getEntity("DIM_JOB");
-            int newJobID = job.field("JOB_PK").getNextID();
+            IEntity job = this.getEntities().getEntity("DIM_JOB");
+            int newJobID = job.getNewIDForField("JOB_PK");
             job.field("JOB_PK").setValue(newJobID);
             job.field("JOB_NAME").setValue("Job ID " + newJobID);
             job.field("JOB_DATETIME_LOAD").setValue(new Date());

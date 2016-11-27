@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-    <jsp:directive.include file="../templates/head.jsp" />
+    <jsp:directive.include file="../../templates/head.jsp" />
 </head>
 
 <body>
@@ -16,14 +16,14 @@
         <!-- Navigation -->
         <nav class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <joy:NaviTopMenuTag>
-                <joy:NaviTopLeftMenuTag xmlconfig="joy-menu-topleft.xml" activemenuid="ADM03" />
+                <joy:NaviTopLeftMenuTag xmlconfig="joy-menu-topleft.xml" activemenuid="Data" />
                 <joy:NaviTopRightMenu>
                     <joy:NaviTopRightShortcutsMenuTag xmlconfig="joy-menu.xml" />
                     <joy:NaviTopRightTasksMenuTag />
                     <joy:NaviTopRightUserMgtMenuTag />
                 </joy:NaviTopRightMenu>
             </joy:NaviTopMenuTag>
-            <joy:NaviLeftMenuTag xmlconfig="joy-menu-admin.xml" activemenuid="ADM03"  />
+            <joy:NaviLeftMenuTag xmlconfig="joy-menu-data.xml" activemenuid="DATA12"  />
         </nav>
 
         <!-- Page Content -->
@@ -83,7 +83,7 @@
         </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
 
-<jsp:directive.include file="../templates/foot.jsp" />
+<jsp:directive.include file="../../templates/foot.jsp" />
 <script>
     function callbackSuccess(content, tag) {
         switch(tag) {

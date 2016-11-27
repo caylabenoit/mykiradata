@@ -149,7 +149,8 @@ public class SrcDQAxisAction extends ActionTypeForm {
                 while (rs.next()) { // parcours les cluster id pour rajouter le nouvel axe
                     BOEntityReadWrite entNew = (BOEntityReadWrite)this.getBOFactory().getEntity("REL_TERM_METRIC");
                     entNew.reset();
-                    entNew.field("TMD_PK").setNextIDValue();
+                    int newid = entNew.getNewIDForField("CON_PK");
+                    entNew.field("TMD_PK").setValue(newid);
                     entNew.field("DQX_NAME").setValue(label);
                     entNew.field("TRM_CLUSTER_ID").setValue(rs.getInt("TRM_CLUSTER_ID"));
                     entNew.field("TRM_NAME").setValue(rs.getString("TRM_NAME"));
@@ -209,14 +210,15 @@ public class SrcDQAxisAction extends ActionTypeForm {
         
     	try {
             // update SRC_DQAXIS table
-            BOEntityReadWrite Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("SRC_DQAXIS");
+            IEntity Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("SRC_DQAXIS");
             Entity.field("DQX_STATUS").doNotUseThisField();
             Entity.field("DQX_DESCRIPTION").setValue(getStrArgumentValue("DQX_DESCRIPTION"));
             Entity.field("DQX_LABEL").setValue(getStrArgumentValue("DQX_LABEL"));
             Entity.field("DQX_FUNCKEY").setValue(getStrArgumentValue("DQX_FUNCKEY"));
             Entity.field("DQX_WEIGHT").setValue(getStrArgumentValue("DQX_WEIGHT"));
             if (uid == 0) {
-                Entity.field("DQX_PK").setNextIDValue();
+                int newid = Entity.getNewIDForField("DQX_PK");
+                Entity.field("DQX_PK").setValue(newid);
                 Entity.insert();
                 addDQAxisReferences(getStrArgumentValue("DQX_LABEL"));
             } else {

@@ -295,11 +295,12 @@ public class RelTermMetricAction extends ActionTypeForm {
         try {
             IEntity entityAxis = this.getBOFactory().getEntity("SRC_DQAXIS");
             ResultSet rs = entityAxis.select();
-            BOEntityReadWrite entity = (BOEntityReadWrite)this.getBOFactory().getEntity("REL_TERM_METRIC");
-            iCluster = entity.field("TRM_CLUSTER_ID").getNextID();
+            IEntity entity = (BOEntityReadWrite)this.getBOFactory().getEntity("REL_TERM_METRIC");
+            iCluster = entity.getNewIDForField("TRM_CLUSTER_ID");
             while (rs.next()) {
                 entity.reset();
-                entity.field("TMD_PK").setNextIDValue();
+                int newid = entity.getNewIDForField("TMD_PK");
+                entity.field("TMD_PK").setValue(newid);
                 entity.field("TMD_DESCRIPTION").setValue("");
                 entity.field("TRM_CLUSTER_ID").setValue(iCluster);
                 entity.field("MET_NAME").setValue(null);

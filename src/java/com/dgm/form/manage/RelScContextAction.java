@@ -114,13 +114,14 @@ public class RelScContextAction  extends ActionTypeForm {
         int uid = getIntArgumentValue("SCX_PK"); 
         
     	try {
-            BOEntityReadWrite Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("REL_SC_CONTEXT");
+            IEntity Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("REL_SC_CONTEXT");
             Entity.reset();
             Entity.field("SCO_NAME").setValue(getStrArgumentValue("SCO_NAME"));
             Entity.field("SCX_DESCRIPTION").setValue(getStrArgumentValue("SCX_DESCRIPTION"));
             Entity.field("CON_DESCRIPTION").setValue(getStrArgumentValue("CON_DESCRIPTION"));
             if (uid == 0) {
-                Entity.field("SCX_PK").setNextIDValue();
+                int newid = Entity.getNewIDForField("SCX_PK");
+                Entity.field("SCX_PK").setValue(newid);
                 Entity.insert();
             } else {
                 Entity.field("SCX_PK").setKeyValue(uid);

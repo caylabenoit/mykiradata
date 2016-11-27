@@ -111,12 +111,13 @@ public class SrcTermTypeAction extends ActionTypeForm {
         int uid = getIntArgumentValue("GIO_PK"); 
         
     	try {
-            BOEntityReadWrite Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("SRC_TERMTYPE");
+            IEntity Entity = (BOEntityReadWrite)this.getBOFactory().getEntity("SRC_TERMTYPE");
             Entity.reset();
             Entity.field("GIO_TERMTYPE_NAME").setValue(getStrArgumentValue("GIO_TERMTYPE_NAME"));
             Entity.field("GIO_ICON_PATHNAME").setValue(getStrArgumentValue("GIO_ICON_PATHNAME"));
             if (uid == 0) {
-                Entity.field("GIO_PK").setNextIDValue();
+                int newid = Entity.getNewIDForField("GIO_PK");
+                Entity.field("GIO_PK").setValue(newid);
                 Entity.insert();
             } else {
                 Entity.field("GIO_PK").setKeyValue(uid);

@@ -24,7 +24,7 @@
                     <joy:NaviTopRightUserMgtMenuTag />
                 </joy:NaviTopRightMenu>
             </joy:NaviTopMenuTag>
-            <joy:NaviLeftMenuTag xmlconfig="joy-menu-data.xml" activemenuid="DATA02"  />
+            <joy:NaviLeftMenuTag xmlconfig="joy-menu-data.xml" activemenuid="DATA05"  />
         </nav>
 
         <!-- Page Content -->
@@ -38,11 +38,7 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-lg-2">
-                        <joy:NaviLeft2ndMenuTag xmlconfig="joy-menu-landing.xml" activemenuid="glossary" />   
-                    </div>
-                    
-                    <div class="col-lg-10">
+                    <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading"><UI:dgmGlyphe name="term"/>Business Glossary Landing data</div>
                             <!-- /.panel-heading -->
