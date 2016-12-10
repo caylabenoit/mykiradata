@@ -52,14 +52,14 @@
                                 <H3>Frameworks</H3>
                                 This application is fully developped in Java EE, Javascript and HTML5/CSS<P>
                                 This application uses these frameworks:
-                                <H4>Java :</H4>
+                                <H4>Java libs:</H4>
                                 <ul>
                                     <li>Joy : my own MVC, REST and Data layer framework</li>
                                     <li>JDOM 1.2</li>
                                     <li>commons-fileupload-1.3.1</li>
                                     <li>JDBC obviously (Oracle & PostgreSQL)</li>
                                 </ul>            
-                                <H4>Javascript/Css frameworks:</H4>
+                                <H4>Javascript/Css libs:</H4>
                                 <ul>
                                     <li>chart.js: http://www.chartjs.org/ Chart.js is open source and available under the MIT license.</li>
                                     <li>gauge.js: http://bernii.github.io/gauge.js/ MIT License</li>

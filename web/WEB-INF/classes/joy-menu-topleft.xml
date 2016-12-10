@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM06" name="Parameters" object="parameters" actiontype="list" />
         <joy-menu class="fa fa-random fa-fw" id="ADM07" name="Tasks" object="tasks" />
     </joy-menu>
-    <joy-menu id="CONFIG01" class="fa  fa-wrench fa-fw" name="Config"> 
+    <joy-menu id="CONFIG01" class="fa  fa-wrench fa-fw" name="Configuration"> 
         <joy-menu class="fa fa-gears fa-fw" id="CONFIG02" name="Quality Dimensions" object="dqaxis" actiontype="list" />
         <joy-menu class="fa fa-gears fa-fw" id="CONFIG03" name="Contexts" object="context" actiontype="list" />
         <joy-menu class="fa fa-gears fa-fw" id="CONFIG04" name="Term Types" object="termtype" actiontype="list" />

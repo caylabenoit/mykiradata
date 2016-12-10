@@ -1,10 +1,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Data Governance Monitor">
+<meta name="description" content="Data Governance Monitor - DGM">
 <meta name="author" content="Benoit CAYLA">
 
-<link rel="icon" type="images/png" href="./images/dgm.png" />
+<link rel="icon" type="images/png" href="./images/logo.png" />
 
 <title>DGM</title>
 
@@ -25,7 +25,6 @@
 <!-- Treeview --><link href="./joy-external/bootstrap/components/bootstrap-treeview-master/dist/bootstrap-treeview.min.css" rel="stylesheet">
 <!-- JQuery-UI --><link href="./joy-external/jquery-ui/dist/jquery-ui.theme.min.css" rel="stylesheet" type="text/css"/>
 <!-- Lobipanel --><link href="./joy-external/bootstrap/components/lobipanel/dist/css/lobipanel.min.css" rel="stylesheet" type="text/css"/>
-<!-- vis.js --><link href="./joy-external/vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
 <!-- datetime-picker --><link href="./joy-external/bootstrap/components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
 <!-- styles Menu DGM --><link href="./theme/css/dgmtaskmenu.css" rel="stylesheet" type="text/css"/>
 <!-- styles DGM --><link href="./theme/css/global.css" rel="stylesheet" type="text/css"/>

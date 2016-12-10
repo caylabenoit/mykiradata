@@ -17,7 +17,7 @@
 package com.dgm.rest.actions;
 
 import com.dgm.beans.termreltree.TermTree;
-import com.dgm.beans.termreltree.TermBean;
+import com.dgm.beans.termreltree.Term;
 import com.joy.mvc.actionTypes.ActionTypeREST;
 
 /**
@@ -32,7 +32,8 @@ public class RESTActionRelTerms extends ActionTypeREST{
         
         String stream = "[ {\"text\": \"Nothing\"} ]";
         TermTree mytree = new TermTree(this.getBOFactory());
-        TermBean ars = mytree.build(this.getIntArgumentValue("P2"), 1, getIntArgumentValue("P1"));
+        Term ars = mytree.build(this.getIntArgumentValue("P2"), 
+                                    this.getIntArgumentValue("P1"));
         stream = "[ " + ars.getJSONObject(this.getURI() + "/images/glossary/").toString() + "]"; //To change body of generated methods, choose Tools | Templates.
         
         return stream;

@@ -210,7 +210,6 @@ public class ReportByTerm extends ReportCommonAction {
                 this.addFormSingleEntry("TRM_EXAMPLE", Joy.T(rs.getString("TRM_EXAMPLE")));
                 this.addFormSingleEntry("TRM_OWNER", Joy.T(rs.getString("TRM_OWNER")));
                 this.addFormSingleEntry("TRM_PHASE", Joy.T(rs.getString("TRM_PHASE")));
-                
                 this.addFormSingleEntry("TRM_USAGE", Joy.T(rs.getString("TRM_USAGE")));
                 this.addFormSingleEntry("TRM_OWNER_EMAIL", Joy.T(rs.getString("TRM_OWNER_EMAIL"), "Not Defined"));
                 this.addFormSingleEntry("TRM_STEWARD_EMAIL", Joy.T(rs.getString("TRM_STEWARD_EMAIL"), "Not Defined"));
@@ -232,7 +231,7 @@ public class ReportByTerm extends ReportCommonAction {
                 if (displayInfa) {
                     String mmURL = myParam.getParamValue("infammurl").getStrValue();
                     this.addFormSingleEntry("INFA_MM_LINK",  getMetaManagerURLLink(false, mmURL, rs.getString("GLO_NAME"), rs.getString("TRM_NAME")));
-                    this.addFormSingleEntry("INFA_DIRECT_LINK",  getBGTermURLLink(rs.getString("TRM_FUNCKEY")));
+                    this.addFormSingleEntry("INFA_DIRECT_LINK",  getBGTermURLLink(rs.getString("OBJECT_ID")));
                 }
                 
                 if (rs.getString("TRM_CLUSTER_ID") != null)

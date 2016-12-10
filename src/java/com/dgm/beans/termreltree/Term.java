@@ -16,9 +16,7 @@
  */
 package com.dgm.beans.termreltree;
 
-import com.dgm.common.Utils;
 import com.joy.Joy;
-import com.joy.bo.BOFactory;
 import com.joy.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,15 +26,23 @@ import java.util.List;
  * This class manages all the data arround a business term
  * @author Benoit CAYLA (benoit@famillecayla.fr) 
  */
-public class TermBean {
-    private List<RelationshipBean> relationShips;
+public class Term {
+    private List<TermRelationShip> relationShips;
     private String type;
     private String name;
     private int key;
     private int level;
-    private BOFactory entities;
-    
-    public List<RelationshipBean> relationShips() {
+    private float score;
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public List<TermRelationShip> relationShips() {
         return relationShips;
     }
 
@@ -48,26 +54,24 @@ public class TermBean {
         this.level = Level;
     }
     
-    public void addRelationShip(RelationshipBean rel) {
+    public void addRelationShip(TermRelationShip rel) {
         relationShips.add(rel);
     }
 
-    public TermBean(BOFactory entities) {
+    public Term() {
         relationShips = new ArrayList();
         this.type = "";
         this.name = "";
         this.key = 0;
         this.level = 1;
-        this.entities = entities;
     }
     
-    public TermBean(BOFactory entities, String TermType, String Name, int Key, int Level) {
+    public Term(String TermType, String Name, int Key, int Level) {
         relationShips = new ArrayList();
         this.type = TermType;
         this.name = Name;
         this.key = Key;
         this.level = Level;
-        this.entities = entities;
     }
     
     public void setTermType(String TermType) {
@@ -95,7 +99,7 @@ public class TermBean {
     }
     
     private boolean checkifNodeAlreadyExist(Collection<JSONObject> _allNodes, 
-                         TermBean curTerm) {
+                         Term curTerm) {
        
         for (JSONObject node : _allNodes) {
             if (node.get("id").equals(curTerm.getKey()))
@@ -104,46 +108,46 @@ public class TermBean {
         return false;
     }
     
-    /*
-    * fonction récursive qui ajoute tous les nodes d'un arbre dans la collection
-    */
+    /**
+     * fonction récursive qui ajoute tous les nodes d'un arbre dans la collection
+     * @param _allNodes
+     * @param curTerm 
+     */
     private void addNode(Collection<JSONObject> _allNodes, 
-                         TermBean curTerm) {
-        // TermBean courant
+                         Term curTerm) {
+        // Term courant
         JSONObject node = new JSONObject();
-        node.put("id", curTerm.key);
-        node.put("label", curTerm.name);
-        node.put("termtype", curTerm.type);
-        node.put("title", "Type: " + curTerm.type);
-        node.put("shape", "image");
-        node.put("image", "./images/glossary/" + Utils.getTermTypeIcon(entities, curTerm.type));
+        node.put("id", curTerm.getKey());
+        node.put("label", curTerm.getName());
+        node.put("termtype", curTerm.getTermType());
+        node.put("score", String.valueOf(curTerm.getScore()));
+        node.put("title", "Type: " + curTerm.getTermType());
         _allNodes.add(node);
         
         // Parcours les relations du terme courant
-        for (RelationshipBean rel : curTerm.relationShips()) {
-            for (TermBean termsUnder : rel.terms()) {
+        for (TermRelationShip rel : curTerm.relationShips()) {
+            for (Term termsUnder : rel.terms()) {
                 if (!checkifNodeAlreadyExist(_allNodes, termsUnder))
                     addNode(_allNodes, termsUnder); // appel récurssif !
             }
         }
     }
 
-    /*
-    * fonction récursive qui ajoute tous les nodes d'un arbre dans la collection
-    */
+    /**
+     * fonction récursive qui ajoute tous les nodes d'un arbre dans la collection
+     * @param _allNodes
+     * @param Source 
+     */
     private void addRelationship(Collection<JSONObject> _allNodes, 
-                                 TermBean Source) {
+                                 Term Source) {
 
         // Parcours les relations du terme courant
-        for (RelationshipBean curRel : Source.relationShips()) {
-            for (TermBean Target : curRel.terms()) {
+        for (TermRelationShip curRel : Source.relationShips()) {
+            for (Term Target : curRel.terms()) {
                 JSONObject edge = new JSONObject();
-                edge.put("from", Source.key);
-                edge.put("to", Target.key);
+                edge.put("source", Source.key);
+                edge.put("target", Target.key);
                 edge.put("label", curRel.getName());
-                //edge.put("font", "{align: 'middle'}");
-                edge.put("length", 250);
-                edge.put("arrows", "to");
                 _allNodes.add(edge);
                 if (!Target.relationShips.isEmpty())
                     addRelationship(_allNodes, Target);
@@ -182,7 +186,7 @@ public class TermBean {
         // ajoute les éléments enfants si il y a
         if (!relationShips.isEmpty()) {
             Collection<JSONObject> items = new ArrayList<JSONObject>();
-            for (RelationshipBean rel : relationShips) {
+            for (TermRelationShip rel : relationShips) {
                 items.add(rel.getJSONBootstrapTreeStream(URI));
             }
             itemChildren.put("text", "[" + type + "] " + this.name);

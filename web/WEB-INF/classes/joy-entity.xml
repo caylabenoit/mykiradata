@@ -32,6 +32,7 @@ for the custom queries :
 
     <joy-entity-files>
         <joy-entity-file id="star">/entity/joy-entity-star.xml</joy-entity-file>
+        <joy-entity-file id="shared">/entity/joy-entity-shared.xml</joy-entity-file>
         <joy-entity-file id="src">/entity/joy-entity-src.xml</joy-entity-file>
         <joy-entity-file id="analytics-global">/entity/joy-entity-analytics-global.xml</joy-entity-file>
         <joy-entity-file id="analytics-term">/entity/joy-entity-analytics-term.xml</joy-entity-file>

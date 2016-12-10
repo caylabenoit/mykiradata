@@ -16,7 +16,7 @@
  */
 package com.dgm.form.analytics.maps;
 
-import com.dgm.beans.termreltree.TermBean;
+import com.dgm.beans.termreltree.Term;
 import com.dgm.beans.termreltree.TermTree;
 import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
@@ -70,12 +70,13 @@ public class MapForRelatedTerms extends ActionTypeForm {
         // récupère l'arbre à partir du terme
         //TermBean treefromRequestedTerm = getRelationShipTree(Term, 1, nbHops);
         TermTree mytree = new TermTree(this.getBOFactory());
-        TermBean firstTerm = mytree.build(Term, 1, nbHops);
+        Term firstTerm = mytree.build(Term, nbHops);
         if (firstTerm != null) {
             Nodes = firstTerm.getAllFlatTerms();
             Relationships = firstTerm.getAllFlatRelationships();
         }
         
+        this.addFormSingleEntry("ID", Term);
         this.addFormSingleEntry("NODES", Nodes);
         this.addFormSingleEntry("RELATIONSHIPS", Relationships);
         
@@ -135,22 +136,22 @@ public class MapForRelatedTerms extends ActionTypeForm {
     * @param level
     * @return 
     */
-    private TermBean getTermInfo (int PK, int level) {
+    private Term getTermInfo (int PK, int level) {
         try {
             IEntity entity = getBOFactory().getEntity("Analytics - Rel Term Info");
-            TermBean trm;
+            Term trm;
             
             entity.field("TRM_PK").setKeyValue(PK);
             ResultSet rs = entity.select();
             
             if (rs.next()) {
-                trm = new TermBean(this.getBOFactory(), 
-                                    rs.getString("GLO_NAME"), 
+                trm = new Term(rs.getString("GLO_NAME"), 
                                     rs.getString("TRM_NAME"), 
                                     rs.getInt("TRM_PK"),
                                     level);
+                trm.setScore(rs.getFloat("GLOBALSCORE"));
             } else {
-                trm = new TermBean(this.getBOFactory());
+                trm = new Term();
             }
             
             getBOFactory().closeResultSet(rs);
@@ -158,7 +159,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
             
         } catch (SQLException ex) {
             Joy.LOG().error(ex);
-            return new TermBean(getBOFactory());
+            return new Term();
         }
         
     }

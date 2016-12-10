@@ -110,7 +110,7 @@ function addButtonTaskList() {
     document.getElementById("lutasklist").appendChild(li);
     
     var li = document.createElement("LI");
-    li.innerHTML = "<A href='?object=tasks' class='text-center'><strong>Go to Task list</Strong></a>";
+    li.innerHTML = "<A href='?object=tasks&' class='text-center'><strong>Go to Task list</Strong></a>";
     document.getElementById("lutasklist").appendChild(li);
 }
 

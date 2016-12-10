@@ -9,7 +9,7 @@
 <head>
     <jsp:directive.include file="../../templates/head.jsp" />
   <style type="text/css">
-    #viz {
+    #mycontainer {
       border: 0px solid lightgray;
       /* overflow-y: scroll; */
     }
@@ -103,9 +103,7 @@
                             <div class="panel-heading"><i class="fa fa-pagelines fa-fw"></i>&nbsp;View the Business Terms Relationships here</div>
                             <!-- /.panel-heading -->
                             <div class="panel-body panel-resizable" id="containerplus">
-                                <div id="viz"></div>
-                                <div id="selectedValueURL" style="visibility:hidden"></div>
-                                <button class="btn btn-primary" type="button" onclick="goToDetail();">View details of selected term</button>
+                                <div id="mycontainer"></div>
                             </div>
                         </div>            
                     </div>    
@@ -132,14 +130,83 @@
             width: '100%'
         });
         $( "#btn1" ).button();
-        $( "#selectedValueURL" ).button();
-        
     });
     
-    $("#viz").height(600);
+    $("#mycontainer").height(600);
+    var nodes = null;
+    var edges = null;
+    var network = null;
+    var EDGE_LENGTH_MAIN = 150;
+    var EDGE_LENGTH_SUB = 50;
+
+    // Create a data table with nodes.
+    nodes = <joy:ActionValueTag name="NODES" />;
+    // Create a data table with links.
+    edges = <joy:ActionValueTag name="RELATIONSHIPS" />;
+    var data = { nodes: nodes, edges: edges };
+    
+    // Destroy the chart
+    function destroy() {
+        if (network !== null) {
+            network.destroy();
+            network = null;
+        }
+    }
+    
+    // First chart drawing
+    function draw() {
+        destroy();
+        // create a network
+        var container = document.getElementById('mycontainer');
+        var options = { autoResize: true,  
+                        height: '100%',
+                        physics: { enabled : false, "minVelocity": 0.75 },
+                        edges: {
+                            smooth: {
+                                type: 'cubicBezier',
+                                forceDirection: 'horizontal',
+                                roundness: 0.4
+                            }
+                        },
+                        layout: {
+                            hierarchical: {
+                                enabled : (document.getElementById("hierarchy").value == "none"  ? false : true ),
+                                direction: (document.getElementById("hierarchy").value == "none"  ? "UD" : document.getElementById("hierarchy").value ),
+                                sortMethod: "directed"
+                            }
+                        }
+                      };
+        
+        network = new vis.Network(container, data, options);
+        //network.setOptions({physics:{stabilization:{fit: false}}});
+        network.stabilize();
+        // Click on node
+        network.on("doubleClick", function (params) {
+            if (params.nodes != "cidCluster")
+                window.open('<joy:JoyBasicURL actiontype="display" object="byterm" />&term=' + params.nodes, '_self'); 
+        });
+    }
+    
+    // Regroup by term type
+    function clusterByTermType() {
+        network.setData(data);
+        _termtype = document.getElementById("termtypes").value;
+        var clusterOptionsByData = {
+            joinCondition:function(childOptions) {
+                return childOptions.termtype == _termtype;
+            },
+            clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database', label:' All ' + _termtype + ' '}
+        };
+        network.cluster(clusterOptionsByData);
+    }
+
+    // Effective draw
+    draw();
+    
     // Events
     $("#panelnetwork").on('onFullScreen.lobiPanel', function(ev, lobiPanel){
-        document.getElementById("viz").style.height = "100%";
+        document.getElementById("mycontainer").style.height = "100%";
+        network.redraw();
     });
     $("#containerplus").resize(function() {
         alert("ok");
@@ -153,53 +220,8 @@
     $('#hierarchy').select2({
         placeholder: "Select an Term Hierarchy type"
     });
-
-    // Create a data table with nodes.
-    nodes = <joy:ActionValueTag name="NODES" />;
-    // Create a data table with links.
-    edges = <joy:ActionValueTag name="RELATIONSHIPS" />;
     
-    // instantiate d3plus
-    var visualization = null;
-    
-    function goToDetail() {
-        var url = '<joy:JoyBasicURL actiontype="display" object="byterm" />&term=' + document.getElementById('selectedValueURL').value;
-        window.open(url, '_self');
-    }
-    
-    function draw() {
-        visualization = d3plus.viz()
-            .container("#viz")  // container DIV to hold the visualization
-            .type("rings")      // visualization type rings or network
-            .data(nodes)  // sample dataset to attach to nodes
-            .edges({
-                "label": "label",
-                "value": edges,
-                "arrows": true,
-                "size": 5
-            })
-            .focus(<joy:ActionValueTag name="ID" />)     // ID of the initial center node
-            .size("score")       // key to size the nodes
-            .id("id")         // key for which our data is unique on
-            .text("label")
-            .descs({
-              "label": "Business Term",  // key referring to data will use string as description
-              "termtype": "Business Term Type"   // multiple descriptions possible
-            })
-            .mouse({
-                "move": true,                        // key will also take custom function
-                "click": function(p1, p2){ 
-                      document.getElementById("selectedValueURL").value = p1.id;
-                      return true; 
-                  }
-            }) 
-            .resize(true)
-            .tooltip(["label", "termtype", "id", "score"])
-            .draw()             // finally, draw the visualization!
-    }
-    document.getElementById("selectedValueURL").value = <joy:ActionValueTag name="ID" />;
-    draw();
-</script>
+</SCRIPT>
 </body>
 </html>
                                 

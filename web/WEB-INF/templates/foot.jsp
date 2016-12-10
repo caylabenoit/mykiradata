@@ -15,11 +15,13 @@
 <!-- JQuery-UI --><script src="./joy-external/jquery-ui/dist/jquery-ui.min.js" type="text/javascript"></script>
 <!-- Lobipanel --><script src="./joy-external/bootstrap/components/lobipanel/dist/js/lobipanel.min.js" type="text/javascript"></script>
 <!-- Joy Ajax function --><script src="joy/ajax.js" type="text/javascript"></script>
-<!-- vis.js --><script type="text/javascript" src="./joy-external/vis/dist/vis.min.js"></script>
 <!-- charts.js --><script src="./joy-external/Chart.js/dist/Chart.bundle.min.js"></script>
 <!-- gauge.js --><script src="./joy-external/gauge.js/gauge.min.js"></script>
 <!-- dgm custom --><script src="./theme/js/dgmtaskmenu.js" type="text/javascript"></script>
 <!-- datetime-picker --><script src="./joy-external/bootstrap/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<!-- d3plus -->
+<script src="./joy-external/d3plus/d3.js"></script>
+<script src="./joy-external/d3plus/d3plus.js"></script>
 
 <!-- End of Includes directives -->      
 

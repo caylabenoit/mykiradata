@@ -25,24 +25,24 @@ import java.util.List;
  * This class manages relationships between the business terms
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class RelationshipBean {
+public class TermRelationShip {
     private String name;
     private int key;
     private int termKey;
-    private List<TermBean> relTerms;
+    private List<Term> relTerms;
 
-    public List<TermBean> terms() {
+    public List<Term> terms() {
         return relTerms;
     }
 
-    public RelationshipBean(String Name, int Key, int TermKey) {
+    public TermRelationShip(String Name, int Key, int TermKey) {
         relTerms = new ArrayList();
         this.name = Name;
         this.key = Key;
         this.termKey = TermKey;
     }
 
-    public void addRelatedTerm(TermBean term) {
+    public void addRelatedTerm(Term term) {
         relTerms.add(term);
     }
 
@@ -58,7 +58,7 @@ public class RelationshipBean {
         Collection<JSONObject> items = new ArrayList<>();
         JSONObject itemChildren = new JSONObject();
 
-        for (TermBean term : relTerms) {
+        for (Term term : relTerms) {
             items.add(term.getJSONObject(URI));
         }
         itemChildren.put("text", name);

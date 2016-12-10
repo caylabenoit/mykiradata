@@ -57,6 +57,7 @@ public class ReportByMetric extends ReportCommonConsolidated {
             entity.field("MET_PK").setKeyValue(Key);
         ResultSet rs = entity.select();
         this.loadSingle(rs);
+        
         getBOFactory().closeResultSet(rs);
     }
 
@@ -65,7 +66,7 @@ public class ReportByMetric extends ReportCommonConsolidated {
      * @param Key 
      */
     private void loadCurrentValue(int Key) {
-        IEntity entity = getBOFactory().getEntity("Last Facts Only"); //LASTONLY_ALL_SCORECARDS");
+        IEntity entity = getBOFactory().getEntity("Last Facts Only"); 
         if (Key != 0)
             entity.field("MET_FK").setKeyValue(Key);
         entity.useOnlyTheseFields("FRS_VALID_ROWS", "FRS_INVALID_ROWS","FRS_TOTALROWS","FRS_KPI_SCORE", "FRS_WEIGHT", "FRS_COST");

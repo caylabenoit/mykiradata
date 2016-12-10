@@ -47,48 +47,60 @@
                                     <canvas id="LastRun"></canvas>
                                     <div id="barLegend" ></div>
                                 </div>
-                                <joy:JoyFormTag inline="true" object='bymetric' actiontype='display' name='myform'>
-                                <div class="form-group col-lg-12">
-                                    <label>Change Metric:</label>
-                                    <joy:ActionComboBoxTag name="metric" CSSClass="js-states form-control" />
-                                    <joy:JoyFormButtonTag id="btn1" label="Change" submit="true" CSSClass="btn btn-primary" />
-                                </div>
-                                </joy:JoyFormTag>
                             </div>
                         </div>                
                     </div> 
                     <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><UI:dgmGlyphe name="metric" />Metric Scores</div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label>Current KPI:&nbsp;</label>
-                                    <joy:ActionValueTag name="FRS_KPI_SCORE" />%
-                                </div>   
-                                <div class="form-group">
-                                    <label>Invalid rows:&nbsp;</label>
-                                    <joy:ActionValueTag name="FRS_INVALID_ROWS" />
-                                </div>  
-                                <div class="form-group">
-                                    <label>Valid rows:&nbsp;</label>
-                                    <joy:ActionValueTag name="FRS_VALID_ROWS" />
-                                </div>  
-                                <div class="form-group">
-                                    <label>Total rows:&nbsp;</label>
-                                    <joy:ActionValueTag name="FRS_TOTALROWS" />
-                                </div>  
-                                <div class="form-group">
-                                    <label>Cost:&nbsp;</label>
-                                    <joy:ActionValueTag name="FRS_COST" />
-                                </div>  
-                                <div class="form-group">
-                                    <label>Last run:&nbsp;</label>
-                                    <joy:ActionValueTag name="FRS_DATETIME_LOAD" />
-                                </div>
+                        <div class="row">
+                            <div class="col-lg-12">&nbsp;<p></div>
+                            <div class="col-lg-12">
+                                    <joy:JoyFormTag inline="true" object='bymetric' actiontype='display' name='myform'>
+                                    <div class="form-group col-lg-12">
+                                        <label>Change Metric:</label>
+                                        <joy:ActionComboBoxTag name="metric" CSSClass="js-states form-control" />
+                                        <joy:JoyFormButtonTag id="btn1" label="Change" submit="true" CSSClass="btn btn-primary" />
+                                    </div>
+                                    </joy:JoyFormTag>
                             </div>
-                        </div>            
-                    </div>   
+                            <div class="col-lg-12">&nbsp;<p></div>
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><UI:dgmGlyphe name="metric" />Metric Scores</div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>Current Score:&nbsp;</label>
+                                            <joy:ActionValueTag name="FRS_KPI_SCORE" />%
+                                        </div>   
+                                        <div class="form-group">
+                                            <label>Invalid rows:&nbsp;</label>
+                                            <joy:ActionValueTag name="FRS_INVALID_ROWS" />
+                                        </div>  
+                                        <div class="form-group">
+                                            <label>Valid rows:&nbsp;</label>
+                                            <joy:ActionValueTag name="FRS_VALID_ROWS" />
+                                        </div>  
+                                        <div class="form-group">
+                                            <label>Total rows:&nbsp;</label>
+                                            <joy:ActionValueTag name="FRS_TOTALROWS" />
+                                        </div>  
+                                        <div class="form-group">
+                                            <label>Cost:&nbsp;</label>
+                                            <joy:ActionValueTag name="FRS_COST" />
+                                        </div>  
+                                        <div class="form-group">
+                                            <label>Imported:&nbsp;</label>
+                                            <joy:ActionValueTag name="FRS_DATETIME_LOAD" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Used by:&nbsp;</label>
+                                            <a href="<joy:JoyBasicURL object="byterm" actiontype="display" />&term=<joy:ActionValueTag name="TRM_FK" />"><joy:ActionValueTag name="TRM_NAME" /></a>
+                                        </div> 
+                                    </div>
+                                </div>            
+                            </div>  
+                        </div> 
+                   </div>   
                 </div>  
                             
                 <div class="row">

@@ -84,6 +84,7 @@
         <map to="TRM_STATUS" from="TERM_STATUS" />
         <map to="TRM_NAME" from="term_name" />
         <map to="TRM_FUNCKEY" from="term_funckey" />
+        <map to="OBJECT_ID" from="term_funckey" />
         <map to="TRM_DESCRIPTION" from="term_description" />
         <map to="TRM_USAGE" from="term_usage" />
         <map to="TRM_EXAMPLE" from="term_example" />

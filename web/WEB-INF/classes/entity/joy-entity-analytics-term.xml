@@ -65,6 +65,7 @@
         <joy-field alias="C">CAT_PK</joy-field>
         <joy-field alias="T">OBJECT_ID</joy-field>
         <joy-field alias="TT">TRT_NAME</joy-field>
+        <joy-field alias="T">TRM_FUNCKEY</joy-field>
         <joy-entity alias="T">DIM_TERM</joy-entity>
         <joy-join type="LEFT">
             <joy-entity alias="RTM">REL_TERM_METRIC</joy-entity>
@@ -84,16 +85,6 @@
         </joy-join>
     </joy-composite>
 
-    <joy-customquery name="Analytics - Terms Global Score Calculation">
-        select TRM_FK, round(sum(FRS_KPI_SCORE*DQX_WEIGHT)/max(GLOBALSUM.SC), 2) AS GLOBALSCORE
-        from (  select * 
-                from FACT_GOVERNANCE, 
-                     ( select distinct FIRST_VALUE(frs_pk) OVER(PARTITION BY TRM_FK, MET_FK, DQX_FK, ORI_FK, CON_FK, DSO_FK ORDER BY JOB_FK DESC) As frs_pk 
-                       from FACT_GOVERNANCE) A
-                Where FACT_GOVERNANCE.frs_pk = A.FRS_PK) X, DIM_DQAXIS, (Select sum(DQX_WEIGHT) SC from DIM_DQAXIS) GLOBALSUM
-        where X.DQX_FK = DIM_DQAXIS.DQX_PK
-        group by TRM_FK
-        order by X.TRM_FK
-    </joy-customquery>
+
     
 </joy-entities>
