@@ -131,15 +131,16 @@ public class RelTermMetricAction extends ActionTypeForm {
     @Override
     public String add() {
         // Ajout d'un nouveau terme
-        if (!getStrArgumentValue("TERM_NAME").equals("")) {
-            int iCluster = daoAddTerm(getStrArgumentValue("TERM_NAME"));
+        if (!getStrArgumentValue("NEW_TERM").equals("")) {
+            int iCluster = daoAddTerm(getStrArgumentValue("NEW_TERM"));
             if (iCluster > 0) {
                 this.addDisplayMessageInfo("00_ADDED_RELTERMMETRIC_OK");
                 AutoLink();
             }
             this.setNewArgument("TRM_CLUSTER_ID", iCluster);
+            return this.edit(); 
         }
-        return this.edit(); 
+        return this.list(); 
     }
 
     /**

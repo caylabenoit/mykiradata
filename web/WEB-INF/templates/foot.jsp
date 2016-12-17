@@ -19,9 +19,7 @@
 <!-- gauge.js --><script src="./joy-external/gauge.js/gauge.min.js"></script>
 <!-- dgm custom --><script src="./theme/js/dgmtaskmenu.js" type="text/javascript"></script>
 <!-- datetime-picker --><script src="./joy-external/bootstrap/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
-<!-- d3plus -->
-<script src="./joy-external/d3plus/d3.js"></script>
-<script src="./joy-external/d3plus/d3plus.js"></script>
+<!-- vis.js --><script type="text/javascript" src="./joy-external/vis-4.17.0/vis.min.js"></script>
 
 <!-- End of Includes directives -->      
 

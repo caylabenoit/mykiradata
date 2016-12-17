@@ -42,7 +42,7 @@ public class TermRelationShip {
         this.termKey = TermKey;
     }
 
-    public void addRelatedTerm(Term term) {
+    public void addTerm(Term term) {
         relTerms.add(term);
     }
 
@@ -54,6 +54,11 @@ public class TermRelationShip {
         return key;
     }
 
+    /**
+     * For bootstrap tree viewing (not for vis.js)
+     * @param URI
+     * @return 
+     */
     public JSONObject getJSONBootstrapTreeStream(String URI) {
         Collection<JSONObject> items = new ArrayList<>();
         JSONObject itemChildren = new JSONObject();

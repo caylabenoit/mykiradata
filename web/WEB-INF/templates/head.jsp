@@ -28,6 +28,7 @@
 <!-- datetime-picker --><link href="./joy-external/bootstrap/components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
 <!-- styles Menu DGM --><link href="./theme/css/dgmtaskmenu.css" rel="stylesheet" type="text/css"/>
 <!-- styles DGM --><link href="./theme/css/global.css" rel="stylesheet" type="text/css"/>
+<!-- vis.js --><link href="./joy-external/vis-4.17.0/vis.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Custom Bootstrap Theme CSS -->
 <link href="./theme/css/theme.css" rel="stylesheet">

@@ -27,7 +27,8 @@ import java.util.List;
  * @author Benoit CAYLA (benoit@famillecayla.fr) 
  */
 public class Term {
-    private List<TermRelationShip> relationShips;
+    private List<TermRelationShip> childs;
+    private List<TermRelationShip> parents;
     private String type;
     private String name;
     private int key;
@@ -43,7 +44,7 @@ public class Term {
     }
 
     public List<TermRelationShip> relationShips() {
-        return relationShips;
+        return childs;
     }
 
     public int getLevel() {
@@ -54,12 +55,17 @@ public class Term {
         this.level = Level;
     }
     
-    public void addRelationShip(TermRelationShip rel) {
-        relationShips.add(rel);
+    public void addChild(TermRelationShip rel) {
+        childs.add(rel);
     }
-
+    
+    public void addParent(TermRelationShip rel) {
+        parents.add(rel);
+    }
+    
     public Term() {
-        relationShips = new ArrayList();
+        childs = new ArrayList();
+        parents = new ArrayList();
         this.type = "";
         this.name = "";
         this.key = 0;
@@ -67,7 +73,8 @@ public class Term {
     }
     
     public Term(String TermType, String Name, int Key, int Level) {
-        relationShips = new ArrayList();
+        childs = new ArrayList();
+        parents = new ArrayList();
         this.type = TermType;
         this.name = Name;
         this.key = Key;
@@ -98,7 +105,13 @@ public class Term {
         return key;
     }
     
-    private boolean checkifNodeAlreadyExist(Collection<JSONObject> _allNodes, 
+    /**
+     * Check if the node already exists and return true if yes
+     * @param _allNodes
+     * @param curTerm
+     * @return 
+     */
+    private boolean checkIfNodeAlreadyExist(Collection<JSONObject> _allNodes, 
                          Term curTerm) {
        
         for (JSONObject node : _allNodes) {
@@ -109,74 +122,138 @@ public class Term {
     }
     
     /**
-     * fonction récursive qui ajoute tous les nodes d'un arbre dans la collection
-     * @param _allNodes
-     * @param curTerm 
+     * Return the color for the Term box
+     * @param curTerm
+     * @return 
      */
-    private void addNode(Collection<JSONObject> _allNodes, 
-                         Term curTerm) {
-        // Term courant
+    private String getBoxColor(float myScore) {
+        String myColor = Joy.PARAMETERS().getParameter("ColorBad").getValue().toString();
+        if (myScore > 0) {
+            int iBad = 30;
+            int iWarning = 50;
+            try {
+                iBad = (Joy.PARAMETERS().getParameter("thresold_bad") == null ? 30 : Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString()));
+                iWarning = (Joy.PARAMETERS().getParameter("thresold_good") == null ? 50 : Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString()));
+            } catch (NumberFormatException e) {}
+            myColor = Joy.PARAMETERS().getParameter("ColorBad").getValue().toString();
+            if (myScore >= iBad && myScore < iWarning) 
+                myColor = Joy.PARAMETERS().getParameter("ColorWarning").getValue().toString();
+            else if (myScore >= iWarning)
+                myColor = Joy.PARAMETERS().getParameter("ColorGood").getValue().toString();
+        } else { // Score not calculated
+            myColor = Joy.PARAMETERS().getParameter("ColorNoMove").getValue().toString();
+        }
+        return Joy.RGBA(myColor, "1");
+    }
+    
+    /**
+     * return the Box texts
+     * @param curTerm
+     * @return 
+     */
+    private String getBoxLabel(Term curTerm) {
+        String myTitle = "[ " + curTerm.getName() + " ]";
+        myTitle += "\n";
+        myTitle += titleFiller(myTitle) + "\n\n";
+        myTitle += "Type: " + curTerm.getTermType() + "\n";
+        if (curTerm.getScore() > 0) // Score calculated
+            myTitle += "Score: " + String.valueOf(curTerm.getScore()) + " %";
+        else
+            myTitle += "No Score";
+        
+        return myTitle;
+    }
+    
+    /**
+     * Resursive function to add all the terms (nodes) for displaying
+     * Display only with vis.js (not for build)
+     * @param _allNodes Term list
+     * @param curTerm term
+     */
+    private void recurGetNextNode(Collection<JSONObject> _allNodes, Term curTerm) {
+
+        String myTerm = getBoxLabel(curTerm);
+        String myColor = getBoxColor(curTerm.getScore());
+
+        // Other box attributes
         JSONObject node = new JSONObject();
         node.put("id", curTerm.getKey());
-        node.put("label", curTerm.getName());
+        node.put("label", myTerm);
         node.put("termtype", curTerm.getTermType());
         node.put("score", String.valueOf(curTerm.getScore()));
-        node.put("title", "Type: " + curTerm.getTermType());
+        node.put("title", curTerm.getName());
+        node.put("color", myColor);
+        node.put("shape", "box");
+        node.put("hasscore", (curTerm.getScore() > 0 ? "yes" : "no"));
         _allNodes.add(node);
         
-        // Parcours les relations du terme courant
+        // Go through the current term's childs
         for (TermRelationShip rel : curTerm.relationShips()) {
             for (Term termsUnder : rel.terms()) {
-                if (!checkifNodeAlreadyExist(_allNodes, termsUnder))
-                    addNode(_allNodes, termsUnder); // appel récurssif !
+                if (!checkIfNodeAlreadyExist(_allNodes, termsUnder))
+                    recurGetNextNode(_allNodes, termsUnder); 
             }
         }
     }
 
     /**
-     * fonction récursive qui ajoute tous les nodes d'un arbre dans la collection
+     * Add the "-" to the entire box length
+     * @param label get for length
+     * @return  "------" with the same size as label
+     */
+    private String titleFiller(String label) {
+        String retVal = "";
+        for (int i=0; i < label.length()-1; i++) 
+            retVal += "_";
+        return retVal;
+    }
+    
+    /**
+     * Resursive function to add all the relationships (edges) for displaying
+     * Display only with vis.js (not for build)
      * @param _allNodes
      * @param Source 
      */
-    private void addRelationship(Collection<JSONObject> _allNodes, 
-                                 Term Source) {
+    private void recurGetNextEdge(Collection<JSONObject> _allNodes,  Term Source) {
 
         // Parcours les relations du terme courant
         for (TermRelationShip curRel : Source.relationShips()) {
             for (Term Target : curRel.terms()) {
                 JSONObject edge = new JSONObject();
-                edge.put("source", Source.key);
-                edge.put("target", Target.key);
+                edge.put("from", Source.key);
+                edge.put("to", Target.key);
                 edge.put("label", curRel.getName());
+                edge.put("arrows", "to");
+                
                 _allNodes.add(edge);
-                if (!Target.relationShips.isEmpty())
-                    addRelationship(_allNodes, Target);
+                if (!Target.childs.isEmpty())
+                    recurGetNextEdge(_allNodes, Target);
             }
         }
     }
     
     /**
      * For vis.js viewing
-     * @return 
+     * @return all the entities
      */
     public String getAllFlatTerms() {
         Collection<JSONObject> allNodes = new ArrayList<JSONObject>();
-        addNode(allNodes, this);
+        recurGetNextNode(allNodes, this);
         return allNodes.toString();
     }
     
     /**
      * For vis.js viewing
-     * @return 
+     * @return ann the edges
      */
     public String getAllFlatRelationships() {
         Collection<JSONObject> allEdges = new ArrayList<JSONObject>();
-        addRelationship(allEdges, this);
+        recurGetNextEdge(allEdges, this);
         return allEdges.toString();
     }
     
     /**
-     * For tree viewing
+     * For bootstrap tree viewing (not for vis.js)
      * @param URI of the images
      * @return 
      */
@@ -184,9 +261,9 @@ public class Term {
         JSONObject itemChildren = new JSONObject();
         
         // ajoute les éléments enfants si il y a
-        if (!relationShips.isEmpty()) {
+        if (!childs.isEmpty()) {
             Collection<JSONObject> items = new ArrayList<JSONObject>();
-            for (TermRelationShip rel : relationShips) {
+            for (TermRelationShip rel : childs) {
                 items.add(rel.getJSONBootstrapTreeStream(URI));
             }
             itemChildren.put("text", "[" + type + "] " + this.name);

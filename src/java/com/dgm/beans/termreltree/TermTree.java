@@ -33,9 +33,12 @@ public class TermTree {
         this.entities = entities;
     }
     
-    /*
-    * récupère les données d'un terme
-    */
+    /**
+     * Collect the term data
+     * @param PK TRM_PK ID
+     * @param level level max for gathering the childs
+     * @return 
+     */
     private Term getTermInfo(int PK, int level) {
         try {
             IEntity entity = entities.getEntity("Analytics - Rel Term Info");
@@ -45,11 +48,14 @@ public class TermTree {
             ResultSet rs = entity.select();
             
             if (rs.next()) {
+                float myScore = -1;
                 trm = new Term(rs.getString("GLO_NAME"), 
                                     rs.getString("TRM_NAME"), 
                                     rs.getInt("TRM_PK"),
                                     level);
-                trm.setScore(rs.getFloat("GLOBALSCORE"));
+                if (rs.getObject("GLOBALSCORE") != null)
+                    myScore = rs.getFloat("GLOBALSCORE");
+                trm.setScore(myScore);
             } else 
                 trm = new Term();
 
@@ -66,26 +72,53 @@ public class TermTree {
     
     /**
      * Build the terms & relationship tree beginning by the TRM_PK = myTerm ID
-     * @param myTerm        Origin's term PK
+     * @param myTermID        Origin's term PK
      * @param levelMax      Max Depth
      * @return 
      */
-    public Term build(int myTerm, 
-                          int levelMax) {
-        return recurBuild(myTerm, 1, levelMax);
+    public Term build(int myTermID, int levelMax) {
+        Term myTerm = recurTermChildsBuild(myTermID, 1, levelMax);
+        return myTerm;
     }
     
     /**
-     * Build the terms & relationship tree recursively
+     * Add the Terms parents
+     * @param requestedTerm requested term
+     */
+    private void addParents(Term requestedTerm) {
+        try {
+            IEntity entity = entities.getEntity("Analytics - Rel Term Relationships");
+            entity.field("TERM_PK_TARGET").setKeyValue(requestedTerm.getKey());
+            entity.addSort("REL_NAME");
+            ResultSet rs = entity.select();
+            
+            while (rs.next()) {
+                Term parent = new Term();
+                parent.setName(rs.getString("TERM_SOURCE"));
+                parent.setTermType(rs.getString("GLO_NAME_SOURCE"));
+                Joy.LOG().debug( "Add Parent Term for  " + rs.getInt("TERM_PK_TARGET"));
+                TermRelationShip  myRelationShip = new TermRelationShip(rs.getString("REL_NAME"), 
+                                                          rs.getInt("REL_FK"),
+                                                          requestedTerm.getKey());
+            }
+            entities.closeResultSet(rs);
+            
+        } catch (Exception e) {
+            Joy.LOG().error(e);
+        }
+    }
+    
+    /**
+     * Build the terms & relationship tree recursively 
+     * (not used for displaying)
      * @param myTerm        Origin's term PK
      * @param currentLevel  Current level (recursivity)
      * @param levelMax      Max Depth
-     * @return 
+     * @return first term
      */
-    private Term recurBuild(int myTerm, 
-                                int currentLevel, 
-                                int levelMax) {
-        boolean hadData = false;
+    private Term recurTermChildsBuild(int myTerm, 
+                                      int currentLevel, 
+                                      int levelMax) {
         
         try {
             Term ars = getTermInfo(myTerm, currentLevel);
@@ -94,34 +127,36 @@ public class TermTree {
                 return ars;
             }
             
-            // Récupère les relations
-            Joy.LOG().debug("Get relationships for  " + String.valueOf(myTerm));
+            // Get the relationships (childs only) for the current term into the db
+            Joy.LOG().debug("Get Term Childs for  " + String.valueOf(myTerm));
             IEntity entity = entities.getEntity("Analytics - Rel Term Relationships");
             entity.field("TERM_PK_SOURCE").setKeyValue(myTerm);
             entity.addSort("REL_NAME");
             ResultSet rs = entity.select();
             
             String rupture = "";
-            TermRelationShip currentFolder = null;
+            TermRelationShip myRelationShip = null;
 
+            // Go through all the relationships (childs) for this current term
             while (rs.next()) {
-                hadData = true;
                 ars.setName(rs.getString("TERM_SOURCE"));
                 ars.setTermType(rs.getString("GLO_NAME_SOURCE"));
-                if (!rupture.equalsIgnoreCase(rs.getString("REL_NAME")) || currentFolder == null) {
-                    // création d'un folder + term
+                if (!rupture.equalsIgnoreCase(rs.getString("REL_NAME")) || myRelationShip == null) {
+                    // Create a relationship (folder)
                     rupture = rs.getString("REL_NAME");
                     Joy.LOG().debug( "Add relationship for  " + rupture);
-                    currentFolder = new TermRelationShip(rs.getString("REL_NAME"), 
-                                                     rs.getInt("REL_FK"),
-                                                     myTerm);
-                    currentFolder.addRelatedTerm(recurBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax));
-                    ars.addRelationShip(currentFolder);
+                    myRelationShip = new TermRelationShip(rs.getString("REL_NAME"), 
+                                                          rs.getInt("REL_FK"),
+                                                          myTerm);
+                    Term myNextChild = recurTermChildsBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax);
+                    myRelationShip.addTerm(myNextChild);
+                    ars.addChild(myRelationShip);
                     
                 } else {
-                    // création d'un terme seul (dans le folder courant)
-                    Joy.LOG().debug( "Add Term for  " + rs.getInt("TERM_PK_TARGET"));
-                    currentFolder.addRelatedTerm(recurBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax));
+                    // No more relationships, just create a term alone
+                    Joy.LOG().debug( "Add Child Term for  " + rs.getInt("TERM_PK_TARGET"));
+                    Term myNextChild = recurTermChildsBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax);
+                    myRelationShip.addTerm(myNextChild);
                 }
             }
             entities.closeResultSet(rs);

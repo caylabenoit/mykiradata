@@ -75,7 +75,7 @@
     <app-parameter name="ColorGood" type="value">92,184,92</app-parameter>  
     <app-parameter name="ColorNoMove" type="value">220,220,220</app-parameter>  
     <app-parameter name="DefaultTermTypeIcon" type="value">favorite.png</app-parameter>
-    
+
     <!-- Business Glossary available icons / image names must be located in /images/glossary -->
     <app-parameter name="TermTypeIcons" type="list">
         <app_parameter-value name="">settings.png</app_parameter-value>

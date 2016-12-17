@@ -68,7 +68,6 @@ public class MapForRelatedTerms extends ActionTypeForm {
         } catch (Exception e) { nbHops = DEFAULT_NB_HOP;}
         
         // récupère l'arbre à partir du terme
-        //TermBean treefromRequestedTerm = getRelationShipTree(Term, 1, nbHops);
         TermTree mytree = new TermTree(this.getBOFactory());
         Term firstTerm = mytree.build(Term, nbHops);
         if (firstTerm != null) {

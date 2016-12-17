@@ -63,10 +63,20 @@
                                     </joy:ActionMatrixRowLoopTag> 
                                 </table>  
                                 <joy:JoyFormTag object='reltermmetric' actiontype='add' name='frmEditItem' inline="true">
-                                <div class="col-lg-12 form-group">
+                                <div class="col-lg-10 form-group">
                                     <label for="TERM_NAME">Add a new Business Term (select below)</label><P>
-                                    <joy:ActionComboBoxTag name="TERM_NAME" CSSClass="js-states form-control" />
-                                    <joy:JoyFormButtonTag id="btn1" label="<i class='fa fa-plus-circle'></i>&nbsp;Add new Business Term" CSSClass="btn btn-success" onclick="ValidateForm();" />
+                                    <div class="col-lg-5">
+                                        <joy:ActionComboBoxTag name="TERM_NAME" CSSClass="js-states form-control" />
+                                    </div>  
+                                    <div class="col-lg-1">
+                                        <joy:JoyFormButtonTag id="btnselect1" label=">" CSSClass="btn btn-default largeinput" onclick="document.getElementById('NEW_TERM').value = document.getElementById('TERM_NAME').value;" />
+                                    </div>  
+                                    <div class="col-lg-4">
+                                        <joy:ActionInputTextTag name="NEW_TERM" CSSClass="form-control" CSSId="NEW_TERM" placeholder="New Business Term" />
+                                    </div> 
+                                    <div class="col-lg-2">
+                                        <joy:JoyFormButtonTag id="btn1" label="<i class='fa fa-plus-circle'></i>&nbsp;Add new Business Term" CSSClass="btn btn-success" onclick="ValidateForm();" />
+                                    </div>
                                 </div>
                                 </joy:JoyFormTag>
                             </div>

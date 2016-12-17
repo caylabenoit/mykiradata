@@ -9,7 +9,7 @@
 <head>
     <jsp:directive.include file="../../templates/head.jsp" />
   <style type="text/css">
-    #viz {
+    #mycontainer {
       border: 0px solid lightgray;
       /* overflow-y: scroll; */
     }
@@ -46,11 +46,11 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading"><i class="fa fa-gears fa-fw"></i>&nbsp;Change the Business Terms Relationships view</div>
+                                    <div class="panel-heading"><i class="fa fa-gears fa-fw"></i>&nbsp;Business Terms Relationships view</div>
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
                                         <div class="dataTable_wrapper">
@@ -69,7 +69,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading"><i class="fa fa-gears fa-fw"></i>&nbsp;View Management</div>
+                                    <div class="panel-heading"><i class="fa fa-gears fa-fw"></i>&nbsp;Layout</div>
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
                                         <div class="dataTable_wrapper">
@@ -77,7 +77,7 @@
                                                 <label>Hierarchy type</label>
                                                 <SELECT  name="hierarchy"  class="js-states form-control"  id="hierarchy">
                                                     <OPTION Value='none'>None</OPTION>
-                                                    <OPTION Value='UD'>Up to Down</OPTION>
+                                                    <OPTION Value='UD' SELECTED>Up to Down</OPTION>
                                                     <OPTION Value='DU'>Down to Up</OPTION>
                                                     <OPTION Value='LR'>Left to Right</OPTION>
                                                     <OPTION Value='RL'>Right to Left</OPTION>
@@ -88,8 +88,13 @@
                                                 <joy:ActionComboBoxTag name="termtypes" CSSClass="js-states form-control" />
                                             </div>
                                             <div class="form-group">
-                                            <joy:JoyFormButtonTag id="btnC1" label="Cluster"  CSSClass="btn btn-primary" onclick="clusterByTermType()" />
-                                            <joy:JoyFormButtonTag id="btnC2" label="Reset Cluster"  CSSClass="btn btn-warning" onclick="draw()" />
+                                            <joy:JoyFormButtonTag id="btnC1" label="Group by Term type"  CSSClass="btn btn-primary" onclick="clusterByTermType()" />
+                                            </div>
+                                            <div class="form-group">
+                                            <joy:JoyFormButtonTag id="btnC3" label="Regroup no scores"  CSSClass="btn btn-primary" onclick="clusterNoScore()" />
+                                            </div>
+                                            <div class="form-group">
+                                                <joy:JoyFormButtonTag id="btnC2" label="Reset Groups"  CSSClass="btn btn-warning" onclick="draw()" />
                                             </div>
                                         </div>
                                     </div>
@@ -98,18 +103,30 @@
                         </div>      
                     </div>
                     
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <div class="panel panel-primary" id ="panelnetwork">
                             <div class="panel-heading"><i class="fa fa-pagelines fa-fw"></i>&nbsp;View the Business Terms Relationships here</div>
                             <!-- /.panel-heading -->
                             <div class="panel-body panel-resizable" id="containerplus">
-                                <div id="viz"></div>
-                                <div id="selectedValueURL" style="visibility:hidden"></div>
-                                <button class="btn btn-primary" type="button" onclick="goToDetail();">View details of selected term</button>
+                                <div id="mycontainer"></div>
                             </div>
                         </div>            
                     </div>    
-                    
+
+                    <div class="col-lg-2">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><i class="fa fa-gears fa-fw"></i>&nbsp;Business Terms</div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                          <div id="businesstermslist"></div>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                                                                   
                 </div> 
 
             </div><!-- /.container-fluid -->
@@ -132,14 +149,98 @@
             width: '100%'
         });
         $( "#btn1" ).button();
-        $( "#selectedValueURL" ).button();
-        
     });
     
-    $("#viz").height(600);
+    $("#mycontainer").height(600);
+    var nodes = null;
+    var edges = null;
+    var network = null;
+
+    var basicURL = '<joy:JoyBasicURL actiontype="display" object="byterm" />';
+    // Create a data table with nodes.
+    nodes = <joy:ActionValueTag name="NODES" />;
+    // Create a data table with links.
+    edges = <joy:ActionValueTag name="RELATIONSHIPS" />;
+    var data = { nodes: nodes, edges: edges };
+    
+    // Destroy the chart
+    function destroy() {
+        if (network !== null) {
+            network.destroy();
+            network = null;
+        }
+    }
+    
+    // First chart drawing
+    function draw() {
+        destroy();
+        // create a network
+        var container = document.getElementById('mycontainer');
+        var options = { 
+                        nodes: { borderWidth: 2, shadow:true },
+                        autoResize: true,  
+                        height: '100%',
+                        physics: { enabled : true, hierarchicalRepulsion : { nodeDistance : 250}},
+                        edges: {
+                            smooth: {
+                                type: 'cubicBezier',
+                                forceDirection: 'horizontal',
+                                roundness: 0.4
+                            }
+                        },
+                        layout: {
+                            improvedLayout : true,
+                            hierarchical: {
+                                enabled : (document.getElementById("hierarchy").value == "none"  ? false : true ),
+                                direction: (document.getElementById("hierarchy").value == "none"  ? "UD" : document.getElementById("hierarchy").value ),
+                                sortMethod: "hubsize", 
+                                nodeSpacing: 200
+                            }
+                        }
+                      };
+        
+        network = new vis.Network(container, data, options);
+        //network.setOptions({physics:{stabilization:{fit: false}}});
+        network.stabilize();
+        // Double Click on node
+        network.on("doubleClick", function (params) {
+            if (params.nodes != "cidCluster")
+                window.open(basicURL + '&term=' + params.nodes, '_self'); 
+        });
+    }
+    
+    // Regroup by term type
+    function clusterByTermType() {
+        network.setData(data);
+        _termtype = document.getElementById("termtypes").value;
+        var clusterOptionsByData = {
+            joinCondition:function(childOptions) {
+                return childOptions.termtype == _termtype;
+            },
+            clusterNodeProperties: { id:'cidCluster', borderWidth:3, shape:'database', label:' All ' + _termtype + ' '}
+        };
+        network.cluster(clusterOptionsByData);
+    }
+    
+    // Regroup all the not calculated scores
+    function clusterNoScore() {
+        network.setData(data);
+        var clusterOptionsByData = {
+            joinCondition:function(childOptions) {
+                return childOptions.hasscore == 'no';
+            },
+            clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database', label:' All Entities\nwithout scores ', color:"rgba(220,220,220,1)"}
+        };
+        network.cluster(clusterOptionsByData);
+    }
+    
+    // Effective draw
+    draw();
+    
     // Events
     $("#panelnetwork").on('onFullScreen.lobiPanel', function(ev, lobiPanel){
-        document.getElementById("viz").style.height = "100%";
+        document.getElementById("mycontainer").style.height = "100%";
+        network.redraw();
     });
     $("#containerplus").resize(function() {
         alert("ok");
@@ -153,53 +254,34 @@
     $('#hierarchy').select2({
         placeholder: "Select an Term Hierarchy type"
     });
+    
+    // List the business terms on the right pane
+    function listBusinessTerm() {
+        var displayTerms = "<UL>";
+        
+        for (var i = 0; i < nodes.length; i++) {
+            myScore = "";
+            if (nodes[i].score >= 0)
+                myScore = "<B>" +nodes[i].score + "% </B>";
+            displayTerms += "<LI><A href='#' onclick='hoverListNode(" + nodes[i].id + ");'>" + nodes[i].title + "</A>&nbsp;"+ myScore + "</LI>";
+        }
+        displayTerms += "</UL>"
+        document.getElementById("businesstermslist").innerHTML = displayTerms;
+    }
+    listBusinessTerm();
+    
+    function hoverListNode(nodeId) {
+        var options = {
+          scale: 1.1,
+          animation: {
+            duration: 1000,
+            easingFunction: 'linear'
+          }
+        };
+        network.focus(nodeId, options);
+    }
+</SCRIPT>
 
-    // Create a data table with nodes.
-    nodes = <joy:ActionValueTag name="NODES" />;
-    // Create a data table with links.
-    edges = <joy:ActionValueTag name="RELATIONSHIPS" />;
-    
-    // instantiate d3plus
-    var visualization = null;
-    
-    function goToDetail() {
-        var url = '<joy:JoyBasicURL actiontype="display" object="byterm" />&term=' + document.getElementById('selectedValueURL').value;
-        window.open(url, '_self');
-    }
-    
-    function draw() {
-        visualization = d3plus.viz()
-            .container("#viz")  // container DIV to hold the visualization
-            .type("rings")      // visualization type rings or network
-            .data(nodes)  // sample dataset to attach to nodes
-            .edges({
-                "label": "label",
-                "value": edges,
-                "arrows": true,
-                "size": 5
-            })
-            .focus(<joy:ActionValueTag name="ID" />)     // ID of the initial center node
-            .size("score")       // key to size the nodes
-            .id("id")         // key for which our data is unique on
-            .text("label")
-            .descs({
-              "label": "Business Term",  // key referring to data will use string as description
-              "termtype": "Business Term Type"   // multiple descriptions possible
-            })
-            .mouse({
-                "move": true,                        // key will also take custom function
-                "click": function(p1, p2){ 
-                      document.getElementById("selectedValueURL").value = p1.id;
-                      return true; 
-                  }
-            }) 
-            .resize(true)
-            .tooltip(["label", "termtype", "id", "score"])
-            .draw()             // finally, draw the visualization!
-    }
-    document.getElementById("selectedValueURL").value = <joy:ActionValueTag name="ID" />;
-    draw();
-</script>
 </body>
 </html>
                                 
