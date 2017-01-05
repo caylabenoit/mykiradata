@@ -116,7 +116,7 @@
                     <div class="col-lg-2">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="panel panel-default">
+                                <div class="panel panel-default panel-default-height600">
                                     <div class="panel-heading"><i class="fa fa-gears fa-fw"></i>&nbsp;Business Terms</div>
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
@@ -132,10 +132,16 @@
             </div><!-- /.container-fluid -->
         </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
-
+    
 <jsp:directive.include file="../../templates/foot.jsp" />
 
 <SCRIPT type='text/javascript'>
+    var idTerm = <joy:ActionValueTag name="ID" />;
+    var nbHop = <joy:ActionValueTag name="NBHOP" />;
+    var nameTerm = '<joy:ActionValueTag name="TRM_NAME" />';
+    var basicURL = '<joy:JoyBasicURL actiontype="display" object="byterm" />';
+    var basicURLZoom = '<joy:JoyBasicURL actiontype="display" object="mapbyterm" />';
+    
     $(document).ready(function(){
         $('#panelnetwork').lobiPanel({
            reload: false,
@@ -152,16 +158,8 @@
     });
     
     $("#mycontainer").height(600);
-    var nodes = null;
-    var edges = null;
+    var data = null;
     var network = null;
-
-    var basicURL = '<joy:JoyBasicURL actiontype="display" object="byterm" />';
-    // Create a data table with nodes.
-    nodes = <joy:ActionValueTag name="NODES" />;
-    // Create a data table with links.
-    edges = <joy:ActionValueTag name="RELATIONSHIPS" />;
-    var data = { nodes: nodes, edges: edges };
     
     // Destroy the chart
     function destroy() {
@@ -204,9 +202,20 @@
         network.stabilize();
         // Double Click on node
         network.on("doubleClick", function (params) {
-            if (params.nodes != "cidCluster")
-                window.open(basicURL + '&term=' + params.nodes, '_self'); 
+            if (params.nodes != "cidCluster") {
+                var url = basicURL + '&term=' + params.nodes;
+                var url2 = basicURLZoom + '&term=' + params.nodes;
+                var msg = '<i class="fa fa-sign-out fa-fw fa-2x"></i>&nbsp;<A href="' + url + '">Open Business Term Page</A><P>&nbsp;<P>';
+                var msg2 = '<i class="fa fa-search-plus fa-fw fa-2x"></i>&nbsp;<A href="' + url2 + '">Zoom on this Business Term</A>';
+                var dialog = bootbox.dialog({
+                    title: 'Business Term Action',
+                    message: msg + msg2,
+                    closeButton: true
+                });
+                dialog.modal();
+            }
         });
+        listBusinessTerm();
     }
     
     // Regroup by term type
@@ -234,9 +243,6 @@
         network.cluster(clusterOptionsByData);
     }
     
-    // Effective draw
-    draw();
-    
     // Events
     $("#panelnetwork").on('onFullScreen.lobiPanel', function(ev, lobiPanel){
         document.getElementById("mycontainer").style.height = "100%";
@@ -257,18 +263,22 @@
     
     // List the business terms on the right pane
     function listBusinessTerm() {
-        var displayTerms = "<UL>";
+        var displayTerms = "<UL class='termlistlu'>";
         
-        for (var i = 0; i < nodes.length; i++) {
+        for (var i = 0; i < data.nodes.length; i++) {
             myScore = "";
-            if (nodes[i].score >= 0)
-                myScore = "<B>" +nodes[i].score + "% </B>";
-            displayTerms += "<LI><A href='#' onclick='hoverListNode(" + nodes[i].id + ");'>" + nodes[i].title + "</A>&nbsp;"+ myScore + "</LI>";
+            if (data.nodes[i].score >= 0)
+                myScore = "<B>" + data.nodes[i].score + "% </B>";
+            else 
+                myScore = "N.C.";
+            displayTerms += "<LI class='listtermli'><DIV class='termblocli'>"; 
+            displayTerms += "<DIV class='listtermli_label'><A href='#' onclick='hoverListNode(" + data.nodes[i].id + ");'>" + data.nodes[i].title + "</A></DIV>";
+            displayTerms += "<DIV class='listtermli_score'>" + myScore + "</DIV>";
+            displayTerms += "</DIV></LI>";
         }
         displayTerms += "</UL>"
         document.getElementById("businesstermslist").innerHTML = displayTerms;
     }
-    listBusinessTerm();
     
     function hoverListNode(nodeId) {
         var options = {
@@ -280,6 +290,18 @@
         };
         network.focus(nodeId, options);
     }
+
+    // Load the map asynchrounously
+    function callbackSuccess(content, tag) {
+        switch(tag) {
+            case 'map':
+                data = content;
+                draw();
+                break;
+            default:
+        }
+    }
+    loadJSON('./rest/termsgraph/' + nbHop + '/' + idTerm, 'map');
 </SCRIPT>
 
 </body>

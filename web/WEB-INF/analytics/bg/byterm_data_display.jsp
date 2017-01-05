@@ -52,7 +52,7 @@
                                     <p><UI:dgmGlyphe name="term" /><B>Type :</B> <joy:ActionValueTag name="TRT_NAME" /></p>
                                     <p><UI:dgmGlyphe name="user" /><B>Owner :</B> <joy:ActionValueTag name="TRM_OWNER_EMAIL" /></p>
                                     <p><UI:dgmGlyphe name="user" /><B>Steward :</B> <joy:ActionValueTag name="TRM_STEWARD_EMAIL" /></p>
-                                    <p><UI:dgmGlyphe name="businessmap" /><A href="<joy:JoyBasicURL object="mapbyterm" actiontype="display" />&nbhops=3&term=<joy:ActionValueTag name="TRM_PK" />">Relationship map</A></p>
+                                    <p><UI:dgmGlyphe name="businessmap" /><A href="<joy:JoyBasicURL object="mapbyterm" actiontype="display" />&nbhops=2&term=<joy:ActionValueTag name="TRM_PK" />">Relationship map</A></p>
                                     <p><UI:dgmGlyphe name="common-configuration" /><A href="<joy:ActionValueTag name="CONFIG_TERM_LINK" />">Term Configuration</A></p>
                                 </div>
                             </div> 

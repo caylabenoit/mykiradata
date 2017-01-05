@@ -16,27 +16,29 @@
  */
 package com.dgm.rest.actions;
 
-import com.dgm.beans.termreltree.TermTree;
-import com.dgm.beans.termreltree.Term;
+import com.dgm.termrelationship.mapview.Term;
 import com.joy.mvc.actionTypes.ActionTypeREST;
 
 /**
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  * retourne la hiérarchie du terme avec ses relations pour un affichage avec vis.js
- * http://localhost:18180/GovManagementTool/rest/relterm/[TRM_PK]
+ * http://localhost:18180/dgm/rest/termsgraph/[depth]/[Term Key]
+ * http://localhost:18080/dgm/rest/termsgraph/3/1
  */
-public class RESTActionRelTerms extends ActionTypeREST{
+public class RESTActionTermsGraph extends ActionTypeREST{
 
     @Override
     public String restGet() {
-        
-        String stream = "[ {\"text\": \"Nothing\"} ]";
-        TermTree mytree = new TermTree(this.getBOFactory());
-        Term ars = mytree.build(this.getIntArgumentValue("P2"), 
-                                    this.getIntArgumentValue("P1"));
-        stream = "[ " + ars.getJSONObject(this.getURI() + "/images/glossary/").toString() + "]"; //To change body of generated methods, choose Tools | Templates.
-        
-        return stream;
+        try {
+            Term term = new Term(this.getBOFactory(), 
+                                 this.getIntArgumentValue("P2"), 
+                                 this.getIntArgumentValue("P1"),
+                                 true);
+
+            return term.getJSONTree();
+        } catch (Exception e) {
+            return "[ {\"text\": \"No data\"} ]";
+        }
     }
     
 }

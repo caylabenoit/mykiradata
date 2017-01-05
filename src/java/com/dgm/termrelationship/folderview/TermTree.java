@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.beans.termreltree;
+package com.dgm.termrelationship.folderview;
 
 import com.joy.Joy;
 import com.joy.bo.BOFactory;
@@ -39,17 +39,17 @@ public class TermTree {
      * @param level level max for gathering the childs
      * @return 
      */
-    private Term getTermInfo(int PK, int level) {
+    private TermNode getTermInfo(int PK, int level) {
         try {
             IEntity entity = entities.getEntity("Analytics - Rel Term Info");
-            Term trm;
+            TermNode trm;
             
             entity.field("TRM_PK").setKeyValue(PK);
             ResultSet rs = entity.select();
             
             if (rs.next()) {
                 float myScore = -1;
-                trm = new Term(rs.getString("GLO_NAME"), 
+                trm = new TermNode(rs.getString("GLO_NAME"), 
                                     rs.getString("TRM_NAME"), 
                                     rs.getInt("TRM_PK"),
                                     level);
@@ -57,7 +57,7 @@ public class TermTree {
                     myScore = rs.getFloat("GLOBALSCORE");
                 trm.setScore(myScore);
             } else 
-                trm = new Term();
+                trm = new TermNode();
 
             
             entities.closeResultSet(rs);
@@ -65,7 +65,7 @@ public class TermTree {
             
         } catch (SQLException ex) {
             Joy.LOG().info( ex);
-            return new Term();
+            return new TermNode();
         }
         
     }
@@ -76,37 +76,11 @@ public class TermTree {
      * @param levelMax      Max Depth
      * @return 
      */
-    public Term build(int myTermID, int levelMax) {
-        Term myTerm = recurTermChildsBuild(myTermID, 1, levelMax);
+    public TermNode build(int myTermID, int levelMax) {
+        TermNode myTerm = recurTermChildsBuild(myTermID, 1, levelMax);
         return myTerm;
     }
-    
-    /**
-     * Add the Terms parents
-     * @param requestedTerm requested term
-     */
-    private void addParents(Term requestedTerm) {
-        try {
-            IEntity entity = entities.getEntity("Analytics - Rel Term Relationships");
-            entity.field("TERM_PK_TARGET").setKeyValue(requestedTerm.getKey());
-            entity.addSort("REL_NAME");
-            ResultSet rs = entity.select();
-            
-            while (rs.next()) {
-                Term parent = new Term();
-                parent.setName(rs.getString("TERM_SOURCE"));
-                parent.setTermType(rs.getString("GLO_NAME_SOURCE"));
-                Joy.LOG().debug( "Add Parent Term for  " + rs.getInt("TERM_PK_TARGET"));
-                TermRelationShip  myRelationShip = new TermRelationShip(rs.getString("REL_NAME"), 
-                                                          rs.getInt("REL_FK"),
-                                                          requestedTerm.getKey());
-            }
-            entities.closeResultSet(rs);
-            
-        } catch (Exception e) {
-            Joy.LOG().error(e);
-        }
-    }
+   
     
     /**
      * Build the terms & relationship tree recursively 
@@ -116,12 +90,12 @@ public class TermTree {
      * @param levelMax      Max Depth
      * @return first term
      */
-    private Term recurTermChildsBuild(int myTerm, 
-                                      int currentLevel, 
-                                      int levelMax) {
+    private TermNode recurTermChildsBuild(int myTerm, 
+                                          int currentLevel, 
+                                          int levelMax) {
         
         try {
-            Term ars = getTermInfo(myTerm, currentLevel);
+            TermNode ars = getTermInfo(myTerm, currentLevel);
             if (currentLevel == levelMax) {
                 Joy.LOG().debug( "End of Term recursivity at level " + String.valueOf(currentLevel));
                 return ars;
@@ -135,7 +109,7 @@ public class TermTree {
             ResultSet rs = entity.select();
             
             String rupture = "";
-            TermRelationShip myRelationShip = null;
+            TermFolder myRelationShip = null;
 
             // Go through all the relationships (childs) for this current term
             while (rs.next()) {
@@ -145,17 +119,17 @@ public class TermTree {
                     // Create a relationship (folder)
                     rupture = rs.getString("REL_NAME");
                     Joy.LOG().debug( "Add relationship for  " + rupture);
-                    myRelationShip = new TermRelationShip(rs.getString("REL_NAME"), 
+                    myRelationShip = new TermFolder(rs.getString("REL_NAME"), 
                                                           rs.getInt("REL_FK"),
                                                           myTerm);
-                    Term myNextChild = recurTermChildsBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax);
+                    TermNode myNextChild = recurTermChildsBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax);
                     myRelationShip.addTerm(myNextChild);
                     ars.addChild(myRelationShip);
                     
                 } else {
                     // No more relationships, just create a term alone
                     Joy.LOG().debug( "Add Child Term for  " + rs.getInt("TERM_PK_TARGET"));
-                    Term myNextChild = recurTermChildsBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax);
+                    TermNode myNextChild = recurTermChildsBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax);
                     myRelationShip.addTerm(myNextChild);
                 }
             }
@@ -165,7 +139,7 @@ public class TermTree {
         } catch (SQLException e) {
             Joy.LOG().error(e);
         }
-        return new Term();
+        return new TermNode();
     }
     
 }

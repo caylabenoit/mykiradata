@@ -377,7 +377,7 @@ and open the template in the editor.
     <actionRequest>
         <object>relterm</object>
         <objecttype>rest</objecttype>
-        <action>com.dgm.rest.actions.RESTActionRelTerms</action>
+        <action>com.dgm.rest.actions.RESTActionTermsInFolders</action>
     </actionRequest>
 
     <actionRequest>
@@ -410,4 +410,12 @@ and open the template in the editor.
         <objecttype>rest</objecttype>
         <action>com.dgm.rest.actions.RESTSearch</action>
     </actionRequest>
+    
+    <actionRequest>
+        <object>termsgraph</object>
+        <objecttype>rest</objecttype>
+        <action>com.dgm.rest.actions.RESTActionTermsGraph</action>
+    </actionRequest>
+    
+    
 </joy-actions>

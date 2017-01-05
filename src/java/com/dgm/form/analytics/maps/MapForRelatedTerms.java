@@ -16,14 +16,14 @@
  */
 package com.dgm.form.analytics.maps;
 
-import com.dgm.beans.termreltree.Term;
-import com.dgm.beans.termreltree.TermTree;
 import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
 import com.joy.mvc.formbean.JoyFormVectorEntry;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import com.joy.bo.IEntity;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,7 +31,7 @@ import com.joy.bo.IEntity;
  */
 public class MapForRelatedTerms extends ActionTypeForm {
     private static final int NB_HOP_MAX = 5;
-    private static final int DEFAULT_NB_HOP = 3;
+    private static final int DEFAULT_NB_HOP = 2;
     
     @Override
     public String search() {
@@ -42,7 +42,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
     }
     
     /**
-     * Load the Term Type combo
+     * Load the TermNode Type combo
      */
     private void loadTermTypes() {
         try {
@@ -60,24 +60,25 @@ public class MapForRelatedTerms extends ActionTypeForm {
     @Override
     public String display() {
         int Term, nbHops;
-        String Nodes = "", Relationships = "";
         
         try { Term = this.getIntArgumentValue("term"); } catch (Exception e) { Term = 0;}
         try { 
             nbHops = (this.getIntArgumentValue("nbhops") == 0 ? DEFAULT_NB_HOP : this.getIntArgumentValue("nbhops")); 
         } catch (Exception e) { nbHops = DEFAULT_NB_HOP;}
-        
-        // récupère l'arbre à partir du terme
-        TermTree mytree = new TermTree(this.getBOFactory());
-        Term firstTerm = mytree.build(Term, nbHops);
-        if (firstTerm != null) {
-            Nodes = firstTerm.getAllFlatTerms();
-            Relationships = firstTerm.getAllFlatRelationships();
-        }
-        
+
+        // Get the Term name
+        IEntity entity = getBOFactory().getEntity("DIM_TERM");
+        entity.field("TRM_PK").setKeyValue(Term);
+        ResultSet rs = entity.select();
+        String termname = "";
+        try {
+            if (rs.next()) termname = rs.getString("TRM_NAME");
+        } catch (SQLException ex) {}
+        this.addFormSingleEntry("TRM_NAME", termname);
+        getBOFactory().closeResultSet(rs);
+            
         this.addFormSingleEntry("ID", Term);
-        this.addFormSingleEntry("NODES", Nodes);
-        this.addFormSingleEntry("RELATIONSHIPS", Relationships);
+        this.addFormSingleEntry("NBHOP", nbHops);
         
         loadCBO(Term, nbHops);
         loadTermTypeCBO();
@@ -127,40 +128,6 @@ public class MapForRelatedTerms extends ActionTypeForm {
             columns.addValue(String.valueOf(i), String.valueOf(i), String.valueOf(i));
         }
         this.addFormVectorEntry("NBHOPS", columns);
-    }
-
-   /**
-    * Get all the term informations
-    * @param PK TRM_PK
-    * @param level
-    * @return 
-    */
-    private Term getTermInfo (int PK, int level) {
-        try {
-            IEntity entity = getBOFactory().getEntity("Analytics - Rel Term Info");
-            Term trm;
-            
-            entity.field("TRM_PK").setKeyValue(PK);
-            ResultSet rs = entity.select();
-            
-            if (rs.next()) {
-                trm = new Term(rs.getString("GLO_NAME"), 
-                                    rs.getString("TRM_NAME"), 
-                                    rs.getInt("TRM_PK"),
-                                    level);
-                trm.setScore(rs.getFloat("GLOBALSCORE"));
-            } else {
-                trm = new Term();
-            }
-            
-            getBOFactory().closeResultSet(rs);
-            return trm;
-            
-        } catch (SQLException ex) {
-            Joy.LOG().error(ex);
-            return new Term();
-        }
-        
     }
 
 }

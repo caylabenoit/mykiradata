@@ -316,8 +316,8 @@ public class ReportCommonAction extends ActionTypeForm {
     
     private ChartCounterData setCounterOptions(ChartCounterData myChart) {
         try {
-            myChart.setThresolds(Integer.valueOf(Joy.PARAMETERS().getParameter("ThresoldBadToWarn").getValue().toString()), 
-                                 Integer.valueOf(Joy.PARAMETERS().getParameter("ThresoldwarningToGood").getValue().toString()));
+            myChart.setThresolds(Integer.valueOf(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString()), 
+                                 Integer.valueOf(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString()));
             myChart.setColors(Joy.RGBA(Joy.PARAMETERS().getParameter("ColorBad").getValue().toString(), "1"), 
                               Joy.RGBA(Joy.PARAMETERS().getParameter("ColorWarning").getValue().toString(), "1"), 
                               Joy.RGBA(Joy.PARAMETERS().getParameter("ColorGood").getValue().toString(), "1"));

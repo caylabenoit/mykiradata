@@ -63,13 +63,15 @@
     <app-parameter name="dimtime_day_begin" type="value">1</app-parameter>
     <app-parameter name="dimtime_nb_records" type="value">5000</app-parameter>
 
+    <!-- Business Map -->
+    <app-parameter name="svg_support" type="value">true</app-parameter>
+    <app-parameter name="node_distance" type="value">1</app-parameter>
+    
     <!-- Thresold display -->
-    <app-parameter name="thresold_bad" type="value">35</app-parameter>
-    <app-parameter name="thresold_good" type="value">65</app-parameter>
+    <app-parameter name="thresold_bad" type="value">40</app-parameter>
+    <app-parameter name="thresold_good" type="value">60</app-parameter>
     
     <!-- Gauges Colors & thresolds -->
-    <app-parameter name="ThresoldBadToWarn" type="value">40</app-parameter>
-    <app-parameter name="ThresoldwarningToGood" type="value">60</app-parameter> 
     <app-parameter name="ColorBad" type="value">217,83,79</app-parameter> 
     <app-parameter name="ColorWarning" type="value">240,173,78</app-parameter> 
     <app-parameter name="ColorGood" type="value">92,184,92</app-parameter>  
