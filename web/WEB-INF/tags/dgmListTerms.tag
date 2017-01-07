@@ -3,7 +3,7 @@
     Created on : 25 oct. 2016, 17:47:28
     Author     : Benoit CAYLA (benoit@famillecayla.fr)
 --%>
-<%@tag description="Tag List" pageEncoding="UTF-8"  import="com.dgm.common.providers.ParamProvider, com.joy.Joy, com.joy.mvc.Action, com.dgm.beans.UITaglibSpotData, com.joy.common.JoyParameter, com.joy.mvc.formbean.JoyFormMatrixEntry, com.joy.mvc.formbean.JoyFormVectorEntry"%>
+<%@tag description="Tag List" pageEncoding="UTF-8"  import="com.dgm.common.providers.ParamProvider, com.joy.Joy, com.joy.mvc.Action, com.dgm.beans.UITaglibSpotDataBean, com.joy.common.JoyParameter, com.joy.mvc.formbean.JoyFormMatrixEntry, com.joy.mvc.formbean.JoyFormVectorEntry"%>
 <%@attribute name="matrixname"%>
 <%@attribute name="labelname"%>
 <%@attribute name="scorename"%>

@@ -152,6 +152,10 @@
                                                 <joy:ActionInputTextTag name="TERM_STEWARD_EMAIL"   CSSClass="form-control" ariadescribedby="basic-addon1" placeholder="Steward's Email" />
                                              </div>      
                                         </div>  
+                                        <div class="form-group">
+                                            <label>Type</label>
+                                            <joy:ActionInputTextTag name="TERM_TYPE"   CSSClass="form-control"  placeholder="Type" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

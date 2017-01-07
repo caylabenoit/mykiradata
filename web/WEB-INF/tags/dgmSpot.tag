@@ -4,7 +4,7 @@
     Author     : benoit CAYLA
 --%>
 
-<%@tag description="Spots here" pageEncoding="UTF-8" import="com.joy.Joy, com.joy.mvc.Action, com.dgm.beans.UITaglibSpotData, com.joy.common.JoyParameter" %>
+<%@tag description="Spots here" pageEncoding="UTF-8" import="com.joy.Joy, com.joy.mvc.Action, com.dgm.beans.UITaglibSpotDataBean, com.joy.common.JoyParameter" %>
 
 <%@attribute name="tag"%>
 <%@attribute name="panelcolor"%>
@@ -14,7 +14,7 @@
     
     try {
         Action actionform = (Action)Joy.CURRENT_ACTION(request);
-        UITaglibSpotData spotdata = (UITaglibSpotData)actionform.getFormSingleEntry(tag).getValue();
+        UITaglibSpotDataBean spotdata = (UITaglibSpotDataBean)actionform.getFormSingleEntry(tag).getValue();
         
         String myglyphe = "";
         JoyParameter glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get(panelicon);

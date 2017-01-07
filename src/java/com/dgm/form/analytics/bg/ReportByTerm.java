@@ -220,7 +220,7 @@ public class ReportByTerm extends ReportCommonAction {
                 // Term icon
                 String icon = Utils.getTermTypeIcon(this.getBOFactory(), rs.getString("TRT_NAME"));
                 this.addFormSingleEntry("ICON", icon);
-                this.addFormSingleEntry("IMGICO", (rs.getString("TRT_NAME").isEmpty() ? Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString() : icon));
+                this.addFormSingleEntry("IMGICO", (rs.getString("TRT_NAME") == null ? Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString() : icon));
                 // Glossary link
                 this.addFormSingleEntry("GLOSSARY_LINK", Joy.HREF("byglossary", "display", rs.getString("GLO_NAME"), "glossary", String.valueOf(rs.getString("GLO_PK"))));
                 // Category link

@@ -46,7 +46,7 @@
                 </div>
                 
                 <!-- Common include search form -->
-                <jsp:directive.include file="../inc/term_search_content_inc.jsp" />
+                <jsp:directive.include file="../../includes/term_search_content_inc.jsp" />
                 <!-- /Common include search form -->
                 
             </div><!-- /.container-fluid -->
@@ -55,7 +55,7 @@
 
 <jsp:directive.include file="../../templates/foot.jsp" />
 <!-- Common include search scripts -->
-<jsp:directive.include file="../inc/term_search_script_inc.jsp" />
+<jsp:directive.include file="../../includes/term_search_script_inc.jsp" />
 <!-- /Common include search scripts -->
 
 </body>

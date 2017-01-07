@@ -61,6 +61,7 @@ public class LNDTermAction extends LNDCommonAction {
         Entity.field("TERM_OWNER").setValue(getStrArgumentValue("TERM_OWNER"));
         Entity.field("TERM_OWNER_EMAIL").setValue(getStrArgumentValue("TERM_OWNER_EMAIL"));
         Entity.field("TERM_STEWARD").setValue(getStrArgumentValue("TERM_STEWARD"));
+        Entity.field("TERM_TYPE").setValue(getStrArgumentValue("TERM_TYPE"));
         Entity.field("TERM_STEWARD_EMAIL").setValue(getStrArgumentValue("TERM_STEWARD_EMAIL"));
         Entity.field("GLOSSARY_KEY").setValue(getStrArgumentValue("GLOSSARY_KEY"));
         Entity.field("CATEGORY_KEY").setValue(getStrArgumentValue("CATEGORY_KEY"));

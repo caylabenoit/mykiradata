@@ -22,7 +22,7 @@ import com.joy.Joy;
  *
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class UITaglibSpotData {
+public class UITaglibSpotDataBean {
     private String bigshorttext;
     private String littlelongtext;
     private String linktext;

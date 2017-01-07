@@ -28,7 +28,7 @@
     <default-dateformat>yyyy-mm-dd HH:mm:ss</default-dateformat>
     
     <!-- Joy Version -->
-    <joy-version>0.1.5.4</joy-version>
+    <joy-version>0.1.5.5</joy-version>
     <joy-app-name>DGM</joy-app-name>
     
     <!-- datasources/entities configuration file here-->
@@ -65,7 +65,8 @@
 
     <!-- Business Map -->
     <app-parameter name="svg_support" type="value">true</app-parameter>
-    <app-parameter name="node_distance" type="value">1</app-parameter>
+    <app-parameter name="node_distance" type="value">150</app-parameter>
+    <app-parameter name="svg_box_template" type="value">svg/box.template</app-parameter>
     
     <!-- Thresold display -->
     <app-parameter name="thresold_bad" type="value">40</app-parameter>

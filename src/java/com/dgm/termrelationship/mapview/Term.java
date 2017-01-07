@@ -39,6 +39,7 @@ public class Term {
     private float score;            // Term's score
     private int childsDepth;        // Depth to go for childs & parents collection
     private boolean initial;        // Initial and central term
+    private static String svgBoxTemplate;  // SVG template coming from the text file
     
     public Term(BOFactory entities, int key, int childDepth, boolean initial) {
         links = new ArrayList();
@@ -48,7 +49,15 @@ public class Term {
         this.entities = entities;
         this.childsDepth = childDepth;
         this.initial = initial;
+        INIT_TEMPLATES();
         init();
+    }
+
+    public static void INIT_TEMPLATES() {
+        if (svgBoxTemplate == null) {
+            String templateFile = Joy.PARAMETERS().getParameter("svg_box_template").getValue().toString();
+            svgBoxTemplate = Joy.FILE_TO_STRING(templateFile);
+        }
     }
 
     public void addLink(TermLink link) {
@@ -321,22 +330,17 @@ public class Term {
     
     private String getSVGImage(Term curTerm) {
         String imgReturn = "data:image/svg+xml;charset=utf-8,";
-        // SVG description here
-        imgReturn += "<svg xmlns=\"http://www.w3.org/2000/svg\"  xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"200\" height=\"75\">";
-        imgReturn += "<rect x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" fill=\"" + curTerm.getBoxColor(curTerm.getScore()) + "\" ></rect>";
-        imgReturn += "<text font-size=\"20\" font-family=\"Verdana\" style=\"fill:" + (curTerm.getScore() < 0 ? "black" : "white") + ";\">";
-        imgReturn += "<tspan x=\"3\" y=\"20\">" + curTerm.getName() + "</tspan>";
-        imgReturn += "</text>";
-        imgReturn += "<text font-size=\"15\" font-family=\"Verdana\" style=\"fill:black;\">";
-        imgReturn += "<tspan x=\"3\" y=\"60\">" + curTerm.getType()+ "</tspan>";
-        imgReturn += "</text>";
-        imgReturn += "<text font-size=\"23\" font-family=\"Verdana\" style=\"fill:black;\">";
-        imgReturn += "<tspan x=\"110\" y=\"60\">" + (curTerm.getScore() < 0 ? "?" : curTerm.getScore() + "%") + "</tspan>";
-        imgReturn += "</text>";
-        imgReturn += "<line x1=\"0\" y1=\"30\" x2=\"200\" y2=\"30\" stroke=\"black\" stroke-width=\"3\" stroke-linecap=\"round\"/>";
-        imgReturn += "<line x1=\"100\" y1=\"30\" x2=\"100\" y2=\"100\" stroke=\"black\" stroke-width=\"3\" stroke-linecap=\"round\"/>";
-        imgReturn += "</svg>";
-        return imgReturn;
+        String template = svgBoxTemplate; 
+        
+        // Replace the keywords
+        template = template.replace("[COLOR]", curTerm.getBoxColor(curTerm.getScore()));
+        template = template.replace("[TITLENAMECOLOR]", curTerm.getBoxColor(curTerm.getScore()));
+        template = template.replace("[NAME]", curTerm.getName());
+        template = template.replace("[TYPE]", curTerm.getType());
+        template = template.replace("[SCORE]", (curTerm.getScore() < 0 ? "?" : curTerm.getScore() + "%"));
+        
+        return imgReturn + template;
+
     }
     
     /**

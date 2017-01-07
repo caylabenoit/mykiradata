@@ -313,8 +313,8 @@ and open the template in the editor.
         <objecttype>form</objecttype>
         <action>com.dgm.form.analytics.maps.MapForRelatedTerms</action>
         <redirects>
-            <redirect tag="SEARCH">./WEB-INF/analytics/maps/mapByterm_request.jsp</redirect>
-            <redirect tag="DISPLAY">./WEB-INF/analytics/maps/mapByTerm_display.jsp</redirect>
+            <redirect tag="SEARCH">./WEB-INF/maps/govern/mapByterm_request.jsp</redirect>
+            <redirect tag="DISPLAY">./WEB-INF/maps/govern/mapByTerm_display.jsp</redirect>
         </redirects>
     </actionRequest>
 

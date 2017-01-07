@@ -16,7 +16,7 @@
  */
 package com.dgm.form;
 
-import com.dgm.beans.UITaglibSpotData;
+import com.dgm.beans.UITaglibSpotDataBean;
 import com.joy.mvc.actionTypes.ActionTypeForm;
 import java.sql.ResultSet;
 import com.joy.bo.IEntity;
@@ -29,7 +29,7 @@ public class HomeAction extends ActionTypeForm {
 
     private void display_Spots() {
         // Spot business Terms
-        UITaglibSpotData spot = new UITaglibSpotData();
+        UITaglibSpotDataBean spot = new UITaglibSpotDataBean();
         IEntity query = this.getBOFactory().getEntity("List of terms used");
         IEntity table = this.getBOFactory().getEntity("DIM_TERM");
         spot.setLittlelongtext("Business Terms");
@@ -39,7 +39,7 @@ public class HomeAction extends ActionTypeForm {
         this.addFormSingleEntry("TERMS", spot);
 
         // Metrics
-        spot = new UITaglibSpotData();
+        spot = new UITaglibSpotDataBean();
         query = this.getBOFactory().getEntity("List of metrics used");
         table = this.getBOFactory().getEntity("DIM_METRIC");
         spot.setLittlelongtext("Metrics");
@@ -49,7 +49,7 @@ public class HomeAction extends ActionTypeForm {
         this.addFormSingleEntry("METRICS", spot);
         
         // Glossaries
-        spot = new UITaglibSpotData();
+        spot = new UITaglibSpotDataBean();
         table = this.getBOFactory().getEntity("DIM_GLOSSARY");
         spot.setLittlelongtext("Glossaries");
         spot.setBigshorttext(String.valueOf(table.count()));
@@ -58,7 +58,7 @@ public class HomeAction extends ActionTypeForm {
         this.addFormSingleEntry("GLOSSARIES", spot);
         
         // DQ Dimensions
-        spot = new UITaglibSpotData();
+        spot = new UITaglibSpotDataBean();
         table = this.getBOFactory().getEntity("DIM_DQAXIS");
         spot.setLittlelongtext("Data Quality Dimensions");
         table.addFilter("DQX_PK>0");
