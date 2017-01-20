@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 /**
  * dynamically Build a list with score (label + score with progress bar)
  * The dataset must return 3 fields in this order :
