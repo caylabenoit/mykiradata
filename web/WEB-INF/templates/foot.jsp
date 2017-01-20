@@ -17,7 +17,9 @@
 <!-- Joy Ajax function --><script src="joy/ajax.js" type="text/javascript"></script>
 <!-- charts.js --><script src="./joy-external/Chart.js/dist/Chart.bundle.min.js"></script>
 <!-- gauge.js --><script src="./joy-external/gauge.js/gauge.min.js"></script>
-<!-- dgm custom --><script src="./theme/js/dgmtaskmenu.js" type="text/javascript"></script>
+<!-- dgm custom -->
+<script src="./theme/js/dgmtaskmenu.js" type="text/javascript"></script>
+<script src="./theme/js/dgmcharts.js" type="text/javascript"></script>
 <!-- datetime-picker --><script src="./joy-external/bootstrap/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
 <!-- vis.js --><script type="text/javascript" src="./joy-external/vis-4.17.0/vis.min.js"></script>
 

@@ -76,25 +76,7 @@
                             <div class="panel-heading">
                                 <i class="fa fa-dashboard fa-fw"></i> Global Scores
                             </div>
-                            <div class="panel-body">
-                                <div class="list-group">
-                                    <joy:ActionMatrixRowLoopTag name="SCORES">
-                                        <a href="#">
-                                            <div>
-                                                <p>
-                                                    <strong><UI:dgmGlyphe name="dqaxis" /><joy:ActionMatrixByRowTag name="DQX_NAME" /></strong>
-                                                    <span class="pull-right text-muted"><joy:ActionMatrixByRowTag name="SCORE" />&nbsp;% Complete</span>
-                                                </p>
-                                                <div class="progress progress-striped active">
-                                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<joy:ActionMatrixByRowTag name="SCORE" />" aria-valuemin="0" aria-valuemax="100" style="width: <joy:ActionMatrixByRowTag name="SCORE" />%">
-                                                        <span class="sr-only"><joy:ActionMatrixByRowTag name="SCORE" />&nbsp;% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </joy:ActionMatrixRowLoopTag>
-                                </div>
-                            </div>
+                            <div class="panel-body" id="div_AXIS_SCORE_HOME_00"></div>
                         </div>    
                     </div>  
                     
@@ -103,11 +85,7 @@
                             <div class="panel-heading">
                                 <i class="fa fa-dashboard fa-fw"></i> Best Terms
                             </div>
-                            <div class="panel-body">
-                                <div class="list-group">
-                                    <UI:dgmListTerms matrixname="BEST_TERMS" labelname="TRM_NAME" scorename="GLOBALSCORE" termkey="TRM_FK"  />
-                                </div>
-                            </div>
+                            <div class="panel-body" id="div_HOME_BEST_TERMS"></div>
                         </div>    
                     </div>   
                     
@@ -116,21 +94,23 @@
                             <div class="panel-heading">
                                 <i class="fa fa-dashboard fa-fw"></i> Worse Terms
                             </div>
-                            <div class="panel-body">
-                                <UI:dgmListTerms matrixname="WORSE_TERMS" labelname="TRM_NAME" scorename="GLOBALSCORE"  termkey="TRM_FK" />
-                            </div>
+                            <div class="panel-body" id="div_HOME_WORSE_TERMS"></div>
                         </div>    
                     </div>  
-                    
                 </div>
-
+                            
             </div><!-- /.container-fluid -->
         </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
 
 <jsp:directive.include file="./templates/foot.jsp" />
 <script>
-    
+var THRESOLD_BAD = <joy:ActionValueTag name="THRESOLD_BAD" />;
+var THRESOLD_GOOD = <joy:ActionValueTag name="THRESOLD_GOOD" />;
+var URLBASIS_DQAXIS = "<joy:ActionValueTag name="URLBASIS_DQAXIS" />";
+var URLBASIS_TERM = "<joy:ActionValueTag name="URLBASIS_TERM" />";
+var LIST_ROWMAX = 5;
+
 $(function(){
     $('#panel-dashbyglossary').lobiPanel({
        reload: false,
@@ -178,7 +158,7 @@ $(function(){
        editTitle: false,
        sortable: true
     });
- });
+});
  
 // Load the charts
 function callbackSuccess(content, tag) {
@@ -219,11 +199,28 @@ function callbackSuccess(content, tag) {
             });
             break;
             
+        case 'AXIS_SCORE_HOME_00':
+            fillDivList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_DQAXIS + "&dqaxis=");
+            break;
+            
+        case 'HOME_BEST_TERMS':
+            fillDivList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+            break;
+            
+        case 'HOME_WORSE_TERMS':
+            fillDivList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+            break;
+
         default:
     }
 }
+
 loadJSON('./rest/charts/sds/AXIS_SCORE_HOME_00', 'polaraxis');
 loadJSON('./rest/charts/mds/GLOBAL_SCORING_HOME_01', 'barbyglossary');
+loadJSON('./rest/data/AXIS_SCORE_HOME_00', 'AXIS_SCORE_HOME_00');
+loadJSON('./rest/data/HOME_BEST_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_BEST_TERMS');
+loadJSON('./rest/data/HOME_WORSE_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_WORSE_TERMS');
+
 </script>
 
 </body>

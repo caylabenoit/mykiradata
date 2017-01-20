@@ -19,14 +19,36 @@
     <joy-dashboard-template type="iframe">
         <body>dashboard/iframe/html.template</body>
     </joy-dashboard-template>
+    <joy-dashboard-template type="scorelist">
+        <body>dashboard/scorelist/html.template</body>
+        <after-body>dashboard/scorelist/js.template</after-body>
+    </joy-dashboard-template>
     
     <joy-dashboard id="r1" name="Personnal Dashboard">
         <joy-dashboard-row>
-             <joy-dashboard-bloc id="c3" type="polar" size="6" title="Global scoring per Data Quality Dimension"> 
-                <joy-param name="entity">AXIS_SCORE_HOME_00</joy-param>
-             </joy-dashboard-bloc>
-             <joy-dashboard-bloc id="c1" type="bar" size="6" title="No Owners/stewards"> 
+             <joy-dashboard-bloc id="bloc1" type="bar" size="6" title="No Owners/stewards"> 
                 <joy-param name="entity">NO_OWNER_HOME_02</joy-param>
+             </joy-dashboard-bloc>
+             <joy-dashboard-bloc id="bloc3" type="scorelist" size="6" title="Best scores"> 
+                <joy-param name="entity">HOME_BEST_TERMS</joy-param>
+                <joy-param name="rowcount">5</joy-param>
+                <joy-param name="glyphe">fa-book</joy-param>
+                <joy-param name="thresold_bad" joy="yes" />
+                <joy-param name="thresold_good" joy="yes" />
+                <joy-param name="urlbasis">./joy?object=byterm&amp;actiontype=display&amp;term=</joy-param>
+             </joy-dashboard-bloc>
+        </joy-dashboard-row>
+        <joy-dashboard-row>
+             <joy-dashboard-bloc id="bloc2" type="lines" size="6" title="No Owners/stewards"> 
+                <joy-param name="entity">NO_OWNER_HOME_02</joy-param>
+             </joy-dashboard-bloc>
+             <joy-dashboard-bloc id="bloc4" type="scorelist" size="6" title="Worse scores"> 
+                <joy-param name="entity">HOME_WORSE_TERMS</joy-param>
+                <joy-param name="rowcount">5</joy-param>
+                <joy-param name="glyphe">fa-book</joy-param>
+                <joy-param name="thresold_bad" joy="yes" />
+                <joy-param name="thresold_good" joy="yes" />
+                <joy-param name="urlbasis">./joy?object=byterm&amp;actiontype=display&amp;term=</joy-param>
              </joy-dashboard-bloc>
         </joy-dashboard-row>
     </joy-dashboard>

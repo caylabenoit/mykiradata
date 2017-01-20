@@ -31,21 +31,21 @@ for the custom queries :
     </joy-query-init>
 
     <joy-entity-files>
-        <joy-entity-file id="star">/entity/joy-entity-star.xml</joy-entity-file>
-        <joy-entity-file id="shared">/entity/joy-entity-shared.xml</joy-entity-file>
-        <joy-entity-file id="src">/entity/joy-entity-src.xml</joy-entity-file>
-        <joy-entity-file id="analytics-global">/entity/joy-entity-analytics-global.xml</joy-entity-file>
-        <joy-entity-file id="analytics-term">/entity/joy-entity-analytics-term.xml</joy-entity-file>
-        <joy-entity-file id="analytics-category">/entity/joy-entity-analytics-category.xml</joy-entity-file>
-        <joy-entity-file id="others">/entity/joy-entity-others.xml</joy-entity-file>
-        <joy-entity-file id="landing">/entity/joy-entity-landing.xml</joy-entity-file>
-        <joy-entity-file id="home">/entity/joy-entity-home.xml</joy-entity-file>
-        <joy-entity-file id="glossary">/entity/joy-entity-analytics-glossary.xml</joy-entity-file>
-        <joy-entity-file id="rel">/entity/joy-entity-analytics-rel.xml</joy-entity-file>
-        <joy-entity-file id="context">/entity/joy-entity-analytics-context.xml</joy-entity-file>
-        <joy-entity-file id="datasource">/entity/joy-entity-analytics-datasource.xml</joy-entity-file>
-        <joy-entity-file id="metric">/entity/joy-entity-analytics-metric.xml</joy-entity-file>
-        <joy-entity-file id="search">/entity/joy-entity-search.xml</joy-entity-file>
+        <joy-entity-file group="star">/entity/joy-entity-star.xml</joy-entity-file>
+        <joy-entity-file group="shared">/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-file group="src">/entity/joy-entity-src.xml</joy-entity-file>
+        <joy-entity-file group="analytics-global">/entity/joy-entity-analytics-global.xml</joy-entity-file>
+        <joy-entity-file group="analytics-term">/entity/joy-entity-analytics-term.xml</joy-entity-file>
+        <joy-entity-file group="analytics-category">/entity/joy-entity-analytics-category.xml</joy-entity-file>
+        <joy-entity-file group="others">/entity/joy-entity-others.xml</joy-entity-file>
+        <joy-entity-file group="landing">/entity/joy-entity-landing.xml</joy-entity-file>
+        <joy-entity-file group="home">/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-file group="glossary">/entity/joy-entity-analytics-glossary.xml</joy-entity-file>
+        <joy-entity-file group="rel">/entity/joy-entity-analytics-rel.xml</joy-entity-file>
+        <joy-entity-file group="context">/entity/joy-entity-analytics-context.xml</joy-entity-file>
+        <joy-entity-file group="datasource">/entity/joy-entity-analytics-datasource.xml</joy-entity-file>
+        <joy-entity-file group="metric">/entity/joy-entity-analytics-metric.xml</joy-entity-file>
+        <joy-entity-file group="search">/entity/joy-entity-search.xml</joy-entity-file>
     </joy-entity-files>
     
 </joy-entities>

@@ -17,8 +17,8 @@
 package com.dgm.form;
 
 import com.dgm.beans.UITaglibSpotDataBean;
+import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import java.sql.ResultSet;
 import com.joy.bo.IEntity;
 
 /**
@@ -30,8 +30,8 @@ public class HomeAction extends ActionTypeForm {
     private void display_Spots() {
         // Spot business Terms
         UITaglibSpotDataBean spot = new UITaglibSpotDataBean();
-        IEntity query = this.getBOFactory().getEntity("List of terms used");
-        IEntity table = this.getBOFactory().getEntity("DIM_TERM");
+        IEntity query = this.getBOFactory().getEntity("home", "List of terms used");
+        IEntity table = this.getBOFactory().getEntity("star", "DIM_TERM");
         spot.setLittlelongtext("Business Terms");
         spot.setBigshorttext(String.valueOf(query.count()) + " / " + String.valueOf(table.count()));
         spot.setLinkURL("byterm", "search");
@@ -40,8 +40,8 @@ public class HomeAction extends ActionTypeForm {
 
         // Metrics
         spot = new UITaglibSpotDataBean();
-        query = this.getBOFactory().getEntity("List of metrics used");
-        table = this.getBOFactory().getEntity("DIM_METRIC");
+        query = this.getBOFactory().getEntity("home", "List of metrics used");
+        table = this.getBOFactory().getEntity("star", "DIM_METRIC");
         spot.setLittlelongtext("Metrics");
         spot.setBigshorttext(String.valueOf(query.count()) + " / " + String.valueOf(table.count()));
         spot.setLinkURL("bymetric", "search");
@@ -50,7 +50,7 @@ public class HomeAction extends ActionTypeForm {
         
         // Glossaries
         spot = new UITaglibSpotDataBean();
-        table = this.getBOFactory().getEntity("DIM_GLOSSARY");
+        table = this.getBOFactory().getEntity("star", "DIM_GLOSSARY");
         spot.setLittlelongtext("Glossaries");
         spot.setBigshorttext(String.valueOf(table.count()));
         spot.setLinkURL("byglossary", "search");
@@ -59,7 +59,7 @@ public class HomeAction extends ActionTypeForm {
         
         // DQ Dimensions
         spot = new UITaglibSpotDataBean();
-        table = this.getBOFactory().getEntity("DIM_DQAXIS");
+        table = this.getBOFactory().getEntity("star", "DIM_DQAXIS");
         spot.setLittlelongtext("Data Quality Dimensions");
         table.addFilter("DQX_PK>0");
         spot.setBigshorttext(String.valueOf(table.count(true)));
@@ -68,33 +68,15 @@ public class HomeAction extends ActionTypeForm {
         this.addFormSingleEntry("DQAXIS", spot);
     }
     
-    private void  display_Metrics() {
-        // display the DQ Axis global scores
-        IEntity entity = this.getBOFactory().getEntity("AXIS_SCORE_HOME_00");
-        entity.resetFilters();
-        ResultSet rs = entity.select();
-        this.loadMatrix(rs, "SCORES");
-        this.getBOFactory().getDB().closeResultSet(rs);
-        
-        // Display the best Terms / Home - Best terms
-        entity = this.getBOFactory().getEntity("Home - Best terms");
-        entity.setLimitRecords(5);
-        rs = entity.select();
-        this.loadMatrix(rs, "BEST_TERMS");
-        this.getBOFactory().getDB().closeResultSet(rs);
-        
-        // Display the best Terms / Home - Best terms
-        entity = this.getBOFactory().getEntity("Home - Worse terms");
-        entity.setLimitRecords(5);
-        rs = entity.select();
-        this.loadMatrix(rs, "WORSE_TERMS");
-        this.getBOFactory().getDB().closeResultSet(rs);
-    }
-    
+
     @Override
     public String display() {
         display_Spots();
-        display_Metrics();
+        
+        this.addFormSingleEntry("THRESOLD_BAD", Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString());
+        this.addFormSingleEntry("THRESOLD_GOOD", Joy.PARAMETERS().getParameter("thresold_good").getValue().toString());
+        this.addFormSingleEntry("URLBASIS_DQAXIS", Joy.URL("bydqaxis", "display"));
+        this.addFormSingleEntry("URLBASIS_TERM", Joy.URL("byterm", "display"));
         
         return super.display(); //To change body of generated methods, choose Tools | Templates.
     }

@@ -16,7 +16,7 @@
  */
 package com.dgm.rest.actions;
 
-import com.dgm.rest.RESTDataCommon;
+import com.dgm.rest.RESTEntityFilteringCommon;
 import com.joy.bo.IEntity;
 
 /**
@@ -26,7 +26,7 @@ import com.joy.bo.IEntity;
  * P1 : nom de la table
  * http://localhost:18180/GovManagementTool/rest/data/[Nom de table]
  */
-public class RESTData extends RESTDataCommon {
+public class RESTData extends RESTEntityFilteringCommon {
 
     @Override
     public String restGet() {

@@ -16,7 +16,7 @@
  */
 package com.dgm.rest.actions;
 
-import com.dgm.rest.RESTDataCommon;
+import com.dgm.rest.RESTEntityFilteringCommon;
 import com.joy.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +28,7 @@ import com.joy.bo.IEntity;
  *  no more arguments
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class RESTLandingCount extends RESTDataCommon {
+public class RESTLandingCount extends RESTEntityFilteringCommon {
 
     @Override
     public String restGet() {

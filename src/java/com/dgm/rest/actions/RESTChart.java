@@ -16,7 +16,7 @@
  */
 package com.dgm.rest.actions;
 
-import com.dgm.rest.RESTDataCommon;
+import com.dgm.rest.RESTEntityFilteringCommon;
 import com.joy.Joy;
 import com.joy.charts.chartjs.ChartWithDataset;
 import java.sql.ResultSet;
@@ -34,7 +34,7 @@ import com.joy.bo.IEntity;
   field 1 : libellé (string)
   field 2 : valeur (numérique)
  */
-public class RESTChart extends RESTDataCommon {
+public class RESTChart extends RESTEntityFilteringCommon {
 
     @Override
     public String restGet() {

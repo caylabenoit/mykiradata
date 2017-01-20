@@ -124,7 +124,7 @@ and open the template in the editor.
         <objecttype>form</objecttype>
         <action>com.dgm.form.admin.ImportAction</action>
         <redirects>
-            <redirect tag="LIST">./WEB-INF/admin/impexp.jsp</redirect>
+            <redirect tag="LIST">./WEB-INF/admin/backup.jsp</redirect>
         </redirects>
     </actionRequest>
 
@@ -331,7 +331,7 @@ and open the template in the editor.
 <!-- NO ACTIONS HERE -->  
 <!-- list here all the actions without action class -->
     <redirects_no_action>
-        <redirect tag="IMPORTEXPORT">./WEB-INF/admin/impexp.jsp</redirect>
+        <redirect tag="IMPORTEXPORT">./WEB-INF/admin/backup.jsp</redirect>
         <redirect tag="ACTION_404">./404.jsp</redirect>
         <redirect tag="ACTION_ERROR">./error.jsp</redirect>
         <redirect tag="TEST">./WEB-INF/test.jsp</redirect>
@@ -381,10 +381,16 @@ and open the template in the editor.
     </actionRequest>
 
     <actionRequest>
-        <object>data</object>
+        <object>datafile</object>
         <objecttype>rest</objecttype>
         <action>com.dgm.rest.actions.RESTData</action>
         <flowtype>file</flowtype>
+    </actionRequest>
+    
+    <actionRequest>
+        <object>data</object>
+        <objecttype>rest</objecttype>
+        <action>com.dgm.rest.actions.RESTData</action>
     </actionRequest>
     
     <actionRequest>

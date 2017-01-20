@@ -24,7 +24,7 @@ import com.joy.bo.IEntity;
  *
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class RESTDataCommon extends ActionTypeREST {
+public class RESTEntityFilteringCommon extends ActionTypeREST {
     
     /**
      * Get the entity whatever it is
@@ -45,6 +45,7 @@ public class RESTDataCommon extends ActionTypeREST {
      * (P2, P3) = (Column Name, Column Value) to define the criterias
      * (P4, P5)
      * (P6,P7) etc.
+     * NB: if Limit records if specific field ROWCOUNT is mentionned as field
      * @param paramIndexFrom Define the first parameter into the URL query (first is entity)
      * @return entity filtered
      */
@@ -61,16 +62,27 @@ public class RESTDataCommon extends ActionTypeREST {
                 hasPair = (!argName.isEmpty() &&  !argValue.isEmpty());
                 if (hasPair) {
                     // Filter the result
-                    BOField field =  entity.field(argName);
-                    if (field != null) 
-                        switch (field.getFieldType()) {
-                            case fieldInteger:  field.setKeyValue(Integer.valueOf(argValue)); break;
-                            case fieldBoolean:  field.setKeyValue((Integer.valueOf(argValue) != 0)); break;
-                            case fieldDate:     field.setKeyValue(argValue); break;
-                            case fieldFloat:    field.setKeyValue(Float.valueOf(argValue)); break;
-                            case fieldString:   
-                            default:            field.setKeyValue(argValue); 
-                        }
+                    if (argName.equalsIgnoreCase("ROWCOUNT")) {
+                        // Limit recors if specific field ROWCOUNT filled and > 0
+                        try { 
+                            int limit = Integer.valueOf(argValue);
+                            if (limit > 0)
+                                entity.setLimitRecords(limit);
+                        } catch (Exception e) {}
+                        
+                    } else {
+                        // Filter criterias
+                        BOField field =  entity.field(argName);
+                        if (field != null) 
+                            switch (field.getFieldType()) {
+                                case fieldInteger:  field.setKeyValue(Integer.valueOf(argValue)); break;
+                                case fieldBoolean:  field.setKeyValue((Integer.valueOf(argValue) != 0)); break;
+                                case fieldDate:     field.setKeyValue(argValue); break;
+                                case fieldFloat:    field.setKeyValue(Float.valueOf(argValue)); break;
+                                case fieldString:   
+                                default:            field.setKeyValue(argValue); 
+                            }
+                    }
                 } 
             }
             return entity;
