@@ -33,12 +33,12 @@ public class Utils {
      * @param val
      * @return 
      */
-    public static String scoreDisplay(Float val) {
+    public static String SCORE_DISPLAY(Float val) {
         return String.format(Constants.FORMAT_FLOAT, val) + "%";
     }
     
     /**
-    * retourne la ligne de commande d'exécution d'un workflow
+     * retourne la ligne de commande d'exécution d'un workflow
      * @param infacmd infacmd.bat path & filename
      * @param infadomain
      * @param infadis
@@ -48,7 +48,7 @@ public class Utils {
      * @param workflow
      * @return 
     */
-    public static String getInformaticaWorkflowCommandLine(String infacmd,
+    public static String GET_INFA_WORKFLOW_CMDLINE(String infacmd,
                                                            String infadomain,
                                                            String infadis,
                                                            String infauser,
@@ -77,7 +77,7 @@ public class Utils {
      * @param termType term type name
      * @return 
     */
-    public static String getTermTypeIcon(BOFactory entities, String termType) {
+    public static String GET_TERM_TYPE_ICON(BOFactory entities, String termType) {
         try {
             IEntity entity = entities.getEntity("SRC_TERMTYPE");
             entity.field("GIO_TERMTYPE_NAME").setKeyValue(termType);
@@ -98,4 +98,53 @@ public class Utils {
         }
     } 
     
+    /**
+     * Returns the Color considering the thresolds criterias and the given score.
+     * @param myScore score to check
+     * @return color code like XXX,XXX,XXX
+     */
+    public static String GET_COLOR_FOR_SCORE(String myScore) {
+        String finalColor = Joy.PARAMETERS().getParameter("ColorGood").getValue().toString();
+        try {
+            float myFloatScore = Float.valueOf(myScore);
+            float tBad = Float.valueOf(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString());
+            float tGood = Float.valueOf(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString());
+            if (myFloatScore < tBad) 
+                finalColor = Joy.PARAMETERS().getParameter("ColorBad").getValue().toString();
+            else if (myFloatScore < tGood) 
+                finalColor = Joy.PARAMETERS().getParameter("ColorWarning").getValue().toString();
+        } catch (NumberFormatException e) {} 
+        return finalColor;
+    }
+    
+    /**
+     * Returns the Color considering the thresolds criterias and the given score.
+     * @param myScore score to check 
+     * @param transparency transparency (0 to 1)
+     * @return color code like RGBA(XXX,XXX,XXX, X)
+     */
+    public static String GET_RGBA_COLOR_FOR_SCORE(String myScore, String transparency) {
+        return Joy.RGBA(GET_COLOR_FOR_SCORE(myScore), transparency);
+    }
+    
+    /**
+     * Returns the Color considering the thresolds criterias and the given score.
+     * @param myScore core to check 
+     * @return color code like #XXXXXX (in hexadecimal)
+     */
+    public static String GET_HEXA_COLOR_FOR_SCORE(String myScore) {
+        try {
+            String myColor = GET_COLOR_FOR_SCORE(myScore);
+            String rgb[] = myColor.split(",");
+            if (rgb.length != 3)
+                return "#FFFFFF";
+            else {
+                return "#" + String.valueOf(Integer.toHexString(Integer.valueOf(rgb[0]))) + 
+                       String.valueOf(Integer.toHexString(Integer.valueOf(rgb[1]))) + 
+                       String.valueOf(Integer.toHexString(Integer.valueOf(rgb[2])));
+            }
+        } catch (Exception e) {
+            return "#FFFFFF";
+        }     
+    }
 }

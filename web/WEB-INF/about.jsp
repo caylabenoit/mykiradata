@@ -45,7 +45,7 @@
                                 
                                 <joy:ActionValueTag name="APPLICATION" />
                                 <H3>Author</H3>
-                                Benoit Cayla
+                                admin@mykiradata.com
                                 <H3>License</H3>
                                 GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007  <BR>
                                 Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>  <BR>Everyone is permitted to copy and distribute verbatim copies  of this license document, but changing it is not allowed.
@@ -54,7 +54,7 @@
                                 This application uses these frameworks:
                                 <H4>Java libs:</H4>
                                 <ul>
-                                    <li>Joy : my own MVC, REST and Data layer framework</li>
+                                    <li>Joy : a myKiraSoft MVC, REST and Data layer Management framework</li>
                                     <li>JDOM 1.2</li>
                                     <li>commons-fileupload-1.3.1</li>
                                     <li>JDBC obviously (Oracle & PostgreSQL)</li>

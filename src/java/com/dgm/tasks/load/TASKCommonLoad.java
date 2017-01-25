@@ -19,7 +19,6 @@ package com.dgm.tasks.load;
 import com.dgm.common.Utils;
 import com.dgm.common.providers.ParamProvider;
 import com.joy.Joy;
-import com.joy.bo.BOEntityReadWrite;
 import com.joy.bo.IEntity;
 import com.joy.etl.MappingSpecification;
 import com.joy.etl.MappingFactory;
@@ -50,7 +49,7 @@ public class TASKCommonLoad extends ActionTypeTASK {
             String result = "";
             trace("Informatica Workflow execution : " + wfName);
 
-            String cmdLine = Utils.getInformaticaWorkflowCommandLine(myParams.getParamValue("infacmd").getStrValue(),
+            String cmdLine = Utils.GET_INFA_WORKFLOW_CMDLINE(myParams.getParamValue("infacmd").getStrValue(),
                                                                         myParams.getParamValue("infadomain").getStrValue(),
                                                                         myParams.getParamValue("infadis").getStrValue(),
                                                                         myParams.getParamValue("infauser").getStrValue(),

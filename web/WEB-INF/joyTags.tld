@@ -136,6 +136,14 @@
       <name>placeholder</name>
       <required>false</required>
     </attribute>
+    <attribute>
+      <name>glypheicon</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>freetagasis</name>
+      <required>false</required>
+    </attribute>
   </tag>  
 
   <tag>

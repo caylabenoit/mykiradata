@@ -61,7 +61,7 @@ public class ReportCommonAction extends ActionTypeForm {
                 columns.addValue("FRS_VALID_ROWS", rs.getString("FRS_VALID_ROWS"));
                 columns.addValue("FRS_INVALID_ROWS", rs.getString("FRS_INVALID_ROWS"));
                 columns.addValue("FRS_TOTALROWS", rs.getString("FRS_TOTALROWS"));
-                columns.addValue("FRS_KPI_SCORE", Utils.scoreDisplay(rs.getFloat("FRS_KPI_SCORE")));
+                columns.addValue("FRS_KPI_SCORE", Utils.SCORE_DISPLAY(rs.getFloat("FRS_KPI_SCORE")));
                 columns.addValue("DQX_NAME", rs.getString("DQX_NAME"));
                 columns.addValue("TRM_NAME", rs.getString("TRM_NAME"));
                 columns.addValue("FRS_WEIGHT", rs.getString("FRS_WEIGHT"));
@@ -137,7 +137,7 @@ public class ReportCommonAction extends ActionTypeForm {
 
             while (rs.next()) {
                 JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("SCORE", Utils.scoreDisplay(rs.getFloat("SCORE")));
+                columns.addValue("SCORE", Utils.SCORE_DISPLAY(rs.getFloat("SCORE")));
                 columns.addValue("COST", rs.getFloat("COST"));
                 columns.addValue("DQX_NAME", rs.getString("DQX_NAME"));
                 columns.addValue("TRM_NAME", rs.getString("TRM_NAME"));
@@ -272,8 +272,8 @@ public class ReportCommonAction extends ActionTypeForm {
                 JoyFormVectorEntry trendVector = new JoyFormVectorEntry();
                 trendVector.addValue("AXIS", axis);
                 trendVector.addValue("TREND_SCORE", String.format("%.1f", trend));
-                trendVector.addValue("PREV", Utils.scoreDisplay(prev));
-                trendVector.addValue("LAST", Utils.scoreDisplay(last));
+                trendVector.addValue("PREV", Utils.SCORE_DISPLAY(prev));
+                trendVector.addValue("LAST", Utils.SCORE_DISPLAY(last));
                 
                 // Last value display (single counter)
                 JoyFormVectorEntry lastValVector = new JoyFormVectorEntry();

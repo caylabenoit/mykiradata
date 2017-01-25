@@ -12,7 +12,7 @@
         <title></title>
     </head>
     <body>
-        <h2>Page not found !</h2>
-        <H3><A href='./joy?object=WELCOME'>Or go home and retry ...</A></H3>
+        <h2>Ooops !</h2>
+        <H3><A href='./joy?object=home&actiontype=DISPLAY'>Go back ???</A></H3>
     </body>
 </html>

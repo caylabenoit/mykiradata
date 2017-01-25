@@ -38,11 +38,19 @@
                 </div>
                 
                 <div class="row">
+                    <div class="col-lg-7">
+                        <div class="panel panel-green">
+                            <div class="panel-heading"><UI:dgmGlyphe name="dqaxis" />Data Quality Dimensions</div>
+                            <div class="panel-body">
+                                <chart:dgmDQAxisCounters_HTML dqaxis="COUNTER_LIST"  trends="TENDANCE_LIST" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-5">
                         <div class="row">
                             <div class="col-lg-5">       
                                 <div class="blocGlobalScore">
-                                    <div class="globalScoreTitle"><span id="gauge-value"></span>%</div>
+                                    <div  style="color: <joy:ActionValueTag name="GLOBALSCORE_COLOR" />" class="globalScoreTitle"><joy:ActionValueTag name="GLOBALSCORE" /><span id="gauge-value"></span>%</div>
                                     <canvas width=200 id="canvasScore" alt="Global score"></canvas>
                                 </div>
                             </div> 
@@ -64,11 +72,7 @@
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
                                         <DIV class="bloctitreprincipal">
-                                        <h5>Metric <joy:ActionValueTag name="TRM_NAME" /> coming from <joy:ActionValueTag name="GLOSSARY_LINK" />&nbsp;/&nbsp;<joy:ActionValueTag name="CATEGORY_LINK" /> </h5>
-                                        <joy:ActionConditionTag name="INFORMATICA">
-                                            <H5><A href="<joy:ActionValueTag name="INFA_MM_LINK" />" target="other"><i class="fa fa-crosshairs fa-fw"></i>&nbsp;Informatica Metadata Data Lineage</a></h5>
-                                            <H5><A href="<joy:ActionValueTag name="INFA_DIRECT_LINK" />" target="_self"><i class="fa fa-book fa-fw"></i>&nbsp;Jump to Business Term</a></h5>
-                                        </joy:ActionConditionTag>
+                                        <h5>Metric <joy:ActionValueTag name="TRM_NAME" /> coming from <joy:ActionValueTag name="GLOSSARY_LINK" />&nbsp;/&nbsp;<joy:ActionValueTag name="CATEGORY_LINK" /></h5>
                                         </DIV>
                                         <joy:JoyFormTag inline="true" object='byterm' actiontype='display' name='myform'>
                                         <div class="form-group">
@@ -80,16 +84,11 @@
                                 </div>
                             </div>  
                         </div>
-                    </div>    
-                    <div class="col-lg-7">
-                        <div class="panel panel-green">
-                            <div class="panel-heading"><UI:dgmGlyphe name="dqaxis" />Data Quality Dimensions</div>
-                            <div class="panel-body">
-                                <chart:dgmDQAxisCounters_HTML dqaxis="COUNTER_LIST"  trends="TENDANCE_LIST" />
-                            </div>
-                        </div>
                     </div>
+                                        
+
                 </DIV>
+                            
                 <div class="row">                
                     <div class="col-lg-6">
                         <div class="panel panel-red">
@@ -313,8 +312,8 @@ var optsGlobalScore = {
     angle: 0.15, // The length of each line
     lineWidth: 0.25, // The line thickness
     limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
-    colorStart: '#A395C0',   // Colors
-    colorStop: '#A395C0',
+    colorStart: '<joy:ActionValueTag name="GLOBALSCORE_COLOR" />',   // Colors
+    colorStop: '<joy:ActionValueTag name="GLOBALSCORE_COLOR" />',
     strokeColor: '#EEEEEE',
     generateGradient: true
 };
@@ -323,7 +322,7 @@ var gauge = new Donut(target).setOptions(optsGlobalScore); // create sexy gauge!
 gauge.maxValue = 100; // set max gauge value
 gauge.animationSpeed = 32; // set animation speed (32 is default value)
 gauge.set(<joy:ActionValueTag name="GLOBALSCORE" />); // set actual value
-gauge.setTextField(document.getElementById("gauge-value"));
+//gauge.setTextField(document.getElementById("gauge-value"));
 </script>
 
 </body>

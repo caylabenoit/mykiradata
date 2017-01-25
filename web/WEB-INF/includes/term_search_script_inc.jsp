@@ -34,11 +34,11 @@ function callbackSuccess(content, tag) {
     t1.clear();
     document.getElementById('pleasewait').innerHTML = '';
     //document.getElementById('searchresult').style.display="block";
-    for (i=0; i < content.SEARCH_TERM.length; i++) {
+    for (i=0; i < content.data.length; i++) {
         t1.row.add( [
-            content.SEARCH_TERM[i].row.TRM_PK.value,
-            content.SEARCH_TERM[i].row.TRM_NAME.value,
-            content.SEARCH_TERM[i].row.TRM_DESCRIPTION.value
+            content.data[i].columns[0].value,
+            content.data[i].columns[2].value,
+            content.data[i].columns[3].value
         ] ).draw( false );
     }
 }

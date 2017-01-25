@@ -14,7 +14,7 @@
 var opts<%= myChart.getCode() %> = {
     lines: 12, // The number of lines to draw
     angle: 0.15, // The length of each line
-    lineWidth: 0.44, // The line thickness
+    lineWidth: 0.18, // The line thickness
     pointer: {
         length: 0.9, // The radius of the inner circle
         strokeWidth: 0.035, // The rotation offset
@@ -27,7 +27,7 @@ var opts<%= myChart.getCode() %> = {
     generateGradient: true
 };
 var target = document.getElementById('canvas-<%= myChart.getCode() %>'); 
-var gauge = new Gauge(target).setOptions(opts<%= myChart.getCode() %>);
+var gauge = new Donut(target).setOptions(opts<%= myChart.getCode() %>); // new Gauge ...
 gauge.maxValue = 100; // set max gauge value
 gauge.animationSpeed = 32; // set animation speed (32 is default value)
 gauge.set(<%= myChart.getValue() %>); // set actual value

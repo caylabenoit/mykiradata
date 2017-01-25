@@ -38,8 +38,8 @@
                 
                 <joy:JoyFormTag object='lndterms' actiontype='update' name='frmEditItem' inline="false" >
                     <joy:ActionHiddenTag name="NEW"   />  
-                <div class="row">
-                    <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">Manage Business Term</div>
                             
@@ -50,10 +50,7 @@
                                             <p><B>Date : </B></p><P><joy:ActionValueTag name="JOYLOADDATE" /></p>
                                             <p><B>Status :</B><joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" /></p>
                                             <label>Identifier</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon " id="basic-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span>
-                                                <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="10" placeholder="Unique Identifier" ariadescribedby="basic-addon2" />
-                                            </div>
+                                            <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="255" placeholder="Unique Identifier" ariadescribedby="basic-addon2" glypheicon="glyphicon-star"  freetagasis="data-minlength='5'" />
                                         </div>
                                     </div>  
                                 </div>
@@ -102,11 +99,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Status</label>
-                                            <joy:ActionInputTextTag name="TERM_STATUS"   CSSClass="form-control" placeholder="Business Term Status" />
+                                            <joy:ActionInputTextTag name="TERM_STATUS"   CSSClass="form-control" placeholder="Business Term Status" glypheicon="glyphicon-flag" />
                                         </div>
                                         <div class="form-group">
                                             <label>Func. Key</label>
-                                            <joy:ActionInputTextTag name="TERM_FUNCKEY"   CSSClass="form-control" placeholder="Functionnal Key" />
+                                            <joy:ActionInputTextTag name="TERM_FUNCKEY"   CSSClass="form-control" placeholder="Functionnal Key" glypheicon="glyphicon-star-empty" />
                                         </div>
                                         <div class="form-group">
                                             <label>Description</label>
@@ -132,25 +129,19 @@
                                     <div class="panel-body">
                                         <div class="form-group">
                                             <label>Owner</label>
-                                            <joy:ActionInputTextTag name="TERM_OWNER"   CSSClass="form-control"  placeholder="Business Term's Owner name" />
+                                            <joy:ActionInputTextTag name="TERM_OWNER"   CSSClass="form-control"  placeholder="Business Term Owner name" glypheicon="glyphicon-user" />
                                         </div>
                                         <div class="form-group">
                                             <label>Owner Email</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1">@</span>
-                                                <joy:ActionInputTextTag name="TERM_OWNER_EMAIL"   CSSClass="form-control"  placeholder="Owner's Email" />
-                                            </div>
+                                            <joy:ActionInputTextTag name="TERM_OWNER_EMAIL"   CSSClass="form-control"  placeholder="Owner Email"  glypheicon="glyphicon-envelope" />
                                         </div>
                                         <div class="form-group">
                                             <label>Steward</label>
-                                            <joy:ActionInputTextTag name="TERM_STEWARD"   CSSClass="form-control"  placeholder="Business Term's Steward name" />
+                                            <joy:ActionInputTextTag name="TERM_STEWARD"   CSSClass="form-control"  placeholder="Business Term Steward name" glypheicon="glyphicon-user" />
                                         </div>                                
                                         <div class="form-group">
                                             <label>Steward Email</label>
-                                            <div class="input-group">
-                                                 <span class="input-group-addon" id="basic-addon1">@</span>
-                                                <joy:ActionInputTextTag name="TERM_STEWARD_EMAIL"   CSSClass="form-control" ariadescribedby="basic-addon1" placeholder="Steward's Email" />
-                                             </div>      
+                                            <joy:ActionInputTextTag name="TERM_STEWARD_EMAIL"   CSSClass="form-control" ariadescribedby="basic-addon1" placeholder="Steward Email" glypheicon="glyphicon-envelope" />
                                         </div>  
                                         <div class="form-group">
                                             <label>Type</label>
@@ -183,7 +174,7 @@
 
 <SCRIPT type='text/javascript'>
     $(document).ready(function(){
-        $( "#JOYFUNCKEY").validator();
+        
         $( "#btn1" ).button();
         $( "#btn2" ).button();
         $( "#btn3" ).button();

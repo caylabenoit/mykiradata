@@ -25,9 +25,8 @@ import com.dgm.common.providers.ParamProvider;
  * @author Benoit CAYLA (benoit@famillecayla.fr) 
  */
 public class InfaConfigInterface extends ActionTypeForm {
+    
     @Override
-    
-    
     public String list() {
         ParamProvider params = new ParamProvider(this.getBOFactory());
         this.addFormSingleEntry("CMD", params.getParamValue("infacmd").getStrValue());

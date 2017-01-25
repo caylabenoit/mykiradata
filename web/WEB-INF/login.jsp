@@ -14,7 +14,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <img src="./images/logo.png" class="logomenu"><span style="font-size: 22px;">&nbsp;Login to myKiradata</span>
                     </div>
                     <div class="panel-body">
                         <joy:JoyFormTag object='login' actiontype='login' inline="false" name="login"> 
@@ -26,7 +26,7 @@
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="#" class="btn btn-lg btn-success btn-block" onclick="document.forms['login'].submit();">Login</a>
+                                <a href="#" class="btn btn-lg btn-warning btn-block" onclick="document.forms['login'].submit();">Login</a>
                             </fieldset>
                         </joy:JoyFormTag>  
                     </div>

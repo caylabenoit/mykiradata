@@ -22,14 +22,17 @@
     <default-url-pattern>/joy</default-url-pattern>
     
     <!-- property file prefix for all the messages -->
-    <bundle-message>dgm</bundle-message>
+    <bundle-message>myKiraData</bundle-message>
     
     <!-- default date format -->
     <default-dateformat>yyyy-mm-dd HH:mm:ss</default-dateformat>
     
     <!-- Joy Version -->
     <joy-version>0.1.5.5</joy-version>
-    <joy-app-name>DGM</joy-app-name>
+    <joy-app-name>myKiraData</joy-app-name>
+
+    <!-- Deactive or not the mandatory login process yes/no -->
+    <no-login>yes</no-login>
     
     <!-- datasources/entities configuration file here-->
     <joy-entities>

@@ -16,9 +16,7 @@
  */
 package com.dgm.form.analytics.bg;
 
-import com.dgm.common.Constants;
 import com.dgm.common.Utils;
-import com.dgm.common.providers.ParamProvider;
 import com.dgm.form.analytics.ReportCommonAction;
 import com.joy.Joy;
 import com.joy.mvc.formbean.JoyFormVectorEntry;
@@ -86,19 +84,22 @@ public class ReportByTerm extends ReportCommonAction {
     /**
      * Calculate Term score
      */
-    public void calculateGlobalScore(int currentTerm) {
+    private void calculateGlobalScore(int currentTerm) {
+        String color = Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString();
         IEntity entity = getBOFactory().getEntity("Analytics - Terms Global Score Calculation");
         entity.field("TRM_FK").setKeyValue(currentTerm);
         ResultSet rs = entity.select();
         
         try {
-            if (rs.next())
+            if (rs.next()) {
                 this.addFormSingleEntry("GLOBALSCORE", rs.getString("GLOBALSCORE"));
-            else
+                color = Utils.GET_HEXA_COLOR_FOR_SCORE(rs.getString("GLOBALSCORE"));
+            } else
                 this.addFormSingleEntry("GLOBALSCORE", "0");
         } catch (SQLException ex) {
             this.addFormSingleEntry("GLOBALSCORE", "0");
         }
+        this.addFormSingleEntry("GLOBALSCORE_COLOR", color);
         getBOFactory().closeResultSet(rs);
     }
     
@@ -200,8 +201,6 @@ public class ReportByTerm extends ReportCommonAction {
             IEntity entity = getBOFactory().getEntity("Analytics - Terms Global Informations");
             entity.field("TRM_PK").setKeyValue(currentTerm);
             ResultSet rs = entity.select();
-            ParamProvider myParam = new ParamProvider(getBOFactory());
-            boolean displayInfa = myParam.getParamValue("INFORMATICA").getStrValue().equalsIgnoreCase(Constants.PARAM_YES);
             
             if (rs.next()) {
                 this.addFormSingleEntry("TRM_NAME", rs.getString("TRM_NAME"));
@@ -218,21 +217,16 @@ public class ReportByTerm extends ReportCommonAction {
                 this.addFormSingleEntry("TRM_PK", rs.getString("TRM_PK"));
                 this.addFormSingleEntry("TRM_CLUSTER_ID", rs.getString("TRM_CLUSTER_ID"));
                 // Term icon
-                String icon = Utils.getTermTypeIcon(this.getBOFactory(), rs.getString("TRT_NAME"));
+                String icon = Utils.GET_TERM_TYPE_ICON(this.getBOFactory(), rs.getString("TRT_NAME"));
                 this.addFormSingleEntry("ICON", icon);
                 this.addFormSingleEntry("IMGICO", (rs.getString("TRT_NAME") == null ? Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString() : icon));
                 // Glossary link
                 this.addFormSingleEntry("GLOSSARY_LINK", Joy.HREF("byglossary", "display", rs.getString("GLO_NAME"), "glossary", String.valueOf(rs.getString("GLO_PK"))));
                 // Category link
-                this.addFormSingleEntry("CATEGORY_LINK", Joy.HREF("bycategory", "display", rs.getString("CAT_NAME"), "category", String.valueOf(rs.getString("CAT_PK"))));
-                
-                // Informatica specifics
-                this.addFormSingleEntry("INFORMATICA", displayInfa);
-                if (displayInfa) {
-                    String mmURL = myParam.getParamValue("infammurl").getStrValue();
-                    this.addFormSingleEntry("INFA_MM_LINK",  getMetaManagerURLLink(false, mmURL, rs.getString("GLO_NAME"), rs.getString("TRM_NAME")));
-                    this.addFormSingleEntry("INFA_DIRECT_LINK",  getBGTermURLLink(rs.getString("OBJECT_ID")));
-                }
+                String catLinkLabel = "[No Category Specified]";
+                if (rs.getString("CAT_NAME") != null)
+                    catLinkLabel = Joy.HREF("bycategory", "display", rs.getString("CAT_NAME"), "category", String.valueOf(rs.getString("CAT_PK")));
+                this.addFormSingleEntry("CATEGORY_LINK", catLinkLabel);
                 
                 if (rs.getString("TRM_CLUSTER_ID") != null)
                     this.addFormSingleEntry("CONFIG_TERM_LINK",  Joy.URL("reltermmetric", "EDIT", "TRM_CLUSTER_ID", rs.getString("TRM_CLUSTER_ID")));
@@ -247,46 +241,5 @@ public class ReportByTerm extends ReportCommonAction {
             Joy.LOG().error(e);
         }
     }
-    
-   /**
-    * Build the Informatica Matedata Manager URL like this
-  http://win2k8:10250/mm/lineage?objectPath=MM/Data Governance Glossary/Account&mode=lineage
-    * @param _detail
-    * @param URL
-    * @param Glossary
-    * @param Term
-    * @return 
-    */
-   private String getMetaManagerURLLink(boolean _detail, String URL, String Glossary, String Term) {
-       String url = "";
-
-       //url += ParamProvider.getParamValue("infammurl").getStrValue();  
-       url += URL; 
-       url += "lineage?objectPath=MM/"  ;
-       url += Glossary + "/" ;
-       url += Term;
-       url += "&mode=" + (_detail ? "detail" : "lineage");
-
-       return url;
-   }
-   
-   /**
-    * replace the URL by "http://infaw2k12:8085/analyst/?wstate=(%27$obj%27:%27" + ObjectID + "@com.informatica.bg.core.models.BGTermInfo%27,%27$ws%27:bgRequirementsWS)";  
-    * @param ObjectID
-    * @return 
-    */
-   private String getBGTermURLLink(String ObjectID) {
-       ParamProvider myParams = new ParamProvider(this.getBOFactory());
-       String mask = myParams.getParamValue("bgtermmask").getStrValue();
-       String url = "";
-
-       if (mask == null)
-           return "#";
-       if (mask.isEmpty())
-           return "#";
-       url = mask.replace("{0}", ObjectID);
-
-       return url;
-   }
    
 }

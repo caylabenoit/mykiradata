@@ -19,7 +19,7 @@
  * dynamically Build a list with score (label + score with progress bar)
  * The dataset must return 3 fields in this order :
  *  --> Name (label), Score (%) and Id (for the url)
- * @param {type} jsonflow       Content in json format
+ * @param {type} jsonflow       Content in json format (typically Data resturned via Joy REST framework)
  * @param {type} didID          DIV Id to write on 
  * @param {type} glyphe         Glyphe to use
  * @param {type} badthresold    bad thresold (progress bar color)
@@ -37,9 +37,8 @@ function fillDivList(jsonflow, didID, glyphe, badthresold, goodthresold, urlbasi
         var id = row.columns[2].value;
         
         var color = "progress-bar-danger";
-        
         if (score >= badthresold && score < goodthresold) 
-            color = "progress-warning";
+            color = "progress-bar-warning";
         else if (score >= goodthresold)
             color = "progress-bar-success";
             

@@ -6,7 +6,7 @@
 
 <link rel="icon" type="images/png" href="./images/logo.png" />
 
-<title>DGM</title>
+<title>myKiraData</title>
 
 <!-- Includes directives below -->
 

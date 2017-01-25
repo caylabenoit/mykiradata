@@ -78,7 +78,7 @@ public class HomeAction extends ActionTypeForm {
         this.addFormSingleEntry("URLBASIS_DQAXIS", Joy.URL("bydqaxis", "display"));
         this.addFormSingleEntry("URLBASIS_TERM", Joy.URL("byterm", "display"));
         
-        return super.display(); //To change body of generated methods, choose Tools | Templates.
+        return super.display(); 
     }
     
 }
