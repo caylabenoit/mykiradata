@@ -26,24 +26,24 @@
             </joy:NaviTopMenuTag>
             <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Analytics"  />
         </nav>
+        
 
+        
         <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="container-fluid">
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <joy:NaviBreadCrumbsTag xmlconfig="joy-menu.xml" activemenuid="Analytics" />
+            
+            <div class="container-fluid"> 
+                <div style="background-color: white; padding: 0 0 0 0; margin: 0 0 0 0">
+                    <div class="row">
+                        <UI:dgmSpot tag="TERMS" panelcolor="spot-primary" panelicon="term" classbloc="col-lg-3 col-md-6" />
+                        <UI:dgmSpot tag="METRICS" panelcolor="spot-red" panelicon="metric"  classbloc="col-lg-3 col-md-6" />
+                        <UI:dgmSpot tag="GLOSSARIES" panelcolor="spot-green" panelicon="glossary"  classbloc="col-lg-3 col-md-6" />
+                        <UI:dgmSpot tag="DQAXIS" panelcolor="spot-yellow" panelicon="dqaxis"  classbloc="col-lg-3 col-md-6" />
                     </div>
                 </div>
+            </div>
                 
-                <div class="row">
-                    <UI:dgmSpot tag="TERMS" panelcolor="spot-primary" panelicon="term" classbloc="col-lg-3 col-md-6" />
-                    <UI:dgmSpot tag="METRICS" panelcolor="spot-red" panelicon="metric"  classbloc="col-lg-3 col-md-6" />
-                    <UI:dgmSpot tag="GLOSSARIES" panelcolor="spot-green" panelicon="glossary"  classbloc="col-lg-3 col-md-6" />
-                    <UI:dgmSpot tag="DQAXIS" panelcolor="spot-yellow" panelicon="dqaxis"  classbloc="col-lg-3 col-md-6" />
-                </div>
-                
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default"  id="panel-dashbydqaxis">

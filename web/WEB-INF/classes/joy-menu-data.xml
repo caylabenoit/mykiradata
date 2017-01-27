@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <joy-menu class="fa fa-dashboard fa-fw" id="DATA09" name="Groups" object="lndscgrp" actiontype="list" />
     </joy-menu>
     <joy-menu class="fa fa-random fa-fw" id="DATA10" name="Import">
-        <joy-menu class="fa fa-random fa-fw" id="DATA11" name="From Informatica" object="infainterface" actiontype="list" />
         <joy-menu class="fa fa-random fa-fw" id="DATA12" name="From Landing" object="landinginterface"  actiontype="list" />
+        <joy-menu class="fa fa-random fa-fw" id="DATA13" name="External Plugins" object="pluginsinterface"  actiontype="list" />
     </joy-menu>
 </joy-menu>

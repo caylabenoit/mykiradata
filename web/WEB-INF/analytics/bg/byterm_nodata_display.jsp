@@ -60,10 +60,6 @@
                                     <div class="panel-body">
                                         <DIV class="bloctitreprincipal">
                                         <h5>Metric <joy:ActionValueTag name="TRM_NAME" /> coming from <joy:ActionValueTag name="GLOSSARY_LINK" />&nbsp;/&nbsp;<joy:ActionValueTag name="CATEGORY_LINK" /> </h5>
-                                        <joy:ActionConditionTag name="INFORMATICA">
-                                            <H5><A href="<joy:ActionValueTag name="INFA_MM_LINK" />" target="other"><i class="fa fa-crosshairs fa-fw"></i>&nbsp;Informatica Metadata Data Lineage</a></h5>
-                                            <H5><A href="<joy:ActionValueTag name="INFA_DIRECT_LINK" />" target="_self"><i class="fa fa-book fa-fw"></i>&nbsp;Jump to Business Term</a></h5>
-                                        </joy:ActionConditionTag>
                                         </DIV>
                                         <joy:JoyFormTag inline="true" object='byterm' actiontype='display' name='myform'>
                                         <div class="form-group">

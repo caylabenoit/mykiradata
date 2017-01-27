@@ -23,7 +23,7 @@
 %>
 <%-- Texts top: --%>
 
-<div class="<%= classbloc %>">
+<div class="<%= classbloc %>"  style="padding: 0 0 0 0;">
     <div class="panel <%= panelcolor %>">
         <div class="panel-heading">
             <div class="row">

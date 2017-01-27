@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Benoit CAYLA (benoit@famillecayla.fr)
+ * Copyright (C) 2017 Benoit CAYLA <benoit@famillecayla.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.tasks.load;
+package com.dgm.form.load;
 
-import com.joy.tasks.JoyTaskStatus;
-
+import com.joy.mvc.actionTypes.ActionTypeForm;
 
 /**
  *
- * @author Benoit CAYLA (benoit@famillecayla.fr)
+ * @author Benoit CAYLA <benoit@famillecayla.fr>
  */
-public class TASKInfaWorkflow extends TASKCommonLoad {
+public class PluginsConfigAction extends ActionTypeForm {
 
     @Override
-    public JoyTaskStatus taskExecute() {
-        JoyTaskStatus infaStatus = this.loadInformatica();
-        if (infaStatus == JoyTaskStatus.Success) {
-            this.addTrace("Load Informatica Data into the Datamart");
-            return this.loadInternalLanding();
-        } else {
-            this.addTrace("Error while getting information from Informatica Platform");
-            return infaStatus;
-        }
+    public String list() {
+        return super.list(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -99,6 +99,15 @@ and open the template in the editor.
     </actionRequest>
     
     <actionRequest>
+        <object>pluginsinterface</object>
+        <objecttype>form</objecttype>
+        <action>com.dgm.form.load.PluginsConfigAction</action>
+        <redirects>
+            <redirect tag="LIST">./WEB-INF/data/import/plugins_import_list.jsp</redirect>
+        </redirects>
+    </actionRequest>
+    
+    <actionRequest>
         <object>landinginterface</object>
         <objecttype>form</objecttype>
         <action>com.dgm.form.load.LandingConfigInterface</action>
@@ -343,9 +352,9 @@ and open the template in the editor.
 <!-- TASKS ACTIONS HERE -->    
 <!-- http://localhost:18180/dgm/task/[tag]  -->
     <actionRequest>
-        <object>infawf</object>
+        <object>plugin</object>
         <objecttype>task</objecttype>
-        <action>com.dgm.tasks.load.TASKInfaWorkflow</action>
+        <action>com.dgm.tasks.load.TASKPluginImport</action>
     </actionRequest>
     
     <actionRequest>

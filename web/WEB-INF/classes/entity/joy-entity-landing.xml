@@ -268,5 +268,19 @@
                     LEFT OUTER JOIN DIM_CONTEXT ON (REL_SC_CONTEXT.CON_DESCRIPTION = DIM_CONTEXT.CON_DESCRIPTION)
         WHERE FACT_GOVERNANCE.FRS_PK IS NULL
     </joy-customquery>
+
+    <!-- Plugins list -->
+    <joy-composite name = "PLUGINS_LIST_00" distinct="yes">
+        <joy-field alias="X">API_PK</joy-field>
+        <joy-field alias="X">API_DESCRIPTION</joy-field>
+        <joy-field alias="X">API_CONTENT</joy-field>
+        <joy-field alias="Y">APT_NAME</joy-field>
+        <joy-field alias="X">API_SUCCESS_WORDS</joy-field>
+        <joy-entity alias="X">APP_PLUGINS</joy-entity>
+        <joy-join type="INNER">
+            <joy-entity alias="Y">APP_PLUGINS_TYPE</joy-entity>
+            <joy-join-key master="APT_FK" slave="APT_PK" />
+        </joy-join>
+    </joy-composite>
     
 </joy-entities>

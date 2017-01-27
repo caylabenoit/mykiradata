@@ -22,7 +22,7 @@
     <default-url-pattern>/joy</default-url-pattern>
     
     <!-- property file prefix for all the messages -->
-    <bundle-message>myKiraData</bundle-message>
+    <bundle-message>dgm</bundle-message>
     
     <!-- default date format -->
     <default-dateformat>yyyy-mm-dd HH:mm:ss</default-dateformat>

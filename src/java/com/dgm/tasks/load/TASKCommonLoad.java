@@ -16,8 +16,6 @@
  */
 package com.dgm.tasks.load;
 
-import com.dgm.common.Utils;
-import com.dgm.common.providers.ParamProvider;
 import com.joy.Joy;
 import com.joy.bo.IEntity;
 import com.joy.etl.MappingSpecification;
@@ -25,6 +23,7 @@ import com.joy.etl.MappingFactory;
 import com.joy.etl.StatMap;
 import com.joy.mvc.actionTypes.ActionTypeTASK;
 import com.joy.tasks.JoyTaskStatus;
+import java.sql.ResultSet;
 import java.util.Date;
 
 /**
@@ -39,35 +38,57 @@ public class TASKCommonLoad extends ActionTypeTASK {
     }
     
     /**
-     * Gather data from informatica
+     * Check the  command line result to see if one of the success word is inside
+     * @param result command line result
+     * @param successWords List of success words (comma separated)
+     * @return Success or fail
+     */
+    private JoyTaskStatus checkResultStatus(String result, String successWords) {
+        String successWordArray[] = successWords.split(",");
+        JoyTaskStatus defaultStatus = JoyTaskStatus.Failed;
+        for (String successWord : successWordArray) {
+            if (result.contains(successWord)) { 
+                return JoyTaskStatus.Success;
+            }
+        }
+        return defaultStatus;
+    } 
+    
+    /**
+     * Gather data from plugin configuration
      * @return 
      */
-    public JoyTaskStatus loadInformatica() {
+    public JoyTaskStatus loadPlugin() {
+        JoyTaskStatus finalExecutionStatus = JoyTaskStatus.Failed;
+        ResultSet rs = null;
         try {
-            ParamProvider myParams = new ParamProvider(this.getEntities());
-            String wfName = this.getTaskName();
+            String cmdLineID = this.getTaskName();
             String result = "";
-            trace("Informatica Workflow execution : " + wfName);
-
-            String cmdLine = Utils.GET_INFA_WORKFLOW_CMDLINE(myParams.getParamValue("infacmd").getStrValue(),
-                                                                        myParams.getParamValue("infadomain").getStrValue(),
-                                                                        myParams.getParamValue("infadis").getStrValue(),
-                                                                        myParams.getParamValue("infauser").getStrValue(),
-                                                                        myParams.getParamValue("infapwd").getStrValue(),
-                                                                        myParams.getParamValue("infaapp").getStrValue(),
-                                                                        wfName);
-            trace("Launch command line: " + cmdLine);
-            result = Joy.EXECUTE_CMD(cmdLine);
-            trace("Result : " + result);
+            trace("Plugin Import ID: " + cmdLineID);
+            
+            IEntity plugins = this.getEntities().getEntity("PLUGINS_LIST_00");
+            plugins.field("API_PK").setKeyValue(cmdLineID);
+            rs = plugins.select();
+            if (rs.next()) {
+                String cmdLine = rs.getString("API_CONTENT");
+                trace("Launch command line: " + cmdLine);
+                result = Joy.EXECUTE_CMD(cmdLine);
+                trace("Result : " + result);
+                finalExecutionStatus = checkResultStatus(result, rs.getString("API_SUCCESS_WORDS"));
+            } else {
+                result = "The plugin is not weel configured";
+                finalExecutionStatus = JoyTaskStatus.Failed;
+            }
             this.setMessage(result);
             
         } catch (Exception e) {
-            this.addTrace("Exception while launching workflow : " + e);
+            this.addTrace("Exception while using plugin configuration : " + e);
             Joy.LOG().fatal(e);
             this.setMessage(e.toString());
-            return JoyTaskStatus.Failed;
+            finalExecutionStatus = JoyTaskStatus.Failed;
         }
-        return JoyTaskStatus.Success;
+        this.getEntities().closeResultSet(rs);
+        return finalExecutionStatus;
     }
     
     /**
