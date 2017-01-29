@@ -24,7 +24,7 @@
 <link href="./joy-external/bootstrap/components/select2/dist/css/select2-bootstrap.css" rel="stylesheet">
 <!-- Treeview --><link href="./joy-external/bootstrap/components/bootstrap-treeview-master/dist/bootstrap-treeview.min.css" rel="stylesheet">
 <!-- JQuery-UI --><link href="./joy-external/jquery-ui/dist/jquery-ui.theme.min.css" rel="stylesheet" type="text/css"/>
-<!-- Lobipanel --><link href="./joy-external/bootstrap/components/lobipanel/dist/css/lobipanel.min.css" rel="stylesheet" type="text/css"/>
+<!-- Lobipanel --><link href="./joy-external/bootstrap/components/lobipanel-master_v0.7.1/dist/css/lobipanel.min.css" rel="stylesheet" type="text/css"/>
 <!-- datetime-picker --><link href="./joy-external/bootstrap/components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
 <!-- styles Menu DGM --><link href="./theme/css/dgmtaskmenu.css" rel="stylesheet" type="text/css"/>
 <!-- styles DGM --><link href="./theme/css/global.css" rel="stylesheet" type="text/css"/>

@@ -27,8 +27,6 @@
             <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Analytics"  />
         </nav>
         
-
-        
         <!-- Page Content -->
         <div id="page-wrapper">
             
@@ -49,9 +47,9 @@
                         <div class="panel panel-default"  id="panel-dashbydqaxis">
                             <div class="panel-heading"><UI:dgmGlyphe name="dqaxis" />Global scoring per Data Quality Dimension</div>
                             <div class="panel-body">
-                                <div class="dataTable_wrapper">
-                                    <canvas id="MyPolar"></canvas>
-                                    <div id="radarLegend" ></div>
+                                <canvas id="graph0"></canvas>
+                                <div id="wait_graph0" class="divTaskImage">
+                                    <div class="divTaskDesc">Please Wait ...</div>
                                 </div>
                             </div>
                         </div>            
@@ -61,9 +59,9 @@
                         <div class="panel panel-default" id="panel-dashbyglossary">
                             <div class="panel-heading"><UI:dgmGlyphe name="dashboard" />Global scoring by Glossary</div>
                             <div class="panel-body">
-                                <div class="dataTable_wrapper">
-                                    <canvas id="MyBars"></canvas>
-                                    <div id="barLegend" ></div>
+                                <canvas id="graph1"></canvas>
+                                <div id="wait_graph1" class="divTaskImage">
+                                    <div class="divTaskDesc">Please Wait ...</div>
                                 </div>
                             </div>
                         </div>            
@@ -76,7 +74,12 @@
                             <div class="panel-heading">
                                 <i class="fa fa-dashboard fa-fw"></i> Global Scores
                             </div>
-                            <div class="panel-body" id="div_AXIS_SCORE_HOME_00"></div>
+                            <div class="panel-body">
+                                <div id="wait_AXIS_SCORE_HOME_00" class="divTaskImage">
+                                    <div class="divTaskDesc">Please Wait ...</div>
+                                </div>
+                                <div id="div_AXIS_SCORE_HOME_00"> </div> 
+                            </div>
                         </div>    
                     </div>  
                     
@@ -85,7 +88,12 @@
                             <div class="panel-heading">
                                 <i class="fa fa-dashboard fa-fw"></i> Best Terms
                             </div>
-                            <div class="panel-body" id="div_HOME_BEST_TERMS"></div>
+                            <div class="panel-body">
+                                <div id="wait_HOME_BEST_TERMS" class="divTaskImage">
+                                    <div class="divTaskDesc">Please Wait ...</div>
+                                </div>
+                                <div id="div_HOME_BEST_TERMS"> </div> 
+                            </div>
                         </div>    
                     </div>   
                     
@@ -94,7 +102,12 @@
                             <div class="panel-heading">
                                 <i class="fa fa-dashboard fa-fw"></i> Worse Terms
                             </div>
-                            <div class="panel-body" id="div_HOME_WORSE_TERMS"></div>
+                            <div class="panel-body">
+                                <div id="wait_HOME_WORSE_TERMS" class="divTaskImage">
+                                    <div class="divTaskDesc">Please Wait ...</div>
+                                </div>
+                                <div id="div_HOME_WORSE_TERMS"> </div> 
+                            </div>
                         </div>    
                     </div>  
                 </div>
@@ -111,52 +124,41 @@ var URLBASIS_DQAXIS = "<joy:ActionValueTag name="URLBASIS_DQAXIS" />";
 var URLBASIS_TERM = "<joy:ActionValueTag name="URLBASIS_TERM" />";
 var LIST_ROWMAX = 5;
 
+var myGraph1;
+var myGraph0;
+
 $(function(){
     $('#panel-dashbyglossary').lobiPanel({
        reload: false,
        close: false,
        editTitle: false,
-       sortable: true
+       sortable: false
      });
     $('#panel-dashbyglossary').on('onFullScreen.lobiPanel', function(ev, lobiPanel){
-        document.getElementById("MyBars").style.height = "90%";
-        window.myBarArea.resize();
+        myGraph1.resize();
     });
     $('#panel-dashbyglossary').on('onSmallSize.lobiPanel', function(ev, lobiPanel){
-        window.myBarArea.resize();
+        myGraph1.resize();
     });
     
     $('.panel-scores').lobiPanel({
        reload: false,
        close: false,
        editTitle: false,
-       sortable: true
+       sortable: false
     });
      
     $('#panel-dashbydqaxis').on('onFullScreen.lobiPanel', function(ev, lobiPanel){
-        window.myPolarArea.resize();
+        myGraph0.resize();
     });
     $('#panel-dashbydqaxis').on('onSmallSize.lobiPanel', function(ev, lobiPanel){
-        window.myPolarArea.resize();
+        myGraph0.resize();
     });
     $('#panel-dashbydqaxis').lobiPanel({
        reload: false,
        close: false,
        editTitle: false,
-       sortable: true
-    });
-    
-    $('#panel-dashOwnerMissing').on('onFullScreen.lobiPanel', function(ev, lobiPanel){
-        window.MyNoOwner.resize();
-    });
-    $('#panel-dashOwnerMissing').on('onSmallSize.lobiPanel', function(ev, lobiPanel){
-        window.MyNoOwner.resize();
-    });
-    $('#panel-dashOwnerMissing').lobiPanel({
-       reload: false,
-       close: false,
-       editTitle: false,
-       sortable: true
+       sortable: false
     });
 });
  
@@ -164,7 +166,7 @@ $(function(){
 function callbackSuccess(content, tag) {
     switch(tag) {
         case 'polaraxis':
-            var ctx = document.getElementById("MyPolar").getContext("2d");
+            var ctx = document.getElementById("graph0").getContext("2d");
             var config = {
                 data: content,
                 options: {
@@ -180,14 +182,16 @@ function callbackSuccess(content, tag) {
                     scaleShowLine : true
                     }
                 };
-            var ctx = document.getElementById("MyPolar");
-            window.myPolarArea = Chart.PolarArea(ctx, config);
-
+            var ctx = document.getElementById("graph0");
+            myGraph0 = Chart.PolarArea(ctx, config);
+            document.getElementById("graph0").style.display="initial";
+            document.getElementById("wait_graph0").style.display="none";
+            
             break;
             
         case 'barbyglossary':
-            var ctx = document.getElementById("MyBars").getContext("2d");
-            window.myBarArea = new Chart(ctx, {
+            var ctx = document.getElementById("graph1").getContext("2d");
+            myGraph1 = new Chart(ctx, {
                 type: 'bar',
                 data: content,
                 options: {
@@ -197,23 +201,37 @@ function callbackSuccess(content, tag) {
                     title: { display: true, text: 'Global scoring by Glossary' }
                 }
             });
+            document.getElementById("graph1").style.display="initial";
+            document.getElementById("wait_graph1").style.display="none";
             break;
             
         case 'AXIS_SCORE_HOME_00':
             fillDivList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_DQAXIS + "&dqaxis=");
+            document.getElementById("div_AXIS_SCORE_HOME_00").style.display="initial";
+            document.getElementById("wait_AXIS_SCORE_HOME_00").style.display="none";
             break;
             
         case 'HOME_BEST_TERMS':
             fillDivList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+            document.getElementById("div_HOME_BEST_TERMS").style.display="initial";
+            document.getElementById("wait_HOME_BEST_TERMS").style.display="none";
             break;
             
         case 'HOME_WORSE_TERMS':
             fillDivList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+            document.getElementById("div_HOME_WORSE_TERMS").style.display="initial";
+            document.getElementById("wait_HOME_WORSE_TERMS").style.display="none";
             break;
 
         default:
     }
 }
+
+document.getElementById("graph1").style.display="none"; // initial
+document.getElementById("graph0").style.display="none"; // initial
+document.getElementById("div_AXIS_SCORE_HOME_00").style.display="none"; // initial
+document.getElementById("div_HOME_BEST_TERMS").style.display="none"; // initial
+document.getElementById("div_HOME_WORSE_TERMS").style.display="none"; // initial
 
 loadJSON('./rest/charts/sds/AXIS_SCORE_HOME_00', 'polaraxis');
 loadJSON('./rest/charts/mds/GLOBAL_SCORING_HOME_01', 'barbyglossary');

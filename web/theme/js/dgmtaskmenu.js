@@ -146,7 +146,7 @@ function WaitForTaskRefresh() {
     var liDivTxt = document.createElement("DIV");
     liDivTxt.classList.add("divTaskDesc");
     
-    var content = document.createTextNode("Please wait ");
+    var content = document.createTextNode(" Please wait ...");
     liDivTxt.appendChild(content);
     liDiv.appendChild(liDivImg);
     liDiv.appendChild(liDivTxt);

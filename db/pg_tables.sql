@@ -5,7 +5,7 @@
 -- Dumped from database version 9.4.5
 -- Dumped by pg_dump version 9.5.1
 
--- Started on 2016-11-24 15:46:56
+-- Started on 2017-01-28 08:38:20
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -24,7 +24,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2188 (class 0 OID 0)
+-- TOC entry 2203 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -35,7 +35,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 203 (class 1255 OID 17473)
+-- TOC entry 205 (class 1255 OID 17473)
 -- Name: first_agg(anyelement, anyelement); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -49,7 +49,7 @@ $_$;
 ALTER FUNCTION public.first_agg(anyelement, anyelement) OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1255 OID 17474)
+-- TOC entry 218 (class 1255 OID 17474)
 -- Name: last_agg(anyelement, anyelement); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -63,7 +63,7 @@ $_$;
 ALTER FUNCTION public.last_agg(anyelement, anyelement) OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1255 OID 17475)
+-- TOC entry 219 (class 1255 OID 17475)
 -- Name: round(double precision, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -77,7 +77,7 @@ CREATE FUNCTION round(double precision, integer) RETURNS numeric
 ALTER FUNCTION public.round(double precision, integer) OWNER TO postgres;
 
 --
--- TOC entry 677 (class 1255 OID 17476)
+-- TOC entry 687 (class 1255 OID 17476)
 -- Name: first(anyelement); Type: AGGREGATE; Schema: public; Owner: postgres
 --
 
@@ -90,7 +90,7 @@ CREATE AGGREGATE first(anyelement) (
 ALTER AGGREGATE public.first(anyelement) OWNER TO postgres;
 
 --
--- TOC entry 678 (class 1255 OID 17477)
+-- TOC entry 688 (class 1255 OID 17477)
 -- Name: last(anyelement); Type: AGGREGATE; Schema: public; Owner: postgres
 --
 
@@ -122,6 +122,36 @@ CREATE TABLE app_params (
 
 
 ALTER TABLE app_params OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 25881)
+-- Name: app_plugins; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE app_plugins (
+    api_pk integer NOT NULL,
+    api_content character varying(4000),
+    apt_fk integer,
+    api_description character varying(4000),
+    api_success_words character varying(1000)
+);
+
+
+ALTER TABLE app_plugins OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 25887)
+-- Name: app_plugins_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE app_plugins_type (
+    apt_pk integer NOT NULL,
+    apt_name character varying(200) NOT NULL,
+    apt_description character varying(4000)
+);
+
+
+ALTER TABLE app_plugins_type OWNER TO postgres;
 
 --
 -- TOC entry 175 (class 1259 OID 17609)
@@ -653,7 +683,25 @@ CREATE TABLE src_termtype (
 ALTER TABLE src_termtype OWNER TO postgres;
 
 --
--- TOC entry 2055 (class 1259 OID 17730)
+-- TOC entry 2083 (class 2606 OID 25894)
+-- Name: app_plugins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY app_plugins
+    ADD CONSTRAINT app_plugins_pkey PRIMARY KEY (api_pk);
+
+
+--
+-- TOC entry 2085 (class 2606 OID 25896)
+-- Name: app_plugins_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY app_plugins_type
+    ADD CONSTRAINT app_plugins_type_pkey PRIMARY KEY (apt_pk);
+
+
+--
+-- TOC entry 2065 (class 1259 OID 17730)
 -- Name: dim_category_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -661,7 +709,7 @@ CREATE UNIQUE INDEX dim_category_pk ON dim_category USING btree (cat_pk);
 
 
 --
--- TOC entry 2056 (class 1259 OID 17731)
+-- TOC entry 2066 (class 1259 OID 17731)
 -- Name: dim_context_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -669,7 +717,7 @@ CREATE UNIQUE INDEX dim_context_pk ON dim_context USING btree (con_pk);
 
 
 --
--- TOC entry 2057 (class 1259 OID 17732)
+-- TOC entry 2067 (class 1259 OID 17732)
 -- Name: dim_datasource_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -677,7 +725,7 @@ CREATE UNIQUE INDEX dim_datasource_pk ON dim_datasource USING btree (dso_pk);
 
 
 --
--- TOC entry 2054 (class 1259 OID 17608)
+-- TOC entry 2064 (class 1259 OID 17608)
 -- Name: dim_dqdimension_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -685,7 +733,7 @@ CREATE UNIQUE INDEX dim_dqdimension_pk ON dim_dqaxis USING btree (dqx_pk);
 
 
 --
--- TOC entry 2058 (class 1259 OID 17733)
+-- TOC entry 2068 (class 1259 OID 17733)
 -- Name: dim_glossary_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -693,7 +741,7 @@ CREATE UNIQUE INDEX dim_glossary_pk ON dim_glossary USING btree (glo_pk);
 
 
 --
--- TOC entry 2059 (class 1259 OID 17734)
+-- TOC entry 2069 (class 1259 OID 17734)
 -- Name: dim_job_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -701,7 +749,7 @@ CREATE UNIQUE INDEX dim_job_pk ON dim_job USING btree (job_pk);
 
 
 --
--- TOC entry 2061 (class 1259 OID 17735)
+-- TOC entry 2071 (class 1259 OID 17735)
 -- Name: dim_metrictype_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -709,7 +757,7 @@ CREATE UNIQUE INDEX dim_metrictype_pk ON dim_metrictype USING btree (mty_pk);
 
 
 --
--- TOC entry 2062 (class 1259 OID 17736)
+-- TOC entry 2072 (class 1259 OID 17736)
 -- Name: dim_origine_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -717,7 +765,7 @@ CREATE UNIQUE INDEX dim_origine_pk ON dim_origine USING btree (ori_pk);
 
 
 --
--- TOC entry 2060 (class 1259 OID 17737)
+-- TOC entry 2070 (class 1259 OID 17737)
 -- Name: dim_rules_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -725,7 +773,7 @@ CREATE UNIQUE INDEX dim_rules_pk ON dim_metric USING btree (met_pk);
 
 
 --
--- TOC entry 2063 (class 1259 OID 17738)
+-- TOC entry 2073 (class 1259 OID 17738)
 -- Name: dim_scorecard_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -733,7 +781,7 @@ CREATE UNIQUE INDEX dim_scorecard_pk ON dim_scorecard USING btree (sco_pk);
 
 
 --
--- TOC entry 2065 (class 1259 OID 17739)
+-- TOC entry 2075 (class 1259 OID 17739)
 -- Name: dim_term_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -741,7 +789,7 @@ CREATE UNIQUE INDEX dim_term_pk ON dim_term USING btree (trm_pk);
 
 
 --
--- TOC entry 2066 (class 1259 OID 17740)
+-- TOC entry 2076 (class 1259 OID 17740)
 -- Name: dim_term_relationship_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -749,7 +797,7 @@ CREATE UNIQUE INDEX dim_term_relationship_pk ON dim_term_relationship USING btre
 
 
 --
--- TOC entry 2067 (class 1259 OID 17745)
+-- TOC entry 2077 (class 1259 OID 17745)
 -- Name: dim_time_index5; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -757,7 +805,7 @@ CREATE INDEX dim_time_index5 ON dim_time USING btree (tim_year_num);
 
 
 --
--- TOC entry 2068 (class 1259 OID 17750)
+-- TOC entry 2078 (class 1259 OID 17750)
 -- Name: dim_time_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -765,7 +813,7 @@ CREATE UNIQUE INDEX dim_time_pk ON dim_time USING btree (tim_pk);
 
 
 --
--- TOC entry 2070 (class 1259 OID 17765)
+-- TOC entry 2080 (class 1259 OID 17765)
 -- Name: fact_gvresult_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -773,7 +821,7 @@ CREATE UNIQUE INDEX fact_gvresult_pk ON fact_governance USING btree (frs_pk);
 
 
 --
--- TOC entry 2069 (class 1259 OID 17751)
+-- TOC entry 2079 (class 1259 OID 17751)
 -- Name: src_dqaxis_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -781,7 +829,7 @@ CREATE UNIQUE INDEX src_dqaxis_pk ON src_dqaxis USING btree (dqx_pk);
 
 
 --
--- TOC entry 2064 (class 1259 OID 17752)
+-- TOC entry 2074 (class 1259 OID 17752)
 -- Name: table_11_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -789,7 +837,7 @@ CREATE UNIQUE INDEX table_11_pk ON dim_scorecard_group USING btree (scg_pk);
 
 
 --
--- TOC entry 2071 (class 1259 OID 17808)
+-- TOC entry 2081 (class 1259 OID 17808)
 -- Name: trt_pk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -797,7 +845,16 @@ CREATE UNIQUE INDEX trt_pk ON dim_term_type USING btree (trt_pk);
 
 
 --
--- TOC entry 2187 (class 0 OID 0)
+-- TOC entry 2086 (class 2606 OID 25897)
+-- Name: app_plugins_apt_fk_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY app_plugins
+    ADD CONSTRAINT app_plugins_apt_fk_fkey FOREIGN KEY (apt_fk) REFERENCES app_plugins_type(apt_pk);
+
+
+--
+-- TOC entry 2202 (class 0 OID 0)
 -- Dependencies: 7
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -808,7 +865,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-11-24 15:46:56
+-- Completed on 2017-01-28 08:38:20
 
 --
 -- PostgreSQL database dump complete
