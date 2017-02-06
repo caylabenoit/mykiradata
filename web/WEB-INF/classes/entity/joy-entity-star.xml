@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+for the Views or tables :
+<joy-table name="XX" /> 
+<joy-view name="YY" />
+
+for the custom queries :
+<joy-customquery name="Mandatory name">
+    SQL Query here
+    AND/OR You can add DB specifics by using 
+        <POSTGRESQL></POSTGRESQL>
+        <ORACLE></ORACLE>
+</joy-customquery>
+-->
+
+<joy-entities>
+
+<!-- Tables or views here -->
+
+    <!-- Star schema Tables -->
+    <joy-table name="DIM_SCORECARD" label="Scorecard Dimension">
+        <joy-field-label name="SCO_PK">Scorecard Dimension PKey</joy-field-label>
+        <joy-field-label name="SCO_NAME">Scorecard Name</joy-field-label>
+        <joy-init-record>
+            <joy-field name="SCO_PK">0</joy-field>
+            <joy-field name="SCO_NAME">Unknown</joy-field>
+            <joy-field name="SCO_DESCRIPTION">Unknown</joy-field>
+            <joy-field name="SCO_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_METRIC">
+         <joy-init-record>
+            <joy-field name="MET_PK">0</joy-field>
+            <joy-field name="MET_NAME">Unknown</joy-field>
+            <joy-field name="MET_DESCRIPTION">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_SCORECARD_GROUP">
+         <joy-init-record>
+            <joy-field name="SCG_PK">0</joy-field>
+            <joy-field name="SCO_FK">0</joy-field>
+            <joy-field name="SCG_NAME">Unknown</joy-field>
+            <joy-field name="SCG_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_DQAXIS">
+         <joy-init-record>
+            <joy-field name="DQX_PK">0</joy-field>
+            <joy-field name="DQX_NAME">Unknown</joy-field>
+            <joy-field name="DQX_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_CONTEXT">
+        <joy-init-record>
+            <joy-field name="CON_PK">0</joy-field>
+            <joy-field name="CON_DESCRIPTION">Unknown</joy-field>
+            <joy-field name="CON_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_JOB">
+        <joy-init-record>
+            <joy-field name="JOB_PK">0</joy-field>
+            <joy-field name="JOB_NAME">Unknown</joy-field>
+            <joy-field name="JOB_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_TERM">
+         <joy-init-record>
+            <joy-field name="TRM_PK">0</joy-field>
+            <joy-field name="TRM_NAME">Unknown</joy-field>
+            <joy-field name="TRM_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_DATASOURCE">
+         <joy-init-record>
+            <joy-field name="DSO_PK">0</joy-field>
+            <joy-field name="DSO_SOURCENAME">Unknown</joy-field>
+            <joy-field name="DSO_CONNECTION">Unknown</joy-field>
+            <joy-field name="DSO_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_ORIGINE"> 
+        <joy-init-record>
+            <joy-field name="ORI_PK">0</joy-field>
+            <joy-field name="ORI_NAME">Unknown</joy-field>
+            <joy-field name="ORI_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+        <joy-init-record>
+            <joy-field name="ORI_PK">1</joy-field>
+            <joy-field name="ORI_NAME">Informatica Data Quality Scorecards</joy-field>
+            <joy-field name="ORI_FUNCKEY">IDQSC</joy-field>
+        </joy-init-record>
+        <joy-init-record>
+            <joy-field name="ORI_PK">2</joy-field>
+            <joy-field name="ORI_NAME">Informatica Data Quality Profiles</joy-field>
+            <joy-field name="ORI_FUNCKEY">IDQPL</joy-field>
+        </joy-init-record>
+        <joy-init-record>
+            <joy-field name="ORI_PK">3</joy-field>
+            <joy-field name="ORI_NAME">External</joy-field>
+            <joy-field name="ORI_FUNCKEY">EXT</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_CATEGORY">
+         <joy-init-record>
+            <joy-field name="CAT_PK">0</joy-field>
+            <joy-field name="CAT_NAME">Unknown</joy-field>
+            <joy-field name="CAT_DESCRIPTION">UNKN</joy-field>
+            <joy-field name="CAT_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_GLOSSARY">
+         <joy-init-record>
+            <joy-field name="GLO_PK">0</joy-field>
+            <joy-field name="GLO_NAME">Unknown</joy-field>
+            <joy-field name="GLO_DESCRIPTION">UNKN</joy-field>
+            <joy-field name="GLO_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_TERM_RELATIONSHIP">
+         <joy-init-record>
+            <joy-field name="REL_PK">0</joy-field>
+            <joy-field name="REL_NAME">Unknown</joy-field>
+            <joy-field name="REL_FUNCKEY">Unknown</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_TERM_RELLINKS">
+         <joy-init-record>
+            <joy-field name="TRL_PK">0</joy-field>
+            <joy-field name="REL_FK">0</joy-field>
+            <joy-field name="TRL_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_TERM_TYPE">
+         <joy-init-record>
+            <joy-field name="TRT_PK">0</joy-field>
+            <joy-field name="TRT_NAME">Unknown</joy-field>
+            <joy-field name="TRT_DESCRIPTION">UNKN</joy-field>
+            <joy-field name="TRT_FUNCKEY">UNKN</joy-field>
+        </joy-init-record>
+    </joy-table>
+    <joy-table name="DIM_METRICTYPE">
+        <joy-init-record>
+            <joy-field name="MTY_PK">0</joy-field>
+            <joy-field name="MTY_NAME">Unknown</joy-field>
+        </joy-init-record>
+        <joy-init-record>
+            <joy-field name="MTY_PK">1</joy-field>
+            <joy-field name="MTY_NAME">Rule</joy-field>
+        </joy-init-record>
+        <joy-init-record>
+            <joy-field name="MTY_PK">2</joy-field>
+            <joy-field name="MTY_NAME">Field</joy-field>
+        </joy-init-record>
+    </joy-table>    
+    <joy-table name="DIM_TIME" />
+    
+    <!-- parametres de l'application -->
+    <joy-table name="APP_PARAMS" />
+    
+    <!-- Fact Tables -->
+    <joy-table name="FACT_GOVERNANCE" label="All Facts" />
+
+</joy-entities>

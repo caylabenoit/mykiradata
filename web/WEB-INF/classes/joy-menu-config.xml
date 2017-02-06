@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<joy-menu>
+    <joy-menu class="fa fa-gears fa-fw" id="CONFIG02" name="Quality Dimensions" object="dqaxis" actiontype="list" />
+    <joy-menu class="fa fa-gears fa-fw" id="CONFIG03" name="Contexts" object="context" actiontype="list" />
+    <joy-menu class="fa fa-gears fa-fw" id="CONFIG04" name="Term Types" object="termtype" actiontype="list" />
+    <joy-menu class="fa fa-gears fa-fw" id="CONFIG05" name="Contexts and Scorecards" object="relsccontext" actiontype="list" />
+    <joy-menu class="fa fa-gears fa-fw" id="CONFIG06" name="Metrics and Terms" object="reltermmetric" actiontype="list" shortcut="true" />
+</joy-menu>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="75">
+<rect x="0" y="0" width="100%" height="100%" fill="[COLOR]" ></rect>
+<text font-size="19" font-family="Verdana" style="fill:[TITLECOLOR];">
+<tspan x="3" y="20">[NAME]</tspan>
+</text>
+<text font-size="15" font-family="Verdana" style="fill:black;">
+<tspan x="3" y="60">[TYPE]</tspan>
+</text>
+<text font-size="23" font-family="Verdana" style="fill:black;">
+<tspan x="110" y="60">[SCORE]</tspan>
+</text>
+<line x1="0" y1="30" x2="200" y2="30" stroke="black" stroke-width="3" stroke-linecap="round"/>
+<line x1="100" y1="30" x2="100" y2="100" stroke="black" stroke-width="3" stroke-linecap="round"/>
+</svg>

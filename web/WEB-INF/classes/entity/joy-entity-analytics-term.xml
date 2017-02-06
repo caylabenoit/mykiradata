@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<joy-entities>
+    
+    <joy-composite name = "Check if Terms has score">
+        <joy-entity alias="T">FACT_GOVERNANCE</joy-entity>
+        <joy-join type="INNER">
+            <joy-entity alias="C">DIM_TERM</joy-entity>
+            <joy-join-key master="TRM_FK" slave="TRM_PK" />
+        </joy-join>
+    </joy-composite>
+    
+    <!-- BUSINESS TERMS -->
+    <joy-composite name = "Analytics - Terms Last Runs">
+        <joy-field as="rundate">MAX(TIM_CALENDAR_DATE)</joy-field>
+        <joy-field alias="T">DQX_NAME</joy-field>
+        <joy-field alias="T">DQX_WEIGHT</joy-field>
+        <joy-field as="SCORE">AVG(FRS_KPI_SCORE)</joy-field>
+        <joy-field alias="T">TRM_FK</joy-field>
+        <joy-entity alias="T">Last Facts Only with details</joy-entity>
+        <joy-group alias="T">DQX_NAME</joy-group>
+        <joy-group alias="T">DQX_WEIGHT</joy-group>
+        <joy-group alias="T">TIM_CALENDAR_DATE</joy-group>
+        <joy-group alias="T">TRM_FK</joy-group>
+        <joy-sort alias="T">TRM_FK</joy-sort>
+        <joy-sort alias="T">TIM_CALENDAR_DATE</joy-sort>
+    </joy-composite>
+
+    <joy-composite name = "Analytics - Terms Context List" distinct="yes">
+        <joy-field alias="T">CON_DESCRIPTION</joy-field>
+        <joy-field alias="T">CON_PK</joy-field>
+        <joy-field alias="T">TRM_FK</joy-field>
+        <joy-entity alias="T">Last Facts Only with details</joy-entity>
+    </joy-composite>
+
+    <joy-composite name = "Analytics - Terms DS List" distinct="yes">
+        <joy-field alias="T">DSO_SOURCENAME</joy-field>
+        <joy-field alias="T">DSO_CONNECTION</joy-field>
+        <joy-field alias="T">DSO_PK</joy-field>
+        <joy-field alias="T">TRM_FK</joy-field>
+        <joy-entity alias="T">Last Facts Only with details</joy-entity>
+    </joy-composite>
+
+    <joy-composite name = "Analytics - Terms Type List">
+        <joy-field alias="X">TRT_PK</joy-field>
+        <joy-field alias="X">TRT_NAME</joy-field>
+        <joy-entity alias="X">DIM_TERM_TYPE</joy-entity>
+    </joy-composite>
+    
+    <joy-composite name = "Analytics - Terms Global Informations">
+        <joy-field alias="RTM">TRM_CLUSTER_ID</joy-field>
+        <joy-field alias="T">TRM_PK</joy-field>
+        <joy-field alias="T">TRM_NAME</joy-field>
+        <joy-field alias="T">TRM_DESCRIPTION</joy-field>
+        <joy-field alias="G">GLO_NAME</joy-field>
+        <joy-field alias="C">CAT_NAME</joy-field>
+        <joy-field alias="T">TRM_USAGE</joy-field>
+        <joy-field alias="T">TRM_EXAMPLE</joy-field>
+        <joy-field alias="T">TRM_PHASE</joy-field>
+        <joy-field alias="T">TRM_OWNER</joy-field>
+        <joy-field alias="T">TRM_STEWARD</joy-field>
+        <joy-field alias="T">TRM_OWNER_EMAIL</joy-field>
+        <joy-field alias="T">TRM_STEWARD_EMAIL</joy-field>
+        <joy-field alias="G">GLO_PK</joy-field>
+        <joy-field alias="C">CAT_PK</joy-field>
+        <joy-field alias="T">OBJECT_ID</joy-field>
+        <joy-field alias="TT">TRT_NAME</joy-field>
+        <joy-field alias="T">TRM_FUNCKEY</joy-field>
+        <joy-entity alias="T">DIM_TERM</joy-entity>
+        <joy-join type="LEFT">
+            <joy-entity alias="RTM">REL_TERM_METRIC</joy-entity>
+            <joy-join-key master="TRM_NAME" slave="TRM_NAME" />
+        </joy-join>
+        <joy-join type="LEFT">
+            <joy-entity alias="TT">DIM_TERM_TYPE</joy-entity>
+            <joy-join-key master="TRT_FK" slave="TRT_PK" />
+        </joy-join>
+        <joy-join type="LEFT">
+            <joy-entity alias="C">DIM_CATEGORY</joy-entity>
+            <joy-join-key master="CAT_FK" slave="CAT_PK" />
+        </joy-join>
+        <joy-join type="LEFT">
+            <joy-entity alias="G">DIM_GLOSSARY</joy-entity>
+            <joy-join-key master="GLO_FK" slave="GLO_PK" />
+        </joy-join>
+    </joy-composite>
+
+
+    
+</joy-entities>
