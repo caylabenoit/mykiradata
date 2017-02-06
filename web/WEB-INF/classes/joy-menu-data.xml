@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 Benoit CAYLA (benoit@famillecayla.fr)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+
+<joy-menu>
+    <joy-menu class="fa fa-star fa-fw" id="DATA01" name="Datamart Metrics" object="dtmlist" actiontype="list" pn1="list" pv1="all"/>
+    <joy-menu class="fa fa-th fa-fw" id="DATA02" name="Landing Area" object="landing" actiontype="list">
+        <joy-menu class="fa fa-book fa-fw" id="DATA03" name="Business Term" object="lndterms" actiontype="list" />
+        <joy-menu class="fa fa-folder-open fa-fw" id="DATA04" name="Category" object="lndcategory" actiontype="list" />
+        <joy-menu class="fa fa-database fa-fw" id="DATA05" name="Glossary" object="lndglossary" actiontype="list" />
+        <joy-menu class="fa fa-pagelines fa-fw" id="DATA06" name="Terms Relationships" object="lndtermsrel" actiontype="list" />
+        <joy-menu class="fa fa-bookmark-o fa-fw" id="DATA07" name="Metrics" object="lndmetric" actiontype="list" />
+        <joy-menu class="fa fa-dashboard fa-fw" id="DATA08" name="Scorecards" object="lndsc" actiontype="list" />
+        <joy-menu class="fa fa-dashboard fa-fw" id="DATA09" name="Groups" object="lndscgrp" actiontype="list" />
+    </joy-menu>
+    <joy-menu class="fa fa-random fa-fw" id="DATA10" name="Import">
+        <joy-menu class="fa fa-random fa-fw" id="DATA12" name="From Landing" object="landinginterface"  actiontype="list" />
+        <joy-menu class="fa fa-random fa-fw" id="DATA13" name="External Plugins" object="pluginsinterface"  actiontype="list" />
+    </joy-menu>
+</joy-menu>
