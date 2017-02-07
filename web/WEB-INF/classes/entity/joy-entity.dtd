@@ -1,0 +1,26 @@
+
+<!ELEMENT joy-composite ( joy-entity | joy-field | joy-join | joy-sort )* ><!ATTLIST joy-composite distinct NMTOKEN #FIXED "yes" >
+<!ATTLIST joy-composite name CDATA #REQUIRED >
+
+<!ELEMENT joy-customquery ( #PCDATA ) ><!ATTLIST joy-customquery name CDATA #REQUIRED >
+
+<!ELEMENT joy-entities ( joy-table+, joy-composite+, joy-customquery ) >
+
+<!ELEMENT joy-entity ( #PCDATA ) >
+<!ATTLIST joy-entity alias NMTOKEN >
+
+<!ELEMENT joy-field ( #PCDATA ) >
+<!ATTLIST joy-field alias NMTOKEN >
+<!ATTLIST joy-field as NMTOKEN #IMPLIED >
+
+<!ELEMENT joy-join ( joy-entity, joy-join-key ) >
+<!ATTLIST joy-join type CDATA >
+<!ELEMENT joy-join-key EMPTY >
+<!ATTLIST joy-join-key master NMTOKEN #REQUIRED >
+<!ATTLIST joy-join-key slave NMTOKEN #REQUIRED >
+
+<!ELEMENT joy-sort ( #PCDATA ) >
+<!ATTLIST joy-sort alias NMTOKEN #REQUIRED >
+<!ATTLIST joy-sort desc NMTOKEN #REQUIRED >
+
+<!ELEMENT joy-table EMPTY ><!ATTLIST joy-table name NMTOKEN #REQUIRED >

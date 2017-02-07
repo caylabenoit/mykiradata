@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+for the Views or tables :
+<joy-table name="XX" /> 
+
+for the custom queries :
+<joy-customquery name="Mandatory name">
+    SQL Query
+</joy-customquery>
+-->
+
+<joy-entities>
+    
+<!-- Connection
+     Via JDBC Data Source Name -->
+    <joy-datasource>java:/comp/env/jdbc/GOVERNANCE</joy-datasource>
+<!-- Or JDBC Direct connection -->
+    <joy-jdbc-driver>org.postgresql.Driver</joy-jdbc-driver>
+    <joy-jdbc-url>jdbc:postgresql://localhost:5432/dgm</joy-jdbc-url>
+    <joy-jdbc-user>dgm</joy-jdbc-user>
+    <joy-jdbc-pwd>dgm</joy-jdbc-pwd>
+<!-- Connection -->
+    
+    <joy-db-plugins>
+        <joy-db-plugin name="oracle">com.joy.bo.ora.BOEntityOraclePlugin</joy-db-plugin>
+        <joy-db-plugin name="postgresql">com.joy.bo.pg.BOEntityPostgreSQLPlugin</joy-db-plugin>
+    </joy-db-plugins>
+
+    <joy-query-init>
+        <ORACLE>ALTER SESSION SET NLS_NUMERIC_CHARACTERS = ', '</ORACLE>
+    </joy-query-init>
+
+    <joy-entity-files>
+        <joy-entity-file group="star">/entity/joy-entity-star.xml</joy-entity-file>
+        <joy-entity-file group="shared">/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-file group="src">/entity/joy-entity-src.xml</joy-entity-file>
+        <joy-entity-file group="analytics-global">/entity/joy-entity-analytics-global.xml</joy-entity-file>
+        <joy-entity-file group="analytics-term">/entity/joy-entity-analytics-term.xml</joy-entity-file>
+        <joy-entity-file group="analytics-category">/entity/joy-entity-analytics-category.xml</joy-entity-file>
+        <joy-entity-file group="others">/entity/joy-entity-others.xml</joy-entity-file>
+        <joy-entity-file group="landing">/entity/joy-entity-landing.xml</joy-entity-file>
+        <joy-entity-file group="home">/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-file group="glossary">/entity/joy-entity-analytics-glossary.xml</joy-entity-file>
+        <joy-entity-file group="rel">/entity/joy-entity-analytics-rel.xml</joy-entity-file>
+        <joy-entity-file group="context">/entity/joy-entity-analytics-context.xml</joy-entity-file>
+        <joy-entity-file group="datasource">/entity/joy-entity-analytics-datasource.xml</joy-entity-file>
+        <joy-entity-file group="metric">/entity/joy-entity-analytics-metric.xml</joy-entity-file>
+        <joy-entity-file group="search">/entity/joy-entity-search.xml</joy-entity-file>
+    </joy-entity-files>
+    
+</joy-entities>

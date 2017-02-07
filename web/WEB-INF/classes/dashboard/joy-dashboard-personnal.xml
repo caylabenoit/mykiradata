@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<joy-dashboards> 
+    <joy-dashboard-template type="bar">
+        <body>dashboard/bar/html.template</body>
+        <after-body>dashboard/bar/js.template</after-body>
+    </joy-dashboard-template>
+    <joy-dashboard-template type="polar">
+        <body>dashboard/polar/html.template</body>
+        <after-body>dashboard/polar/js.template</after-body>
+    </joy-dashboard-template>
+    <joy-dashboard-template type="text">
+        <body>dashboard/text/html.template</body>
+    </joy-dashboard-template>
+    <joy-dashboard-template type="lines">
+        <body>dashboard/lines/html.template</body>
+        <after-body>dashboard/lines/js.template</after-body>
+    </joy-dashboard-template>
+    <joy-dashboard-template type="iframe">
+        <body>dashboard/iframe/html.template</body>
+    </joy-dashboard-template>
+    <joy-dashboard-template type="scorelist">
+        <body>dashboard/scorelist/html.template</body>
+        <after-body>dashboard/scorelist/js.template</after-body>
+    </joy-dashboard-template>
+    
+    <joy-dashboard id="r1" name="First Dashboard">
+        <joy-dashboard-row>
+             <joy-dashboard-bloc id="bloc1" type="bar" size="6" title="No Owners/stewards"> 
+                <joy-param name="entity">NO_OWNER_HOME_02</joy-param>
+             </joy-dashboard-bloc>
+             <joy-dashboard-bloc id="bloc3" type="scorelist" size="6" title="Best scores"> 
+                <joy-param name="entity">HOME_BEST_TERMS</joy-param>
+                <joy-param name="rowcount">5</joy-param>
+                <joy-param name="glyphe">fa-book</joy-param>
+                <joy-param name="thresold_bad" joy="yes" />
+                <joy-param name="thresold_good" joy="yes" />
+                <joy-param name="urlbasis">./joy?object=byterm&amp;actiontype=display&amp;term=</joy-param>
+             </joy-dashboard-bloc>
+        </joy-dashboard-row>
+        <joy-dashboard-row>
+             <joy-dashboard-bloc id="bloc2" type="lines" size="6" title="No Owners/stewards"> 
+                <joy-param name="entity">NO_OWNER_HOME_02</joy-param>
+             </joy-dashboard-bloc>
+             <joy-dashboard-bloc id="bloc4" type="scorelist" size="6" title="Worse scores"> 
+                <joy-param name="entity">HOME_WORSE_TERMS</joy-param>
+                <joy-param name="rowcount">5</joy-param>
+                <joy-param name="glyphe">fa-book</joy-param>
+                <joy-param name="thresold_bad" joy="yes" />
+                <joy-param name="thresold_good" joy="yes" />
+                <joy-param name="urlbasis">./joy?object=byterm&amp;actiontype=display&amp;term=</joy-param>
+             </joy-dashboard-bloc>
+        </joy-dashboard-row>
+    </joy-dashboard>
+
+    <joy-dashboard id="r2" name="Second Dashboard">
+        <joy-dashboard-row>
+             <joy-dashboard-bloc id="bloc4" type="scorelist" size="6" title="Worse scores"> 
+                <joy-param name="entity">HOME_WORSE_TERMS</joy-param>
+                <joy-param name="rowcount">10</joy-param>
+                <joy-param name="glyphe">fa-book</joy-param>
+                <joy-param name="thresold_bad" joy="yes" />
+                <joy-param name="thresold_good" joy="yes" />
+                <joy-param name="urlbasis">./joy?object=byterm&amp;actiontype=display&amp;term=</joy-param>
+             </joy-dashboard-bloc>
+             <joy-dashboard-bloc id="bloc3" type="scorelist" size="6" title="Best scores"> 
+                <joy-param name="entity">HOME_BEST_TERMS</joy-param>
+                <joy-param name="rowcount">10</joy-param>
+                <joy-param name="glyphe">fa-book</joy-param>
+                <joy-param name="thresold_bad" joy="yes" />
+                <joy-param name="thresold_good" joy="yes" />
+                <joy-param name="urlbasis">./joy?object=byterm&amp;actiontype=display&amp;term=</joy-param>
+             </joy-dashboard-bloc>
+        </joy-dashboard-row>
+    </joy-dashboard>
+
+</joy-dashboards> 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<joy-entities>
+    
+    <joy-composite name = "Analytics - Metric Global">
+        <joy-field alias="MSG">MET_PK</joy-field>
+        <joy-field alias="MSG">MET_NAME</joy-field>
+        <joy-field alias="MSG">MET_DESCRIPTION</joy-field>
+        <joy-field alias="MSG">MET_WEIGHT</joy-field>
+        <joy-field alias="MSG">MTY_NAME</joy-field>
+        <joy-field alias="MSG">SCG_NAME</joy-field>
+        <joy-field alias="MSG">SCO_NAME</joy-field>
+        <joy-field alias="MSG">SCO_DESCRIPTION</joy-field>
+        <joy-field alias="MSG">SCO_LASTRUN</joy-field>
+        <joy-field alias="MSG">SCO_PROJECT</joy-field>
+        <joy-field alias="MSG">SCO_FULLPATH</joy-field>
+        <joy-field alias="T">TRM_NAME</joy-field>
+        <joy-field alias="LFO">TRM_FK</joy-field>
+        <joy-field alias="LFO">FRS_DATETIME_LOAD</joy-field>
+        <joy-entity alias="LFO">Last Facts Only</joy-entity>
+        <joy-join type="LEFT">
+            <joy-entity alias="MSG">Metrics With Scorecard information</joy-entity>
+            <joy-join-key master="MET_FK" slave="MET_PK" />
+        </joy-join> 
+        <joy-join type="LEFT">
+            <joy-entity alias="T">DIM_TERM</joy-entity>
+            <joy-join-key master="TRM_FK" slave="TRM_PK" />
+        </joy-join>
+    </joy-composite>
+    
+    <joy-composite name = "Analytics - Metric Last Runs">
+        <joy-field as="RUNDATE">MAX(TIM_CALENDAR_DATE)</joy-field>
+        <joy-field alias="DQX">DQX_NAME</joy-field>
+        <joy-field as="SCORE">AVG(FRS_KPI_SCORE)</joy-field>
+        <joy-field alias="LFO">MET_FK</joy-field>
+        <joy-entity alias="LFO">FACT_GOVERNANCE</joy-entity>
+         <joy-join type="INNER">
+            <joy-entity alias="DQX">DIM_DQAXIS</joy-entity>
+            <joy-join-key master="DQX_FK" slave="DQX_PK" />
+        </joy-join> 
+         <joy-join type="INNER">
+            <joy-entity alias="TIM">DIM_TIME</joy-entity>
+            <joy-join-key master="TIM_FK" slave="TIM_PK" />
+        </joy-join> 
+        <joy-group alias="DQX">DQX_NAME</joy-group>
+        <joy-group alias="TIM">TIM_CALENDAR_DATE</joy-group>
+        <joy-group alias="LFO">MET_FK</joy-group>
+        <joy-sort alias="LFO">MET_FK</joy-sort>
+        <joy-sort alias="TIM">TIM_CALENDAR_DATE</joy-sort>
+    </joy-composite>
+    
+</joy-entities>
