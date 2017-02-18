@@ -41,7 +41,7 @@
                             <div class="panel-heading">Tasks</div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
-                                <joy:JoyFormButtonTag id="btn1" label="Refresh tasks list"  CSSClass="btn btn-default" onclick="loadJSON('./rest/taskslist', 'tasks')" /><p>
+                                <joy:JoyFormButtonTag id="btn1" label="Refresh tasks list"  CSSClass="btn btn-default" onclick="getAsyncJson('./rest/taskslist', 'tasks')" /><p>
                                 <table id="tasks" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
@@ -93,7 +93,7 @@ function callbackError(tag) {
 }
 
 $( "#btn1" ).button();
-loadJSON('./rest/taskslist', 'tasks');
+getAsyncJson('./rest/taskslist', 'tasks');
 </script>
 
 </body>

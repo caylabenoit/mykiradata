@@ -43,7 +43,7 @@ public class ReportByTerm extends ReportCommonAction {
      * @param currentTerm TRM_PK
      * @return false if no score
      */
-    private boolean asLeastOneScore(int currentTerm) {
+    private boolean hasLeastOneScore(int currentTerm) {
         IEntity entity = getBOFactory().getEntity("Check if Terms has score");
         entity.field("TRM_PK").setKeyValue(currentTerm);
         return entity.hasRecord();
@@ -64,7 +64,7 @@ public class ReportByTerm extends ReportCommonAction {
             // available Terms Combo
             loadTerms(false, iCurrentTerm);
             
-            if (asLeastOneScore(iCurrentTerm)) {
+            if (hasLeastOneScore(iCurrentTerm)) {
                 // Load trends value and radar data 
                 loadDQVectorsValAndTrends(iCurrentTerm, "Analytics - Terms Last Runs" ,  "TRM_FK");
                 // Metrics list
@@ -132,7 +132,7 @@ public class ReportByTerm extends ReportCommonAction {
         IEntity entity = getBOFactory().getEntity("Analytics - Terms Context List");
         entity.field("TRM_FK").setKeyValue(currentTerm);
         ResultSet rs = entity.select();
-        
+
         this.loadMatrix(rs, "CONTEXT_LIST");
         getBOFactory().closeResultSet(rs);
     }

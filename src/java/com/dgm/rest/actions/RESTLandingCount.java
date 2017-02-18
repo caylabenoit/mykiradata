@@ -16,11 +16,11 @@
  */
 package com.dgm.rest.actions;
 
-import com.dgm.rest.RESTEntityFilteringCommon;
 import com.joy.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import com.joy.bo.IEntity;
+import com.joy.mvc.actionTypes.ActionTypeREST;
 
 /**
  * Return count information about all the landing tables
@@ -28,7 +28,7 @@ import com.joy.bo.IEntity;
  *  no more arguments
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class RESTLandingCount extends RESTEntityFilteringCommon {
+public class RESTLandingCount extends ActionTypeREST {
 
     @Override
     public String restGet() {

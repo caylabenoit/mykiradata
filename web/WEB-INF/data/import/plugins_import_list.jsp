@@ -77,7 +77,7 @@
         t1.clear();
         t1.draw();
         document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
-        loadJSON('./rest/data/PLUGINS_LIST_00', 'list');
+        getAsyncJson('./rest/entity/PLUGINS_LIST_00', 'list');
     }
     
     function callbackSuccess(content, tag) {
@@ -108,7 +108,7 @@
     
     function launchPlugin(id) {
         var url = "./task/plugin/" + id;
-        loadJSON(url, "load");
+        getAsyncJson(url, "load");
     }
 refreshlist();
 </script>

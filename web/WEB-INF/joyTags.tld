@@ -144,6 +144,10 @@
       <name>freetagasis</name>
       <required>false</required>
     </attribute>
+    <attribute>
+      <name>dataerror</name>
+      <required>false</required>
+    </attribute>
   </tag>  
 
   <tag>

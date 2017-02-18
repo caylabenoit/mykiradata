@@ -27,15 +27,6 @@ and open the template in the editor.
             <redirect tag="LIST">./WEB-INF/manage/srcDqAxis/list.jsp</redirect>
         </redirects>
     </actionRequest>
-    
-    <actionRequest>
-        <object>home</object>
-        <objecttype>form</objecttype>
-        <action>com.dgm.form.HomeAction</action>
-        <redirects>
-            <redirect tag="DISPLAY">./WEB-INF/home.jsp</redirect>
-        </redirects>
-    </actionRequest>
 
     <actionRequest>
         <object>about</object>
@@ -340,6 +331,7 @@ and open the template in the editor.
 <!-- NO ACTIONS HERE -->  
 <!-- list here all the actions without action class -->
     <redirects_no_action>
+        <redirect tag="HOMEPAGE">./WEB-INF/home.jsp</redirect>
         <redirect tag="IMPORTEXPORT">./WEB-INF/admin/backup.jsp</redirect>
         <redirect tag="ACTION_404">./404.jsp</redirect>
         <redirect tag="ACTION_ERROR">./error.jsp</redirect>
@@ -390,16 +382,10 @@ and open the template in the editor.
     </actionRequest>
 
     <actionRequest>
-        <object>datafile</object>
+        <object>entitydump</object>
         <objecttype>rest</objecttype>
-        <action>com.dgm.rest.actions.RESTData</action>
+        <action>com.joy.mvc.ready.RESTEntity</action>
         <flowtype>file</flowtype>
-    </actionRequest>
-    
-    <actionRequest>
-        <object>data</object>
-        <objecttype>rest</objecttype>
-        <action>com.dgm.rest.actions.RESTData</action>
     </actionRequest>
     
     <actionRequest>
@@ -411,13 +397,13 @@ and open the template in the editor.
     <actionRequest>
         <object>checks</object>
         <objecttype>rest</objecttype>
-        <action>com.dgm.rest.actions.RESTApplicationChecks</action>
+        <action>com.joy.mvc.ready.RESTJoyCheck</action>
     </actionRequest>
     
     <actionRequest>
         <object>charts</object>
         <objecttype>rest</objecttype>
-        <action>com.dgm.rest.actions.RESTChart</action>
+        <action>com.joy.mvc.ready.RESTChart</action>
     </actionRequest>
     
     <actionRequest>
@@ -427,9 +413,9 @@ and open the template in the editor.
     </actionRequest>
 
     <actionRequest>
-        <object>search</object>
+        <object>entity</object>
         <objecttype>rest</objecttype>
-        <action>com.dgm.rest.actions.RESTSearch</action>
+        <action>com.joy.mvc.ready.RESTEntity</action>
     </actionRequest>
     
     <actionRequest>
@@ -437,6 +423,17 @@ and open the template in the editor.
         <objecttype>rest</objecttype>
         <action>com.dgm.rest.actions.RESTActionTermsGraph</action>
     </actionRequest>
-    
-    
+
+    <actionRequest>
+        <object>bterm</object>
+        <objecttype>rest</objecttype>
+        <action>com.dgm.rest.actions.dimensions.RESTBusinessTerm</action>
+    </actionRequest>
+
+    <actionRequest>
+        <object>params</object>
+        <objecttype>rest</objecttype>
+        <action>com.joy.mvc.ready.RESTParameters</action>
+    </actionRequest>
+
 </joy-actions>

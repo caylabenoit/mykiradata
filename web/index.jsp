@@ -1,1 +1,1 @@
-<jsp:forward page="./joy?object=home&actiontype=DISPLAY"/>
+<jsp:forward page="./joy?object=HOMEPAGE"/>

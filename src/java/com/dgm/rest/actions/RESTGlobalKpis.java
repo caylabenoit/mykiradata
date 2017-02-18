@@ -17,10 +17,10 @@
 package com.dgm.rest.actions;
 
 import com.dgm.common.Utils;
-import com.dgm.rest.RESTEntityFilteringCommon;
 import com.joy.Joy;
 import com.joy.bo.IEntity;
 import com.joy.json.JSONObject;
+import com.joy.mvc.actionTypes.ActionTypeREST;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.Collection;
  * Returns the global application indicators
  * ./rest/globalkpis
  */
-public class RESTGlobalKpis extends RESTEntityFilteringCommon {
+public class RESTGlobalKpis extends ActionTypeREST {
     
     private static final String C_LONGTEXT_LABEL = "longtext";
     private static final String C_BIG_SHORT_TEXT_LABEL = "bigshorttext";

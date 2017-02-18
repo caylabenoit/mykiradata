@@ -50,7 +50,7 @@
                                             <p><B>Date : </B></p><P><joy:ActionValueTag name="JOYLOADDATE" /></p>
                                             <p><B>Status :</B><joy:ActionComboBoxTag name="JOYSTATUS" CSSClass="combobox form-control" id="JOYSTATUS" /></p>
                                             <label>Identifier</label>
-                                            <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="255" placeholder="Unique Identifier" ariadescribedby="basic-addon2" glypheicon="glyphicon-star"  freetagasis="data-minlength='5'" />
+                                            <joy:ActionInputTextTag name="JOYFUNCKEY" CSSId="JOYFUNCKEY" CSSClass="form-control" required="yes" maxlength="255" placeholder="Unique Identifier" ariadescribedby="basic-addon2" glypheicon="glyphicon-star"  freetagasis="data-minlength='5'" dataerror="Please enter a value or correct this field." />
                                         </div>
                                     </div>  
                                 </div>

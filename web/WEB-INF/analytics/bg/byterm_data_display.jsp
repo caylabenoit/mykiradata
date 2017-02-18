@@ -285,7 +285,7 @@ function callbackSuccess(content, tag) {
 
 // Treeview display
 start_waitMessage("panel_treeview", "treeview");
-loadJSON('./rest/relterm/3/<joy:ActionValueTag name="TRM_PK" />', 'relationship');
+getAsyncJson('./rest/relterm/3/<joy:ActionValueTag name="TRM_PK" />', 'relationship');
 
 // display the last run bars
 var configRuns = {

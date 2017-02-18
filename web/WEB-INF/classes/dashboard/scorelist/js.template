@@ -19,5 +19,5 @@
         fillDivList(content, 'SCORE_LIST_[ID]', '[glyphe]', [thresold_bad], [thresold_good], '[urlbasis]');
     }
 
-    loadScoreList_[ID]('./rest/data/[entity]/rowcount/[rowcount]');
+    loadScoreList_[ID]('./rest/entity/[entity]/rowcount/[rowcount]');
 </SCRIPT>

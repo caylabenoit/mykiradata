@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 <joy-menu>
-    <joy-menu class="fa fa-home fa-fw" id="Home" name="Home" object="home"  actiontype="display" />
+    <joy-menu class="fa fa-home fa-fw" id="Home" name="Home" object="homepage" />
     <joy-menu class="fa fa-tachometer fa-fw" id="Dashboards" name="Dashboards" object="dashboard" actiontype="display" shortcut="true" />
     <joy-menu class="fa fa-database fa-fw" id="Analytics-BG" name="Business"> 
         <joy-menu class="fa fa-book fa-fw" id="Analytics-BG-Term" name="By Term" object="byterm" actiontype="search" shortcut="true" />

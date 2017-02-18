@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="dgm" uri="/WEB-INF/dgmTags.tld"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="UI" %>
 <%@taglib prefix="joy" uri="/WEB-INF/joyTags.tld"%>
-<%@taglib prefix="chart" tagdir="/WEB-INF/tags/charts" %>
 
 <html lang="en">
 
@@ -56,7 +54,7 @@
                         </div>            
                     </div>   
                 </div>
-                            
+
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="panel panel-default panel-scores">
@@ -98,10 +96,11 @@
 
 <jsp:directive.include file="./templates/foot.jsp" />
 <script>
-var THRESOLD_BAD = <joy:ActionValueTag name="THRESOLD_BAD" />;
-var THRESOLD_GOOD = <joy:ActionValueTag name="THRESOLD_GOOD" />;
-var URLBASIS_DQAXIS = "<joy:ActionValueTag name="URLBASIS_DQAXIS" />";
-var URLBASIS_TERM = "<joy:ActionValueTag name="URLBASIS_TERM" />";
+var params = null;
+var THRESOLD_BAD = null;
+var THRESOLD_GOOD = null;
+var URLBASIS_DQAXIS = null;
+var URLBASIS_TERM = null; 
 var LIST_ROWMAX = 5;
 
 var myGraph1;
@@ -141,8 +140,8 @@ $(function(){
        sortable: false
     });
 });
- 
-// Load the charts
+
+// Loads
 function callbackSuccess(content, tag) {
     switch(tag) {
         case 'polaraxis':
@@ -164,7 +163,6 @@ function callbackSuccess(content, tag) {
                 };
             myGraph0 = Chart.PolarArea(ctx, config);
             end_waitMessage("graph0", "div_graph0");
-            
             break;
             
         case 'barbyglossary':
@@ -205,19 +203,31 @@ function callbackSuccess(content, tag) {
     }
 }
 
-start_waitMessage("graph0", "div_graph0");
-start_waitMessage("graph1", "div_graph1");
-start_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
-start_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
-start_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
+function joyInitialize() {
+    start_waitMessage("graph0", "div_graph0");
+    start_waitMessage("graph1", "div_graph1");
+    start_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
+    start_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
+    start_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
+    getAsyncJson('./rest/params', 'initialize');
+}
 
-loadJSON('./rest/charts/sds/AXIS_SCORE_HOME_00', 'polaraxis');
-loadJSON('./rest/charts/mds/GLOBAL_SCORING_HOME_01', 'barbyglossary');
-loadJSON('./rest/data/AXIS_SCORE_HOME_00', 'AXIS_SCORE_HOME_00');
-loadJSON('./rest/data/HOME_BEST_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_BEST_TERMS');
-loadJSON('./rest/data/HOME_WORSE_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_WORSE_TERMS');
-loadJSON('./rest/globalkpis', 'KPIS');
+function joyAfterInitalize(content) {
+    params = content;
+    THRESOLD_BAD = content.thresold_bad;
+    THRESOLD_GOOD = content.thresold_good;
+    URLBASIS_DQAXIS = joyURL(content.urlpatterm, "bydqaxis", "display"); // content.url.dqaxis;
+    URLBASIS_TERM = joyURL(content.urlpatterm, "byterm", "display");
+    
+    getAsyncJson('./rest/charts/sds/AXIS_SCORE_HOME_00', 'polaraxis');
+    getAsyncJson('./rest/charts/mds/GLOBAL_SCORING_HOME_01', 'barbyglossary');
+    getAsyncJson('./rest/entity/AXIS_SCORE_HOME_00', 'AXIS_SCORE_HOME_00');
+    getAsyncJson('./rest/entity/HOME_BEST_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_BEST_TERMS');
+    getAsyncJson('./rest/entity/HOME_WORSE_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_WORSE_TERMS');
+    getAsyncJson('./rest/globalkpis', 'KPIS');
+}
 
+joyInitialize();
 </script>
 
 </body>

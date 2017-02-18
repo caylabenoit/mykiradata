@@ -53,7 +53,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
                              rs.getFloat(fieldValue));
             }
             this.getBOFactory().closeResultSet(rs);
-            return chartbar.getChartData();
+            return chartbar.getJsonData().toString();
 
         } catch (SQLException e) {
             Joy.LOG().error(e);
@@ -74,7 +74,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
                              rs.getFloat(fieldValue));
             }
             this.getBOFactory().closeResultSet(rs);
-            return chartbar.getChartData();
+            return chartbar.getJsonData().toString();
 
         } catch (SQLException e) {
             Joy.LOG().error(e);
@@ -94,7 +94,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
                              rs.getFloat(fieldValue));
             }
             this.getBOFactory().closeResultSet(rs);
-            return chartbar.getChartData();
+            return chartbar.getJsonData().toString();
 
         } catch (SQLException e) {
             Joy.LOG().error(e);
@@ -119,7 +119,7 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
                 chartbar.add(res, "data",  rs.getFloat(fieldValue));
             }
             this.getBOFactory().closeResultSet(rs);
-            return chartbar.getChartData();
+            return chartbar.getJsonData().toString();
 
         } catch (SQLException e) {
             Joy.LOG().error(e);

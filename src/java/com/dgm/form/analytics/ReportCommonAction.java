@@ -111,7 +111,7 @@ public class ReportCommonAction extends ActionTypeForm {
             }
             getBOFactory().closeResultSet(rs);
             
-            this.addFormSingleEntry(TAG_LASTRUNS, chartbar.getChartData());
+            this.addFormSingleEntry(TAG_LASTRUNS, chartbar.getJsonData().toString());
 
         } catch (SQLException e) {
             Joy.LOG().error( e);
@@ -190,7 +190,7 @@ public class ReportCommonAction extends ActionTypeForm {
     }
 
     /**
-     * Load the tendance data. This function builds
+     * Load the trends data. This function builds
      *  1) all the last runs scores in a table
      *  2) The trends data (with only the two last values)
      *  3) The gauges by dq Axis (last score only)
@@ -247,7 +247,7 @@ public class ReportCommonAction extends ActionTypeForm {
                 }
                 nbScoreByDqx++;
             }
-            this.addFormSingleEntry(TAG_LASTRUNS, chartbar.getChartData());
+            this.addFormSingleEntry(TAG_LASTRUNS, chartbar.getJsonData().toString());
             
             if (nbScoreByDqx == 2) {
                 // Missing a score (does not exist) for the last value only, add a dummy/blank score
@@ -311,7 +311,7 @@ public class ReportCommonAction extends ActionTypeForm {
         // Add data into the result form
         this.addFormMatrixEntry(TAG_MATRIX_VALUE, matrixLastValues);
         this.addFormMatrixEntry(TAG_TRENDS_LIST, matrixTrends);
-        this.addFormSingleEntry(TAG_MULTIPLE_RADAR,  radar.getChartData());
+        this.addFormSingleEntry(TAG_MULTIPLE_RADAR,  radar.getJsonData().toString());
     }
     
     private ChartCounterData setCounterOptions(ChartCounterData myChart) {

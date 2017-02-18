@@ -14,7 +14,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <img src="./images/logo.png" class="logomenu"><span style="font-size: 22px;">&nbsp;Login to myKiradata</span>
+                        <img src="./images/logo.png" class="logomenu"><span style="font-size: 22px;">&nbsp;Login to myKiraData</span>
                     </div>
                     <div class="panel-body">
                         <joy:JoyFormTag object='login' actiontype='login' inline="false" name="login"> 

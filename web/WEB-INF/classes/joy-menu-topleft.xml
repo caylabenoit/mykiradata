@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <joy-menu>
-    <joy-menu class="fa fa-star fa-fw" id="Analytics" name="Govern" object="home"  actiontype="display" />
+    <joy-menu class="fa fa-star fa-fw" id="Analytics" name="Govern" object="homepage" />
     <joy-menu class="fa fa-th fa-fw" id="Data" name="Data" object="landing" actiontype="list" />
     <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM01" name="Admin"> 
         <joy-menu class="fa fa-unlock-alt fa-fw" id="ADM04" name="Check Application" object="checkapp" />

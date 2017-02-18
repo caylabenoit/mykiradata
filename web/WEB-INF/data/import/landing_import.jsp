@@ -43,11 +43,11 @@
                             <div class="panel-body">
                                 <div class="dataTable_wrapper">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-warning" onclick="loadJSON('./task/landingload/landingload', 'landingload');"><i class="fa fa-arrow-circle-right "></i>&nbsp;Import From Landing tables</button><p>
+                                        <button type="button" class="btn btn-warning" onclick="getAsyncJson('./task/landingload/landingload', 'landingload');"><i class="fa fa-arrow-circle-right "></i>&nbsp;Import From Landing tables</button><p>
                                         <p><code>This task gathers all the data (Terms, Categories, Glossary, etc.) from the import area and load them in the Datamart.</code>
                                     </div>      
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-warning" onclick="loadJSON('./task/dtmpurge/dtmpurge', 'dtmpurge');"><i class="fa fa-arrow-circle-right "></i>&nbsp;Datamart Purge</button><p>
+                                        <button type="button" class="btn btn-warning" onclick="getAsyncJson('./task/dtmpurge/dtmpurge', 'dtmpurge');"><i class="fa fa-arrow-circle-right "></i>&nbsp;Datamart Purge</button><p>
                                         <p><code>BE CAREFUL, this task purge all the data into the Datamart !</code>
                                     </div>
                                     <div class="form-group">
@@ -72,7 +72,7 @@
                                     </thead>
                                 </table>
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-warning" onclick="loadJSON('./task/landingpurge/landingpurge', 'landingpurge');"><i class="fa fa-arrow-circle-right "></i>&nbsp;Landing Purge</button><p>
+                                    <button type="button" class="btn btn-warning" onclick="getAsyncJson('./task/landingpurge/landingpurge', 'landingpurge');"><i class="fa fa-arrow-circle-right "></i>&nbsp;Landing Purge</button><p>
                                     <p><code>BE CAREFUL, this task purge all the data into the import tables !</code>
                                 </div> 
                             </div>
@@ -109,7 +109,7 @@
             default:
         }
     }
-    loadJSON('./rest/landingcount', 'landingcount');
+    getAsyncJson('./rest/landingcount', 'landingcount');
 </script>
 </body>
 </html>

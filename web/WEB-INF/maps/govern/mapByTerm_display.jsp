@@ -301,7 +301,7 @@
             default:
         }
     }
-    loadJSON('./rest/termsgraph/' + nbHop + '/' + idTerm, 'map');
+    getAsyncJson('./rest/termsgraph/' + nbHop + '/' + idTerm, 'map');
 </SCRIPT>
 
 </body>

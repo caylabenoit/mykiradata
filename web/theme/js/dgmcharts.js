@@ -101,11 +101,11 @@ function fillDivSpot(jsonFlow, didID) {
         innerHtml += "<DIV class='col-xs-4'><I class='fa " + jsonFlow.kpis[i].glyphe + " fa-2x'></I></DIV>";
         innerHtml += "<DIV class='col-xs-8 text-right' style='border-color-left:white;'>";
         innerHtml += "<A href='" + jsonFlow.kpis[i].url + "'>";
-        innerHtml += "<DIV style='font-size: x-large;'>" + jsonFlow.kpis[i].bigshorttext + "</DIV>";
+        innerHtml += "<DIV style='font-size: 17px;'>" + jsonFlow.kpis[i].bigshorttext + "</DIV>";
         innerHtml += "</A>";
         innerHtml += "</DIV>";
-        innerHtml += "</DIV>";
-        innerHtml += "<DIV style='font-size: smaller;border-top-style: solid;border-top-width: 1px;text-align: right;padding-top: 4px;'>" + jsonFlow.kpis[i].longtext + "</DIV>";
+        innerHtml += "</DIV>"; // border-top-style: solid;border-top-width: 1px;
+        innerHtml += "<DIV style='font-size: 17px;font-weight: bold;text-align: right;padding-top: 4px;'>" + jsonFlow.kpis[i].longtext + "</DIV>";
         innerHtml += "</DIV></DIV>";
         innerHtml += "</DIV>";
         innerHtml += "</DIV>";

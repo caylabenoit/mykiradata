@@ -15,6 +15,7 @@
 <!-- JQuery-UI --><script src="./joy-external/jquery-ui/dist/jquery-ui.min.js" type="text/javascript"></script>
 <!-- Lobipanel --><script src="./joy-external/bootstrap/components/lobipanel-master_v0.7.1/dist/js/lobipanel.min.js" type="text/javascript"></script>
 <!-- Joy Ajax function --><script src="joy/ajax.js" type="text/javascript"></script>
+<!-- Joy Common functions --><script src="joy/joycommon.js" type="text/javascript"></script>
 <!-- charts.js --><script src="./joy-external/Chart.js/dist/Chart.bundle.min.js"></script>
 <!-- gauge.js --><script src="./joy-external/gauge.js/gauge.min.js"></script>
 <!-- dgm custom -->
@@ -23,7 +24,6 @@
 <script src="./theme/js/dgmWait.js" type="text/javascript"></script>
 <!-- datetime-picker --><script src="./joy-external/bootstrap/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
 <!-- vis.js --><script type="text/javascript" src="./joy-external/vis-4.17.0/vis.min.js"></script>
-
 <!-- End of Includes directives -->      
 
 <script>

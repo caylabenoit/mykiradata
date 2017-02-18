@@ -122,8 +122,8 @@ function callbackSuccess(content, tag) {
         default:
     }
 }
-loadJSON('./rest/charts/polar/AXIS_SCORE_HOME_00', 'polaraxis');
-loadJSON('./rest/charts/bar/TEST', 'barbyglossary');
+getAsyncJson('./rest/charts/polar/AXIS_SCORE_HOME_00', 'polaraxis');
+getAsyncJson('./rest/charts/bar/TEST', 'barbyglossary');
 </script>
 </body>
 </html>

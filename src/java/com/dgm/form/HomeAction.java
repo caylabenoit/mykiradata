@@ -16,7 +16,6 @@
  */
 package com.dgm.form;
 
-import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
 
 /**
@@ -27,12 +26,6 @@ public class HomeAction extends ActionTypeForm {
 
     @Override
     public String display() {
-
-        this.addFormSingleEntry("THRESOLD_BAD", Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString());
-        this.addFormSingleEntry("THRESOLD_GOOD", Joy.PARAMETERS().getParameter("thresold_good").getValue().toString());
-        this.addFormSingleEntry("URLBASIS_DQAXIS", Joy.URL("bydqaxis", "display"));
-        this.addFormSingleEntry("URLBASIS_TERM", Joy.URL("byterm", "display"));
-        
         return super.display(); 
     }
     

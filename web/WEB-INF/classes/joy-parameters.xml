@@ -28,7 +28,7 @@
     <default-dateformat>yyyy-mm-dd HH:mm:ss</default-dateformat>
     
     <!-- Joy Version -->
-    <joy-version>0.1.5.5</joy-version>
+    <joy-version>0.1.5.6</joy-version>
     <joy-app-name>myKiraData</joy-app-name>
 
     <!-- Deactive or not the mandatory login process yes/no -->

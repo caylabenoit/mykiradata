@@ -1,7 +1,8 @@
 
-/*
-*	Création de l'objet AJAX XHR selon le navigateur
-*/
+/**
+ * Création de l'objet AJAX XHR selon le navigateur
+ * @return {ActiveXObject|XMLHttpRequest|Boolean}
+ */
 function createXHR() {
     var request = false;
 	try {
@@ -20,32 +21,46 @@ function createXHR() {
     return request;
 }
 
-/*
-*	Appel asynchrone AJAX avec renvoit de l'objet JSON vers les callback
-* 	@fname : contient le nom du fichier JSON
-*	@tag : permet de gérer plusieurs appels AJAX dans la même page
-*/
-function loadJSON(fname, tag) {	
-    //document.getElementById("zone").innerHTML = "<p><p><h3>Please wait ...</H3>";
+/**
+ * Appel asynchrone AJAX avec renvoit de l'objet JSON vers les callback
+ * @fname : contient le nom du fichier JSON
+ * @tag : permet de gérer plusieurs appels AJAX dans la même page
+ */
+function getAsyncJson(fname, tag) {	
     var xhr=createXHR();
     xhr.open("GET", fname, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status !== 404) {
-                    // Succes
-                    var data = eval("(" + xhr.responseText + ")");
-                    callbackSuccess(data, tag);
+                // Succes
+                var data = eval("(" + xhr.responseText + ")");
+                joyCallbackSuccess(data, tag);
             } else {
-                    // Echec
-                    callbackError(tag);
+                // Echec
+                joyCallbackError(tag);
             }
         }
     };
     xhr.send(null);
 }
 
-/*
-Implémenter les deux fonctions dans la page comme suit
+function joyCallbackSuccess(content, tag) {
+    switch(tag) {
+        case 'initialize':
+            joyAfterInitalize(content);
+            break;
+        default:
+            callbackSuccess(content, tag);
+    }
+}
+
+function joyCallbackError(tag) {
+    callbackError(tag);
+}
+
+/* 
+ * Appel asynchrone
+ *  Implémenter les deux fonctions dans la page comme suit
 
 function callbackSuccess(content, tag) {
 	switch(tag) {

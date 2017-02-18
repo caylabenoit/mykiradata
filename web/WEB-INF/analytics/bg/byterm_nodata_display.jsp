@@ -139,7 +139,7 @@ function callbackSuccess(content, tag) {
       data: jsonContent
     });
 }
-loadJSON('./rest/relterm/3/<joy:ActionValueTag name="TRM_PK" />', 'relationship');
+getAsyncJson('./rest/relterm/3/<joy:ActionValueTag name="TRM_PK" />', 'relationship');
 
 </script>
 

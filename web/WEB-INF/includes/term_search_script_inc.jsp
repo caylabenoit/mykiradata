@@ -25,8 +25,8 @@ function search() {
     t1.draw();
     //document.getElementById('searchresult').style.display="none";
     document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
-    var myurlsearch = './rest/search/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value;
-    loadJSON(myurlsearch, 'search');
+    var myurlsearch = './rest/entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value;
+    getAsyncJson(myurlsearch, 'search');
 }
 
 function callbackSuccess(content, tag) {

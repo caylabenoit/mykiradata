@@ -42,7 +42,7 @@
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <div class="dataTable_wrapper">
-                                    <joy:JoyFormButtonTag id="btn1" label="Check Application entities"  CSSClass="btn btn-default" onclick="loadJSON('./rest/checks', 'check')" />
+                                    <joy:JoyFormButtonTag id="btn1" label="Check Application entities"  CSSClass="btn btn-default" onclick="getAsyncJson('./rest/checks', 'check')" />
                                </div>
                             </div>
                         </div>            

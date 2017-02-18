@@ -43,12 +43,12 @@
                             <div class="panel-body">
                                 <div class="dataTable_wrapper">
                                     <UL>
-                                        <li><a href="./rest/datafile/APP_PARAMS">Export the application parameters here</A></li>
-                                        <li><a href="./rest/datafile/REL_TERM_METRIC">Export the Terms/DQ Types/metrics here</A></li>
-                                        <li><a href="./rest/datafile/SRC_CONTEXT">Export the Contexts here</A></li>
-                                        <li><a href="./rest/datafile/SRC_DQAXIS">Export the Data Quality types here</A></li>
-                                        <li><a href="./rest/datafile/SRC_TERMTYPE">Export the Glossary icons here</A></li>
-                                        <li><a href="./rest/datafile/SRC_SCORECARD">Export the Scorecards informations here</A></li>
+                                        <li><a href="./rest/entitydump/APP_PARAMS">Export the application parameters here</A></li>
+                                        <li><a href="./rest/entitydump/REL_TERM_METRIC">Export the Terms/DQ Types/metrics here</A></li>
+                                        <li><a href="./rest/entitydump/SRC_CONTEXT">Export the Contexts here</A></li>
+                                        <li><a href="./rest/entitydump/SRC_DQAXIS">Export the Data Quality types here</A></li>
+                                        <li><a href="./rest/entitydump/SRC_TERMTYPE">Export the Glossary icons here</A></li>
+                                        <li><a href="./rest/entitydump/SRC_SCORECARD">Export the Scorecards informations here</A></li>
                                     </UL>   
                                 </div>
                             </div>
