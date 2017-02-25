@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default"  id="panel-dashbydqaxis">
-                            <div class="panel-heading"><UI:dgmGlyphe name="dqaxis" />Global scoring per Data Quality Dimension</div>
+                            <div class="panel-heading"><i class="glyphedqaxis"></i>&nbsp;Global scoring per Data Quality Dimension</div>
                             <div class="panel-body"  id="graph0">
                                 <canvas id="div_graph0"></canvas>
                             </div>
@@ -47,7 +47,7 @@
                                 
                     <div class="col-lg-6">
                         <div class="panel panel-default" id="panel-dashbyglossary">
-                            <div class="panel-heading"><UI:dgmGlyphe name="dashboard" />Global scoring by Glossary</div>
+                            <div class="panel-heading"><i class="glyphedashboard"></i>&nbsp;Global scoring by Glossary</div>
                             <div class="panel-body" id="graph1">
                                 <canvas id="div_graph1"></canvas>
                             </div>
@@ -59,7 +59,7 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default panel-scores">
                             <div class="panel-heading">
-                                <i class="fa fa-dashboard fa-fw"></i> Global Scores
+                                <i class="glyphedashboard"></i>&nbsp;Global Scores
                             </div>
                             <div class="panel-body" id="AXIS_SCORE_HOME_00">
                                 <div id="div_AXIS_SCORE_HOME_00"></div> 
@@ -70,7 +70,7 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default panel-scores">
                             <div class="panel-heading">
-                                <i class="fa fa-dashboard fa-fw"></i> Best Terms
+                                <i class="glyphedashboard"></i>&nbsp;Best Terms
                             </div>
                             <div class="panel-body"  id="HOME_BEST_TERMS">
                                 <div id="div_HOME_BEST_TERMS"> </div> 
@@ -81,7 +81,7 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default panel-scores">
                             <div class="panel-heading">
-                                <i class="fa fa-dashboard fa-fw"></i> Worse Terms
+                                <i class="glyphedashboard"></i>&nbsp;Worse Terms
                             </div>
                             <div class="panel-body"  id="HOME_WORSE_TERMS">
                                 <div id="div_HOME_WORSE_TERMS"> </div> 
@@ -95,6 +95,7 @@
     </div><!-- /#wrapper -->
 
 <jsp:directive.include file="./templates/foot.jsp" />
+
 <script>
 var params = null;
 var THRESOLD_BAD = null;
@@ -141,93 +142,90 @@ $(function(){
     });
 });
 
-// Loads
-function callbackSuccess(content, tag) {
-    switch(tag) {
-        case 'polaraxis':
-            var ctx = document.getElementById("div_graph0").getContext("2d");
-            var config = {
-                data: content,
-                options: {
-                    responsive: true,
-                    legend: { position: 'bottom' },
-                    title: { display: true, text: 'Global scoring per Data Quality Dimension' },
-                    scale: {
-                        ticks: { beginAtZero: true },
-                        reverse: false
-                    },
-                    animateRotate:true,
-                    segmentShowStroke : true,
-                    scaleShowLine : true
-                    }
-                };
-            myGraph0 = Chart.PolarArea(ctx, config);
-            end_waitMessage("graph0", "div_graph0");
-            break;
-            
-        case 'barbyglossary':
-            var ctx = document.getElementById("div_graph1").getContext("2d");
-            myGraph1 = new Chart(ctx, {
-                type: 'bar',
-                data: content,
-                options: {
-                    elements: {  rectangle: { borderWidth: 2, borderSkipped: 'bottom' } },
-                    responsive: true,
-                    legend: { position: 'bottom' },
-                    title: { display: true, text: 'Global scoring by Glossary' }
-                }
-            });
-            end_waitMessage("graph1", "div_graph1");
-            break;
-            
-        case 'AXIS_SCORE_HOME_00':
-            fillDivList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_DQAXIS + "&dqaxis=");
-            end_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
-            break;
-            
-        case 'HOME_BEST_TERMS':
-            fillDivList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
-            end_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
-            break;
-            
-        case 'HOME_WORSE_TERMS':
-            fillDivList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
-            end_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
-            break;
-            
-        case 'KPIS':
-            fillDivSpot(content, "spots");
-            break;
-            
-        default:
-    }
+function cb_kpis(content) {
+    fillDivSpot(content, "spots");
 }
 
-function joyInitialize() {
+function cb_listWorseTerms(content) {
+    fillDivList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+    end_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
+}
+
+function cb_listBestTerms(content) {
+    fillDivList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+    end_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
+}
+
+function cb_listAxisScore(content) {
+    fillDivList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_DQAXIS + "&dqaxis=");
+    end_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
+}
+
+function cb_chartBar(content) {
+    var ctx = document.getElementById("div_graph1").getContext("2d");
+    myGraph1 = new Chart(ctx, {
+        type: 'bar',
+        data: content,
+        options: {
+            elements: {  rectangle: { borderWidth: 2, borderSkipped: 'bottom' } },
+            responsive: true,
+            legend: { position: 'bottom' },
+            title: { display: true, text: 'Global scoring by Glossary' }
+        }
+    });
+    end_waitMessage("graph1", "div_graph1");
+}
+
+function cb_chartPolar(content) {
+    var ctx = document.getElementById("div_graph0").getContext("2d");
+    var config = {
+        data: content,
+        options: {
+            responsive: true,
+            legend: { position: 'bottom' },
+            title: { display: true, text: 'Global scoring per Data Quality Dimension' },
+            scale: {
+                ticks: { beginAtZero: true },
+                reverse: false
+            },
+            animateRotate:true,
+            segmentShowStroke : true,
+            scaleShowLine : true
+            }
+        };
+    myGraph0 = Chart.PolarArea(ctx, config);
+    end_waitMessage("graph0", "div_graph0");
+}
+
+function form_preInitialize() {
     start_waitMessage("graph0", "div_graph0");
     start_waitMessage("graph1", "div_graph1");
     start_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
     start_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
     start_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
-    getAsyncJson('./rest/params', 'initialize');
 }
 
-function joyAfterInitalize(content) {
+function form_afterInit(content) {
     params = content;
     THRESOLD_BAD = content.thresold_bad;
     THRESOLD_GOOD = content.thresold_good;
-    URLBASIS_DQAXIS = joyURL(content.urlpatterm, "bydqaxis", "display"); // content.url.dqaxis;
-    URLBASIS_TERM = joyURL(content.urlpatterm, "byterm", "display");
+    URLBASIS_DQAXIS = joyURL(content.urlpattern, "bydqaxis", "display"); // content.url.dqaxis;
+    URLBASIS_TERM = joyURL(content.urlpattern, "byterm", "display");
     
-    getAsyncJson('./rest/charts/sds/AXIS_SCORE_HOME_00', 'polaraxis');
-    getAsyncJson('./rest/charts/mds/GLOBAL_SCORING_HOME_01', 'barbyglossary');
-    getAsyncJson('./rest/entity/AXIS_SCORE_HOME_00', 'AXIS_SCORE_HOME_00');
-    getAsyncJson('./rest/entity/HOME_BEST_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_BEST_TERMS');
-    getAsyncJson('./rest/entity/HOME_WORSE_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_WORSE_TERMS');
-    getAsyncJson('./rest/globalkpis', 'KPIS');
+    // Call back declaration here
+    addCBLoad(cb_chartPolar, './rest/charts/sds/AXIS_SCORE_HOME_00');
+    addCBLoad(cb_chartBar, './rest/charts/mds/GLOBAL_SCORING_HOME_01');
+    addCBLoad(cb_listAxisScore, './rest/entity/AXIS_SCORE_HOME_00');
+    addCBLoad(cb_listBestTerms, './rest/entity/HOME_BEST_TERMS/ROWCOUNT/' + LIST_ROWMAX);
+    addCBLoad(cb_listWorseTerms, './rest/entity/HOME_WORSE_TERMS/ROWCOUNT/' + LIST_ROWMAX);
+    addCBLoad(cb_kpis, './rest/globalkpis');
+    
+    // Glyphes
+    setGlypheToClass('dqaxis', 'glyphedqaxis', params);
+    setGlypheToClass('dashboard', 'glyphedashboard', params);
 }
 
-joyInitialize();
+execTwoStepsInitalization('./rest/params');
 </script>
 
 </body>

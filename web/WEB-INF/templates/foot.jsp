@@ -14,7 +14,8 @@
 <!-- Treeview --><script src="./joy-external/bootstrap/components/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"></script>
 <!-- JQuery-UI --><script src="./joy-external/jquery-ui/dist/jquery-ui.min.js" type="text/javascript"></script>
 <!-- Lobipanel --><script src="./joy-external/bootstrap/components/lobipanel-master_v0.7.1/dist/js/lobipanel.min.js" type="text/javascript"></script>
-<!-- Joy Ajax function --><script src="joy/ajax.js" type="text/javascript"></script>
+<!-- Joy Ajax functions and utils --><script src="joy/ajax.js" type="text/javascript"></script>
+<script src="joy/callbacks.js" type="text/javascript"></script>
 <!-- Joy Common functions --><script src="joy/joycommon.js" type="text/javascript"></script>
 <!-- charts.js --><script src="./joy-external/Chart.js/dist/Chart.bundle.min.js"></script>
 <!-- gauge.js --><script src="./joy-external/gauge.js/gauge.min.js"></script>

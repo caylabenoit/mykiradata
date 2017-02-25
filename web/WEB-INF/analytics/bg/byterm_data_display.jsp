@@ -267,25 +267,22 @@ $(document).ready(function() {
     } );
 });
 
+var ID = '<joy:ActionValueTag name="TRM_PK" />';
 
-function callbackSuccess(content, tag) {
-    switch (tag) {
-        case 'relationship': // Treeview display
-            var jsonContent = JSON.stringify(content);
-            $('#treeview').treeview({
-                color: "#428bca",
-                showBorder: false,
-                enableLinks: true,
-                data: jsonContent
-            });
-            end_waitMessage("panel_treeview", "treeview");
-            break;  
-    }
+function cb_displayRelationShips(content) {
+    var jsonContent = JSON.stringify(content);
+    $('#treeview').treeview({
+        color: "#428bca",
+        showBorder: false,
+        enableLinks: true,
+        data: jsonContent
+    });
+    end_waitMessage("panel_treeview", "treeview");
 }
 
-// Treeview display
+addCBLoad(cb_displayRelationShips, './rest/relterm/3/' + ID);
 start_waitMessage("panel_treeview", "treeview");
-getAsyncJson('./rest/relterm/3/<joy:ActionValueTag name="TRM_PK" />', 'relationship');
+execOneStepInitalization();
 
 // display the last run bars
 var configRuns = {

@@ -23,13 +23,12 @@ function search() {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
     t1.draw();
-    //document.getElementById('searchresult').style.display="none";
     document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
     var myurlsearch = './rest/entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value;
     getAsyncJson(myurlsearch, 'search');
 }
 
-function callbackSuccess(content, tag) {
+function cb_filldatatable(content) {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
     document.getElementById('pleasewait').innerHTML = '';
@@ -41,6 +40,10 @@ function callbackSuccess(content, tag) {
             content.data[i].columns[3].value
         ] ).draw( false );
     }
+}
+
+function callbackSuccess(content, tag) {
+    cb_filldatatable(content);
 }
 
 function callbackError(tag) {

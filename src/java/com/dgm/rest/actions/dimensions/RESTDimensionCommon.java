@@ -21,9 +21,10 @@ import com.joy.Joy;
 import com.joy.bo.IEntity;
 import com.joy.charts.chartjs.ChartWithDataset;
 import com.joy.charts.gaugejs.ChartCounterData;
-import com.joy.json.JSONArray;
 import com.joy.json.JSONObject;
 import com.joy.mvc.actionTypes.ActionTypeREST;
+import com.joy.mvc.restbean.JoyJsonMatrix;
+import com.joy.mvc.restbean.JoyJsonVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,7 +44,12 @@ public class RESTDimensionCommon extends ActionTypeREST {
     private static final String TAG_LASTRUNS = "LASTRUNS";
     private static final String TAG_MULTIPLE_RADAR = "MULTIPLE_RADAR";
     private static final String TAG_TREND_NAME = "TREND";
-
+    
+    /**
+     * Set coutner options
+     * @param myChart chart object
+     * @return 
+     */
     private ChartCounterData setCounterOptions(ChartCounterData myChart) {
         try {
             myChart.setThresolds(Integer.valueOf(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString()), 
@@ -193,8 +199,8 @@ public class RESTDimensionCommon extends ActionTypeREST {
      * @param KeyName
      * @return 
      */
-    protected JSONArray getMetrics(int KeyValue, String KeyName) {
-        JSONArray table = new JSONArray();
+    protected void setMetrics(int KeyValue, String KeyName) {
+        JoyJsonMatrix matrix = new JoyJsonMatrix();
         
         try {
             IEntity entity = getBOFactory().getEntity("Last Facts Only with details");
@@ -203,49 +209,52 @@ public class RESTDimensionCommon extends ActionTypeREST {
             ResultSet rs = entity.select();
 
             while (rs.next()) {
-                JSONObject columns = new JSONObject();
-                columns.put("FRS_PK", rs.getString("FRS_PK"));
-                columns.put("FRS_VALID_ROWS", rs.getString("FRS_VALID_ROWS"));
-                columns.put("FRS_INVALID_ROWS", rs.getString("FRS_INVALID_ROWS"));
-                columns.put("FRS_TOTALROWS", rs.getString("FRS_TOTALROWS"));
-                columns.put("FRS_KPI_SCORE", Utils.SCORE_DISPLAY(rs.getFloat("FRS_KPI_SCORE")));
-                columns.put("DQX_NAME", rs.getString("DQX_NAME"));
-                columns.put("TRM_NAME", rs.getString("TRM_NAME"));
-                columns.put("FRS_WEIGHT", rs.getString("FRS_WEIGHT"));
-                columns.put("FRS_COST", rs.getString("FRS_COST"));
-                columns.put("MET_NAME", rs.getString("MET_NAME"));
-                columns.put("TRM_FK", rs.getString("TRM_FK"));
-                columns.put("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
-                columns.put("MET_FK", rs.getString("MET_FK"));
-                columns.put("FRS_DATETIME_LOAD", rs.getString("FRS_DATETIME_LOAD"));
-                columns.put("SCG_NAME", rs.getString("SCG_NAME"));
-                columns.put("SCO_NAME", rs.getString("SCO_NAME"));
-                columns.put("METRIC_LINK", Joy.HREF("bymetric", "display", rs.getString("MET_NAME"), "metric",  rs.getString("MET_FK")));
-                columns.put("AXIS_LINK", Joy.HREF("bydqaxis", "display", rs.getString("DQX_NAME"), "dqaxis",  rs.getString("DQX_FK")));
-                columns.put("TERM_LINK", Joy.URL("byterm", "display", "term",  rs.getString("TRM_FK")));
-                columns.put("SCORECARD_REF", (rs.getString("SCO_NAME")==null ? "N.A." : rs.getString("SCO_NAME") + "/" + rs.getString("SCG_NAME")));
+                JoyJsonVector columns = new JoyJsonVector();
+                columns.addItem("FRS_PK", rs.getString("FRS_PK"));
+                columns.addItem("FRS_VALID_ROWS", rs.getString("FRS_VALID_ROWS"));
+                columns.addItem("FRS_INVALID_ROWS", rs.getString("FRS_INVALID_ROWS"));
+                columns.addItem("FRS_TOTALROWS", rs.getString("FRS_TOTALROWS"));
+                columns.addItem("FRS_KPI_SCORE", Utils.SCORE_DISPLAY(rs.getFloat("FRS_KPI_SCORE")));
+                columns.addItem("DQX_NAME", rs.getString("DQX_NAME"));
+                columns.addItem("TRM_NAME", rs.getString("TRM_NAME"));
+                columns.addItem("FRS_WEIGHT", rs.getString("FRS_WEIGHT"));
+                columns.addItem("FRS_COST", rs.getString("FRS_COST"));
+                columns.addItem("MET_NAME", rs.getString("MET_NAME"));
+                columns.addItem("TRM_FK", rs.getString("TRM_FK"));
+                columns.addItem("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
+                columns.addItem("MET_FK", rs.getString("MET_FK"));
+                columns.addItem("FRS_DATETIME_LOAD", rs.getString("FRS_DATETIME_LOAD"));
+                columns.addItem("SCG_NAME", rs.getString("SCG_NAME"));
+                columns.addItem("SCO_NAME", rs.getString("SCO_NAME"));
+                columns.addItem("METRIC_LINK", Joy.HREF("bymetric", "display", rs.getString("MET_NAME"), "metric",  rs.getString("MET_FK")));
+                columns.addItem("AXIS_LINK", Joy.HREF("bydqaxis", "display", rs.getString("DQX_NAME"), "dqaxis",  rs.getString("DQX_FK")));
+                columns.addItem("TERM_LINK", Joy.URL("byterm", "display", "term",  rs.getString("TRM_FK")));
+                columns.addItem("SCORECARD_REF", (rs.getString("SCO_NAME")==null ? "N.A." : rs.getString("SCO_NAME") + "/" + rs.getString("SCG_NAME")));
 
-                table.put(columns);
+                matrix.addRow(columns);
             }
             getBOFactory().closeResultSet(rs);
-
+            this.addMatrix("metrics", matrix);
+            
         } catch (SQLException e) {
             Joy.LOG().error( e);
         }
-        return table;
+        
     }
     
     /**
-     * Returns the entity content in a json format
+     * Add a matrix with a filtered entity
      * @param id ID for filtering
      * @param idName Field name to filter
      * @param entityName Entity name
-     * @return  JSON with all the data
      */
-    protected JSONObject getEntityContent(int id, String idName, String entityName) {
+    protected void setFilteredEntityToMatrix(String matrixTag, int id, String idName, String entityName) {
+        JoyJsonMatrix contents = new JoyJsonMatrix();
         IEntity entity = getBOFactory().getEntity(entityName);
         entity.field(idName).setKeyValue(id);
-        return entity.exp();
+        this.addMatrix(matrixTag, entity);
     }
+    
+    
     
 }

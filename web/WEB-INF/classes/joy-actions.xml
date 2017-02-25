@@ -372,7 +372,7 @@ and open the template in the editor.
     <actionRequest>
         <object>taskslist</object>
         <objecttype>rest</objecttype>
-        <action>com.dgm.rest.tasks.RESTTasksList</action>
+        <action>com.joy.rest.ready.RESTTasksList</action>
     </actionRequest>
 
     <actionRequest>
@@ -384,7 +384,7 @@ and open the template in the editor.
     <actionRequest>
         <object>entitydump</object>
         <objecttype>rest</objecttype>
-        <action>com.joy.mvc.ready.RESTEntity</action>
+        <action>com.joy.rest.ready.RESTEntity</action>
         <flowtype>file</flowtype>
     </actionRequest>
     
@@ -397,13 +397,13 @@ and open the template in the editor.
     <actionRequest>
         <object>checks</object>
         <objecttype>rest</objecttype>
-        <action>com.joy.mvc.ready.RESTJoyCheck</action>
+        <action>com.joy.rest.ready.RESTJoyCheck</action>
     </actionRequest>
     
     <actionRequest>
         <object>charts</object>
         <objecttype>rest</objecttype>
-        <action>com.joy.mvc.ready.RESTChart</action>
+        <action>com.joy.rest.ready.RESTChartJS</action>
     </actionRequest>
     
     <actionRequest>
@@ -415,7 +415,7 @@ and open the template in the editor.
     <actionRequest>
         <object>entity</object>
         <objecttype>rest</objecttype>
-        <action>com.joy.mvc.ready.RESTEntity</action>
+        <action>com.joy.rest.ready.RESTEntity</action>
     </actionRequest>
     
     <actionRequest>
@@ -433,7 +433,7 @@ and open the template in the editor.
     <actionRequest>
         <object>params</object>
         <objecttype>rest</objecttype>
-        <action>com.joy.mvc.ready.RESTParameters</action>
+        <action>com.joy.rest.ready.RESTParameters</action>
     </actionRequest>
 
 </joy-actions>

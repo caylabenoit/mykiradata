@@ -37,7 +37,6 @@ public class RESTGlobalKpis extends ActionTypeREST {
     private static final String C_LONGTEXT_LABEL = "longtext";
     private static final String C_BIG_SHORT_TEXT_LABEL = "bigshorttext";
     private static final String C_URL = "url";
-    private static final String C_URL_TEXT = "urltext";
     private static final String C_KPIS = "kpis";
     private static final String C_GLYPHE = "glyphe";
     

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="dgm" uri="/WEB-INF/dgmTags.tld"%>
-<%@taglib prefix="UI" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="joy" uri="/WEB-INF/joyTags.tld"%>
-<%@taglib prefix="chart" tagdir="/WEB-INF/tags/charts" %>
 
 <html lang="en">
 
@@ -34,7 +31,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <joy:NaviBreadCrumbsTag xmlconfig="joy-menu.xml" activemenuid="Analytics-BG-Term" />
-                        <h1 class="page-header"><IMG src='./images/glossary/<joy:ActionValueTag name="IMGICO" />' height="28px" />&nbsp;<joy:ActionValueTag name="TRM_NAME" /></h1>
+                        <h1 class="page-header"><IMG id="IMGICO" height="28px" />&nbsp;<SPAN id="TRM_NAME"></SPAN></h1>
                     </div>
                 </div>
                 
@@ -43,60 +40,56 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="divtermblocheader">
-                                    <p><UI:dgmGlyphe name="status" /><B>Status :</B> <joy:ActionValueTag name="TRM_PHASE" /></p>
-                                    <p><UI:dgmGlyphe name="term" /><B>Type :</B> <joy:ActionValueTag name="TRT_NAME" /></p>
-                                    <p><UI:dgmGlyphe name="user" /><B>Owner :</B> <joy:ActionValueTag name="TRM_OWNER_EMAIL" /></p>
-                                    <p><UI:dgmGlyphe name="user" /><B>Steward :</B> <joy:ActionValueTag name="TRM_STEWARD_EMAIL" /></p>
-                                    <p><UI:dgmGlyphe name="businessmap" /><A href="<joy:JoyBasicURL object="mapbyterm" actiontype="display" />&nbhops=3&term=<joy:ActionValueTag name="TRM_PK" />">Relationship map</A></p>
-                                    <p><UI:dgmGlyphe name="common-configuration" /><A href="<joy:ActionValueTag name="CONFIG_TERM_LINK" />">Term Configuration</A></p>
+                                    <p><i class="glyphestatus"></i>&nbsp;<B>Status :</B> <SPAN id="TRM_PHASE"></SPAN></p>
+                                    <p><i class="glypheterm"></i>&nbsp;<B>Type :</B> <SPAN id="TRT_NAME"></SPAN></p>
+                                    <p><i class="glypheuser"></i>&nbsp;<B>Owner :</B> <SPAN id="TRM_OWNER_EMAIL"></SPAN></p>
+                                    <p><i class="glypheuser"></i>&nbsp;<B>Steward :</B> <SPAN id="TRM_STEWARD_EMAIL"></SPAN></p>
+                                    <p><i class="glyphebusmap"></i>&nbsp;<A id="ph_termrel">Relationship map</A></p>
+                                    <p><i class="glyphecommon"></i>&nbsp;<A id="ph_termConfiglink">Configuration</A></p>
                                 </div>
                             </div> 
                         </div>   
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="panel panel-yellow">
-                                    <!--  <div class="panel-heading"><UI:dgmGlyphe name="term" />Business Term: <joy:ActionValueTag name="TRM_NAME" /></div> -->
-                                    <!-- /.panel-heading -->
-                                    <div class="panel-body">
+                        <DIV class="row">
+                            <DIV class="col-lg-12">
+                                <DIV class="panel panel-yellow">
+                                    <DIV class="panel-body">
                                         <DIV class="bloctitreprincipal">
-                                        <h5>Metric <joy:ActionValueTag name="TRM_NAME" /> coming from <joy:ActionValueTag name="GLOSSARY_LINK" />&nbsp;/&nbsp;<joy:ActionValueTag name="CATEGORY_LINK" /> </h5>
+                                            <h5>Coming from <SPAN id="GLOSSARY_LINK"></SPAN>&nbsp;/&nbsp;<SPAN id="CATEGORY_LINK"></SPAN></h5>
                                         </DIV>
-                                        <joy:JoyFormTag inline="true" object='byterm' actiontype='display' name='myform'>
-                                        <div class="form-group">
-                                            <joy:ActionComboBoxTag name="term" CSSClass="js-states form-control" />
-                                            <joy:JoyFormButtonTag id="btn1" label="Change" submit="true" CSSClass="btn btn-primary" />
-                                        </div>
-                                        </joy:JoyFormTag>
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
+                                        <DIV class="form-group form-inline">
+                                            <SELECT name="term" class="js-states form-control" id="term"></SELECT>
+                                            <BUTTON id='btn1' class='btn btn-primary' type='button' onclick="evt_changeTerm();" >Change</BUTTON>
+                                        </DIV>
+                                    </DIV>
+                                </DIV>
+                            </DIV>  
+                        </DIV>
+                        
                         <div class="row">                
                             <div class="col-lg-12">
                                 <div class="panel panel-red">
-                                    <div class="panel-heading"><UI:dgmGlyphe name="glossary" />Glossary definition</div>
+                                    <div class="panel-heading"><i class="glypheglossary"></i>&nbsp;Glossary definition</div>
                                     <div class="panel-body" style="max-height: 300px; min-height: 300px;overflow-y: scroll;">
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs">
-                                                <li class="active"><a href="#Description" data-toggle="tab">Description</a></li>
-                                                <li><a href="#Usage" data-toggle="tab">Usage</a></li>
-                                                <li><a href="#Example" data-toggle="tab">Example</a></li>
+                                            <li class="active"><a href="#Description" data-toggle="tab">Description</a></li>
+                                            <li><a href="#Usage" data-toggle="tab">Usage</a></li>
+                                            <li><a href="#Example" data-toggle="tab">Example</a></li>
                                         </ul>
-
                                         <!-- Tab panes -->
                                         <div class="tab-content">
-                                                <div class="tab-pane fade in active" id="Description">
-                                                        <h4>Description</h4>
-                                                        <p><joy:ActionValueTag name="TRM_DESCRIPTION" /></p>
-                                                </div>
-                                                <div class="tab-pane fade" id="Usage">
-                                                        <h4>Usage</h4>
-                                                        <p><joy:ActionValueTag name="TRM_USAGE" /></p>
-                                                </div>
-                                                <div class="tab-pane fade" id="Example">
-                                                        <h4>Example</h4>
-                                                        <p><joy:ActionValueTag name="TRM_EXAMPLE" /></p>
-                                                </div>
+                                            <div class="tab-pane fade in active" id="Description">
+                                                <h4>Description</h4>
+                                                <p><SPAN id="TRM_DESCRIPTION"></SPAN></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="Usage">
+                                                <h4>Usage</h4>
+                                                <p><SPAN id="TRM_USAGE"></SPAN></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="Example">
+                                                <h4>Example</h4>
+                                                <p><SPAN id="TRM_EXAMPLE"></SPAN></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -105,32 +98,34 @@
                     </div> 
                     <div class="col-lg-6">
                         <div class="panel panel-primary">   
-                           <div class="panel-heading"><UI:dgmGlyphe name="relationship" />Business Term Relationships</div>
+                           <div class="panel-heading"><i class="glypherelationship"></i>&nbsp;Business Term Relationships</div>
                            <div class="panel-body" style="max-height: 300px;min-height: 600px;overflow-y: scroll;">
                                <div id="treeview" class=""></div>
                            </div>
                         </div>
                     </div>                 
                 </DIV>
- 
-
-                            
+         
             </div><!-- /.container-fluid -->
         </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
 
 <jsp:directive.include file="../../templates/foot.jsp" />
+
 <SCRIPT>
-<chart:dgmDQAxisCounters_JS dqaxis="COUNTER_LIST" />
+var myTermID = getRequestParameter('term');
+var ID = '<joy:ActionValueTag name="TRM_PK" />';
+var params = null;
+
 $(document).ready(function() {
-    $( '#term' ).select2({
-        placeholder: "Select an Term"
-    });
     $( "#btn1" ).button();
 });
 
-// treeview display
-function callbackSuccess(content, tag) {
+function evt_changeTerm() {
+    window.open(joyURL(params.urlpattern, "byterm","display") + "&term=" + term.value, "_self");
+}
+
+function cb_relationShipTree(content) {
     var jsonContent = JSON.stringify(content);
     $('#treeview').treeview({
       color: "#428bca",
@@ -139,7 +134,50 @@ function callbackSuccess(content, tag) {
       data: jsonContent
     });
 }
-getAsyncJson('./rest/relterm/3/<joy:ActionValueTag name="TRM_PK" />', 'relationship');
+
+function cb_header(content) {
+    // fill the form data
+    document.getElementById("TRM_NAME").innerHTML = getFromJoy(content.single, "TRM_NAME");
+    document.getElementById("IMGICO").src = './images/glossary/' + getFromJoy(content.single, "IMGICO");
+    document.getElementById("TRM_PHASE").innerHTML = getFromJoy(content.single, "TRM_PHASE");
+    document.getElementById("TRT_NAME").innerHTML = getFromJoy(content.single, "TRT_NAME");
+    document.getElementById("TRM_OWNER_EMAIL").innerHTML = getFromJoy(content.single, "TRM_OWNER_EMAIL");
+    document.getElementById("TRM_STEWARD_EMAIL").innerHTML = getFromJoy(content.single, "TRM_STEWARD_EMAIL");
+    document.getElementById("ph_termConfiglink").href = getFromJoy(content.single, "CONFIG_TERM_LINK");
+    document.getElementById("TRM_DESCRIPTION").innerHTML = getFromJoy(content.single, "TRM_DESCRIPTION");
+    document.getElementById("TRM_USAGE").innerHTML = getFromJoy(content.single, "RM_USAGE");
+    document.getElementById("TRM_EXAMPLE").innerHTML = getFromJoy(content.single, "TRM_EXAMPLE");
+    document.getElementById("ph_termrel").href = joyURL(params.urlpattern, "mapbyterm", "display") + "&nbhops=3&term=" + getFromJoy(content.single, "TRM_PK");
+    document.getElementById("GLOSSARY_LINK").innerHTML = getFromJoy(content.single, "GLOSSARY_LINK");
+    document.getElementById("CATEGORY_LINK").innerHTML = getFromJoy(content.single, "CATEGORY_LINK");
+
+    // Set the glyphes
+    setGlypheToClass('status', 'glyphestatus', params);
+    setGlypheToClass('user', 'glypheuser', params);
+    setGlypheToClass('term', 'glypheterm', params);
+    setGlypheToClass('businessmap', 'glyphebusmap', params);
+    setGlypheToClass('common-configuration', 'glyphecommon', params);
+    setGlypheToClass('glossary', 'glypheglossary', params);
+    setGlypheToClass('relationship', 'glypherelationship', params);
+    
+    // fill and display the terms cbo
+    fillCombobox('term', getFromJoy(content.vector, "terms"));
+    $('#term').select2({ placeholder: "Select an Term" });
+}
+
+function form_preInitialize() {
+    // ...
+}
+
+function form_afterInit(content) {
+    params = content; // Global application parameters
+    
+    // Call back declaration here
+    addCBLoad(cb_relationShipTree, './rest/relterm/3/' + ID);
+    addCBLoad(cb_header, './rest/bterm/' + ID);
+}
+
+execTwoStepsInitalization('./rest/params');
 
 </script>
 

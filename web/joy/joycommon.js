@@ -18,3 +18,80 @@
 function joyURL(pattern, object, actiontype) {
     return "." + pattern + "?object=" + object + "&actiontype=" + actiontype;
 }
+
+/**
+ * Modify the <i> tag to display a glyphe
+ * @param {type} name           Glyphe name
+ * @param {type} placeHolderID  <I id="?"> id of the place holder
+ * @param {type} params         Array of parameters (application given)
+ * @returns {undefined}         Nothing
+ */
+function setGlypheToID(name, placeHolderID, params) {
+    var glyphes = params.ApplicationIconsBSGlyphe;
+    for (i=0; i < glyphes.length; i++) {
+        if (glyphes[i].name == name) {
+            var myObject = document.getElementById(placeHolderID);
+            myObject.classList.add("fa");
+            myObject.classList.add(glyphes[i].value);
+            myObject.classList.add("fa-fw");
+            return;
+        }
+    }
+}
+
+/**
+ * Modify the <i> tag to display a glyphe for all the object with the class
+ * @param {type} name           Glyphe name
+ * @param {type} className      <I class="?"> class of the place holder
+ * @param {type} params         Array of parameters (application given)
+ * @returns {undefined}         Nothing
+ */
+function setGlypheToClass(name, className, params) {
+    var glyphes = params.ApplicationIconsBSGlyphe;
+    var goodGlyphe = "";
+    
+    // search for the good glyphe code
+    for (i=0; i < glyphes.length; i++) {
+        if (glyphes[i].name == name) 
+            goodGlyphe = glyphes[i].value;
+    }
+    
+    // Search for all the <i> with the class specified
+    var myObjectClasses = document.getElementsByClassName(className);
+    for (j=0; j < myObjectClasses.length; j++) {
+        myObjectClasses[j].classList.add("fa");
+        myObjectClasses[j].classList.add(goodGlyphe);
+        myObjectClasses[j].classList.add("fa-fw");
+    }
+}
+
+/**
+ * Dynamically build the combobox items with the JSON Object (coming from standard Joy REST API)
+ * @param {type} selectID   ID of the <select> tag
+ * @param {type} data       JSON object which contains data
+ * @returns {undefined}     Nothing
+ */
+function fillCombobox(selectID, data) {
+    var cboObject = document.getElementById(selectID);
+    for (i=0; i < data.count; i++) {
+        var myoption = document.createElement("option");
+        myoption.text = data.list[i].name;
+        myoption.value = data.list[i].value;
+        cboObject.value = data.selected;
+        cboObject.add(myoption, null);
+    }
+}
+
+/**
+ * Retrieve a specific value from a dataset in JSON format
+ * example : {"name":"ICON","value":"pin.png"},{"name":"IMGICO","value":"pin.png"}
+ * @param {type} content    json dataset
+ * @param {type} fieldname  field to get (ex. ICON)
+ * @returns {Window.value}  value
+ */
+function getFromJoy(content, fieldname) {
+    for (i=0; i < content.length; i++) {
+        if (content[i].name == fieldname)
+            return content[i].value;
+    }
+}
