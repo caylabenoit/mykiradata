@@ -33,10 +33,10 @@ public class ReportGlobalInvalidsAndCosts extends ActionTypeForm {
     @Override
     public String display() {
         // Build the different sub-reports
-        this.addFormSingleEntry("BARS1", (Object)getBarGlobalCostByDQAxis());
-        this.addFormSingleEntry("BARS2", (Object)getBarGlobalCostByDataSource());
-        this.addFormSingleEntry("BARS3", (Object)getBarGlobalCostByContext());
-        this.addFormSingleEntry("BARS4", (Object)getBarGlobalCostByTerm());
+        this.addSingle("BARS1", (Object)getBarGlobalCostByDQAxis());
+        this.addSingle("BARS2", (Object)getBarGlobalCostByDataSource());
+        this.addSingle("BARS3", (Object)getBarGlobalCostByContext());
+        this.addSingle("BARS4", (Object)getBarGlobalCostByTerm());
         
         return super.display(); //To change body of generated methods, choose Tools | Templates.
     }

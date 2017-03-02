@@ -19,8 +19,8 @@ package com.dgm.form.manage;
 import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
 import com.joy.bo.BOEntityReadWrite;
-import com.joy.mvc.formbean.JoyFormMatrixEntry;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormMatrix;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -34,20 +34,20 @@ public class SrcDQAxisAction extends ActionTypeForm {
 
     @Override
     public String list() {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         try {
             IEntity Entity = this.getBOFactory().getEntity("SRC_DQAXIS");
             ResultSet rs = Entity.select();
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("DQX_PK", rs.getInt("DQX_PK"));
-                columns.addValue("DQX_DESCRIPTION", rs.getString("DQX_DESCRIPTION"));
-                columns.addValue("DQX_LABEL", rs.getString("DQX_LABEL"));
-                columns.addValue("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
-                columns.addValue("DQX_WEIGHT", rs.getString("DQX_WEIGHT"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("DQX_PK", rs.getInt("DQX_PK"));
+                columns.addItem("DQX_DESCRIPTION", rs.getString("DQX_DESCRIPTION"));
+                columns.addItem("DQX_LABEL", rs.getString("DQX_LABEL"));
+                columns.addItem("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
+                columns.addItem("DQX_WEIGHT", rs.getString("DQX_WEIGHT"));
                 matrix.addRow(columns);
             }
-            this.addFormMatrixEntry("LIST", matrix);
+            this.addMatrix("LIST", matrix);
             this.getBOFactory().closeResultSet(rs);
         } catch (SQLException e) {
             Joy.LOG().error(  e);
@@ -66,11 +66,11 @@ public class SrcDQAxisAction extends ActionTypeForm {
                 ResultSet rs = Entity.select();
 
                 if (rs.next()) {
-                    this.addFormSingleEntry("DQX_PK", rs.getString("DQX_PK"));
-                    this.addFormSingleEntry("DQX_DESCRIPTION", rs.getString("DQX_DESCRIPTION"));
-                    this.addFormSingleEntry("DQX_LABEL", rs.getString("DQX_LABEL"));
-                    this.addFormSingleEntry("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
-                    this.addFormSingleEntry("DQX_WEIGHT", rs.getString("DQX_WEIGHT"));
+                    this.addSingle("DQX_PK", rs.getString("DQX_PK"));
+                    this.addSingle("DQX_DESCRIPTION", rs.getString("DQX_DESCRIPTION"));
+                    this.addSingle("DQX_LABEL", rs.getString("DQX_LABEL"));
+                    this.addSingle("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
+                    this.addSingle("DQX_WEIGHT", rs.getString("DQX_WEIGHT"));
                 }
                 this.getBOFactory().closeResultSet(rs);
 
@@ -88,11 +88,11 @@ public class SrcDQAxisAction extends ActionTypeForm {
 
     @Override
     public String add() {
-        this.addFormSingleEntry("DQX_PK", "0");
-        this.addFormSingleEntry("DQX_DESCRIPTION", "");
-        this.addFormSingleEntry("DQX_LABEL", "");
-        this.addFormSingleEntry("DQX_FUNCKEY", "");
-        this.addFormSingleEntry("DQX_WEIGHT", "1");
+        this.addSingle("DQX_PK", "0");
+        this.addSingle("DQX_DESCRIPTION", "");
+        this.addSingle("DQX_LABEL", "");
+        this.addSingle("DQX_FUNCKEY", "");
+        this.addSingle("DQX_WEIGHT", "1");
         return super.add();
     }
 

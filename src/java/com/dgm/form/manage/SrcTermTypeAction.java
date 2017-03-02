@@ -20,8 +20,8 @@ import com.joy.Joy;
 import com.joy.bo.BOEntityReadWrite;
 import com.joy.common.JoyParameter;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import com.joy.mvc.formbean.JoyFormMatrixEntry;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormMatrix;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -36,18 +36,18 @@ public class SrcTermTypeAction extends ActionTypeForm {
     @Override
     public String list() {
         try {
-            JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+            JoyFormMatrix matrix = new JoyFormMatrix();
             IEntity Entity = this.getBOFactory().getEntity("SRC_TERMTYPE");
             ResultSet rs = Entity.select();
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("GIO_PK", rs.getInt("GIO_PK"));
-                columns.addValue("GIO_TERMTYPE_NAME", rs.getString("GIO_TERMTYPE_NAME"));
-                columns.addValue("GIO_ICON_PATHNAME", rs.getString("GIO_ICON_PATHNAME"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("GIO_PK", rs.getInt("GIO_PK"));
+                columns.addItem("GIO_TERMTYPE_NAME", rs.getString("GIO_TERMTYPE_NAME"));
+                columns.addItem("GIO_ICON_PATHNAME", rs.getString("GIO_ICON_PATHNAME"));
                 matrix.addRow(columns);
             }
             this.getBOFactory().closeResultSet(rs);
-            this.addFormMatrixEntry("LIST", matrix);
+            this.addMatrix("LIST", matrix);
             
         } catch (SQLException e) {
             Joy.LOG().error( e);
@@ -66,9 +66,9 @@ public class SrcTermTypeAction extends ActionTypeForm {
                 ResultSet rs = Entity.select();
 
                 if (rs.next()) {
-                    this.addFormSingleEntry("GIO_PK", rs.getInt("GIO_PK"));
-                    this.addFormSingleEntry("GIO_TERMTYPE_NAME", rs.getString("GIO_TERMTYPE_NAME"));
-                    this.addFormSingleEntry("GIO_ICON_PATHNAME", rs.getString("GIO_ICON_PATHNAME"));
+                    this.addSingle("GIO_PK", rs.getInt("GIO_PK"));
+                    this.addSingle("GIO_TERMTYPE_NAME", rs.getString("GIO_TERMTYPE_NAME"));
+                    this.addSingle("GIO_ICON_PATHNAME", rs.getString("GIO_ICON_PATHNAME"));
                 }
                 this.getBOFactory().closeResultSet(rs);
 
@@ -77,8 +77,8 @@ public class SrcTermTypeAction extends ActionTypeForm {
             }
         }
         
-        loadCBOGlossaries(this.getFormSingleEntry("GIO_TERMTYPE_NAME").getStrValue());
-        loadCBOAvailableIcons(this.getFormSingleEntry("GIO_ICON_PATHNAME").getStrValue());
+        loadCBOGlossaries(this.getSingle("GIO_TERMTYPE_NAME").getStrValue());
+        loadCBOAvailableIcons(this.getSingle("GIO_ICON_PATHNAME").getStrValue());
         
         return super.edit(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -98,9 +98,9 @@ public class SrcTermTypeAction extends ActionTypeForm {
     
     @Override
     public String add() {
-        this.addFormSingleEntry("GIO_PK", "0");
-        this.addFormSingleEntry("GIO_TERMTYPE_NAME", "");
-        this.addFormSingleEntry("GIO_ICON_PATHNAME", "");
+        this.addSingle("GIO_PK", "0");
+        this.addSingle("GIO_TERMTYPE_NAME", "");
+        this.addSingle("GIO_ICON_PATHNAME", "");
         loadCBOGlossaries("");
         loadCBOAvailableIcons("");
         return super.add(); 
@@ -132,25 +132,25 @@ public class SrcTermTypeAction extends ActionTypeForm {
     
     private void loadCBOAvailableIcons(String PKSelected) {
         List<JoyParameter> icons = Joy.PARAMETERS().getParameter("TermTypeIcons").getList();
-        JoyFormVectorEntry columns = new JoyFormVectorEntry();
+        JoyFormVector columns = new JoyFormVector();
         
         for (JoyParameter param : icons) {
-            columns.addValue("VALUE", param.getValue().toString());
+            columns.addItem("VALUE", param.getValue().toString());
             if (param.getValue().toString().equalsIgnoreCase(PKSelected))
                 columns.setSelected(PKSelected);
         }
-        this.addFormVectorEntry("GIO_ICON_PATHNAME", columns);
+        this.addVector("GIO_ICON_PATHNAME", columns);
     }
     
     private void loadCBOGlossaries(String PKSelected) {
-        JoyFormVectorEntry columns = new JoyFormVectorEntry();
+        JoyFormVector columns = new JoyFormVector();
         try {
             IEntity entity = this.getBOFactory().getEntity("DIM_GLOSSARY");
             entity.addSort("GLO_NAME");
             ResultSet rs = entity.select();
             
             while (rs.next()) {
-                columns.addValue("GLO_NAME", rs.getString("GLO_NAME"));
+                columns.addItem("GLO_NAME", rs.getString("GLO_NAME"));
                 if (rs.getString("GLO_NAME").equalsIgnoreCase(PKSelected))
                     columns.setSelected(PKSelected);
             }
@@ -159,6 +159,6 @@ public class SrcTermTypeAction extends ActionTypeForm {
         } catch (SQLException e) {
             Joy.LOG().error( e);
         }
-        this.addFormVectorEntry("GIO_TERMTYPE_NAME", columns);
+        this.addVector("GIO_TERMTYPE_NAME", columns);
     }
 }

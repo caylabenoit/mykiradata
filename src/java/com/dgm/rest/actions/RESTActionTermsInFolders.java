@@ -25,7 +25,7 @@ import com.joy.mvc.actionTypes.ActionTypeREST;
  * retourne la hiérarchie du terme avec ses relations pour un affichage avec vis.js
  * http://localhost:18180/GovManagementTool/rest/relterm/[TRM_PK]
  */
-public class RESTActionTermsInFolders extends ActionTypeREST{
+public class RESTActionTermsInFolders extends ActionTypeREST {
 
     @Override
     public String restGet() {

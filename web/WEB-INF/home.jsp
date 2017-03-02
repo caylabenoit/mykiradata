@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib tagdir="/WEB-INF/tags" prefix="UI" %>
-<%@taglib prefix="joy" uri="/WEB-INF/joyTags.tld"%>
 
 <html lang="en">
 
@@ -13,17 +11,38 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <joy:NaviTopMenuTag>
-                <joy:NaviTopLeftMenuTag xmlconfig="joy-menu-topleft.xml" activemenuid="Analytics" />
-                <joy:NaviTopRightMenu>
-                    <joy:NaviTopRightShortcutsMenuTag xmlconfig="joy-menu.xml" />
-                    <joy:NaviTopRightTasksMenuTag />
-                    <joy:NaviTopRightUserMgtMenuTag />
-                </joy:NaviTopRightMenu>
-            </joy:NaviTopMenuTag>
-            <joy:NaviLeftMenuTag xmlconfig="joy-menu.xml" activemenuid="Analytics"  />
-        </nav>
+        <NAV class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <DIV class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">";
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <DIV class='logobloc'>
+                    <A id="href_about"><IMG id="src_logo" class='logomenu' /></A>
+                </DIV>
+            </DIV>
+            <DIV class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>  
+                <DIV id="menu_top_left" selected="TL01"></DIV>
+                <UL class="nav navbar-top-links navbar-right">
+                    <LI id="menu_right_shortcuts"></LI>
+                    <LI id="dropdown-tasks" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-random fa-fw"></i><i class="fa fa-caret-down"></i>
+                        </a>
+                        <UL class="dropdown-menu dropdown-shortcuts" id="lutasklist">
+                            <li><a class="text-center" href="#"><strong>Please wait while Refreshing tasks list</strong>&nbsp;<i class="fa fa-angle-right"></i></a></li>
+                        </UL>
+                    </LI>
+                    <LI id="menu_right_user"></LI>
+                </UL>
+            </DIV>
+            <DIV class='navbar-default sidebar' role='navigation' >
+                <DIV class='sidebar-nav navbar-collapse' id="menu_left" selected="Home"></DIV>
+            </DIV>
+        </NAV>
+        <!-- Enf of Navigation -->
         
         <!-- Page Content -->
         <div id="page-wrapper">
@@ -143,57 +162,31 @@ $(function(){
 });
 
 function cb_kpis(content) {
-    fillDivSpot(content, "spots");
+    displaySpot(content, "spots");
 }
 
 function cb_listWorseTerms(content) {
-    fillDivList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+    displayGaugeList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
     end_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
 function cb_listBestTerms(content) {
-    fillDivList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+    displayGaugeList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
     end_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
 }
 
 function cb_listAxisScore(content) {
-    fillDivList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_DQAXIS + "&dqaxis=");
+    displayGaugeList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_DQAXIS + "&dqaxis=");
     end_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
 }
 
 function cb_chartBar(content) {
-    var ctx = document.getElementById("div_graph1").getContext("2d");
-    myGraph1 = new Chart(ctx, {
-        type: 'bar',
-        data: content,
-        options: {
-            elements: {  rectangle: { borderWidth: 2, borderSkipped: 'bottom' } },
-            responsive: true,
-            legend: { position: 'bottom' },
-            title: { display: true, text: 'Global scoring by Glossary' }
-        }
-    });
+    myGraph1 =displayBar("div_graph1", 'Global scoring by Glossary', content);
     end_waitMessage("graph1", "div_graph1");
 }
 
 function cb_chartPolar(content) {
-    var ctx = document.getElementById("div_graph0").getContext("2d");
-    var config = {
-        data: content,
-        options: {
-            responsive: true,
-            legend: { position: 'bottom' },
-            title: { display: true, text: 'Global scoring per Data Quality Dimension' },
-            scale: {
-                ticks: { beginAtZero: true },
-                reverse: false
-            },
-            animateRotate:true,
-            segmentShowStroke : true,
-            scaleShowLine : true
-            }
-        };
-    myGraph0 = Chart.PolarArea(ctx, config);
+    myGraph0 = displayChartPolar("div_graph0", 'Global scoring per Data Quality Dimension', content);
     end_waitMessage("graph0", "div_graph0");
 }
 
@@ -205,12 +198,22 @@ function form_preInitialize() {
     start_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
+function init_menus(context) {
+    document.getElementById("src_logo").src = context.parameters.logo;
+    document.getElementById("href_about").href = joyURL(context.parameters.urlpattern, "about");
+    menu_topLeft("menu_top_left", context);
+    menu_topRightShortcuts("menu_right_shortcuts", context);
+    menu_topRightUserManagement("menu_right_user", context);
+    menu_left("menu_left", context, "govern");
+    $("#side-menu").metisMenu();
+}
+
 function form_afterInit(content) {
-    params = content;
-    THRESOLD_BAD = content.thresold_bad;
-    THRESOLD_GOOD = content.thresold_good;
-    URLBASIS_DQAXIS = joyURL(content.urlpattern, "bydqaxis", "display"); // content.url.dqaxis;
-    URLBASIS_TERM = joyURL(content.urlpattern, "byterm", "display");
+    params = content.parameters;
+    THRESOLD_BAD = params.thresold_bad;
+    THRESOLD_GOOD = params.thresold_good;
+    URLBASIS_DQAXIS = joyURL(params.urlpattern, "bydqaxis", "display"); // content.url.dqaxis;
+    URLBASIS_TERM = joyURL(params.urlpattern, "byterm", "display");
     
     // Call back declaration here
     addCBLoad(cb_chartPolar, './rest/charts/sds/AXIS_SCORE_HOME_00');
@@ -220,12 +223,15 @@ function form_afterInit(content) {
     addCBLoad(cb_listWorseTerms, './rest/entity/HOME_WORSE_TERMS/ROWCOUNT/' + LIST_ROWMAX);
     addCBLoad(cb_kpis, './rest/globalkpis');
     
+    // Menus
+    init_menus(content);
+    
     // Glyphes
     setGlypheToClass('dqaxis', 'glyphedqaxis', params);
     setGlypheToClass('dashboard', 'glyphedashboard', params);
 }
 
-execTwoStepsInitalization('./rest/params');
+execTwoStepsInitalization('./rest/context');
 </script>
 
 </body>

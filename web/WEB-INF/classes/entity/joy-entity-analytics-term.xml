@@ -41,10 +41,16 @@
         <joy-entity alias="T">Last Facts Only with details</joy-entity>
     </joy-composite>
 
-    <joy-composite name = "Analytics - Terms Type List">
+    <joy-composite name = "TERM_TYPE_LIST">
         <joy-field alias="X">TRT_PK</joy-field>
         <joy-field alias="X">TRT_NAME</joy-field>
         <joy-entity alias="X">DIM_TERM_TYPE</joy-entity>
+    </joy-composite>
+    
+    <joy-composite name = "TERM_LIST">
+        <joy-field alias="X">TRM_PK</joy-field>
+        <joy-field alias="X">TRM_NAME</joy-field>
+        <joy-entity alias="X">DIM_TERM</joy-entity>
     </joy-composite>
     
     <joy-composite name = "Analytics - Terms Global Informations">

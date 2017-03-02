@@ -20,7 +20,7 @@ import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
 import java.sql.ResultSet;
 import com.joy.bo.IEntity;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.SQLException;
 
 /**
@@ -55,7 +55,7 @@ public class LNDCommonAction extends ActionTypeForm {
         ResultSet rs = entity.select();
         this.loadMatrix(rs, "LIST");
         this.getBOFactory().closeResultSet(rs);
-        this.addFormSingleEntry("LIMIT", i);
+        this.addSingle("LIMIT", i);
         
         return super.list(); 
     }
@@ -66,15 +66,15 @@ public class LNDCommonAction extends ActionTypeForm {
      */
     protected void addComboAction(ResultSet rs) {
         // add the joy status
-        JoyFormVectorEntry vector = new JoyFormVectorEntry();
-        vector.addValue("Load", "L",  "Load");
-        vector.addValue("Ignore", "I", "Ignore");
-        vector.addValue("Purge", "P", "Purge");
-        vector.addValue("Not speficied", "", "Not speficied");
+        JoyFormVector vector = new JoyFormVector();
+        vector.addItem("Load", "L",  "Load");
+        vector.addItem("Ignore", "I", "Ignore");
+        vector.addItem("Purge", "P", "Purge");
+        vector.addItem("Not speficied", "", "Not speficied");
         try {
             vector.setSelected(rs.getString("JOYSTATUS"));
         } catch (SQLException ex) {}
-        this.addFormVectorEntry("JOYSTATUS", vector);
+        this.addVector("JOYSTATUS", vector);
     }
     
     @Override
@@ -104,8 +104,8 @@ public class LNDCommonAction extends ActionTypeForm {
     
     @Override
     public String add() {
-        this.addFormSingleEntry(LandingKeyName, "");
-        this.addFormSingleEntry("NEW", "yes");
+        this.addSingle(LandingKeyName, "");
+        this.addSingle("NEW", "yes");
         addSpecific();
         return super.add();
     }

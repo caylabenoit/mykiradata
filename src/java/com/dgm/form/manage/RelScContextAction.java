@@ -19,8 +19,8 @@ package com.dgm.form.manage;
 import com.joy.Joy;
 import com.joy.bo.BOEntityReadWrite;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import com.joy.mvc.formbean.JoyFormMatrixEntry;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormMatrix;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.joy.bo.IEntity;
@@ -33,16 +33,16 @@ public class RelScContextAction  extends ActionTypeForm {
 
     @Override
     public String list() {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         try {
             IEntity Entity = this.getBOFactory().getEntity("REL_SC_CONTEXT");
             ResultSet rs = Entity.select();
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("SCX_PK", rs.getString("SCX_PK"));
-                columns.addValue("SCO_NAME", rs.getString("SCO_NAME"));
-                columns.addValue("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
-                columns.addValue("SCX_DESCRIPTION", rs.getString("SCX_DESCRIPTION"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("SCX_PK", rs.getString("SCX_PK"));
+                columns.addItem("SCO_NAME", rs.getString("SCO_NAME"));
+                columns.addItem("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
+                columns.addItem("SCX_DESCRIPTION", rs.getString("SCX_DESCRIPTION"));
                 matrix.addRow(columns);
             }
             this.getBOFactory().closeResultSet(rs);
@@ -50,7 +50,7 @@ public class RelScContextAction  extends ActionTypeForm {
         } catch (SQLException e) {
             Joy.LOG().error( e);
         }
-        this.addFormMatrixEntry("LIST", matrix);
+        this.addMatrix("LIST", matrix);
         return super.list(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -65,10 +65,10 @@ public class RelScContextAction  extends ActionTypeForm {
                 ResultSet rs = Entity.select();
 
                 if (rs.next()) {
-                    this.addFormSingleEntry("SCX_PK", rs.getString("SCX_PK"));
-                    this.addFormSingleEntry("SCO_NAME", rs.getString("SCO_NAME"));
-                    this.addFormSingleEntry("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
-                    this.addFormSingleEntry("SCX_DESCRIPTION", rs.getString("SCX_DESCRIPTION"));
+                    this.addSingle("SCX_PK", rs.getString("SCX_PK"));
+                    this.addSingle("SCO_NAME", rs.getString("SCO_NAME"));
+                    this.addSingle("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
+                    this.addSingle("SCX_DESCRIPTION", rs.getString("SCX_DESCRIPTION"));
                 }
                 this.getBOFactory().closeResultSet(rs);
 
@@ -77,8 +77,8 @@ public class RelScContextAction  extends ActionTypeForm {
             }
         }
         
-        loadCBOAvailableContexts(this.getFormSingleEntry("CON_DESCRIPTION").getStrValue());
-        loadCBOAvailableScorecards(this.getFormSingleEntry("SCO_NAME").getStrValue());
+        loadCBOAvailableContexts(this.getSingle("CON_DESCRIPTION").getStrValue());
+        loadCBOAvailableScorecards(this.getSingle("SCO_NAME").getStrValue());
         return super.edit(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -89,9 +89,9 @@ public class RelScContextAction  extends ActionTypeForm {
 
     @Override
     public String add() {
-        this.addFormSingleEntry("SCX_PK", "0");
-        this.addFormSingleEntry("CON_DESCRIPTION", "");
-        this.addFormSingleEntry("SCX_DESCRIPTION", "");
+        this.addSingle("SCX_PK", "0");
+        this.addSingle("CON_DESCRIPTION", "");
+        this.addSingle("SCX_DESCRIPTION", "");
         loadCBOAvailableContexts("");
         loadCBOAvailableScorecards("");
         return super.add(); 
@@ -135,7 +135,7 @@ public class RelScContextAction  extends ActionTypeForm {
     }
     
     private void loadCBOAvailableContexts(String _selected) {
-        JoyFormVectorEntry columns = new JoyFormVectorEntry();
+        JoyFormVector columns = new JoyFormVector();
         try {
             IEntity EntitySrcContext = this.getBOFactory().getEntity("SRC_CONTEXT");
             EntitySrcContext.addSort("CON_DESCRIPTION");
@@ -143,18 +143,18 @@ public class RelScContextAction  extends ActionTypeForm {
             columns.setSelected(_selected);
             
             while (rs.next()) {
-                columns.addValue("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
+                columns.addItem("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
             }
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
             Joy.LOG().error( e);
         }
-        this.addFormVectorEntry("CON_DESCRIPTION", columns);
+        this.addVector("CON_DESCRIPTION", columns);
     }
     
     private void loadCBOAvailableScorecards(String CurrentScorecard) {
-        JoyFormVectorEntry columns = new JoyFormVectorEntry();
+        JoyFormVector columns = new JoyFormVector();
         
         try {
             IEntity EntitySrcContext = this.getBOFactory().getEntity("Scorecard Dimension");
@@ -164,16 +164,16 @@ public class RelScContextAction  extends ActionTypeForm {
             columns.setSelected(CurrentScorecard);
             
             while (rs.next()) {
-                columns.addValue("SCO_NAME", rs.getString("SCO_NAME"));
+                columns.addItem("SCO_NAME", rs.getString("SCO_NAME"));
             }
             if (!CurrentScorecard.isEmpty())
-                columns.addValue("SCO_NAME", CurrentScorecard);
+                columns.addItem("SCO_NAME", CurrentScorecard);
             this.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
             Joy.LOG().error( e);
         }
-        this.addFormVectorEntry("SCO_NAME", columns);
+        this.addVector("SCO_NAME", columns);
     }
     
 }

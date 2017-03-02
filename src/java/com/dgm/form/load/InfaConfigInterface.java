@@ -29,13 +29,13 @@ public class InfaConfigInterface extends ActionTypeForm {
     @Override
     public String list() {
         ParamProvider params = new ParamProvider(this.getBOFactory());
-        this.addFormSingleEntry("CMD", params.getParamValue("infacmd").getStrValue());
-        this.addFormSingleEntry("DOMAIN", params.getParamValue("infadomain").getStrValue());
-        this.addFormSingleEntry("DIS", params.getParamValue("infadis").getStrValue());
-        this.addFormSingleEntry("USER", params.getParamValue("infauser").getStrValue());
-        this.addFormSingleEntry("PWD", params.getParamValue("infapwd").getStrValue());
-        this.addFormSingleEntry("APP", params.getParamValue("infaapp").getStrValue());
-        this.addFormSingleEntry("WF", Constants.DEFAULT_INFA_LANDINGWF);
+        this.addSingle("CMD", params.getParamValue("infacmd").getStrValue());
+        this.addSingle("DOMAIN", params.getParamValue("infadomain").getStrValue());
+        this.addSingle("DIS", params.getParamValue("infadis").getStrValue());
+        this.addSingle("USER", params.getParamValue("infauser").getStrValue());
+        this.addSingle("PWD", params.getParamValue("infapwd").getStrValue());
+        this.addSingle("APP", params.getParamValue("infaapp").getStrValue());
+        this.addSingle("WF", Constants.DEFAULT_INFA_LANDINGWF);
         return super.list();
     }
 

@@ -36,14 +36,8 @@ import java.util.List;
  * @author benoit
  */
 public class RESTDimensionCommon extends ActionTypeREST {
-    
-    private static final String TAG_MATRIX_VALUE = "COUNTER_LIST";
-    private static final String TAG_COUNTER_NAME = "COUNTER_NAME";
-    private static final String TAG_COUNTER_OBJECT = "COUNTER_VALUE";
-    private static final String TAG_TRENDS_LIST = "TREND_LIST";
-    private static final String TAG_LASTRUNS = "LASTRUNS";
-    private static final String TAG_MULTIPLE_RADAR = "MULTIPLE_RADAR";
-    private static final String TAG_TREND_NAME = "TREND";
+    private static final String TAG_LASTRUNS = "lastruns";
+    private static final String TAG_MULTIPLE_RADAR = "radar";
     
     /**
      * Set coutner options
@@ -80,7 +74,6 @@ public class RESTDimensionCommon extends ActionTypeREST {
         boolean takethisrow;
         List<String> Axis = new ArrayList();
         List<Float> Values = new ArrayList();
-        Collection<JSONObject> matrixTrends = new ArrayList<>();
         ChartWithDataset radar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());
         Collection<JSONObject> matrixLastValues = new ArrayList<>();
         ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString()); 
@@ -133,6 +126,7 @@ public class RESTDimensionCommon extends ActionTypeREST {
             
             // Now calcultate the trend and load the data for display
             int i=0;
+            JoyJsonMatrix trendMatrix = new JoyJsonMatrix();
             while (i < Axis.size()) {
                 String axis = Axis.get(i);
                 Float prev = (Values.get(i+1)==null ? new Float(0) : Values.get(i+1)); 
@@ -142,42 +136,29 @@ public class RESTDimensionCommon extends ActionTypeREST {
                 // Multiple Radar build
                 radar.add(Axis.get(i), "Previous score", prev);
                 radar.add(Axis.get(i+1),"Last score",  last);
-
-                // Trends display
-                JSONObject trendVector = new JSONObject();
-                trendVector.put("dqdimension", axis);
-                trendVector.put("score", String.format("%.1f", trend));
-                trendVector.put("previous", Utils.SCORE_DISPLAY(prev));
-                trendVector.put("last", Utils.SCORE_DISPLAY(last));
                 
-                // Last value display (single counter)
-                JSONObject lastValVector = new JSONObject();
-                ChartCounterData myChart = new ChartCounterData(last,  Axis.get(i),  Axis.get(i));
-                myChart = setCounterOptions(myChart);
-                try {
-                    myChart.setThresolds(Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString()), 
-                                         Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString()));
-                } catch (Exception e) {}
-                lastValVector.put(TAG_COUNTER_NAME, Axis.get(i));
-                lastValVector.put(TAG_COUNTER_OBJECT, myChart.getValue()); 
-                
-                matrixLastValues.add(lastValVector);
-
+                // Trends display --> in a matrix
+                JoyJsonVector trendVector = new JoyJsonVector();
+                trendVector.addItem("dqdimension", axis);
+                trendVector.addItem("variation", String.format("%.1f", trend));
+                trendVector.addItem("previous", String.format("%.1f", prev));
+                trendVector.addItem("current", String.format("%.1f", last));
                 // Trends values calculation
                 if (Values.get(i+1) != null) {
                     if (trend == 0)
-                        trendVector.put(TAG_TREND_NAME, "equal");
+                        trendVector.addItem("trend", "equal");
                     else if (trend > 0)
-                        trendVector.put(TAG_TREND_NAME, "up");
+                        trendVector.addItem("trend", "up");
                     else if (trend < 0)
-                        trendVector.put(TAG_TREND_NAME, "down");
+                        trendVector.addItem("trend", "down");
                 } else 
-                    trendVector.put(TAG_TREND_NAME, "new");
-                matrixTrends.add(trendVector);
+                    trendVector.addItem("trend", "new");
+                trendMatrix.addRow(trendVector);
                 
                 // Next couple of data (Couple = previous val and last val)
                 i=i+2;
             }
+            this.addMatrix("trends", trendMatrix);
             
         } catch (SQLException ex) {
             Joy.LOG().error( ex);
@@ -185,8 +166,6 @@ public class RESTDimensionCommon extends ActionTypeREST {
         }
         
         // Add data into the result form
-        data.put(TAG_MATRIX_VALUE, matrixLastValues);
-        data.put(TAG_TRENDS_LIST, matrixTrends);
         data.put(TAG_MULTIPLE_RADAR,  radar.getJsonData());
         
         return data;
@@ -255,6 +234,74 @@ public class RESTDimensionCommon extends ActionTypeREST {
         this.addMatrix(matrixTag, entity);
     }
     
+    /**
+     * Load the related category list
+     * @param KeyValue
+     * @param KeyName
+     * @param ViewName 
+     */
+    protected void setCategoryList(int KeyValue, 
+                                    String KeyName,
+                                    String ViewName)
+    {
+        JoyJsonMatrix matrix = new JoyJsonMatrix();
+        
+        try {
+            IEntity entity = getBOFactory().getEntity(ViewName);
+            if (KeyValue != 0)
+                entity.field(KeyName).setKeyValue(KeyValue);
+            ResultSet rs = entity.select();
+
+            while (rs.next()) {
+                JoyJsonVector columns = new JoyJsonVector();
+                columns.addItem("CAT_PK", rs.getInt("CAT_PK"));
+                columns.addItem("CAT_NAME", rs.getString("CAT_NAME"));
+                columns.addItem("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
+                columns.addItem("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
+                columns.addItem("CAT_DATETIME_LOAD", rs.getString("CAT_DATETIME_LOAD"));
+                columns.addItem("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
+                matrix.addRow(columns);
+            }
+            getBOFactory().closeResultSet(rs);
+            this.addMatrix("categories", matrix);
+            
+        } catch (SQLException e) {
+            Joy.LOG().error( e);
+        }
+    }
     
-    
+    /**
+     * load the related term list
+     * @param KeyValue
+     * @param KeyName
+     * @param ViewName 
+     */
+    protected void setTermsList(int KeyValue, 
+                                 String KeyName,
+                                 String ViewName) {
+        JoyJsonMatrix matrix = new JoyJsonMatrix();
+        
+        try {
+            IEntity entity = getBOFactory().getEntity(ViewName);
+            if (KeyValue != 0)
+                entity.field(KeyName).setKeyValue(KeyValue);
+            ResultSet rs = entity.select();
+
+            while (rs.next()) {
+                JoyJsonVector columns = new JoyJsonVector();
+                columns.addItem("SCORE", Utils.SCORE_DISPLAY(rs.getFloat("SCORE")));
+                columns.addItem("COST", rs.getFloat("COST"));
+                columns.addItem("DQX_NAME", rs.getString("DQX_NAME"));
+                columns.addItem("TRM_NAME", rs.getString("TRM_NAME"));
+                columns.addItem("TRM_FK", rs.getString("TRM_FK"));
+                columns.addItem("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
+                matrix.addRow(columns);
+            }
+            this.addMatrix("terms", matrix);
+            getBOFactory().closeResultSet(rs);
+            
+        } catch (SQLException e) {
+            Joy.LOG().error(  e);
+        }
+    }
 }

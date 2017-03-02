@@ -50,7 +50,7 @@ public class DTMListAction extends ActionTypeForm {
         ResultSet rs = entity.select();
         this.loadMatrix(rs, "LIST");
         this.getBOFactory().closeResultSet(rs);
-        this.addFormSingleEntry("LIMIT", i);
+        this.addSingle("LIMIT", i);
         
         return super.list(); 
     }

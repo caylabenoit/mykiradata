@@ -18,7 +18,7 @@
 /**
  * Insert a wait message dynamically during a div load (hiden while end_waitMessage is not called).
  * @param {type} panelID    Div Contener (would be a bootstrap panel)
- * @param {type} divID      Div where the stuf is loading (hiden here)
+ * @param {type} divID      Div where the stuf is loading (hidden here)
  * @returns {undefined}     Nothing
  */
 function start_waitMessage(panelID, divID) {

@@ -1,30 +1,27 @@
-<%@tag description="DGM Counter Tag" pageEncoding="UTF-8" import="com.joy.Joy, com.joy.common.JoyParameter, com.joy.charts.gaugejs.ChartCounterData, com.joy.mvc.Action, com.joy.C, com.joy.mvc.formbean.JoyFormMatrixEntry, com.joy.mvc.formbean.JoyFormVectorEntry" %>
+<%@tag description="DGM Counter Tag" pageEncoding="UTF-8" import="com.joy.Joy, com.joy.common.JoyParameter, com.joy.charts.gaugejs.ChartCounterData, com.joy.mvc.ActionForm, com.joy.C, com.joy.mvc.formbean.JoyFormMatrix, com.joy.mvc.formbean.JoyFormVector" %>
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="dqaxis"%>
 <%@attribute name="trends"%>
 <%
     try {
-        Action actionform = (Action)Joy.CURRENT_ACTION(request);
-        JoyFormMatrixEntry matrix = (JoyFormMatrixEntry)actionform.getFormMatrixEntry(dqaxis); 
+        ActionForm actionform = (ActionForm)Joy.CURRENT_ACTION(request);
+        JoyFormMatrix matrix = (JoyFormMatrix)actionform.getMatrix(dqaxis); 
         int i = matrix.getMatrix().size();
         
         if (i > 0) {
 %>
 	<div class="table-responsive">
-		<table class="table">
-			<tbody>
-                            <tr>
+		<table class="table"><tbody><tr>
 <%
-            for (JoyFormVectorEntry axis : matrix.getMatrix()) {
+            for (JoyFormVector axis : matrix.getMatrix()) {
                 ChartCounterData myChart = (ChartCounterData)axis.getVectorObject("COUNTER_OBJECT");
 %>
                                 <TH style="text-align:center;"><canvas width=100 height=70 id="canvas-<%= myChart.getCode() %>"></canvas><br><%= myChart.getLabel() %></TH>
 <%          } %>
                             </tr>
-                            
                             <tr>
-<%          for (JoyFormVectorEntry axis : matrix.getMatrix()) {
+<%          for (JoyFormVector axis : matrix.getMatrix()) {
                 ChartCounterData myChart = (ChartCounterData)axis.getVectorObject("COUNTER_OBJECT");
 %>
                                 <td style="text-align:center;">
@@ -36,12 +33,12 @@
                             </TR>
                     <TR>
 <%
-        JoyFormMatrixEntry matrixtrends = (JoyFormMatrixEntry)actionform.getFormMatrixEntry(trends); 
+        JoyFormMatrix matrixtrends = (JoyFormMatrix)actionform.getMatrix(trends); 
         JoyParameter glypheParam;
         String myglyphe = "";
         String mycolor = "";
         
-        for (JoyFormVectorEntry axis : matrixtrends.getMatrix()) {
+        for (JoyFormVector axis : matrixtrends.getMatrix()) {
             if (axis.getVectorValue("TREND").equalsIgnoreCase("UP")) {
                glypheParam = Joy.PARAMETERS().getParameter("ApplicationIconsBSGlyphe").get("trend-up");
                mycolor = "style=\"color:" + Joy.RGBA(Joy.PARAMETERS().getParameter("ColorGood").getValue().toString(), "1") + "\"";

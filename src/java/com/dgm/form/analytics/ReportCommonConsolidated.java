@@ -17,7 +17,7 @@
 package com.dgm.form.analytics;
 
 import com.joy.Joy;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.joy.bo.IEntity;
@@ -73,7 +73,7 @@ public class ReportCommonConsolidated extends ReportCommonAction {
     protected void loadCBO(int current) {
         IEntity entity;
             
-        JoyFormVectorEntry columns = new JoyFormVectorEntry();
+        JoyFormVector columns = new JoyFormVector();
         columns.setSelected(String.valueOf(current));
         try {
             entity = this.getBOFactory().getEntity(dimTableName);
@@ -84,7 +84,7 @@ public class ReportCommonConsolidated extends ReportCommonAction {
             entity.addSort(dimFieldName); 
             ResultSet rs = entity.select();
             while (rs.next()) {
-                columns.addValue(dimFieldKey, 
+                columns.addItem(dimFieldKey, 
                                  rs.getString(dimFieldKey), 
                                  rs.getString(dimFieldName));
             }
@@ -93,7 +93,7 @@ public class ReportCommonConsolidated extends ReportCommonAction {
         } catch (SQLException e) {
             Joy.LOG().error( e);
         }
-        this.addFormVectorEntry(tagDimensionRequest, columns);
+        this.addVector(tagDimensionRequest, columns);
     }
     
     /***

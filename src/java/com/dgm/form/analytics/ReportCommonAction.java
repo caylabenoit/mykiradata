@@ -21,8 +21,8 @@ import com.joy.Joy;
 import com.joy.charts.chartjs.ChartWithDataset;
 import com.joy.charts.gaugejs.ChartCounterData;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import com.joy.mvc.formbean.JoyFormMatrixEntry;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormMatrix;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class ReportCommonAction extends ActionTypeForm {
      * @param KeyName
      */
     protected void loadMetricTableList(int KeyValue, String KeyName) {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         
         try {
             IEntity entity = getBOFactory().getEntity("Last Facts Only with details");
@@ -56,28 +56,28 @@ public class ReportCommonAction extends ActionTypeForm {
             ResultSet rs = entity.select();
 
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("FRS_PK", rs.getString("FRS_PK"));
-                columns.addValue("FRS_VALID_ROWS", rs.getString("FRS_VALID_ROWS"));
-                columns.addValue("FRS_INVALID_ROWS", rs.getString("FRS_INVALID_ROWS"));
-                columns.addValue("FRS_TOTALROWS", rs.getString("FRS_TOTALROWS"));
-                columns.addValue("FRS_KPI_SCORE", Utils.SCORE_DISPLAY(rs.getFloat("FRS_KPI_SCORE")));
-                columns.addValue("DQX_NAME", rs.getString("DQX_NAME"));
-                columns.addValue("TRM_NAME", rs.getString("TRM_NAME"));
-                columns.addValue("FRS_WEIGHT", rs.getString("FRS_WEIGHT"));
-                columns.addValue("FRS_COST", rs.getString("FRS_COST"));
-                columns.addValue("MET_NAME", rs.getString("MET_NAME"));
-                columns.addValue("TRM_FK", rs.getString("TRM_FK"));
-                columns.addValue("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
-                columns.addValue("MET_FK", rs.getString("MET_FK"));
-                columns.addValue("FRS_DATETIME_LOAD", rs.getString("FRS_DATETIME_LOAD"));
-                columns.addValue("SCG_NAME", rs.getString("SCG_NAME"));
-                columns.addValue("SCO_NAME", rs.getString("SCO_NAME"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("FRS_PK", rs.getString("FRS_PK"));
+                columns.addItem("FRS_VALID_ROWS", rs.getString("FRS_VALID_ROWS"));
+                columns.addItem("FRS_INVALID_ROWS", rs.getString("FRS_INVALID_ROWS"));
+                columns.addItem("FRS_TOTALROWS", rs.getString("FRS_TOTALROWS"));
+                columns.addItem("FRS_KPI_SCORE", Utils.SCORE_DISPLAY(rs.getFloat("FRS_KPI_SCORE")));
+                columns.addItem("DQX_NAME", rs.getString("DQX_NAME"));
+                columns.addItem("TRM_NAME", rs.getString("TRM_NAME"));
+                columns.addItem("FRS_WEIGHT", rs.getString("FRS_WEIGHT"));
+                columns.addItem("FRS_COST", rs.getString("FRS_COST"));
+                columns.addItem("MET_NAME", rs.getString("MET_NAME"));
+                columns.addItem("TRM_FK", rs.getString("TRM_FK"));
+                columns.addItem("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
+                columns.addItem("MET_FK", rs.getString("MET_FK"));
+                columns.addItem("FRS_DATETIME_LOAD", rs.getString("FRS_DATETIME_LOAD"));
+                columns.addItem("SCG_NAME", rs.getString("SCG_NAME"));
+                columns.addItem("SCO_NAME", rs.getString("SCO_NAME"));
                 
-                columns.addValue("METRIC_LINK", Joy.HREF("bymetric", "display", rs.getString("MET_NAME"), "metric",  rs.getString("MET_FK")));
-                columns.addValue("AXIS_LINK", Joy.HREF("bydqaxis", "display", rs.getString("DQX_NAME"), "dqaxis",  rs.getString("DQX_FK")));
-                columns.addValue("TERM_LINK", Joy.URL("byterm", "display", "term",  rs.getString("TRM_FK")));
-                columns.addValue("SCORECARD_REF", (rs.getString("SCO_NAME")==null ? "N.A." : rs.getString("SCO_NAME") + "/" + rs.getString("SCG_NAME")));
+                columns.addItem("METRIC_LINK", Joy.HREF("bymetric", "display", rs.getString("MET_NAME"), "metric",  rs.getString("MET_FK")));
+                columns.addItem("AXIS_LINK", Joy.HREF("bydqaxis", "display", rs.getString("DQX_NAME"), "dqaxis",  rs.getString("DQX_FK")));
+                columns.addItem("TERM_LINK", Joy.URL("byterm", "display", "term",  rs.getString("TRM_FK")));
+                columns.addItem("SCORECARD_REF", (rs.getString("SCO_NAME")==null ? "N.A." : rs.getString("SCO_NAME") + "/" + rs.getString("SCG_NAME")));
 
                 matrix.addRow(columns);
             }
@@ -86,7 +86,7 @@ public class ReportCommonAction extends ActionTypeForm {
         } catch (SQLException e) {
             Joy.LOG().error( e);
         }
-        this.addFormMatrixEntry("METRIC_LIST", matrix);
+        this.addMatrix("METRIC_LIST", matrix);
     }
     
     /**
@@ -111,7 +111,7 @@ public class ReportCommonAction extends ActionTypeForm {
             }
             getBOFactory().closeResultSet(rs);
             
-            this.addFormSingleEntry(TAG_LASTRUNS, chartbar.getJsonData().toString());
+            this.addSingle(TAG_LASTRUNS, chartbar.getJsonData().toString());
 
         } catch (SQLException e) {
             Joy.LOG().error( e);
@@ -127,7 +127,7 @@ public class ReportCommonAction extends ActionTypeForm {
     protected void loadTermsList(int KeyValue, 
                                  String KeyName,
                                  String ViewName) {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         
         try {
             IEntity entity = getBOFactory().getEntity(ViewName);
@@ -136,16 +136,16 @@ public class ReportCommonAction extends ActionTypeForm {
             ResultSet rs = entity.select();
 
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("SCORE", Utils.SCORE_DISPLAY(rs.getFloat("SCORE")));
-                columns.addValue("COST", rs.getFloat("COST"));
-                columns.addValue("DQX_NAME", rs.getString("DQX_NAME"));
-                columns.addValue("TRM_NAME", rs.getString("TRM_NAME"));
-                columns.addValue("TRM_FK", rs.getString("TRM_FK"));
-                columns.addValue("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("SCORE", Utils.SCORE_DISPLAY(rs.getFloat("SCORE")));
+                columns.addItem("COST", rs.getFloat("COST"));
+                columns.addItem("DQX_NAME", rs.getString("DQX_NAME"));
+                columns.addItem("TRM_NAME", rs.getString("TRM_NAME"));
+                columns.addItem("TRM_FK", rs.getString("TRM_FK"));
+                columns.addItem("DQX_FUNCKEY", rs.getString("DQX_FUNCKEY"));
                 matrix.addRow(columns);
             }
-            this.addFormMatrixEntry("TERM_LIST", matrix);
+            this.addMatrix("TERM_LIST", matrix);
             getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
@@ -163,7 +163,7 @@ public class ReportCommonAction extends ActionTypeForm {
                                     String KeyName,
                                     String ViewName)
     {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         
         try {
             IEntity entity = getBOFactory().getEntity(ViewName);
@@ -172,17 +172,17 @@ public class ReportCommonAction extends ActionTypeForm {
             ResultSet rs = entity.select();
 
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("CAT_PK", rs.getInt("CAT_PK"));
-                columns.addValue("CAT_NAME", rs.getString("CAT_NAME"));
-                columns.addValue("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
-                columns.addValue("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
-                columns.addValue("CAT_DATETIME_LOAD", rs.getString("CAT_DATETIME_LOAD"));
-                columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("CAT_PK", rs.getInt("CAT_PK"));
+                columns.addItem("CAT_NAME", rs.getString("CAT_NAME"));
+                columns.addItem("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
+                columns.addItem("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
+                columns.addItem("CAT_DATETIME_LOAD", rs.getString("CAT_DATETIME_LOAD"));
+                columns.addItem("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
                 matrix.addRow(columns);
             }
             getBOFactory().closeResultSet(rs);
-            this.addFormMatrixEntry("CATEGORY_LIST", matrix);
+            this.addMatrix("CATEGORY_LIST", matrix);
             
         } catch (SQLException e) {
             Joy.LOG().error( e);
@@ -205,9 +205,9 @@ public class ReportCommonAction extends ActionTypeForm {
         boolean takethisrow;
         List<String> Axis = new ArrayList();
         List<Float> Values = new ArrayList();
-        JoyFormMatrixEntry matrixTrends = new JoyFormMatrixEntry();
+        JoyFormMatrix matrixTrends = new JoyFormMatrix();
         ChartWithDataset radar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString());
-        JoyFormMatrixEntry matrixLastValues = new JoyFormMatrixEntry();
+        JoyFormMatrix matrixLastValues = new JoyFormMatrix();
         ChartWithDataset chartbar = new ChartWithDataset(Joy.PARAMETERS().getParameter("ChartsColors").getList(), Joy.PARAMETERS().getParameter("transparency").getValue().toString()); 
         
         try {
@@ -247,7 +247,7 @@ public class ReportCommonAction extends ActionTypeForm {
                 }
                 nbScoreByDqx++;
             }
-            this.addFormSingleEntry(TAG_LASTRUNS, chartbar.getJsonData().toString());
+            this.addSingle(TAG_LASTRUNS, chartbar.getJsonData().toString());
             
             if (nbScoreByDqx == 2) {
                 // Missing a score (does not exist) for the last value only, add a dummy/blank score
@@ -269,14 +269,14 @@ public class ReportCommonAction extends ActionTypeForm {
                 radar.add(Axis.get(i+1),"Last score",  last);
 
                 // Trends display
-                JoyFormVectorEntry trendVector = new JoyFormVectorEntry();
-                trendVector.addValue("AXIS", axis);
-                trendVector.addValue("TREND_SCORE", String.format("%.1f", trend));
-                trendVector.addValue("PREV", Utils.SCORE_DISPLAY(prev));
-                trendVector.addValue("LAST", Utils.SCORE_DISPLAY(last));
+                JoyFormVector trendVector = new JoyFormVector();
+                trendVector.addItem("AXIS", axis);
+                trendVector.addItem("TREND_SCORE", String.format("%.1f", trend));
+                trendVector.addItem("PREV", Utils.SCORE_DISPLAY(prev));
+                trendVector.addItem("LAST", Utils.SCORE_DISPLAY(last));
                 
                 // Last value display (single counter)
-                JoyFormVectorEntry lastValVector = new JoyFormVectorEntry();
+                JoyFormVector lastValVector = new JoyFormVector();
                 ChartCounterData myChart = new ChartCounterData(last,  Axis.get(i),  Axis.get(i));
                 myChart = setCounterOptions(myChart);
                 try {
@@ -284,20 +284,20 @@ public class ReportCommonAction extends ActionTypeForm {
                                          Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString()));
                 } catch (Exception e) {}
                 
-                lastValVector.addValue(TAG_COUNTER_NAME, Axis.get(i));
-                lastValVector.addValue(TAG_COUNTER_OBJECT, myChart); 
+                lastValVector.addItem(TAG_COUNTER_NAME, Axis.get(i));
+                lastValVector.addItem(TAG_COUNTER_OBJECT, myChart); 
                 matrixLastValues.addRow(lastValVector);
 
                 // Trends values calculation
                 if (Values.get(i+1) != null) {
                     if (trend == 0)
-                        trendVector.addValue(TAG_TREND_NAME, "EQUAL");
+                        trendVector.addItem(TAG_TREND_NAME, "EQUAL");
                     else if (trend > 0)
-                        trendVector.addValue(TAG_TREND_NAME, "UP");
+                        trendVector.addItem(TAG_TREND_NAME, "UP");
                     else if (trend < 0)
-                        trendVector.addValue(TAG_TREND_NAME, "DOWN");
+                        trendVector.addItem(TAG_TREND_NAME, "DOWN");
                 } else 
-                    trendVector.addValue(TAG_TREND_NAME, "NO");
+                    trendVector.addItem(TAG_TREND_NAME, "NO");
                 matrixTrends.addRow(trendVector);
                 
                 // Next couple of data (Couple = previous val and last val)
@@ -309,9 +309,9 @@ public class ReportCommonAction extends ActionTypeForm {
         }
         
         // Add data into the result form
-        this.addFormMatrixEntry(TAG_MATRIX_VALUE, matrixLastValues);
-        this.addFormMatrixEntry(TAG_TRENDS_LIST, matrixTrends);
-        this.addFormSingleEntry(TAG_MULTIPLE_RADAR,  radar.getJsonData().toString());
+        this.addMatrix(TAG_MATRIX_VALUE, matrixLastValues);
+        this.addMatrix(TAG_TRENDS_LIST, matrixTrends);
+        this.addSingle(TAG_MULTIPLE_RADAR,  radar.getJsonData().toString());
     }
     
     private ChartCounterData setCounterOptions(ChartCounterData myChart) {

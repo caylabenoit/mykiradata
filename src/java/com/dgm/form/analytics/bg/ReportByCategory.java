@@ -18,8 +18,8 @@ package com.dgm.form.analytics.bg;
 
 import com.dgm.form.analytics.ReportCommonConsolidated;
 import com.joy.Joy;
-import com.joy.mvc.formbean.JoyFormMatrixEntry;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormMatrix;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.joy.bo.IEntity;
@@ -87,10 +87,10 @@ public class ReportByCategory extends ReportCommonConsolidated {
             ResultSet rs = entity.select();
 
             if (rs.next()) {
-                this.addFormSingleEntry("CAT_PK", rs.getString("GLO_NAME"));
-                this.addFormSingleEntry("GLO_DESCRIPTION", rs.getString("GLO_DESCRIPTION"));
-                this.addFormSingleEntry("GLO_PK", rs.getInt("GLO_PK"));
-                this.addFormSingleEntry("GLO_LINK", Joy.HREF("byglossary", "display", rs.getString("GLO_DESCRIPTION"), "glossary", rs.getString("GLO_PK")));
+                this.addSingle("CAT_PK", rs.getString("GLO_NAME"));
+                this.addSingle("GLO_DESCRIPTION", rs.getString("GLO_DESCRIPTION"));
+                this.addSingle("GLO_PK", rs.getInt("GLO_PK"));
+                this.addSingle("GLO_LINK", Joy.HREF("byglossary", "display", rs.getString("GLO_DESCRIPTION"), "glossary", rs.getString("GLO_PK")));
             }
             getBOFactory().closeResultSet(rs);
             
@@ -104,7 +104,7 @@ public class ReportByCategory extends ReportCommonConsolidated {
      * @param Key 
      */
     private void loadParentsCategory(int Key) {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         try {
             IEntity entity = getBOFactory().getEntity("Analytics - Category Parent List");
             if (Key != 0)
@@ -116,17 +116,17 @@ public class ReportByCategory extends ReportCommonConsolidated {
             ResultSet rs = entity.select();
 
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("CAT_PK", rs.getInt("CAT_PK")); 
-                columns.addValue("CAT_NAME", rs.getString("CAT_NAME"));
-                columns.addValue("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
-                columns.addValue("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
-                columns.addValue("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
-                columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("CAT_PK", rs.getInt("CAT_PK")); 
+                columns.addItem("CAT_NAME", rs.getString("CAT_NAME"));
+                columns.addItem("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
+                columns.addItem("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
+                columns.addItem("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
+                columns.addItem("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
                 if (rs.getString("ASLINK").equalsIgnoreCase("Y")) 
-                    columns.addValue("LINK", Joy.HREF("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
+                    columns.addItem("LINK", Joy.HREF("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
                 else
-                    columns.addValue("LINK", rs.getString("CAT_NAME"));
+                    columns.addItem("LINK", rs.getString("CAT_NAME"));
                 matrix.addRow(columns);
             }
             getBOFactory().closeResultSet(rs);
@@ -134,7 +134,7 @@ public class ReportByCategory extends ReportCommonConsolidated {
         } catch (SQLException e) {
             Joy.LOG().error(e);
         }
-        this.addFormMatrixEntry("PARENTS", matrix);
+        this.addMatrix("PARENTS", matrix);
     }
 
     /**
@@ -142,7 +142,7 @@ public class ReportByCategory extends ReportCommonConsolidated {
      * @param Key 
      */
     private void loadChildsCategory(int Key) {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         try {
             IEntity entity = getBOFactory().getEntity("Analytics - Category Child List");
             if (Key != 0)
@@ -154,17 +154,17 @@ public class ReportByCategory extends ReportCommonConsolidated {
             ResultSet rs = entity.select();
 
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("CAT_PK", rs.getInt("CAT_PK")); 
-                columns.addValue("CAT_NAME", rs.getString("CAT_NAME"));
-                columns.addValue("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
-                columns.addValue("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
-                columns.addValue("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
-                columns.addValue("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("CAT_PK", rs.getInt("CAT_PK")); 
+                columns.addItem("CAT_NAME", rs.getString("CAT_NAME"));
+                columns.addItem("CAT_FUNCKEY", rs.getString("CAT_FUNCKEY"));
+                columns.addItem("CAT_PARENT_FUNCKEY", rs.getString("CAT_PARENT_FUNCKEY"));
+                columns.addItem("CAT_DATETIME_LOAD", rs.getDate("CAT_DATETIME_LOAD"));
+                columns.addItem("CAT_DESCRIPTION", rs.getString("CAT_DESCRIPTION"));
                 if (rs.getString("ASLINK").equalsIgnoreCase("Y")) 
-                    columns.addValue("LINK", Joy.HREF("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
+                    columns.addItem("LINK", Joy.HREF("bycategory", "display",  rs.getString("CAT_PK"), rs.getString("CAT_NAME")));
                 else
-                    columns.addValue("LINK", rs.getString("CAT_NAME"));
+                    columns.addItem("LINK", rs.getString("CAT_NAME"));
                 matrix.addRow(columns);
             }
             getBOFactory().closeResultSet(rs);
@@ -172,6 +172,6 @@ public class ReportByCategory extends ReportCommonConsolidated {
         } catch (SQLException e) {
             Joy.LOG().error(e);
         }
-        this.addFormMatrixEntry("CHILDS", matrix);
+        this.addMatrix("CHILDS", matrix);
     }
 }

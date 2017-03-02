@@ -19,8 +19,8 @@ package com.dgm.form.manage;
 import com.joy.Joy;
 import com.joy.bo.BOEntityReadWrite;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import com.joy.mvc.formbean.JoyFormMatrixEntry;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormMatrix;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.joy.bo.IEntity;
@@ -36,16 +36,16 @@ public class SrcContextAction extends ActionTypeForm {
         try {
             IEntity Entity = this.getBOFactory().getEntity("SRC_CONTEXT");
             ResultSet rs = Entity.select();
-            JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+            JoyFormMatrix matrix = new JoyFormMatrix();
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("CON_PK", String.valueOf(rs.getInt("CON_PK")));
-                columns.addValue("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
-                columns.addValue("CON_FUNCKEY", rs.getString("CON_FUNCKEY"));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("CON_PK", String.valueOf(rs.getInt("CON_PK")));
+                columns.addItem("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
+                columns.addItem("CON_FUNCKEY", rs.getString("CON_FUNCKEY"));
                 matrix.addRow(columns);
             }
             this.getBOFactory().closeResultSet(rs);
-            this.addFormMatrixEntry("CONTEXTLIST", matrix);
+            this.addMatrix("CONTEXTLIST", matrix);
             
         } catch (SQLException e) {
             Joy.LOG().error(  e);
@@ -64,9 +64,9 @@ public class SrcContextAction extends ActionTypeForm {
                 ResultSet rs = Entity.select();
 
                 if (rs.next()) {
-                    this.addFormSingleEntry("CON_PK", String.valueOf(rs.getInt("CON_PK")));
-                    this.addFormSingleEntry("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
-                    this.addFormSingleEntry("CON_FUNCKEY", rs.getString("CON_FUNCKEY"));
+                    this.addSingle("CON_PK", String.valueOf(rs.getInt("CON_PK")));
+                    this.addSingle("CON_DESCRIPTION", rs.getString("CON_DESCRIPTION"));
+                    this.addSingle("CON_FUNCKEY", rs.getString("CON_FUNCKEY"));
                 }
                 this.getBOFactory().closeResultSet(rs);
 
@@ -84,9 +84,9 @@ public class SrcContextAction extends ActionTypeForm {
 
     @Override
     public String add() {
-        this.addFormSingleEntry("CON_PK", "0");
-        this.addFormSingleEntry("CON_DESCRIPTION", "");
-        this.addFormSingleEntry("CON_FUNCKEY", "");
+        this.addSingle("CON_PK", "0");
+        this.addSingle("CON_DESCRIPTION", "");
+        this.addSingle("CON_FUNCKEY", "");
         return super.add(); 
     }
 

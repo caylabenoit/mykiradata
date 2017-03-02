@@ -113,8 +113,7 @@
 <jsp:directive.include file="../../templates/foot.jsp" />
 
 <SCRIPT>
-var myTermID = getRequestParameter('term');
-var ID = '<joy:ActionValueTag name="TRM_PK" />';
+var ID = getRequestParameter('term');
 var params = null;
 
 $(document).ready(function() {
@@ -126,13 +125,7 @@ function evt_changeTerm() {
 }
 
 function cb_relationShipTree(content) {
-    var jsonContent = JSON.stringify(content);
-    $('#treeview').treeview({
-      color: "#428bca",
-      showBorder: false,
-      enableLinks: true,
-      data: jsonContent
-    });
+    displayTree('treeview', content);
 }
 
 function cb_header(content) {
@@ -161,7 +154,7 @@ function cb_header(content) {
     setGlypheToClass('relationship', 'glypherelationship', params);
     
     // fill and display the terms cbo
-    fillCombobox('term', getFromJoy(content.vector, "terms"));
+    fillComboboxFromJoyVector('term', getFromJoy(content.matrix, "terms"));
     $('#term').select2({ placeholder: "Select an Term" });
 }
 
@@ -170,14 +163,14 @@ function form_preInitialize() {
 }
 
 function form_afterInit(content) {
-    params = content; // Global application parameters
+    params = content.parameters; // Global application parameters
     
     // Call back declaration here
     addCBLoad(cb_relationShipTree, './rest/relterm/3/' + ID);
     addCBLoad(cb_header, './rest/bterm/' + ID);
 }
 
-execTwoStepsInitalization('./rest/params');
+execTwoStepsInitalization('./rest/context');
 
 </script>
 

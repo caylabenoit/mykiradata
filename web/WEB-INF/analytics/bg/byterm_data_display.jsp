@@ -33,16 +33,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <joy:NaviBreadCrumbsTag xmlconfig="joy-menu.xml" activemenuid="Analytics-BG-Term" />
-                        <h1 class="page-header"><IMG src='./images/glossary/<joy:ActionValueTag name="IMGICO" />' height="28px" />&nbsp;<joy:ActionValueTag name="TRM_NAME" /></h1>
+                        <h1 class="page-header"><IMG id="IMGICO" height="28px" />&nbsp;<SPAN id="TRM_NAME"></SPAN></h1>
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="panel panel-green">
-                            <div class="panel-heading"><UI:dgmGlyphe name="dqaxis" />Data Quality Dimensions</div>
-                            <div class="panel-body">
-                                <chart:dgmDQAxisCounters_HTML dqaxis="COUNTER_LIST"  trends="TENDANCE_LIST" />
+                            <div class="panel-heading"><i class="glyphedqaxis"></i>&nbsp;Data Quality Dimensions</div>
+                            <div class="panel-body" id="panel_Wait_dqpanel">
+                                <div id="div_Wait_dqpanel"></div> 
+                                <div class="table-responsive" id="dqpanel"></div>
                             </div>
                         </div>
                     </div>
@@ -50,82 +51,76 @@
                         <div class="row">
                             <div class="col-lg-5">       
                                 <div class="blocGlobalScore">
-                                    <div  style="color: <joy:ActionValueTag name="GLOBALSCORE_COLOR" />" class="globalScoreTitle"><joy:ActionValueTag name="GLOBALSCORE" /><span id="gauge-value"></span>%</div>
+                                    <div id="score_color" class="globalScoreTitle"><span id="GLOBALSCORE"></span></div>
                                     <canvas width=200 id="canvasScore" alt="Global score"></canvas>
                                 </div>
                             </div> 
                             <div class="col-lg-7">
                                 <div class="divtermblocheader">
-                                    <p><UI:dgmGlyphe name="status" /><B>Status :</B> <joy:ActionValueTag name="TRM_PHASE" /></p>
-                                    <p><UI:dgmGlyphe name="term" /><B>Type :</B> <joy:ActionValueTag name="TRT_NAME" /></p>
-                                    <p><UI:dgmGlyphe name="user" /><B>Owner :</B> <joy:ActionValueTag name="TRM_OWNER_EMAIL" /></p>
-                                    <p><UI:dgmGlyphe name="user" /><B>Steward :</B> <joy:ActionValueTag name="TRM_STEWARD_EMAIL" /></p>
-                                    <p><UI:dgmGlyphe name="businessmap" /><A href="<joy:JoyBasicURL object="mapbyterm" actiontype="display" />&nbhops=2&term=<joy:ActionValueTag name="TRM_PK" />">Relationship map</A></p>
-                                    <p><UI:dgmGlyphe name="common-configuration" /><A href="<joy:ActionValueTag name="CONFIG_TERM_LINK" />">Term Configuration</A></p>
+                                    <p><i class="glyphestatus"></i>&nbsp;<B>Status :</B> <SPAN id="TRM_PHASE"></SPAN></p>
+                                    <p><i class="glypheterm"></i>&nbsp;<B>Type :</B> <SPAN id="TRT_NAME"></SPAN></p>
+                                    <p><i class="glypheuser"></i>&nbsp;<B>Owner :</B> <SPAN id="TRM_OWNER_EMAIL"></SPAN></p>
+                                    <p><i class="glypheuser"></i>&nbsp;<B>Steward :</B> <SPAN id="TRM_STEWARD_EMAIL"></SPAN></p>
+                                    <p><i class="glyphebusmap"></i>&nbsp;<A id="ph_termrel">Relationship map</A></p>
+                                    <p><i class="glyphecommon"></i>&nbsp;<A id="ph_termConfiglink">Configuration</A></p>
                                 </div>
                             </div> 
                         </div>   
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel panel-yellow">
-                                    <!--  <div class="panel-heading"><UI:dgmGlyphe name="term" />Business Term: <joy:ActionValueTag name="TRM_NAME" /></div> -->
                                     <!-- /.panel-heading -->
-                                    <div class="panel-body">
+                                    <DIV class="panel-body">
                                         <DIV class="bloctitreprincipal">
-                                        <h5>Metric <joy:ActionValueTag name="TRM_NAME" /> coming from <joy:ActionValueTag name="GLOSSARY_LINK" />&nbsp;/&nbsp;<joy:ActionValueTag name="CATEGORY_LINK" /></h5>
+                                            <h5>Coming from <SPAN id="GLOSSARY_LINK"></SPAN>&nbsp;/&nbsp;<SPAN id="CATEGORY_LINK"></SPAN></h5>
                                         </DIV>
-                                        <joy:JoyFormTag inline="true" object='byterm' actiontype='display' name='myform'>
-                                        <div class="form-group">
-                                            <joy:ActionComboBoxTag name="term" CSSClass="js-states form-control" />
-                                            <joy:JoyFormButtonTag id="btn1" label="Change" submit="true" CSSClass="btn btn-primary" />
-                                        </div>
-                                        </joy:JoyFormTag>
-                                    </div>
+                                        <DIV class="form-group form-inline">
+                                            <SELECT name="term" class="js-states form-control" id="term"></SELECT>
+                                            <BUTTON id='btn1' class='btn btn-primary' type='button' onclick="evt_changeTerm();" >Change</BUTTON>
+                                        </DIV>
+                                    </DIV>
                                 </div>
                             </div>  
                         </div>
                     </div>
-                                        
-
                 </DIV>
                             
                 <div class="row">                
                     <div class="col-lg-6">
                         <div class="panel panel-red">
-                            <div class="panel-heading"><UI:dgmGlyphe name="glossary" />Glossary definition</div>
-                            <div class="panel-body" style="max-height: 300px;min-height: 300px;overflow-y: scroll;">
+                            <div class="panel-heading"><i class="glypheglossary"></i>&nbsp;Glossary definition</div>
+                            <div class="panel-body" style="max-height: 300px; min-height: 300px;overflow-y: scroll;">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#Description" data-toggle="tab">Description</a></li>
-                                        <li><a href="#Usage" data-toggle="tab">Usage</a></li>
-                                        <li><a href="#Example" data-toggle="tab">Example</a></li>
+                                    <li class="active"><a href="#Description" data-toggle="tab">Description</a></li>
+                                    <li><a href="#Usage" data-toggle="tab">Usage</a></li>
+                                    <li><a href="#Example" data-toggle="tab">Example</a></li>
                                 </ul>
-
                                 <!-- Tab panes -->
                                 <div class="tab-content">
-                                        <div class="tab-pane fade in active" id="Description">
-                                                <h4>Description</h4>
-                                                <p><joy:ActionValueTag name="TRM_DESCRIPTION" /></p>
-                                        </div>
-                                        <div class="tab-pane fade" id="Usage">
-                                                <h4>Usage</h4>
-                                                <p><joy:ActionValueTag name="TRM_USAGE" /></p>
-                                        </div>
-                                        <div class="tab-pane fade" id="Example">
-                                                <h4>Example</h4>
-                                                <p><joy:ActionValueTag name="TRM_EXAMPLE" /></p>
-                                        </div>
+                                    <div class="tab-pane fade in active" id="Description">
+                                        <h4>Description</h4>
+                                        <p><SPAN id="TRM_DESCRIPTION"></SPAN></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="Usage">
+                                        <h4>Usage</h4>
+                                        <p><SPAN id="TRM_USAGE"></SPAN></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="Example">
+                                        <h4>Example</h4>
+                                        <p><SPAN id="TRM_EXAMPLE"></SPAN></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="panel panel-success">
-                            <div class="panel-heading"><UI:dgmGlyphe name="common-chart" />Last runs</div>
-                            <div class="panel-body">
+                            <div class="panel-heading"><i class="glyphechart"></i>&nbsp;Last runs</div>
+                            <div class="panel-body" id="panel_Wait_LastRun">
                                 <div>
+                                    <div id="div_Wait_LastRun"></div> 
                                     <canvas id="LastRun"></canvas>
-                                    <div id="barLegend"></div>
                                 </div>
                             </div>
                         </div>
@@ -136,19 +131,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-success">
-                            <div class="panel-heading"><UI:dgmGlyphe name="common-chart" />Radar Synthesis</div>
-                            <div class="panel-body">
+                            <div class="panel-heading"><i class="glyphechart"></i>&nbsp;Radar Synthesis</div>
+                            <div class="panel-body" id="panel_Wait_radar">
                                 <div>
+                                    <div id="div_Wait_radar"></div> 
                                     <canvas id="radar"></canvas>
-                                    <div id="radarLegend"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="panel panel-primary">   
-                           <div class="panel-heading"><UI:dgmGlyphe name="relationship" />Business Term Relationships</div>
+                           <div class="panel-heading"><i class="glypherelationship"></i>&nbsp;Business Term Relationships</div>
                            <div class="panel-body" style="max-height: 300px;min-height: 300px;overflow-y: scroll;" id="panel_treeview">
+                               <div id="div_Wait_treeview"></div>
                                <div id="treeview" class=""></div>
                            </div>
                         </div>
@@ -158,7 +154,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-info">
-                            <div class="panel-heading"><UI:dgmGlyphe name="common-data" />Data</div>
+                            <div class="panel-heading"><i class="glyphecommonp"></i>&nbsp;Data</div>
                             <div class="panel-body">
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -173,7 +169,7 @@
                                         <div class="tab-content">
                                                 <div class="tab-pane fade in active" id="Metrics">
                                                     <h4>Metrics</h4>
-                                                    <table id="matablelist" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
+                                                    <table id="tableMetric" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
                                                     <thead>
                                                     <tr>
                                                         <th>Metric/Rules</th>
@@ -184,52 +180,26 @@
                                                         <th>Scorecard</th>
                                                     </tr> 
                                                     </thead>
-                                                    <tbody>
-                                                    <joy:ActionMatrixRowLoopTag name="METRIC_LIST">
-                                                    <tr>
-                                                        <td><UI:dgmGlyphe name="metric" /><joy:ActionMatrixByRowTag name="METRIC_LINK" /></td>
-                                                        <td><joy:ActionMatrixByRowTag name="AXIS_LINK" /></td>
-                                                        <td><joy:ActionMatrixByRowTag name="FRS_TOTALROWS" /></td>
-                                                        <td><joy:ActionMatrixByRowTag name="FRS_INVALID_ROWS" /></td>
-                                                        <td><B><joy:ActionMatrixByRowTag name="FRS_KPI_SCORE" /></B></td>
-                                                        <td><joy:ActionMatrixByRowTag name="SCORECARD_REF" /></td>
-                                                    </tr>
-                                                    </joy:ActionMatrixRowLoopTag>
-                                                    </tbody>
                                                     </table>
                                                 </div>
                                                 <div class="tab-pane fade" id="Context">
                                                         <h4>Context</h4>
-                                                   <table id="matablelist2" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
+                                                   <table id="tableContext" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
                                                         <thead>
                                                                 <tr>
                                                                 <th>Context</th>
                                                                 </tr> 
                                                         </thead>
-                                                        <tbody>
-                                                        <joy:ActionMatrixRowLoopTag name="CONTEXT_LIST">
-                                                        <tr>
-                                                                <td><UI:dgmGlyphe name="context" /><A href="<joy:JoyBasicURL object="bycontext" actiontype="display" />&context=<joy:ActionMatrixByRowTag name="CON_PK" />"><joy:ActionMatrixByRowTag name="CON_DESCRIPTION" /></a></td>
-                                                        </tr>
-                                                        </joy:ActionMatrixRowLoopTag>
-                                                        </tbody>
                                                         </table>
                                                 </div>
                                                 <div class="tab-pane fade" id="DataSource">
                                                     <h4>Data sources</h4>
-                                                    <table id="matablelist3" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
-                                                    <thead>
-                                                            <tr>
-                                                            <th>Data Source</th>
-                                                            </tr> 
-                                                    </thead>
-                                                    <tbody>
-                                                    <joy:ActionMatrixRowLoopTag name="DATASOURCE_LIST">
-                                                    <tr>
-                                                        <td><UI:dgmGlyphe name="datasource" /><A href="<joy:JoyBasicURL object="byds" actiontype="display" />&ds=<joy:ActionMatrixByRowTag name="DSO_PK" />"><joy:ActionMatrixByRowTag name="DSO_SOURCENAME" /></a></td>
-                                                    </tr>
-                                                    </joy:ActionMatrixRowLoopTag>
-                                                    </tbody>
+                                                    <table id="tableDatasource" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
+                                                        <thead>
+                                                                <tr>
+                                                                <th>Data Source</th>
+                                                                </tr> 
+                                                        </thead>
                                                     </table>
                                                 </div>
                                         </div>
@@ -246,15 +216,15 @@
 
 <jsp:directive.include file="../../templates/foot.jsp" />
 <SCRIPT>
-<chart:dgmDQAxisCounters_JS dqaxis="COUNTER_LIST" />
+
 $(document).ready(function() {
-    $('#matablelist').DataTable({
+    $('#tableMetric').DataTable({
             responsive: true
     });
-    $('#matablelist2').DataTable({
+    $('#tableContext').DataTable({
             responsive: true
     });
-    $('#matablelist3').DataTable({
+    $('#tableDatasource').DataTable({
             responsive: true
     });
     $( '#term' ).select2({
@@ -267,67 +237,120 @@ $(document).ready(function() {
     } );
 });
 
-var ID = '<joy:ActionValueTag name="TRM_PK" />';
+var ID = getRequestParameter('term');
+var params = null;
 
-function cb_displayRelationShips(content) {
-    var jsonContent = JSON.stringify(content);
-    $('#treeview').treeview({
-        color: "#428bca",
-        showBorder: false,
-        enableLinks: true,
-        data: jsonContent
-    });
-    end_waitMessage("panel_treeview", "treeview");
+function fillDatasource(content) {
+    var t1 = $('#tableDatasource').DataTable();
+    t1.clear();
+    for (i=0; i < content.rowcount; i++) {
+        var myLink = "<a href='" + joyURL(params.urlpattern, "byds","display") + "&ds=" + getFromJoy(content.rows[i].items, "dso_pk") + "'>" + getFromJoy(content.rows[i].items, "dso_sourcename") + "</a>";
+        t1.row.add( [
+            myLink
+        ] ).draw( false );
+    }
+}
+function fillContext(content) {
+    var t1 = $('#tableContext').DataTable();
+    t1.clear();
+    for (i=0; i < content.rowcount; i++) {
+        var myLink = "<a href='" + joyURL(params.urlpattern, "bycontext","display") + "&ds=" + getFromJoy(content.rows[i].items, "con_pk") + "'>" + getFromJoy(content.rows[i].items, "con_description") + "</a>";
+        t1.row.add( [
+            myLink
+        ] ).draw( false );
+    }
+}
+function fillMetrics(content) {
+    var t1 = $('#tableMetric').DataTable();
+    t1.clear();
+    for (i=0; i < content.rowcount; i++) {
+        var myLink = "<a href='" + joyURL(params.urlpattern, "bymetric", "display") + "&metric=" + getFromJoy(content.rows[i].items, "MET_FK") + "'>" + getFromJoy(content.rows[i].items, "MET_NAME") + "</a>";
+        t1.row.add( [
+            myLink,
+            getFromJoy(content.rows[i].items, "DQX_NAME"),
+            getFromJoy(content.rows[i].items, "FRS_TOTALROWS"),
+            getFromJoy(content.rows[i].items, "FRS_INVALID_ROWS"),
+            getFromJoy(content.rows[i].items, "FRS_KPI_SCORE"),
+            getFromJoy(content.rows[i].items, "SCO_NAME")
+        ] ).draw( false );
+    }
 }
 
-addCBLoad(cb_displayRelationShips, './rest/relterm/3/' + ID);
-start_waitMessage("panel_treeview", "treeview");
-execOneStepInitalization();
+function evt_changeTerm() {
+    window.open(joyURL(params.urlpattern, "byterm","display") + "&term=" + term.value, "_self");
+}
 
-// display the last run bars
-var configRuns = {
-    type: 'bar',
-    data: <joy:ActionValueTag name="LASTRUNS" />,
-    options: {
-        elements: {
-            rectangle: { borderWidth: 2, borderSkipped: 'bottom' }
-        },
-        responsive: true,
-        legend: { position: 'bottom' },
-        title: { display: true, text: 'Last runs (grouped per day)' }
-    }
-};
-window.LastRun = new Chart(document.getElementById("LastRun"), configRuns);
+function cb_relationShipTree(content) {
+    displayTree('treeview', content);
+    end_waitMessage("panel_treeview", "div_Wait_treeview");
+}
 
-// display the radar
-var configRadar = {
-    type: 'radar',
-    data: <joy:ActionValueTag name="MULTIPLE_RADAR" />,
-    options: {
-        legend: {  position: 'bottom' },
-        title: { display: true, text: 'Synthesis per Data Quality Dimension' },
-        scale: { reverse: false, ticks: { beginAtZero: true  } }
-    }
-};
-window.myRadar = new Chart(document.getElementById("radar"), configRadar);
+function cb_global(content) {
+    // fill the form data
+    document.getElementById("TRM_NAME").innerHTML = getFromJoy(content.single, "TRM_NAME");
+    document.getElementById("IMGICO").src = './images/glossary/' + getFromJoy(content.single, "IMGICO");
+    document.getElementById("TRM_PHASE").innerHTML = getFromJoy(content.single, "TRM_PHASE");
+    document.getElementById("TRT_NAME").innerHTML = getFromJoy(content.single, "TRT_NAME");
+    document.getElementById("TRM_OWNER_EMAIL").innerHTML = getFromJoy(content.single, "TRM_OWNER_EMAIL");
+    document.getElementById("TRM_STEWARD_EMAIL").innerHTML = getFromJoy(content.single, "TRM_STEWARD_EMAIL");
+    document.getElementById("ph_termConfiglink").href = getFromJoy(content.single, "CONFIG_TERM_LINK");
+    document.getElementById("TRM_DESCRIPTION").innerHTML = getFromJoy(content.single, "TRM_DESCRIPTION");
+    document.getElementById("TRM_USAGE").innerHTML = getFromJoy(content.single, "RM_USAGE");
+    document.getElementById("TRM_EXAMPLE").innerHTML = getFromJoy(content.single, "TRM_EXAMPLE");
+    document.getElementById("ph_termrel").href = joyURL(params.urlpattern, "mapbyterm", "display") + "&nbhops=3&term=" + getFromJoy(content.single, "TRM_PK");
+    document.getElementById("GLOSSARY_LINK").innerHTML = getFromJoy(content.single, "GLOSSARY_LINK");
+    document.getElementById("CATEGORY_LINK").innerHTML = getFromJoy(content.single, "CATEGORY_LINK");
+    document.getElementById("GLOBALSCORE").innerHTML = getFromJoy(content.single, "GLOBALSCORE") + "%";
+    document.getElementById('score_color').style.cssText = "color :" + getFromJoy(content.single, "GLOBALSCORE_COLOR");
+    // charts
+    displayBar("LastRun", 'Last runs (grouped per day)', content.other[0].value.lastruns);
+    displayRadar("radar", 'Synthesis per Data Quality Dimension', content.other[0].value.radar);
+    displayGauge('canvasScore', getFromJoy(content.single, 'GLOBALSCORE_COLOR'), getFromJoy(content.single, 'GLOBALSCORE'));
+    // DQ Axis panel
+    displayDQAxisPanel("dqpanel", getFromJoy(content.matrix, 'trends'), params);
+    // tables
+    fillDatasource(getFromJoy(content.matrix, 'datasources'));
+    fillContext(getFromJoy(content.matrix, 'contexts'));
+    fillMetrics(getFromJoy(content.matrix, 'metrics')); 
+    // fill and display the terms cbo
+    fillComboboxFromJoyVector('term', getFromJoy(content.matrix, "terms"));
+    $('#term').select2({ placeholder: "Select an Term" });
+    
+    end_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
+    end_waitMessage("panel_Wait_radar", "div_Wait_radar");
+    end_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
+}
 
-// Display the global score
-var optsGlobalScore = {
-    lines: 1, // The number of lines to draw
-    angle: 0.15, // The length of each line
-    lineWidth: 0.25, // The line thickness
-    limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
-    colorStart: '<joy:ActionValueTag name="GLOBALSCORE_COLOR" />',   // Colors
-    colorStop: '<joy:ActionValueTag name="GLOBALSCORE_COLOR" />',
-    strokeColor: '#EEEEEE',
-    generateGradient: true
-};
-var target = document.getElementById('canvasScore'); // your canvas element
-var gauge = new Donut(target).setOptions(optsGlobalScore); // create sexy gauge!
-gauge.maxValue = 100; // set max gauge value
-gauge.animationSpeed = 32; // set animation speed (32 is default value)
-gauge.set(<joy:ActionValueTag name="GLOBALSCORE" />); // set actual value
-//gauge.setTextField(document.getElementById("gauge-value"));
+function form_preInitialize() {
+    start_waitMessage("panel_treeview", "div_Wait_treeview");
+    start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
+    start_waitMessage("panel_Wait_radar", "div_Wait_radar");
+    start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
+}
+
+function form_afterInit(content) {
+    params = content.parameters; // Global application parameters
+
+    // Set the glyphes
+    setGlypheToClass('status', 'glyphestatus', params);
+    setGlypheToClass('user', 'glypheuser', params);
+    setGlypheToClass('term', 'glypheterm', params);
+    setGlypheToClass('businessmap', 'glyphebusmap', params);
+    setGlypheToClass('common-configuration', 'glyphecommon', params);
+    setGlypheToClass('glossary', 'glypheglossary', params);
+    setGlypheToClass('relationship', 'glypherelationship', params);
+    setGlypheToClass('dqaxis', 'glyphedqaxis', params);
+    setGlypheToClass('common-chart', 'glyphechart', params);
+    setGlypheToClass('context', 'glyphecontext', params);
+    setGlypheToClass('datasource', 'glyphedatasource', params);
+    
+    // Call back declaration here
+    addCBLoad(cb_relationShipTree, './rest/relterm/3/' + ID);
+    addCBLoad(cb_global, './rest/bterm/' + ID);
+}
+
+execTwoStepsInitalization('./rest/context');
+
 </script>
 
 </body>

@@ -20,7 +20,7 @@ import com.joy.dashboard.Dashboard;
 import com.joy.dashboard.Dashboards;
 import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormVector;
 
 /**
  * This class manages the screen (Action) to display the dashboards.
@@ -35,10 +35,10 @@ public class DashboardAction  extends ActionTypeForm {
         dashbs.init(Joy.PARAMETERS().getParameter("dashboardconfig").getValue().toString()); 
 
         if (!dashbSelected.isEmpty())
-            this.addFormSingleEntry("DASHBOARD", dashbs.getDashboard(dashbSelected));
+            this.addSingle("DASHBOARD", dashbs.getDashboard(dashbSelected));
         else {
             dashbSelected = dashbs.getDefaultDashboard().getID();
-            this.addFormSingleEntry("DASHBOARD", dashbs.getDefaultDashboard());
+            this.addSingle("DASHBOARD", dashbs.getDefaultDashboard());
         }
         loadCboDashboards(dashbs, dashbSelected);
         
@@ -51,12 +51,12 @@ public class DashboardAction  extends ActionTypeForm {
      * @param selected 
      */
     private void loadCboDashboards(Dashboards dashbs, String selected) {
-        JoyFormVectorEntry cbo = new JoyFormVectorEntry();
+        JoyFormVector cbo = new JoyFormVector();
         for (Dashboard ds : dashbs.getList()) {
-            cbo.addValue(ds.getName(), ds.getID(), ds.getTitle());
+            cbo.addItem(ds.getName(), ds.getID(), ds.getTitle());
         }
         cbo.setSelected(selected);
-        this.addFormVectorEntry("CBO_DASHBOARDS", cbo);
+        this.addVector("CBO_DASHBOARDS", cbo);
     }
     
 }

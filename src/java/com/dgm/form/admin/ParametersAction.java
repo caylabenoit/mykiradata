@@ -68,11 +68,11 @@ public class ParametersAction extends ActionTypeForm {
 
     @Override
     public String add() {
-        this.addFormSingleEntry("PARAM_NAME", "");
-        this.addFormSingleEntry("PARAM_LABEL", "");
-        this.addFormSingleEntry("PARAM_INTVALUE", "");
-        this.addFormSingleEntry("PARAM_STRVALUE", "");
-        this.addFormSingleEntry("PARAM_DISPLAY", "Y");
+        this.addSingle("PARAM_NAME", "");
+        this.addSingle("PARAM_LABEL", "");
+        this.addSingle("PARAM_INTVALUE", "");
+        this.addSingle("PARAM_STRVALUE", "");
+        this.addSingle("PARAM_DISPLAY", "Y");
 
         return super.add(); //To change body of generated methods, choose Tools | Templates.
     }

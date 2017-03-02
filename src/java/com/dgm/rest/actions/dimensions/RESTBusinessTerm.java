@@ -20,8 +20,6 @@ import com.dgm.common.Utils;
 import com.joy.C;
 import com.joy.Joy;
 import com.joy.bo.IEntity;
-import com.joy.json.JSONObject;
-import com.joy.mvc.restbean.JoyJsonMatrix;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -42,23 +40,22 @@ public class RESTBusinessTerm extends RESTDimensionCommon {
             id = Integer.valueOf(this.getStrArgumentValue("P1"));
         } catch (NumberFormatException e) {}
         if (id == 0) return C.JSON_EMPTY;
-
-        JSONObject btermAll = new JSONObject();
         
         // Get global informations
         setGlobalData(id);
        
         // Get other info if the business term has scores infos
         if (hasAtLeastOneScore(id)) {
-            addOther("charts", getDQVectorsValAndTrends(id, "Analytics - Terms Last Runs" ,  "TRM_FK"));
+            this.addOther("charts", getDQVectorsValAndTrends(id, "Analytics - Terms Last Runs" ,  "TRM_FK"));
             setMetrics(id, "TRM_FK");
-            setFilteredEntityToMatrix("contents", id, "TRM_FK", "Analytics - Terms Context List");
+            setFilteredEntityToMatrix("contexts", id, "TRM_FK", "Analytics - Terms Context List");
             setFilteredEntityToMatrix("datasources", id, "TRM_FK", "Analytics - Terms DS List");
             setGlobalScore(id);
         }
         
         // set the combobox via vectors
-        addVector("terms", "DIM_TERM", "TRM_PK", "TRM_NAME", String.valueOf(id));
+        this.addMatrix("terms", this.getBOFactory().getEntity("DIM_TERM"));
+        this.addSingle("selectedterm", String.valueOf(id));
         
         return this.getData().toString();
     }
@@ -128,8 +125,7 @@ public class RESTBusinessTerm extends RESTDimensionCommon {
      * Calculate Term score
      * @param currentTerm ID of the current term
      */
-    private JSONObject setGlobalScore(int currentTerm) {
-        JSONObject score = new JSONObject();
+    private void setGlobalScore(int currentTerm) {
         String color = Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString();
         IEntity entity = getBOFactory().getEntity("Analytics - Terms Global Score Calculation");
         entity.field("TRM_FK").setKeyValue(currentTerm);
@@ -146,8 +142,6 @@ public class RESTBusinessTerm extends RESTDimensionCommon {
         }
         this.addSingle("GLOBALSCORE_COLOR", color);
         getBOFactory().closeResultSet(rs);
-        
-        return score;
     }
     
 }

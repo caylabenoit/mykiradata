@@ -19,8 +19,8 @@ package com.dgm.form.manage;
 import com.joy.Joy;
 import com.joy.bo.BOEntityReadWrite;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import com.joy.mvc.formbean.JoyFormMatrixEntry;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormMatrix;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class RelTermMetricAction extends ActionTypeForm {
     public String edit() {
         String uid = getStrArgumentValue("TRM_CLUSTER_ID");
         String termlink = "";
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
         if (uid != null) {
             int id = Integer.parseInt(uid);
             try {
@@ -56,30 +56,30 @@ public class RelTermMetricAction extends ActionTypeForm {
                 int TRM_PK = this.getTrmPKFromClusterID(uid);
                 
                 while (rs.next()) {
-                    JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                    columns.addValue("TMD_DESCRIPTION", rs.getString("TMD_DESCRIPTION"));
-                    columns.addValue("TRM_CLUSTER_ID", rs.getInt("TRM_CLUSTER_ID"));
-                    columns.addValue("MET_NAME", (rs.getString("MET_NAME") == null ? "" : rs.getString("MET_NAME")));  
-                    columns.addValue("TRM_NAME", rs.getString("TRM_NAME"));
-                    columns.addValue("TRM_PK", TRM_PK);
-                    columns.addValue("DQX_NAME", rs.getString("DQX_NAME"));
-                    columns.addValue("TMD_PK", rs.getInt("TMD_PK"));
+                    JoyFormVector columns = new JoyFormVector();
+                    columns.addItem("TMD_DESCRIPTION", rs.getString("TMD_DESCRIPTION"));
+                    columns.addItem("TRM_CLUSTER_ID", rs.getInt("TRM_CLUSTER_ID"));
+                    columns.addItem("MET_NAME", (rs.getString("MET_NAME") == null ? "" : rs.getString("MET_NAME")));  
+                    columns.addItem("TRM_NAME", rs.getString("TRM_NAME"));
+                    columns.addItem("TRM_PK", TRM_PK);
+                    columns.addItem("DQX_NAME", rs.getString("DQX_NAME"));
+                    columns.addItem("TMD_PK", rs.getInt("TMD_PK"));
                     if (termlink.isEmpty()) {
                         termlink = getTermLink(String.valueOf(TRM_PK), rs.getString("TRM_NAME"));
-                        columns.addValue("TERMLINK", termlink);
+                        columns.addItem("TERMLINK", termlink);
                     }
                     matrix.addRow(columns);
                 }
                 this.getBOFactory().closeResultSet(rs);
 
-                this.addFormSingleEntry("TRM_CLUSTER_ID", uid);
-                this.addFormSingleEntry("TERM_LINK", termlink);
+                this.addSingle("TRM_CLUSTER_ID", uid);
+                this.addSingle("TERM_LINK", termlink);
 
             } catch (SQLException e) {
                 Joy.LOG().error( e);
             }
         }
-        this.addFormMatrixEntry("LIST", matrix);
+        this.addMatrix("LIST", matrix);
         loadListOfAvailableMetrics();
         return super.edit(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -99,17 +99,17 @@ public class RelTermMetricAction extends ActionTypeForm {
 
     @Override
     public String list() {
-        JoyFormMatrixEntry matrix = new JoyFormMatrixEntry();
+        JoyFormMatrix matrix = new JoyFormMatrix();
          try {
             IEntity entity = this.getBOFactory().getEntity("Rel Term Metric List");
             ResultSet rs = entity.select();
             
             while (rs.next()) {
-                JoyFormVectorEntry columns = new JoyFormVectorEntry();
-                columns.addValue("TRM_CLUSTER_ID", rs.getString("TRM_CLUSTER_ID"));
-                columns.addValue("TRM_NAME", rs.getString("TRM_NAME"));
-                columns.addValue("TRM_PK", rs.getString("TRM_PK"));
-                columns.addValue("TERMLINK", getTermLink(rs.getString("TRM_PK"), rs.getString("TRM_NAME")));
+                JoyFormVector columns = new JoyFormVector();
+                columns.addItem("TRM_CLUSTER_ID", rs.getString("TRM_CLUSTER_ID"));
+                columns.addItem("TRM_NAME", rs.getString("TRM_NAME"));
+                columns.addItem("TRM_PK", rs.getString("TRM_PK"));
+                columns.addItem("TERMLINK", getTermLink(rs.getString("TRM_PK"), rs.getString("TRM_NAME")));
                 
                 matrix.addRow(columns);
             }
@@ -117,7 +117,7 @@ public class RelTermMetricAction extends ActionTypeForm {
         } catch (SQLException e) {
             Joy.LOG().error(e);
         }
-        this.addFormMatrixEntry("LIST", matrix);
+        this.addMatrix("LIST", matrix);
         
         loadListOfAvailableTerms();
         return super.list(); //To change body of generated methods, choose Tools | Templates.
@@ -282,7 +282,7 @@ public class RelTermMetricAction extends ActionTypeForm {
             Joy.LOG().error(e);
         }
 
-        this.addFormSingleEntry("AVAILABLE_METRICS", line);
+        this.addSingle("AVAILABLE_METRICS", line);
     }
     
     /**

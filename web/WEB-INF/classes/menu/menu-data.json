@@ -1,0 +1,93 @@
+{
+    "joy-menu": "admin",
+    "items" :[
+      {
+        "glyphe": "fa fa-star fa-fw",
+        "id": "DATA01",
+        "label": "Datamart Metrics",
+        "object": "dtmlist",
+        "actiontype": "list",
+        "pn1": "list",
+        "pv1": "all"
+      },
+      {
+        "glyphe": "fa fa-th fa-fw",
+        "id": "DATA02",
+        "label": "Landing Area",
+        "object": "landing",
+        "actiontype": "list",
+        "items": [
+          {
+            "glyphe": "fa fa-book fa-fw",
+            "id": "DATA03",
+            "label": "Business Term",
+            "object": "lndterms",
+            "actiontype": "list"
+          },
+          {
+            "glyphe": "fa fa-folder-open fa-fw",
+            "id": "DATA04",
+            "label": "Category",
+            "object": "lndcategory",
+            "actiontype": "list"
+          },
+          {
+            "glyphe": "fa fa-database fa-fw",
+            "id": "DATA05",
+            "label": "Glossary",
+            "object": "lndglossary",
+            "actiontype": "list"
+          },
+          {
+            "glyphe": "fa fa-pagelines fa-fw",
+            "id": "DATA06",
+            "label": "Terms Relationships",
+            "object": "lndtermsrel",
+            "actiontype": "list"
+          },
+          {
+            "glyphe": "fa fa-bookmark-o fa-fw",
+            "id": "DATA07",
+            "label": "Metrics",
+            "object": "lndmetric",
+            "actiontype": "list"
+          },
+          {
+            "glyphe": "fa fa-dashboard fa-fw",
+            "id": "DATA08",
+            "label": "Scorecards",
+            "object": "lndsc",
+            "actiontype": "list"
+          },
+          {
+            "glyphe": "fa fa-dashboard fa-fw",
+            "id": "DATA09",
+            "label": "Groups",
+            "object": "lndscgrp",
+            "actiontype": "list"
+          }
+        ]
+      },
+      {
+        "glyphe": "fa fa-random fa-fw",
+        "id": "DATA10",
+        "label": "Import",
+        "items": [
+          {
+            "glyphe": "fa fa-random fa-fw",
+            "id": "DATA12",
+            "label": "From Landing",
+            "object": "landinginterface",
+            "actiontype": "list"
+          },
+          {
+            "glyphe": "fa fa-random fa-fw",
+            "id": "DATA13",
+            "label": "External Plugins",
+            "object": "pluginsinterface",
+            "actiontype": "list"
+          }
+        ]
+      }
+    ]
+}

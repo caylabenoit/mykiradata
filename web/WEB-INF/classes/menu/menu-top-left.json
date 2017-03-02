@@ -1,0 +1,73 @@
+{
+    "joy-menu": "top-left",
+    "items" : [
+        { "id": "TL01", 
+           "label": "Govern", 
+           "object": "homepage",
+           "glyphe" : "fa fa-star fa-fw"},
+        { "id": "TL02", 
+           "label" : "Data", 
+           "object" : "landing" ,
+           "glyphe" : "fa fa-th fa-fw",
+           "actiontype" : "list" },
+        {
+            "id": "TL03", 
+            "label" : "Admin", 
+            "glyphe": "fa fa-unlock-alt fa-fw",
+            "items" : [
+                { "id": "TL04", 
+                  "label": "Check Application", 
+                  "object": "checkapp",
+                  "glyphe" : "fa fa-unlock-alt fa-fw"},
+                { "id": "TL05", 
+                  "label": "Backup configuration", 
+                  "object": "import",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-unlock-alt fa-fw"},
+                { "id": "TL06", 
+                  "label": "Parameters", 
+                  "object": "parameters",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-unlock-alt fa-fw"},
+                { "id": "TL07", 
+                  "label": "Tasks", 
+                  "object": "tasks",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-random fa-fw"}
+
+            ]
+        },
+        {
+            "id": "TL08", 
+            "label" : "Configuration", 
+            "glyphe": "fa  fa-wrench fa-fw",
+            "items" : [
+                { "id": "TL09", 
+                  "label": "Quality Dimensions", 
+                  "object": "dqaxis",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-gears fa-fw"},
+                { "id": "TL10", 
+                  "label": "Contexts", 
+                  "object": "context",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-gears fa-fw"},
+                { "id": "TL11", 
+                  "label": "Term Types", 
+                  "object": "termtype",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-gears fa-fw"},
+                { "id": "TL12", 
+                  "label": "Contexts and Scorecards", 
+                  "object": "relsccontext",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-gears fa-fw"},
+                { "id": "TL13", 
+                  "label": "Metrics and Terms", 
+                  "object": "reltermmetric",
+                  "actiontype" : "list",
+                  "glyphe" : "fa fa-gears fa-fw"}
+            ]
+        }
+    ]
+}

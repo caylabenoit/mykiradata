@@ -15,9 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Return a Joy URL
+ * @param {type} pattern
+ * @param {type} object
+ * @param {type} actiontype
+ * @returns {String}
+ */
 function joyURL(pattern, object, actiontype) {
-    return "." + pattern + "?object=" + object + "&actiontype=" + actiontype;
+    if (actiontype != null && object != null)
+        return "." + pattern + "?object=" + object + "&actiontype=" + actiontype;
+    else if (actiontype == null && object != null)
+        return "." + pattern + "?object=" + object;
+    else
+        return "." + pattern;
 }
+
 
 /**
  * Modify the <i> tag to display a glyphe
@@ -28,7 +41,7 @@ function joyURL(pattern, object, actiontype) {
  */
 function setGlypheToID(name, placeHolderID, params) {
     var glyphes = params.ApplicationIconsBSGlyphe;
-    for (i=0; i < glyphes.length; i++) {
+    for (var i=0; i < glyphes.length; i++) {
         if (glyphes[i].name == name) {
             var myObject = document.getElementById(placeHolderID);
             myObject.classList.add("fa");
@@ -37,6 +50,16 @@ function setGlypheToID(name, placeHolderID, params) {
             return;
         }
     }
+}
+
+function getGlyphe(name, params) {
+    var glyphes = params.ApplicationIconsBSGlyphe;
+    for (var i=0; i < glyphes.length; i++) {
+        if (glyphes[i].name == name) {
+            return glyphes[i].value;
+        }
+    }
+    return null;
 }
 
 /**
@@ -51,14 +74,14 @@ function setGlypheToClass(name, className, params) {
     var goodGlyphe = "";
     
     // search for the good glyphe code
-    for (i=0; i < glyphes.length; i++) {
+    for (var i=0; i < glyphes.length; i++) {
         if (glyphes[i].name == name) 
             goodGlyphe = glyphes[i].value;
     }
     
     // Search for all the <i> with the class specified
     var myObjectClasses = document.getElementsByClassName(className);
-    for (j=0; j < myObjectClasses.length; j++) {
+    for (var j=0; j < myObjectClasses.length; j++) {
         myObjectClasses[j].classList.add("fa");
         myObjectClasses[j].classList.add(goodGlyphe);
         myObjectClasses[j].classList.add("fa-fw");
@@ -71,13 +94,13 @@ function setGlypheToClass(name, className, params) {
  * @param {type} data       JSON object which contains data
  * @returns {undefined}     Nothing
  */
-function fillCombobox(selectID, data) {
+function fillComboboxFromJoyVector(selectID, data) {
     var cboObject = document.getElementById(selectID);
-    for (i=0; i < data.count; i++) {
+    for (var i=0; i < data.rowcount; i++) {
         var myoption = document.createElement("option");
-        myoption.text = data.list[i].name;
-        myoption.value = data.list[i].value;
-        cboObject.value = data.selected;
+        myoption.text = data.rows[i].items[1].value;
+        myoption.value = data.rows[i].items[0].value;
+        //cboObject.value = vector.selected;
         cboObject.add(myoption, null);
     }
 }
@@ -90,8 +113,9 @@ function fillCombobox(selectID, data) {
  * @returns {Window.value}  value
  */
 function getFromJoy(content, fieldname) {
-    for (i=0; i < content.length; i++) {
+    for (var i=0; i < content.length; i++) {
         if (content[i].name == fieldname)
             return content[i].value;
     }
+    return null;
 }

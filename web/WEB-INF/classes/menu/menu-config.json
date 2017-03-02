@@ -1,0 +1,41 @@
+{
+    "joy-menu": "config",
+    "items" :[
+      {
+        "glyphe": "fa fa-gears fa-fw",
+        "id": "CONFIG02",
+        "label": "Quality Dimensions",
+        "object": "dqaxis",
+        "actiontype": "list"
+      },
+      {
+        "glyphe": "fa fa-gears fa-fw",
+        "id": "CONFIG03",
+        "label": "Contexts",
+        "object": "context",
+        "actiontype": "list"
+      },
+      {
+        "glyphe": "fa fa-gears fa-fw",
+        "id": "CONFIG04",
+        "label": "Term Types",
+        "object": "termtype",
+        "actiontype": "list"
+      },
+      {
+        "glyphe": "fa fa-gears fa-fw",
+        "id": "CONFIG05",
+        "label": "Contexts and Scorecards",
+        "object": "relsccontext",
+        "actiontype": "list"
+      },
+      {
+        "glyphe": "fa fa-gears fa-fw",
+        "id": "CONFIG06",
+        "label": "Metrics and Terms",
+        "object": "reltermmetric",
+        "actiontype": "list",
+        "-shortcut": "true"
+      }
+    ]
+}

@@ -382,13 +382,6 @@ and open the template in the editor.
     </actionRequest>
 
     <actionRequest>
-        <object>entitydump</object>
-        <objecttype>rest</objecttype>
-        <action>com.joy.rest.ready.RESTEntity</action>
-        <flowtype>file</flowtype>
-    </actionRequest>
-    
-    <actionRequest>
         <object>globalkpis</object>
         <objecttype>rest</objecttype>
         <action>com.dgm.rest.actions.RESTGlobalKpis</action>
@@ -419,6 +412,13 @@ and open the template in the editor.
     </actionRequest>
     
     <actionRequest>
+        <object>entitydump</object>
+        <objecttype>rest</objecttype>
+        <action>com.joy.rest.ready.RESTEntity</action>
+        <flowtype>file</flowtype>
+    </actionRequest>
+    
+    <actionRequest>
         <object>termsgraph</object>
         <objecttype>rest</objecttype>
         <action>com.dgm.rest.actions.RESTActionTermsGraph</action>
@@ -431,9 +431,9 @@ and open the template in the editor.
     </actionRequest>
 
     <actionRequest>
-        <object>params</object>
+        <object>context</object>
         <objecttype>rest</objecttype>
-        <action>com.joy.rest.ready.RESTParameters</action>
+        <action>com.dgm.rest.actions.RESTAppContext</action>
     </actionRequest>
 
 </joy-actions>

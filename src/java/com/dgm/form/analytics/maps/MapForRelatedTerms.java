@@ -18,7 +18,7 @@ package com.dgm.form.analytics.maps;
 
 import com.joy.Joy;
 import com.joy.mvc.actionTypes.ActionTypeForm;
-import com.joy.mvc.formbean.JoyFormVectorEntry;
+import com.joy.mvc.formbean.JoyFormVector;
 import java.sql.ResultSet;
 import com.joy.bo.IEntity;
 import java.sql.SQLException;
@@ -35,7 +35,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
     
     @Override
     public String search() {
-        this.addFormSingleEntry("target", this.getStrArgumentValue("target"));
+        this.addSingle("target", this.getStrArgumentValue("target"));
         loadCBO(0, DEFAULT_NB_HOP);
         loadTermTypes();
         return super.search(); //To change body of generated methods, choose Tools | Templates.
@@ -47,7 +47,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
     private void loadTermTypes() {
         try {
             ResultSet rs;
-            IEntity entity = getBOFactory().getEntity("Analytics - Terms Type List");
+            IEntity entity = getBOFactory().getEntity("TERM_TYPE_LIST");
             rs = entity.select();
             this.loadVector(rs, "TRT_PK", "TRT_NAME", "termtypes", "TRT_PK");
             this.getBOFactory().closeResultSet(rs);
@@ -74,11 +74,11 @@ public class MapForRelatedTerms extends ActionTypeForm {
         try {
             if (rs.next()) termname = rs.getString("TRM_NAME");
         } catch (SQLException ex) {}
-        this.addFormSingleEntry("TRM_NAME", termname);
+        this.addSingle("TRM_NAME", termname);
         getBOFactory().closeResultSet(rs);
             
-        this.addFormSingleEntry("ID", Term);
-        this.addFormSingleEntry("NBHOP", nbHops);
+        this.addSingle("ID", Term);
+        this.addSingle("NBHOP", nbHops);
         
         loadCBO(Term, nbHops);
         loadTermTypeCBO();
@@ -89,7 +89,7 @@ public class MapForRelatedTerms extends ActionTypeForm {
     private void loadTermTypeCBO() {
         try {
             ResultSet rs;
-            IEntity entity = getBOFactory().getEntity("Analytics - Terms Type List");
+            IEntity entity = getBOFactory().getEntity("TERM_TYPE_LIST");
             rs = entity.select();
             this.loadVector(rs, "TRT_NAME", "TRT_NAME", "termtypes", "TRT_NAME");
             this.getBOFactory().closeResultSet(rs);
@@ -122,12 +122,12 @@ public class MapForRelatedTerms extends ActionTypeForm {
         }
         
         // load the Nb hops Combobox
-        JoyFormVectorEntry columns = new JoyFormVectorEntry();
+        JoyFormVector columns = new JoyFormVector();
         columns.setSelected(String.valueOf(NbHops));
         for (int i = 1; i < NB_HOP_MAX; i++) {
-            columns.addValue(String.valueOf(i), String.valueOf(i), String.valueOf(i));
+            columns.addItem(String.valueOf(i), String.valueOf(i), String.valueOf(i));
         }
-        this.addFormVectorEntry("NBHOPS", columns);
+        this.addVector("NBHOPS", columns);
     }
 
 }
