@@ -5,15 +5,7 @@
         "glyphe": "fa fa-home fa-fw",
         "id": "Home",
         "label": "Home",
-        "object": "homepage"
-      },
-      {
-        "glyphe": "fa fa-tachometer fa-fw",
-        "id": "Dashboards",
-        "label": "Dashboards",
-        "object": "dashboard",
-        "actiontype": "display",
-        "shortcut": "true"
+        "url": "home.html"
       },
       {
         "glyphe": "fa fa-database fa-fw",
@@ -24,23 +16,20 @@
             "glyphe": "fa fa-book fa-fw",
             "id": "Analytics-BG-Term",
             "label": "By Term",
-            "object": "byterm",
-            "actiontype": "search",
-            "shortcut": "true"
+            "shortcut": "true",
+            "url": "govern/bterm/search.html"
           },
           {
             "glyphe": "fa fa-folder-open fa-fw",
             "id": "Analytics-BG-Category",
             "label": "By Category",
-            "object": "bycategory",
-            "actiontype": "search"
+            "url": "govern/category/search.html"
           },
           {
             "glyphe": "fa fa-database fa-fw",
             "id": "Analytics-BG-Glossary",
             "label": "By Glossary",
-            "object": "byglossary",
-            "actiontype": "search"
+            "url": "govern/glossary/search.html"
           }
         ]
       },
@@ -53,30 +42,26 @@
             "glyphe": "fa fa-bookmark-o fa-fw",
             "id": "Analytics-S-Metric",
             "label": "By Metric",
-            "object": "bymetric",
-            "actiontype": "search",
+            "url": "govern/metric/search.html",
             "shortcut": "true"
           },
           {
             "glyphe": "fa fa-briefcase fa-fw",
             "id": "Analytics-S-Context",
             "label": "By Context",
-            "object": "bycontext",
-            "actiontype": "search"
+            "url": "govern/context/search.html"
           },
           {
             "glyphe": "fa fa-flag-checkered fa-fw",
             "id": "Analytics-S-QV",
             "label": "By Quality Dimension",
-            "object": "bydqaxis",
-            "actiontype": "search"
+            "url": "govern/dqaxis/display.html"
           },
           {
             "glyphe": "fa fa-cubes fa-fw",
             "id": "Analytics-S-DS",
             "label": "By Data Source",
-            "object": "byds",
-            "actiontype": "search"
+            "url": "govern/datasource/search.html"
           }
         ]
       },
@@ -84,23 +69,20 @@
         "glyphe": "fa fa-bar-chart-o fa-fw",
         "id": "Analytics-G-Costs",
         "label": "Costs",
-        "object": "globalcosts",
-        "actiontype": "display"
+        "url": "govern/global/costs.html"
       },
       {
         "glyphe": "fa fa-bar-chart-o fa-fw",
         "id": "Analytics-G-ID",
         "label": "Invalid Data",
-        "object": "globalinvalids",
-        "actiontype": "display",
+        "url": "govern/global/invalids.html",
         "shortcut": "true"
       },
       {
         "glyphe": "fa fa-pagelines fa-fw",
         "id": "Analytics-BM-Relationships",
         "label": "Business Map",
-        "object": "mapbyterm",
-        "actiontype": "search",
+        "url": "govern/bmap/search.html",
         "shortcut": "true"
       }
     ]

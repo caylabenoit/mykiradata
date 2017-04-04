@@ -77,8 +77,7 @@
             "glyphe": "fa fa-random fa-fw",
             "id": "DATA12",
             "label": "From Landing",
-            "object": "landinginterface",
-            "actiontype": "list"
+            "url": "data/import/process.html"
           },
           {
             "glyphe": "fa fa-random fa-fw",

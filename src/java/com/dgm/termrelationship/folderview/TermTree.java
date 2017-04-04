@@ -16,17 +16,18 @@
  */
 package com.dgm.termrelationship.folderview;
 
-import com.joy.Joy;
+import com.joy.JOY;
 import com.joy.bo.BOFactory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.joy.bo.IEntity;
+import com.joy.common.joyClassTemplate;
 
 /**
  *
  * @author Benoit CAYLA (benoit@famillecayla.fr) 
  */
-public class TermTree {
+public class TermTree extends joyClassTemplate {
     BOFactory entities;
 
     public TermTree(BOFactory entities) {
@@ -64,7 +65,7 @@ public class TermTree {
             return trm;
             
         } catch (SQLException ex) {
-            Joy.LOG().info( ex);
+            getLog().severe(ex.toString());
             return new TermNode();
         }
         
@@ -97,12 +98,12 @@ public class TermTree {
         try {
             TermNode ars = getTermInfo(myTerm, currentLevel);
             if (currentLevel == levelMax) {
-                Joy.LOG().debug( "End of Term recursivity at level " + String.valueOf(currentLevel));
+                getLog().fine( "End of Term recursivity at level " + String.valueOf(currentLevel));
                 return ars;
             }
             
             // Get the relationships (childs only) for the current term into the db
-            Joy.LOG().debug("Get Term Childs for  " + String.valueOf(myTerm));
+            getLog().fine("Get Term Childs for  " + String.valueOf(myTerm));
             IEntity entity = entities.getEntity("Analytics - Rel Term Relationships");
             entity.field("TERM_PK_SOURCE").setKeyValue(myTerm);
             entity.addSort("REL_NAME");
@@ -118,7 +119,7 @@ public class TermTree {
                 if (!rupture.equalsIgnoreCase(rs.getString("REL_NAME")) || myRelationShip == null) {
                     // Create a relationship (folder)
                     rupture = rs.getString("REL_NAME");
-                    Joy.LOG().debug( "Add relationship for  " + rupture);
+                    getLog().fine( "Add relationship for  " + rupture);
                     myRelationShip = new TermFolder(rs.getString("REL_NAME"), 
                                                           rs.getInt("REL_FK"),
                                                           myTerm);
@@ -128,7 +129,7 @@ public class TermTree {
                     
                 } else {
                     // No more relationships, just create a term alone
-                    Joy.LOG().debug( "Add Child Term for  " + rs.getInt("TERM_PK_TARGET"));
+                    getLog().fine( "Add Child Term for  " + rs.getInt("TERM_PK_TARGET"));
                     TermNode myNextChild = recurTermChildsBuild(rs.getInt("TERM_PK_TARGET"), currentLevel+1, levelMax);
                     myRelationShip.addTerm(myNextChild);
                 }
@@ -137,7 +138,7 @@ public class TermTree {
             return ars;
             
         } catch (SQLException e) {
-            Joy.LOG().error(e);
+            getLog().severe(e.toString());
         }
         return new TermNode();
     }

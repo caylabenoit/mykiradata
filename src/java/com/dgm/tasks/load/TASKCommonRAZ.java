@@ -16,9 +16,9 @@
  */
 package com.dgm.tasks.load;
 
-import com.joy.Joy;
+import com.joy.JOY;
 import com.joy.bo.IEntity;
-import com.joy.mvc.actionTypes.ActionTypeTASK;
+import com.joy.tasks.ActionTypeTASK;
 import com.joy.tasks.JoyTaskStatus;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +34,7 @@ public class TASKCommonRAZ extends ActionTypeTASK {
      * @param Table table to purge
      */
     protected void purgeTable(String Table) {
-        IEntity entity = (IEntity)this.getEntities().getEntity(Table);
+        IEntity entity = (IEntity)getJoyState().getBOFactory().getEntity(Table);
         entity.resetKeys();
         if (!entity.delete())
             this.addTrace(Table + " not purged successfully");
@@ -85,21 +85,21 @@ public class TASKCommonRAZ extends ActionTypeTASK {
      */
     protected void dimensionsInit() {
         
-        this.getEntities().getEntity("Scorecard Dimension").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_CATEGORY").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_TERM_RELATIONSHIP").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_TERM_RELLINKS").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_JOB").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_CONTEXT").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_METRICTYPE").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_ORIGINE").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_SCORECARD_GROUP").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_METRIC").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_TERM").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_DATASOURCE").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_DQAXIS").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_GLOSSARY").insertDefaultRecords();
-        this.getEntities().getEntity("DIM_TERM_TYPE").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("Scorecard Dimension").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_CATEGORY").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_TERM_RELATIONSHIP").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_TERM_RELLINKS").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_JOB").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_CONTEXT").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_METRICTYPE").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_ORIGINE").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_SCORECARD_GROUP").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_METRIC").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_TERM").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_DATASOURCE").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_DQAXIS").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_GLOSSARY").insertDefaultRecords();
+        getJoyState().getBOFactory().getEntity("DIM_TERM_TYPE").insertDefaultRecords();
         // Init DIM_TIME
         initDimTime();
         
@@ -124,10 +124,10 @@ public class TASKCommonRAZ extends ActionTypeTASK {
         
         // Calendar initialization
         try {
-            int iYear = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_year_begin").getValue().toString());
-            int iMonth = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_month_begin").getValue().toString());
-            int iDay = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_day_begin").getValue().toString());
-            iNbRecords = Integer.parseInt(Joy.PARAMETERS().getParameter("dimtime_nb_records").getValue().toString());
+            int iYear = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_year_begin").getValue().toString());
+            int iMonth = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_month_begin").getValue().toString());
+            int iDay = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_day_begin").getValue().toString());
+            iNbRecords = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_nb_records").getValue().toString());
             cal.set(iYear, iMonth, iDay);
         } catch (NumberFormatException e) { 
             cal.set(2010, 00, 01);
@@ -137,15 +137,15 @@ public class TASKCommonRAZ extends ActionTypeTASK {
         for (int i=0; i<iNbRecords; i++) {
             Date myDate = cal.getTime();
             
-            IEntity dimTime = this.getEntities().getEntity("DIM_TIME");
-            dimTime.field("TIM_PK").setValue(Integer.parseInt(Joy.DATE_FORMAT(myDate, "yyyyMMdd")));
-            dimTime.field("TIM_DATETIME_LOAD").setValue(Joy.CURRENT_DATE());
+            IEntity dimTime = getJoyState().getBOFactory().getEntity("DIM_TIME");
+            dimTime.field("TIM_PK").setValue(Integer.parseInt(JOY.DATE_FORMAT(myDate, "yyyyMMdd")));
+            dimTime.field("TIM_DATETIME_LOAD").setValue(JOY.CURRENT_DATE());
             dimTime.field("TIM_CALENDAR_DATE").setValue(myDate);
-            dimTime.field("TIM_DAY_IN_WEEK_NAME").setValue(Joy.DATE_FORMAT(myDate, "E"));
-            dimTime.field("TIM_MONTH_NAME").setValue(Joy.DATE_FORMAT(myDate, "MMM"));
-            dimTime.field("TIM_YEAR_NUM").setValue(Joy.DATE_FORMAT(myDate, "yyyy"));
-            dimTime.field("TIM_MONTH_NUM").setValue(Joy.DATE_FORMAT(myDate, "MM"));
-            dimTime.field("TIM_DAY_NUM").setValue(Joy.DATE_FORMAT(myDate, "ddd"));
+            dimTime.field("TIM_DAY_IN_WEEK_NAME").setValue(JOY.DATE_FORMAT(myDate, "E"));
+            dimTime.field("TIM_MONTH_NAME").setValue(JOY.DATE_FORMAT(myDate, "MMM"));
+            dimTime.field("TIM_YEAR_NUM").setValue(JOY.DATE_FORMAT(myDate, "yyyy"));
+            dimTime.field("TIM_MONTH_NUM").setValue(JOY.DATE_FORMAT(myDate, "MM"));
+            dimTime.field("TIM_DAY_NUM").setValue(JOY.DATE_FORMAT(myDate, "ddd"));
             dimTime.field("TIM_SEQUENCE_ORDER").setValue(i);
             
             dimTime.insert();

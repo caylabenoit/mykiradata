@@ -43,7 +43,7 @@ $( "#dropdown-tasks" ).click(function() {
     $("#lutasklist").empty();
     WaitForTaskRefresh();
     // ask for resfresh / rest call
-    refreshTaskList('./rest/taskslist/5');
+    refreshTaskList(getURLApi() + 'taskslist/5');
 });
 
 /*

@@ -63,6 +63,12 @@ for the custom queries :
        And FACT_GOVERNANCE.TRM_FK = DIM_TERM.TRM_PK
        And FACT_GOVERNANCE.dso_fk = DIM_DATASOURCE.dso_pk
     </joy-customquery>
+
+    <joy-composite name = "CATEGORY_LIST">
+        <joy-field alias="X">CAT_PK</joy-field>
+        <joy-field alias="X">CAT_NAME</joy-field>
+        <joy-entity alias="X">DIM_CATEGORY</joy-entity>
+    </joy-composite>
     
     <joy-customquery name="Analytics - Category List">
         select distinct CAT_PK, CAT_NAME 

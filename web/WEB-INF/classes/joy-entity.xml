@@ -17,8 +17,8 @@ for the custom queries :
 <!-- Or JDBC Direct connection -->
     <joy-jdbc-driver>org.postgresql.Driver</joy-jdbc-driver>
     <joy-jdbc-url>jdbc:postgresql://localhost:5432/dgm</joy-jdbc-url>
-    <joy-jdbc-user>dgm</joy-jdbc-user>
-    <joy-jdbc-pwd>dgm</joy-jdbc-pwd>
+    <joy-jdbc-user>dgmX</joy-jdbc-user>
+    <joy-jdbc-pwd>dgmX</joy-jdbc-pwd>
 <!-- Connection -->
     
     <joy-db-plugins>
@@ -34,7 +34,8 @@ for the custom queries :
         <joy-entity-file group="star">/entity/joy-entity-star.xml</joy-entity-file>
         <joy-entity-file group="shared">/entity/joy-entity-shared.xml</joy-entity-file>
         <joy-entity-file group="src">/entity/joy-entity-src.xml</joy-entity-file>
-        <joy-entity-file group="analytics-global">/entity/joy-entity-analytics-global.xml</joy-entity-file>
+        <joy-entity-file group="analytics-global-costs">/entity/joy-entity-analytics-global-costs.xml</joy-entity-file>
+        <joy-entity-file group="analytics-global-invalids">/entity/joy-entity-analytics-global-invalids.xml</joy-entity-file>
         <joy-entity-file group="analytics-term">/entity/joy-entity-analytics-term.xml</joy-entity-file>
         <joy-entity-file group="analytics-category">/entity/joy-entity-analytics-category.xml</joy-entity-file>
         <joy-entity-file group="others">/entity/joy-entity-others.xml</joy-entity-file>
@@ -47,5 +48,108 @@ for the custom queries :
         <joy-entity-file group="metric">/entity/joy-entity-analytics-metric.xml</joy-entity-file>
         <joy-entity-file group="search">/entity/joy-entity-search.xml</joy-entity-file>
     </joy-entity-files>
+    
+    <!-- *****************  SHARED ***************** -->
+    <joy-entity>
+        <joy-entity-name>Last Facts Only</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-type>query</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>Analytics - Terms Global Score Calculation</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-type>query</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>Terms with Glossary information</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+        <joy-entity-dependencies>
+            <joy-entity-dependency sequence="1">DIM_CATEGORY</joy-entity-dependency>
+            <joy-entity-dependency sequence="2">DIM_GLOSSARY</joy-entity-dependency>
+        </joy-entity-dependencies>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>Scorecards with Group information</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>Metrics With Scorecard information</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+        <joy-entity-dependencies>
+            <joy-entity-dependency sequence="1">Scorecards with Group information</joy-entity-dependency>
+        </joy-entity-dependencies>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>Last Facts Only with details</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-shared.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+        <joy-entity-dependencies>
+            <joy-entity-dependency sequence="1">Terms with Glossary information</joy-entity-dependency>
+            <joy-entity-dependency sequence="2">Metrics With Scorecard information</joy-entity-dependency>
+        </joy-entity-dependencies>
+    </joy-entity>
+    
+    <!-- *****************  HOME ***************** -->
+    
+    <joy-entity>
+        <joy-entity-name>List of terms used</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>List of metrics used</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>AXIS_SCORE_HOME_00</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>GLOBAL_SCORING_HOME_01</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+        <joy-entity-dependencies>
+            <joy-entity-dependency sequence="1">Terms with Glossary information</joy-entity-dependency>
+        </joy-entity-dependencies>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>NO_OWNER_HOME_02</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>query</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>Total Weight for DQ Axis</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>HOME_BEST_TERMS</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+        <joy-entity-dependencies>
+            <joy-entity-dependency sequence="1">Last Facts Only</joy-entity-dependency>
+        </joy-entity-dependencies>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>HOME_WORSE_TERMS</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+        <joy-entity-dependencies>
+            <joy-entity-dependency sequence="1">Last Facts Only</joy-entity-dependency>
+        </joy-entity-dependencies>
+    </joy-entity>
+    <joy-entity>
+        <joy-entity-name>SCORING_KPIS</joy-entity-name>
+        <joy-entity-file>/entity/joy-entity-home.xml</joy-entity-file>
+        <joy-entity-type>composite</joy-entity-type>
+        <joy-entity-dependencies>
+            <joy-entity-dependency sequence="1">Analytics - Terms Global Score Calculation</joy-entity-dependency>
+        </joy-entity-dependencies>
+    </joy-entity>
     
 </joy-entities>

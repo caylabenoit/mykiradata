@@ -17,7 +17,6 @@
 package com.dgm.tasks.load;
 
 import com.dgm.common.providers.ParamProvider;
-import com.joy.Joy;
 import com.joy.tasks.JoyTaskStatus;
 
 /**
@@ -34,7 +33,7 @@ public class TASKLandingPurge extends TASKCommonRAZ {
     @Override
     public JoyTaskStatus taskExecute() {
         try {
-            ParamProvider myParams = new ParamProvider(this.getEntities());
+            ParamProvider myParams = new ParamProvider(getJoyState().getBOFactory());
             
             // vide les tables
             landingPurge();
@@ -43,7 +42,7 @@ public class TASKLandingPurge extends TASKCommonRAZ {
             this.setMessage("Landing tables purged.");
             
         } catch (Exception e) {
-            Joy.LOG().fatal(e);
+            getLog().severe(e.toString());
             this.setMessage(e.toString());
             return JoyTaskStatus.Failed;
         }

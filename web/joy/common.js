@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2017 benoit
+ * Copyright (C) 2017 Benoit CAYLA (benoit@famillecayla.fr)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,12 +94,15 @@ function setGlypheToClass(name, className, params) {
  * @param {type} data       JSON object which contains data
  * @returns {undefined}     Nothing
  */
-function fillComboboxFromJoyVector(selectID, data) {
+function fillComboboxFromJoyVector(selectID, data, orderText, orderValue) {
+    var oText, oValue;
     var cboObject = document.getElementById(selectID);
+    if (orderText == null) oText = 1; else oText = orderText;
+    if (orderValue == null) oValue = 0;  else oValue = orderValue;
     for (var i=0; i < data.rowcount; i++) {
         var myoption = document.createElement("option");
-        myoption.text = data.rows[i].items[1].value;
-        myoption.value = data.rows[i].items[0].value;
+        myoption.text = data.rows[i].items[oText].value;
+        myoption.value = data.rows[i].items[oValue].value;
         //cboObject.value = vector.selected;
         cboObject.add(myoption, null);
     }
@@ -118,4 +121,29 @@ function getFromJoy(content, fieldname) {
             return content[i].value;
     }
     return null;
+}
+
+/**
+ * Modify a <A> href tag to add a onClick callback to call joyNavigate function
+ * @param {type} aId Tag ID
+ * @param {type} tag MVC tag
+ */
+function makeHref(aId, tag) {
+    document.getElementById(aId).href = "#";
+    document.getElementById(aId).addEventListener("click", function() { joyNavigate(tag) }, false); 
+}
+
+/**
+ * Joy single values to set to the <SPAN> tags
+ * @param {type} singles values
+ */
+function setJoyFieldValues(singles) {
+    var spans = document.getElementsByTagName("span");
+    for (var i=0; i < spans.length; i++) {
+        for (var j=0; j < singles.length; j++) {
+            if (spans[i].id.toUpperCase() == singles[j].name.toUpperCase()) {
+                spans[i].innerHTML = singles[j].value;
+            }
+        }
+    }
 }

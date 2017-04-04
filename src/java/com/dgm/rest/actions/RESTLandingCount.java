@@ -20,7 +20,7 @@ import com.joy.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import com.joy.bo.IEntity;
-import com.joy.mvc.actionTypes.ActionTypeREST;
+import com.joy.api.ActionTypeREST;
 
 /**
  * Return count information about all the landing tables

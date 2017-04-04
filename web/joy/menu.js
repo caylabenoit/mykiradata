@@ -37,14 +37,14 @@ function menu_topLeft(divId, context) {
         
         if (mainItem.items == null) { // Display direct link
             out += "<LI class='" + active + "'>";
-            out += "<A class='active' HREF='" + joyURL(params.urlpattern, mainItem.object, mainItem.actiontype) + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
+            out += "<A class='active' HREF='" + getURLApp() + mainItem.url + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
             out += "<LI>";
         } else { // Display dropdown
             out += "<LI class='dropdown " + active + "'>";
             out += "<A  class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'  HREF='#'><I class='fa fa-unlock-alt fa-fw'></I>&nbsp;" + mainItem.label + "</A>";
             out += "<UL class='dropdown-menu dropdown-shortcuts'>";
             for (var j=0; j <mainItem.items.length; j++) { // Go through the 2nd level items 
-                out += "<LI><A  HREF='" + joyURL(params.urlpattern, mainItem.items[j].object, mainItem.items[j].actiontype) + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
+                out += "<LI><A  HREF='" + getURLApp() + mainItem.items[j].url + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
             }
             out += "</UL>";
             out += "</LI>";
@@ -74,11 +74,11 @@ function menu_topRightShortcuts(divId, context) {
         var mainItem = myMenu.items[i];
 
         if (mainItem.shortcut == 'true')
-            out += "<LI><A href=" + joyURL(params.urlpattern, mainItem.object, mainItem.actiontype) + "><div><p><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</p></div></A></LI>";
+            out += "<LI><A href=" + getURLApp() + mainItem.url + "><div><p><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</p></div></A></LI>";
         if (mainItem.items != null) { // Go through the 2nd level 
             for (var j=0; j <mainItem.items.length; j++) { // Go through the 2nd level items 
                 if (mainItem.items[j].shortcut == 'true')
-                    out += "<LI><A href=" + joyURL(params.urlpattern, mainItem.items[j].object, mainItem.items[j].actiontype) + "><div><p><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</p></div></A></LI>";
+                    out += "<LI><A href=" + getURLApp() + mainItem.items[j].url + "><div><p><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</p></div></A></LI>";
             }
         }
     }
@@ -144,7 +144,7 @@ function menu_left(divId, context, menuTag) {
                     activeBloc = active;
                 }
                 bloc2nd += "<LI " + active + ">";
-                bloc2nd += "<A aria-expanded='false' " + active + " href='" + joyURL(params.urlpattern, mainItem.items[j].object, mainItem.items[j].actiontype) + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
+                bloc2nd += "<A aria-expanded='false' " + active + " href='" + getURLApp() + mainItem.items[j].url + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
                 bloc2nd += "</LI>";
             }
 
@@ -157,13 +157,29 @@ function menu_left(divId, context, menuTag) {
             if (activeMenuId == mainItem.id)
                 active += "class='active'";
             out += "<LI " + active + ">";
-            out += "<A " + active + " aria-expanded='false' href='" + joyURL(params.urlpattern, mainItem.object, mainItem.actiontype) + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
+            out += "<A " + active + " aria-expanded='false' href='" + getURLApp() + mainItem.url + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
             out += "</LI>";
         }
         
     }
     out += "</UL>";
     document.getElementById(divId).innerHTML = out;
+}
+
+/**
+ * Initialize the application menu
+ * @param {type} context
+ * @returns {undefined}
+ */
+function init_menus(context, leftmenuname) {
+    document.getElementById("src_logo").src = getURLRoot() + context.parameters.logo;
+    document.getElementById("href_about").href = getURLApp() + "about.html";
+    //makeHref("href_about", "about");
+    menu_topLeft("menu_top_left", context);
+    menu_topRightShortcuts("menu_right_shortcuts", context);
+    menu_topRightUserManagement("menu_right_user", context);
+    menu_left("menu_left", context, leftmenuname);
+    $("#side-menu").metisMenu();
 }
 
 /*

@@ -18,17 +18,18 @@ package com.dgm.common.providers;
 
 import com.dgm.beans.ParamBean;
 import com.dgm.common.Constants;
-import com.joy.Joy;
+import com.joy.JOY;
 import com.joy.bo.BOFactory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.joy.bo.IEntity;
+import com.joy.common.joyClassTemplate;
 
 /**
  * 
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class ParamProvider {
+public class ParamProvider extends joyClassTemplate {
     BOFactory entities;
 
     public ParamProvider(BOFactory entities) {
@@ -82,7 +83,7 @@ public class ParamProvider {
             entities.closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.LOG().error("Issue while getting parameter " + _Name + " Error is -> " +  e);
+            getLog().severe("Issue while getting parameter " + _Name + " Error is -> " +  e);
         }
         return result;
     }
@@ -99,7 +100,7 @@ public class ParamProvider {
             return true;
             
         } catch (Exception e) {
-            Joy.LOG().error(e);
+            getLog().severe(e.toString());
             return false;
         }
     }

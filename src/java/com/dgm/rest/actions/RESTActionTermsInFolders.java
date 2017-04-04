@@ -18,7 +18,7 @@ package com.dgm.rest.actions;
 
 import com.dgm.termrelationship.folderview.TermTree;
 import com.dgm.termrelationship.folderview.TermNode;
-import com.joy.mvc.actionTypes.ActionTypeREST;
+import com.joy.api.ActionTypeREST;
 
 /**
  * @author Benoit CAYLA (benoit@famillecayla.fr)
@@ -32,8 +32,8 @@ public class RESTActionTermsInFolders extends ActionTypeREST {
         
         String stream = "[ {\"text\": \"Nothing\"} ]";
         TermTree mytree = new TermTree(this.getBOFactory());
-        TermNode ars = mytree.build(this.getIntArgumentValue("P2"), 
-                                    this.getIntArgumentValue("P1"));
+        TermNode ars = mytree.build(Integer.valueOf(this.getRestParameter(2)), 
+                                    Integer.valueOf(this.getRestParameter(1)));
         stream = "[ " + ars.getJSONObject().toString() + "]"; 
         
         return stream;

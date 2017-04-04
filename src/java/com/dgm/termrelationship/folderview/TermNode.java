@@ -16,7 +16,7 @@
  */
 package com.dgm.termrelationship.folderview;
 
-import com.joy.Joy;
+import com.joy.JOY;
 import com.joy.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -116,7 +116,7 @@ public class TermNode {
         }
         
         itemChildren.put("text", "[" + type + "] " + this.name);
-        itemChildren.put("href", Joy.URL("byterm", "display", "term",  String.valueOf(key)));
+        itemChildren.put("href", JOY.URL("byterm", "display", "term",  String.valueOf(key)));
         return itemChildren;
     }
 }

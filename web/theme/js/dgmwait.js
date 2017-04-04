@@ -28,8 +28,10 @@ function start_waitMessage(panelID, divID) {
     var divImg = document.createElement("DIV");
     divImg.classList.add("divTaskImage");
     divImg.id = "wait_" + panelID;
+    
     var divTxt = document.createElement("DIV");
     divTxt.classList.add("divTaskDesc");
+    
     var content = document.createTextNode(" Please wait ...");
     divTxt.appendChild(content);
     divImg.appendChild(divTxt);
@@ -44,6 +46,10 @@ function start_waitMessage(panelID, divID) {
  * @returns {undefined}     Nothing
  */
 function end_waitMessage(panelID, divID) {
-    document.getElementById(divID).style.display="initial";
-    document.getElementById("wait_" + panelID).style.display="none";
+    var divItem = document.getElementById(divID);
+    var panelItem = document.getElementById("wait_" + panelID);
+    if (divItem != null && panelItem != null) {
+        divItem.style.display="initial";
+        panelItem.style.display="none";
+    }
 }

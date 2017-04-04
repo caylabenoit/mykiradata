@@ -16,9 +16,11 @@
  */
 package com.dgm.termrelationship.mapview;
 
-import com.joy.Joy;
+import com.joy.JOY;
+import com.joy.common.state.JoyState;
 import com.joy.bo.BOFactory;
 import com.joy.bo.IEntity;
+import com.joy.common.joyClassTemplate;
 import com.joy.json.JSONObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +32,8 @@ import java.util.List;
  * Build the graph view for vis.js viewing
  * @author Benoit CAYLA <benoit@famillecayla.fr>
  */
-public class Term {
-    BOFactory entities;             // data connection
+public class Term extends joyClassTemplate {
+    JoyState state;             // data connection
     private List<TermLink> links;   // links (parents & childs)
     private String type;            // Term type
     private String name;            // Term name
@@ -41,22 +43,21 @@ public class Term {
     private boolean initial;        // Initial and central term
     private static String svgBoxTemplate;  // SVG template coming from the text file
     
-    public Term(BOFactory entities, int key, int childDepth, boolean initial) {
+    public Term(JoyState state, int key, int childDepth, boolean initial) {
         links = new ArrayList();
         this.type = "";
         this.name = "";
         this.key = key;
-        this.entities = entities;
+        this.state = state;
         this.childsDepth = childDepth;
         this.initial = initial;
-        INIT_TEMPLATES();
+        INIT_TEMPLATES(state.getParameters().getParameter("svg_box_template").getValue().toString());
         init();
     }
 
-    public static void INIT_TEMPLATES() {
+    public static void INIT_TEMPLATES(String svg_box_template) {
         if (svgBoxTemplate == null) {
-            String templateFile = Joy.PARAMETERS().getParameter("svg_box_template").getValue().toString();
-            svgBoxTemplate = Joy.FILE_TO_STRING(templateFile);
+            svgBoxTemplate = JOY.FILE_TO_STRING(svg_box_template);
         }
     }
 
@@ -104,7 +105,7 @@ public class Term {
      */
     private void initTermInformations() {
         try {
-            IEntity entity = entities.getEntity("Analytics - Rel Term Info");
+            IEntity entity = state.getBOFactory().getEntity("Analytics - Rel Term Info");
 
             entity.field("TRM_PK").setKeyValue(this.key);
             ResultSet rs = entity.select();
@@ -115,10 +116,10 @@ public class Term {
                 if (rs.getObject("GLOBALSCORE") != null)
                     this.score = rs.getFloat("GLOBALSCORE");
             } 
-            entities.closeResultSet(rs);
+            state.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException ex) {
-            Joy.LOG().error(ex);
+            getLog().severe(ex.toString());
         }
     }   
     
@@ -133,13 +134,13 @@ public class Term {
         
         try {
             if (levelMax == 0) {
-                Joy.LOG().debug( "End of Term recursivity at level " + String.valueOf(levelMax));
+                getLog().fine( "End of Term recursivity at level " + String.valueOf(levelMax));
                 return ;
             }
             
             // Get the relationships (childs only) for the current term into the db
-            Joy.LOG().debug("Get Term Childs for Term Key=" + String.valueOf(currentTerm.name));
-            IEntity entity = entities.getEntity("Analytics - Rel Term Relationships");
+            getLog().fine("Get Term Childs for Term Key=" + String.valueOf(currentTerm.name));
+            IEntity entity = state.getBOFactory().getEntity("Analytics - Rel Term Relationships");
             entity.field("TERM_PK_SOURCE").setKeyValue(currentTerm.getKey());
             entity.addSort("REL_NAME");
             ResultSet rs = entity.select();
@@ -148,15 +149,15 @@ public class Term {
             while (rs.next()) {
                 TermLink edge = new TermLink();
                 edge.setSource(currentTerm);
-                Term child = new Term(entities, rs.getInt("TERM_PK_TARGET"), levelMax-1, false);
+                Term child = new Term(state, rs.getInt("TERM_PK_TARGET"), levelMax-1, false);
                 edge.setTarget(child);
                 edge.setLabel(rs.getString("REL_NAME"));
                 this.addLink(edge);
             }
-            entities.closeResultSet(rs);
+            state.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.LOG().error(e);
+            getLog().severe(e.toString());
         }
     }
 
@@ -172,8 +173,8 @@ public class Term {
         
         try {
             // Get the relationships (childs only) for the current term into the db
-            Joy.LOG().debug("Get Term Childs for Term Key=" + String.valueOf(currentTerm.name));
-            IEntity entity = entities.getEntity("Analytics - Rel Term Relationships");
+            getLog().fine("Get Term Childs for Term Key=" + String.valueOf(currentTerm.name));
+            IEntity entity = state.getBOFactory().getEntity("Analytics - Rel Term Relationships");
             entity.field("TERM_PK_TARGET").setKeyValue(currentTerm.getKey());
             entity.addSort("REL_NAME");
             ResultSet rs = entity.select();
@@ -182,15 +183,15 @@ public class Term {
             while (rs.next()) {
                 TermLink edge = new TermLink();
                 edge.setTarget(currentTerm);
-                Term parent = new Term(entities, rs.getInt("TERM_PK_SOURCE"), 0, false);
+                Term parent = new Term(state, rs.getInt("TERM_PK_SOURCE"), 0, false);
                 edge.setSource(parent);
                 edge.setLabel(rs.getString("REL_NAME"));
                 this.addLink(edge);
             }
-            entities.closeResultSet(rs);
+            state.getBOFactory().closeResultSet(rs);
             
         } catch (SQLException e) {
-            Joy.LOG().error(e);
+            getLog().severe(e.toString());
         }
     }
 
@@ -201,23 +202,23 @@ public class Term {
      * @return 
      */
     private String getBoxColor(float myScore) {
-        String myColor = Joy.PARAMETERS().getParameter("ColorBad").getValue().toString();
+        String myColor = state.getParameters().getParameter("ColorBad").getValue().toString();
         if (myScore > 0) {
             int iBad = 30;
             int iWarning = 50;
             try {
-                iBad = (Joy.PARAMETERS().getParameter("thresold_bad") == null ? 30 : Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString()));
-                iWarning = (Joy.PARAMETERS().getParameter("thresold_good") == null ? 50 : Integer.parseInt(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString()));
+                iBad = (state.getParameters().getParameter("thresold_bad") == null ? 30 : Integer.parseInt(state.getParameters().getParameter("thresold_bad").getValue().toString()));
+                iWarning = (state.getParameters().getParameter("thresold_good") == null ? 50 : Integer.parseInt(state.getParameters().getParameter("thresold_good").getValue().toString()));
             } catch (NumberFormatException e) {}
-            myColor = Joy.PARAMETERS().getParameter("ColorBad").getValue().toString();
+            myColor = state.getParameters().getParameter("ColorBad").getValue().toString();
             if (myScore >= iBad && myScore < iWarning) 
-                myColor = Joy.PARAMETERS().getParameter("ColorWarning").getValue().toString();
+                myColor = state.getParameters().getParameter("ColorWarning").getValue().toString();
             else if (myScore >= iWarning)
-                myColor = Joy.PARAMETERS().getParameter("ColorGood").getValue().toString();
+                myColor = state.getParameters().getParameter("ColorGood").getValue().toString();
         } else { // Score not calculated
-            myColor = Joy.PARAMETERS().getParameter("ColorNoMove").getValue().toString();
+            myColor = state.getParameters().getParameter("ColorNoMove").getValue().toString();
         }
-        return Joy.RGBA(myColor, "1");
+        return JOY.RGBA(myColor, "1");
     }
     
     /**
@@ -271,7 +272,7 @@ public class Term {
             return jsonReturn.toString(); 
             
         } catch (Exception ex) {
-            Joy.LOG().error(ex);
+            getLog().severe(ex.toString());
             return "[ {\"text\": \"Nothing\"} ]";
         }
     }
@@ -303,7 +304,7 @@ public class Term {
         // Box attributes
         JSONObject node = new JSONObject();
         node.put("id", curTerm.getKey());
-        if (Joy.PARAMETERS().getParameter("svg_support").getValue().toString().equalsIgnoreCase("TRUE")) {
+        if (state.getParameters().getParameter("svg_support").getValue().toString().equalsIgnoreCase("TRUE")) {
             // Use SVG for viewing the boxes
             node.put("image", getSVGImage(curTerm));
             node.put("shape", "image");
@@ -359,7 +360,7 @@ public class Term {
             edge.put("to", link.getTarget().getKey());
             edge.put("label", link.getLabel());
             edge.put("arrows", "to");
-            edge.put("length", Joy.PARAMETERS().getParameter("node_distance").getValue().toString());
+            edge.put("length", state.getParameters().getParameter("node_distance").getValue().toString());
             _allEdges.add(edge); 
             
             Term myNode = (curTerm.getKey() == link.getSource().getKey() ? link.getTarget() : link.getSource());

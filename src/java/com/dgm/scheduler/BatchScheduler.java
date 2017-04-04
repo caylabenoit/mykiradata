@@ -16,7 +16,7 @@
  */
 package com.dgm.scheduler;
 
-import com.joy.Joy;
+import com.joy.JOY;
 import com.joy.listener.ListenerBasic;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -39,21 +39,21 @@ public class BatchScheduler extends ListenerBasic  {
             if (schedulerActive.equalsIgnoreCase("true")) {
                 int timer = 10;
                 try {
-                    Joy.LOG().debug( "Get timeout information");
+                    getLog().fine( "Get timeout information");
                     timer = 30;
-                    Joy.LOG().debug("Timeout is defined to " + timer + " minutes");
+                    getLog().fine("Timeout is defined to " + timer + " minutes");
 
                     scheduler = Executors.newSingleThreadScheduledExecutor();
                     scheduler.scheduleAtFixedRate(new BatchRefresh(), 0, timer, TimeUnit.MINUTES);
-                    Joy.LOG().info("Scheduler Initialized");
+                    getLog().info("Scheduler Initialized");
                     
                 } catch (Exception e) {
-                    Joy.LOG().fatal(e);
+                    getLog().severe(e.toString());
                 }
             }else
-                Joy.LOG().info( "scheduler entry in not set to true, scheduler is not actived.");
+                getLog().info( "scheduler entry in not set to true, scheduler is not actived.");
         } else
-            Joy.LOG().error("scheduler entry in web.xml was not found, scheduler is not actived.");
+            getLog().severe("scheduler entry in web.xml was not found, scheduler is not actived.");
     }
 
     @Override

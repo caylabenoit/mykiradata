@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "services": [
+    {
+      "name": "plugin",
+      "class": "com.dgm.tasks.load.TASKPluginImport",
+    },
+    {
+      "name": "dtmpurge",
+      "class": "com.dgm.tasks.load.TASKDtmPurge",
+    },
+    {
+      "name": "landingpurge",
+      "class": "com.dgm.tasks.load.TASKLandingPurge",
+    },
+    {
+      "name": "landingload",
+      "class": "com.dgm.tasks.load.TASKLoadProcess",
+    }
+  ]
+}

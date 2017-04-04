@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Data Governance Monitor - DGM">
+    <meta name="author" content="Benoit CAYLA">
+
+    <link rel="icon" type="images/png" href="../../../images/logo.png" />
+
+    <title>myKiraData</title>
+
+    <script type="text/javascript" src="../../../joy/global.js"></script>
+    <script type="text/javascript" src="../../../joy/includes.js"></script>
+    <script>
+        includeAllCSS();
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <NAV class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <DIV class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">";
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <DIV class='logobloc'>
+                    <A id="href_about"><IMG id="src_logo" class='logomenu' /></A>
+                </DIV>
+            </DIV>
+            <DIV class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>  
+                <DIV id="menu_top_left" selected="TL01"></DIV>
+                <UL class="nav navbar-top-links navbar-right">
+                    <LI id="menu_right_shortcuts"></LI>
+                    <LI id="dropdown-tasks" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-random fa-fw"></i><i class="fa fa-caret-down"></i>
+                        </a>
+                        <UL class="dropdown-menu dropdown-shortcuts" id="lutasklist">
+                            <li><a class="text-center" href="#"><strong>Please wait while Refreshing tasks list</strong>&nbsp;<i class="fa fa-angle-right"></i></a></li>
+                        </UL>
+                    </LI>
+                    <LI id="menu_right_user"></LI>
+                </UL>
+            </DIV>
+            <DIV class='navbar-default sidebar' role='navigation' >
+                <DIV class='sidebar-nav navbar-collapse' id="menu_left" selected="Analytics-S-DS"></DIV>
+            </DIV>
+        </NAV>
+        <!-- Enf of Navigation -->
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"><SPAN id="GLO_NAME"></SPAN></h1>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading"><i class="glypheglossary"></i>&nbsp;Data Source</div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <label>Description</label>
+                                <SPAN id="DSO_SOURCENAME"></SPAN>
+                                <DIV class="form-group form-inline">
+                                    <SELECT name="datasource" class="js-states form-control" id="datasource"></SELECT>
+                                    <BUTTON id='btn1' class='btn btn-primary' type='button' onclick="evt_change();" >Change</BUTTON>
+                                </div>
+                            </div>
+                        </div>
+                    </div>            
+                    <div class="col-lg-8">
+                        <div class="panel panel-green">
+                            <div class="panel-heading"><i class="glyphedqaxis"></i>&nbsp;Data Quality Dimensions</div>
+                            <div class="panel-body" id="panel_Wait_dqpanel">
+                                <div id="div_Wait_dqpanel"></div> 
+                                <div class="table-responsive" id="dqpanel"></div>
+                            </div>
+                        </div>
+                    </div>   
+                </DIV>
+                            
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><i class="glyphechart"></i>&nbsp;Radar Synthesis</div>
+                            <div class="panel-body" id="panel_Wait_radar">
+                                <div>
+                                    <div id="div_Wait_radar"></div> 
+                                    <canvas id="radar"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><i class="glyphechart"></i>&nbsp;Last runs</div>
+                            <div class="panel-body" id="panel_Wait_LastRun">
+                                <div>
+                                    <div id="div_Wait_LastRun"></div> 
+                                    <canvas id="LastRun"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                            
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Data</div>
+                            <div class="panel-body">
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#Metrics" data-toggle="tab">Metrics</a></li>
+                                        <li><a href="#Terms" data-toggle="tab">Business Terms</a></li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="Metrics">
+                                            <h4>Metrics</h4>
+                                                <table id="tableMetric" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Metric/Rules</th>
+                                                    <th>DQ Dimension</th>
+                                                    <th>Total Rows</th>
+                                                    <th>Invalid Rows</th>
+                                                    <th>Score</th>
+                                                    <th>Scorecard</th>
+                                                </tr> 
+                                                </thead>
+                                                </table>
+                                        </div>
+                                        <div class="tab-pane fade" id="Terms">
+                                           <h4>Business Terms</h4>
+                                           <table id="tableTerm" class="table table-striped table-bordered table-hover"  cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="200px">Term</th>
+                                                        <th width="100px">DQ. Axis</th>
+                                                        <th width="70px">Score</th>
+                                                        <th width="70px">Cost</th>
+                                                    </tr>   
+                                                </thead> 
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+            
+            </div><!-- /.container-fluid -->
+        </div><!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+
+<script>includeAllJS();</script>
+<script type="text/javascript" src="display.js"></script>
+
+</body>
+</html>                                    
+

@@ -15,7 +15,7 @@ for the custom queries :
 
 <joy-entities>
 
-    <joy-customquery name="Analytics - Context Last Runs"> <!-- Replace RPT_CON_LASTRUNS -->
+    <joy-customquery name="Analytics - Context Last Runs"> 
         select max(DIM_TIME.TIM_CALENDAR_DATE) AS rundate, 
         DIM_DQAXIS.DQX_NAME, 
         avg(FRS_KPI_SCORE) AS SCORE, 
@@ -30,7 +30,7 @@ for the custom queries :
         ORDER BY CON_FK, tim_calendar_date
     </joy-customquery>
     
-    <joy-customquery name="Analytics - Context Term List"> <!-- Replace RPT_CON_TERM_LIST -->
+    <joy-customquery name="Analytics - Context Term List">
         SELECT AVG (FRS_KPI_SCORE) AS SCORE, AVG (FRS_COST) AS COST, DQX_NAME, TRM_NAME,  TRM_FK, DQX_FUNCKEY, B.CON_FK
           FROM (select FACT_GOVERNANCE.*, DIM_TERM.CAT_FK, DIM_TERM.GLO_FK
                from FACT_GOVERNANCE, (select distinct FIRST_VALUE(frs_pk) OVER(PARTITION BY TRM_FK, MET_FK, DQX_FK, ORI_FK, CON_FK, DSO_FK ORDER BY JOB_FK DESC) As frs_pk 
@@ -43,4 +43,15 @@ for the custom queries :
         GROUP BY DQX_NAME, TRM_NAME, TRM_FK,  DQX_FUNCKEY, B.CON_FK
         ORDER BY TRM_NAME
     </joy-customquery>
+    
+    <joy-composite name = "CONTEXT_LIST" distinct="yes">
+        <joy-field alias="X">CON_PK</joy-field>
+        <joy-field alias="X">CON_DESCRIPTION</joy-field>
+        <joy-entity alias="X">DIM_CONTEXT</joy-entity>
+        <joy-join type="INNER">
+            <joy-entity alias="SC">Last Facts Only</joy-entity>
+            <joy-join-key master="CON_PK" slave="CON_FK" />
+        </joy-join>
+    </joy-composite>
+    
 </joy-entities>

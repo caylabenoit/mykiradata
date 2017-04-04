@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "services": [
+    {
+      "name": "taskslist",
+      "class": "com.joy.api.ready.RESTTasksList",
+      "mime": "application/json"
+    },
+    {
+      "name": "relterm",
+      "class": "com.dgm.rest.actions.RESTActionTermsInFolders",
+      "mime": "application/json"
+    },
+    {
+      "name": "globalkpis",
+      "class": "com.dgm.rest.actions.RESTGlobalKpis",
+      "mime": "application/json"
+    },
+    {
+      "name": "checks",
+      "class": "com.joy.api.ready.RESTJoyCheck",
+      "mime": "application/json"
+    },
+    {
+      "name": "charts",
+      "class": "com.joy.api.ready.RESTChartJS",
+      "mime": "application/json"
+    },
+    {
+      "name": "landingcount",
+      "class": "com.dgm.rest.actions.RESTLandingCount",
+      "mime": "application/json"
+    },
+    {
+      "name": "entity",
+      "class": "com.joy.api.ready.RESTEntity",
+      "mime": "application/json"
+    },
+    {
+      "name": "entitydump",
+      "class": "com.joy.api.ready.RESTEntity",
+      "mime": "unknown/unknown"
+    },
+    {
+      "name": "termsgraph",
+      "class": "com.dgm.rest.actions.RESTActionTermsGraph",
+      "mime": "application/json"
+    },
+    {
+      "name": "app",
+      "class": "com.dgm.rest.actions.RESTAppContext",
+      "mime": "application/json"
+    },
+    {
+      "name": "bterm",
+      "class": "com.dgm.rest.actions.dimensions.RESTBusinessTerm",
+      "mime": "application/json"
+    },
+    {
+      "name": "category",
+      "class": "com.dgm.rest.actions.dimensions.RESTCategory",
+      "mime": "application/json"
+    },
+    {
+      "name": "glossary",
+      "class": "com.dgm.rest.actions.dimensions.RESTGlossary",
+      "mime": "application/json"
+    },
+    {
+      "name": "datasource",
+      "class": "com.dgm.rest.actions.dimensions.RESTDataSource",
+      "mime": "application/json"
+    },
+    {
+      "name": "context",
+      "class": "com.dgm.rest.actions.dimensions.RESTContext",
+      "mime": "application/json"
+    },
+    {
+      "name": "metric",
+      "class": "com.dgm.rest.actions.dimensions.RESTMetric",
+      "mime": "application/json"
+    },
+    {
+      "name": "dqaxis",
+      "class": "com.dgm.rest.actions.dimensions.RESTDQAxis",
+      "mime": "application/json"
+    }
+  ]
+}

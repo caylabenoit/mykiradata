@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<HEAD>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Data Governance Monitor - DGM">
+    <meta name="author" content="Benoit CAYLA">
+
+    <link rel="icon" type="images/png" href="../images/logo.png" />
+
+    <title>myKiraData</title>
+
+    <script type="text/javascript" src="../joy/global.js"></script>
+    <script type="text/javascript" src="../joy/includes.js"></script>
+    <script>
+        includeAllCSS();
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</HEAD>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <NAV class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <DIV class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">";
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <DIV class='logobloc'>
+                    <A id="href_about"><IMG id="src_logo" class='logomenu' /></A>
+                </DIV>
+            </DIV>
+            <DIV class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>  
+                <DIV id="menu_top_left" selected="TL01"></DIV>
+                <UL class="nav navbar-top-links navbar-right">
+                    <LI id="menu_right_shortcuts"></LI>
+                    <LI id="dropdown-tasks" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-random fa-fw"></i><i class="fa fa-caret-down"></i>
+                        </a>
+                        <UL class="dropdown-menu dropdown-shortcuts" id="lutasklist">
+                            <li><a class="text-center" href="#"><strong>Please wait while Refreshing tasks list</strong>&nbsp;<i class="fa fa-angle-right"></i></a></li>
+                        </UL>
+                    </LI>
+                    <LI id="menu_right_user"></LI>
+                </UL>
+            </DIV>
+            <DIV class='navbar-default sidebar' role='navigation' >
+                <DIV class='sidebar-nav navbar-collapse' id="menu_left" selected="Home"></DIV>
+            </DIV>
+        </NAV>
+        <!-- Enf of Navigation -->
+        
+        <!-- Page Content -->
+        <div id="page-wrapper">
+
+            <div class="container-fluid"> 
+                <div style="background-color: white; padding: 0 0 0 0; margin: 0 0 0 0">
+                    <div class="row" id="spots"></div>
+                </div>
+            </div>            
+                
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default"  id="panel-dashbydqaxis">
+                            <div class="panel-heading"><i class="glyphedqaxis"></i>&nbsp;Global scoring per Data Quality Dimension</div>
+                            <div class="panel-body"  id="graph0">
+                                <canvas id="div_graph0"></canvas>
+                            </div>
+                        </div>            
+                    </div>       
+                                
+                    <div class="col-lg-6">
+                        <div class="panel panel-default" id="panel-dashbyglossary">
+                            <div class="panel-heading"><i class="glyphedashboard"></i>&nbsp;Global scoring by Glossary</div>
+                            <div class="panel-body" id="graph1">
+                                <canvas id="div_graph1"></canvas>
+                            </div>
+                        </div>            
+                    </div>   
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-default panel-scores">
+                            <div class="panel-heading">
+                                <i class="glyphedashboard"></i>&nbsp;Global Scores
+                            </div>
+                            <div class="panel-body" id="AXIS_SCORE_HOME_00">
+                                <div id="div_AXIS_SCORE_HOME_00"></div> 
+                            </div>
+                        </div>    
+                    </div>  
+                    
+                    <div class="col-lg-4">
+                        <div class="panel panel-default panel-scores">
+                            <div class="panel-heading">
+                                <i class="glyphedashboard"></i>&nbsp;Best Terms
+                            </div>
+                            <div class="panel-body"  id="HOME_BEST_TERMS">
+                                <div id="div_HOME_BEST_TERMS"> </div> 
+                            </div>
+                        </div>    
+                    </div>   
+                    
+                    <div class="col-lg-4">
+                        <div class="panel panel-default panel-scores">
+                            <div class="panel-heading">
+                                <i class="glyphedashboard"></i>&nbsp;Worse Terms
+                            </div>
+                            <div class="panel-body"  id="HOME_WORSE_TERMS">
+                                <div id="div_HOME_WORSE_TERMS"> </div> 
+                            </div>
+                        </div>    
+                    </div>  
+                </div>
+                            
+            </div><!-- /.container-fluid -->
+        </div><!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+
+<script>includeAllJS();</script>
+<script type="text/javascript" src="home.js"></script>
+
+</body>
+</html>

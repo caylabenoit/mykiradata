@@ -30,4 +30,14 @@
         GROUP BY DQX_NAME, TRM_NAME, TRM_FK,  DQX_FUNCKEY, B.DSO_FK
         ORDER BY TRM_NAME
     </joy-customquery>
+    
+    <joy-composite name = "DATASOURCE_LIST" distinct="yes">
+        <joy-field alias="X">DSO_PK</joy-field>
+        <joy-field alias="X">DSO_SOURCENAME</joy-field>
+        <joy-entity alias="X">DIM_DATASOURCE</joy-entity>
+        <joy-join type="INNER">
+            <joy-entity alias="SC">Last Facts Only</joy-entity>
+            <joy-join-key master="DSO_PK" slave="DSO_FK" />
+        </joy-join>
+    </joy-composite>
 </joy-entities>

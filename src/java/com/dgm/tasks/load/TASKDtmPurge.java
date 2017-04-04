@@ -16,7 +16,7 @@
  */
 package com.dgm.tasks.load;
 
-import com.joy.Joy;
+import com.joy.JOY;
 import com.joy.tasks.JoyTaskStatus;
 
 /**
@@ -42,7 +42,7 @@ public class TASKDtmPurge extends TASKCommonRAZ {
             this.setMessage("DataMart reinitialized successfully");
             
         } catch (Exception e) {
-            Joy.LOG().fatal(e);
+            getLog().severe(e.toString());
             this.setMessage(e.toString());
             return JoyTaskStatus.Failed;
         }

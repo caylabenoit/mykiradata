@@ -1,1 +1,31 @@
-Nothing for the moment
+Pratique
+--------------------
+
+récupérer le texte d'une combo :
+    var t = document.getElementById("termtypes");
+    var _termtype = t.options[t.selectedIndex].text;
+Modifier la valeur selectionnée d'une combo
+    $("#nbhops").val(nbHop).trigger("change");
+
+
+-----------------
+Vérifier les liens entres pages
+    * 3 liens faux dans term (glossaire, categ et config)
+
+REST post
+
+http://www.openjs.com/articles/ajax%5Fxmlhttp%5Fusing%5Fpost.php
+
+function delete_item() { var id = $(this).attr('data-id'); jQuery.ajax({ url: 'http://127.0.0.1:5000/api/v2/item/' + id, type: 'DELETE', success: function(data) { show_items(); } }); }
+
+org chart lib
+http://gojs.net/latest/index.html
+
+Dashboard
+http://modeln.github.io/sDashboard/#
+https://github.com/ModelN/sDashboard
+
+Charts
+https://github.com/caprica/jquery-orgchart
+https://github.com/wesnolte/jOrgChart
+

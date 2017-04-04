@@ -327,7 +327,6 @@ and open the template in the editor.
         </redirects>
     </actionRequest>
 
-
 <!-- NO ACTIONS HERE -->  
 <!-- list here all the actions without action class -->
     <redirects_no_action>
@@ -425,15 +424,10 @@ and open the template in the editor.
     </actionRequest>
 
     <actionRequest>
-        <object>bterm</object>
-        <objecttype>rest</objecttype>
-        <action>com.dgm.rest.actions.dimensions.RESTBusinessTerm</action>
-    </actionRequest>
-
-    <actionRequest>
-        <object>context</object>
+        <object>app</object>
         <objecttype>rest</objecttype>
         <action>com.dgm.rest.actions.RESTAppContext</action>
     </actionRequest>
-
+   
+    
 </joy-actions>

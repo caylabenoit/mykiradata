@@ -16,7 +16,8 @@
  */
 package com.dgm.common;
 
-import com.joy.Joy;
+import com.joy.JOY;
+import com.joy.common.state.JoyState;
 import com.joy.bo.BOFactory;
 import java.sql.ResultSet;
 import com.joy.bo.IEntity;
@@ -56,7 +57,6 @@ public class Utils {
                                                            String infaapp,
                                                            String workflow) {
         String cmd  = "";
-        Joy.LOG().debug ("Action type=Workflow");
 
         // infacmd.bat wfs startWorkflow -dn Domain_WIN2K8 -sn DIS -un Administrator -pd Administrator -a App_Governance_Framework -wf wf_Full_Delta -w true
         cmd += infacmd + " wfs startWorkflow";
@@ -77,9 +77,9 @@ public class Utils {
      * @param termType term type name
      * @return 
     */
-    public static String GET_TERM_TYPE_ICON(BOFactory entities, String termType) {
+    public static String GET_TERM_TYPE_ICON(JoyState state, String termType) {
         try {
-            IEntity entity = entities.getEntity("SRC_TERMTYPE");
+            IEntity entity = state.getBOFactory().getEntity("SRC_TERMTYPE");
             entity.field("GIO_TERMTYPE_NAME").setKeyValue(termType);
             String result;
             
@@ -87,14 +87,13 @@ public class Utils {
             if (rs.next()) 
                 result = rs.getString("GIO_ICON_PATHNAME");
             else
-                result =  Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString();
+                result =  state.getParameters().getParameter("DefaultTermTypeIcon").getValue().toString();
             
-            entities.closeResultSet(rs);
+            state.getBOFactory().closeResultSet(rs);
             return result;
             
         } catch (SQLException e) {
-            Joy.LOG().error(e);
-            return Joy.PARAMETERS().getParameter("DefaultTermTypeIcon").getValue().toString();
+            return state.getParameters().getParameter("DefaultTermTypeIcon").getValue().toString();
         }
     } 
     
@@ -103,28 +102,18 @@ public class Utils {
      * @param myScore score to check
      * @return color code like XXX,XXX,XXX
      */
-    public static String GET_COLOR_FOR_SCORE(String myScore) {
-        String finalColor = Joy.PARAMETERS().getParameter("ColorGood").getValue().toString();
+    public static String GET_COLOR_FOR_SCORE(JoyState state, String myScore) {
+        String finalColor = state.getParameters().getParameter("ColorGood").getValue().toString();
         try {
             float myFloatScore = Float.valueOf(myScore);
-            float tBad = Float.valueOf(Joy.PARAMETERS().getParameter("thresold_bad").getValue().toString());
-            float tGood = Float.valueOf(Joy.PARAMETERS().getParameter("thresold_good").getValue().toString());
+            float tBad = Float.valueOf(state.getParameters().getParameter("thresold_bad").getValue().toString());
+            float tGood = Float.valueOf(state.getParameters().getParameter("thresold_good").getValue().toString());
             if (myFloatScore < tBad) 
-                finalColor = Joy.PARAMETERS().getParameter("ColorBad").getValue().toString();
+                finalColor = state.getParameters().getParameter("ColorBad").getValue().toString();
             else if (myFloatScore < tGood) 
-                finalColor = Joy.PARAMETERS().getParameter("ColorWarning").getValue().toString();
+                finalColor = state.getParameters().getParameter("ColorWarning").getValue().toString();
         } catch (NumberFormatException e) {} 
         return finalColor;
-    }
-    
-    /**
-     * Returns the Color considering the thresolds criterias and the given score.
-     * @param myScore score to check 
-     * @param transparency transparency (0 to 1)
-     * @return color code like RGBA(XXX,XXX,XXX, X)
-     */
-    public static String GET_RGBA_COLOR_FOR_SCORE(String myScore, String transparency) {
-        return Joy.RGBA(GET_COLOR_FOR_SCORE(myScore), transparency);
     }
     
     /**
@@ -132,9 +121,9 @@ public class Utils {
      * @param myScore core to check 
      * @return color code like #XXXXXX (in hexadecimal)
      */
-    public static String GET_HEXA_COLOR_FOR_SCORE(String myScore) {
+    public static String GET_HEXA_COLOR_FOR_SCORE(JoyState state, String myScore) {
         try {
-            String myColor = GET_COLOR_FOR_SCORE(myScore);
+            String myColor = GET_COLOR_FOR_SCORE(state, myScore);
             String rgb[] = myColor.split(",");
             if (rgb.length != 3)
                 return "#FFFFFF";

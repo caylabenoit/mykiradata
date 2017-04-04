@@ -17,6 +17,12 @@
         </joy-join>
     </joy-composite>
     
+    <joy-composite name = "GLOSSARY_LIST">
+        <joy-field alias="X">GLO_PK</joy-field>
+        <joy-field alias="X">GLO_NAME</joy-field>
+        <joy-entity alias="X">DIM_GLOSSARY</joy-entity>
+    </joy-composite>
+    
     <joy-customquery name="Analytics - Glossary Last Runs"> <!-- Replace RPT_GLO_LASTRUNS -->
         select max(DIM_TIME.TIM_CALENDAR_DATE) AS rundate, 
         DIM_DQAXIS.DQX_NAME, 

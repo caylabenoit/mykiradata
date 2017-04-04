@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Data Governance Monitor - DGM">
+    <meta name="author" content="Benoit CAYLA">
+
+    <link rel="icon" type="images/png" href="../../../images/logo.png" />
+
+    <title>myKiraData</title>
+
+    <script type="text/javascript" src="../../../joy/global.js"></script>
+    <script type="text/javascript" src="../../../joy/includes.js"></script>
+    <script>
+        includeAllCSS();
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <NAV class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <DIV class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">";
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <DIV class='logobloc'>
+                    <A id="href_about"><IMG id="src_logo" class='logomenu' /></A>
+                </DIV>
+            </DIV>
+            <DIV class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>  
+                <DIV id="menu_top_left" selected="TL01"></DIV>
+                <UL class="nav navbar-top-links navbar-right">
+                    <LI id="menu_right_shortcuts"></LI>
+                    <LI id="dropdown-tasks" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-random fa-fw"></i><i class="fa fa-caret-down"></i>
+                        </a>
+                        <UL class="dropdown-menu dropdown-shortcuts" id="lutasklist">
+                            <li><a class="text-center" href="#"><strong>Please wait while Refreshing tasks list</strong>&nbsp;<i class="fa fa-angle-right"></i></a></li>
+                        </UL>
+                    </LI>
+                    <LI id="menu_right_user"></LI>
+                </UL>
+            </DIV>
+            <DIV class='navbar-default sidebar' role='navigation' >
+                <DIV class='sidebar-nav navbar-collapse' id="menu_left" selected="Analytics-BG-Term"></DIV>
+            </DIV>
+        </NAV>
+        <!-- Enf of Navigation -->
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"><IMG id="IMGICO" height="28px" />&nbsp;<SPAN id="TRM_NAME"></SPAN></h1>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="divtermblocheader">
+                                    <p><i class="glyphestatus"></i>&nbsp;<B>Status :</B> <SPAN id="TRM_PHASE"></SPAN></p>
+                                    <p><i class="glypheterm"></i>&nbsp;<B>Type :</B> <SPAN id="TRT_NAME"></SPAN></p>
+                                    <p><i class="glypheuser"></i>&nbsp;<B>Owner :</B> <SPAN id="TRM_OWNER_EMAIL"></SPAN></p>
+                                    <p><i class="glypheuser"></i>&nbsp;<B>Steward :</B> <SPAN id="TRM_STEWARD_EMAIL"></SPAN></p>
+                                    <p><i class="glyphebusmap"></i>&nbsp;<A id="ph_termrel">Relationship map</A></p>
+                                    <p><i class="glyphecommon"></i>&nbsp;<A id="ph_termConfiglink">Configuration</A></p>
+                                </div>
+                            </div> 
+                        </div>   
+                        <DIV class="row">
+                            <DIV class="col-lg-12">
+                                <DIV class="panel panel-yellow">
+                                    <DIV class="panel-body">
+                                        <DIV class="bloctitreprincipal">
+                                            <h5>Coming from <SPAN id="GLOSSARY_LINK"></SPAN>&nbsp;/&nbsp;<SPAN id="CATEGORY_LINK"></SPAN></h5>
+                                        </DIV>
+                                        <DIV class="form-group form-inline">
+                                            <SELECT name="term" class="js-states form-control" id="term"></SELECT>
+                                            <BUTTON id='btn1' class='btn btn-primary' type='button' onclick="evt_changeTerm();" >Change</BUTTON>
+                                        </DIV>
+                                    </DIV>
+                                </DIV>
+                            </DIV>  
+                        </DIV>
+                        
+                        <div class="row">                
+                            <div class="col-lg-12">
+                                <div class="panel panel-red">
+                                    <div class="panel-heading"><i class="glypheglossary"></i>&nbsp;Glossary definition</div>
+                                    <div class="panel-body" style="max-height: 300px; min-height: 300px;overflow-y: scroll;">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#Description" data-toggle="tab">Description</a></li>
+                                            <li><a href="#Usage" data-toggle="tab">Usage</a></li>
+                                            <li><a href="#Example" data-toggle="tab">Example</a></li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="Description">
+                                                <h4>Description</h4>
+                                                <p><SPAN id="TRM_DESCRIPTION"></SPAN></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="Usage">
+                                                <h4>Usage</h4>
+                                                <p><SPAN id="TRM_USAGE"></SPAN></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="Example">
+                                                <h4>Example</h4>
+                                                <p><SPAN id="TRM_EXAMPLE"></SPAN></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>           
+                        </div>  
+                    </div> 
+                    <div class="col-lg-6">
+                        <div class="panel panel-primary">   
+                           <div class="panel-heading"><i class="glypherelationship"></i>&nbsp;Business Term Relationships</div>
+                           <div class="panel-body" style="max-height: 300px;min-height: 600px;overflow-y: scroll;">
+                               <div id="treeview" class=""></div>
+                           </div>
+                        </div>
+                    </div>                 
+                </DIV>
+         
+            </div><!-- /.container-fluid -->
+        </div><!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+
+<script>includeAllJS();</script>
+<script type="text/javascript" src="common.js"></script>
+<script type="text/javascript" src="nodata.js"></script>
+
+</body>
+</html>                                    
+

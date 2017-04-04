@@ -5,27 +5,25 @@
         "glyphe": "fa fa-unlock-alt fa-fw",
         "id": "ADM04",
         "label": "Check application",
-        "object": "checkapp"
+        "url": "admin/checkapp.html",
       },
       {
         "glyphe": "fa fa-unlock-alt fa-fw",
         "id": "ADM05",
         "label": "Backup configuration",
-        "object": "import",
-        "actiontype": "list"
+        "url": "#",
       },
       {
         "glyphe": "fa fa-unlock-alt fa-fw",
         "-id": "ADM06",
         "label": "Parameters",
-        "object": "parameters",
-        "actiontype": "list"
+        "url": "#",
       },
       {
         "glyphe": "fa fa-random fa-fw",
         "id": "ADM07",
         "label": "Tasks",
-        "object": "tasks"
+        "url": "admin/tasks.html"
       }
     ]
 }

@@ -17,7 +17,7 @@
 package com.dgm.rest.actions;
 
 import com.dgm.termrelationship.mapview.Term;
-import com.joy.mvc.actionTypes.ActionTypeREST;
+import com.joy.api.ActionTypeREST;
 
 /**
  * @author Benoit CAYLA (benoit@famillecayla.fr)
@@ -25,14 +25,14 @@ import com.joy.mvc.actionTypes.ActionTypeREST;
  * http://localhost:18180/dgm/rest/termsgraph/[depth]/[Term Key]
  * http://localhost:18080/dgm/rest/termsgraph/3/1
  */
-public class RESTActionTermsGraph extends ActionTypeREST{
+public class RESTActionTermsGraph extends ActionTypeREST {
 
     @Override
     public String restGet() {
         try {
-            Term term = new Term(this.getBOFactory(), 
-                                 this.getIntArgumentValue("P2"), 
-                                 this.getIntArgumentValue("P1"),
+            Term term = new Term(this.getState(), 
+                                 Integer.valueOf(this.getRestParameter(2)), 
+                                 Integer.valueOf(this.getRestParameter(1)),
                                  true);
 
             return term.getJSONTree();

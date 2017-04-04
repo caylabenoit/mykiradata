@@ -49,4 +49,10 @@
         <joy-sort alias="TIM">TIM_CALENDAR_DATE</joy-sort>
     </joy-composite>
     
+    <joy-composite name = "METRIC_LIST">
+        <joy-field alias="X">MET_PK</joy-field>
+        <joy-field alias="X">MET_NAME</joy-field>
+        <joy-entity alias="X">DIM_METRIC</joy-entity>
+    </joy-composite>
+    
 </joy-entities>

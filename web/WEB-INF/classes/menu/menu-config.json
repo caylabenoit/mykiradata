@@ -35,7 +35,7 @@
         "label": "Metrics and Terms",
         "object": "reltermmetric",
         "actiontype": "list",
-        "-shortcut": "true"
+        "shortcut": "true"
       }
     ]
 }

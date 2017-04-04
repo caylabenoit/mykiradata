@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/mykiradata">
-  <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="150" maxIdle="10" maxWait="10000" name="jdbc/GOVERNANCE" password="DGM" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:orcl" username="DGM"/>
+  <!--  <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" 
+            maxActive="150" 
+            maxIdle="10" 
+            maxWait="10000" 
+            name="jdbc/GOVERNANCE" 
+            password="DGM" 
+            type="javax.sql.DataSource" 
+            url="jdbc:oracle:thin:@localhost:1521:orcl" 
+            username="DGM"/>
+  -->
+  <Resource name="jdbc/GOVERNANCE" 
+            auth="Container"
+            type="javax.sql.DataSource" 
+            driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql://localhost:5432/dgm"
+            username="dgm" 
+            password="dgm" 
+            maxActive="100" 
+            maxIdle="10" 
+            maxWait="-1"/>
   <!--
     Add this parameter to setup a separate (from J2EE tree) app directory (no default values)
     in this directory you must have the files :
@@ -13,4 +32,5 @@
   <!--    
 <Parameter name="joy-appdir" value="C:/Dropbox/DGM/appdir/dgm" override="true"/>
 -->
+<Parameter name="joy-rest" value="rest-config.json" override="true"/>
 </Context>

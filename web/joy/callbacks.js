@@ -131,21 +131,7 @@ function classCallbacks() {
     };
 }
 
-/**
- * Mandatory init function to call to launch the callback two-steps process
- * @param {type} restURL
- * @returns {undefined}
- */
-function execTwoStepsInitalization(restURL) {
-    form_preInitialize(restURL);
-    callAJAXAsync(restURL, TAG_FORM_INIT);
-}
-
-/**
- * Mandatory init function to call to launch the callback one-steps process
- * @returns {undefined}
- */
-function execOneStepInitalization() {
+function joyLoadExec() {
     callAllLoadAsync();
 }
 
@@ -154,7 +140,7 @@ function execOneStepInitalization() {
  * @param {type} tag
  * @returns {undefined} Nothing
  */
-function execAction(tag) {
+function joyExecAction(tag) {
     if (tag != null) {
         var index = cbs.getIndexFromTag(tag);
         if (index >= 0) 
@@ -201,25 +187,3 @@ function getRequestParameter(name) {
         }
     return null;
 }
-
-/* appel
-loadScript("my_lovely_script.js", function(){
-    console.log("Script charge!");
-});
-*/
-function loadScript(url, callback)
-{
-    // Pr�pare l'ajoute du script au head
-    var head = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = url;
- 
-    // Lance une callback � la fin de la t�che
-    script.onreadystatechange = callback;
-    script.onload = callback;
- 
-    // Ajoute le script
-    head.appendChild(script);
-}
-
