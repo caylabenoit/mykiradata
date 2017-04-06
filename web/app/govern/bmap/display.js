@@ -16,8 +16,9 @@
  */
 
 
-var idTerm = getRequestParameter('term'); //<joy:ActionValueTag name="ID" />;
-var nbHop = getRequestParameter('hop'); //<joy:ActionValueTag name="NBHOP" />;
+var idTerm = getRequestParameter('term'); 
+var nbHop = 2; 
+nbHop = getRequestParameter('hop');
 
 var nameTerm = "My term" ; //'<joy:ActionValueTag name="TRM_NAME" />';
 var basicURL =  getURLApp() + "govern/bterm/display.html"; //'<joy:JoyBasicURL actiontype="display" object="byterm" />';
@@ -41,6 +42,7 @@ function destroy() {
 
 // First chart drawing
 function draw() {
+    if (data == null) return;
     destroy();
 
     // create a network
@@ -128,12 +130,12 @@ $('#hierarchy').select2({ placeholder: "Select an Term Hierarchy type" });
 // List the business terms on the right pane
 function listBusinessTerm() {
     var displayTerms = "<UL class='termlistlu'>";
-
+    if (data == null) return;
     for (var i = 0; i < data.nodes.length; i++) {
         myScore = "";
         if (data.nodes[i].score >= 0)
             myScore = "<B>" + data.nodes[i].score + "% </B>";
-        else 
+        else
             myScore = "";
         displayTerms += "<LI class='listtermli'><DIV class='termblocli'>"; 
         displayTerms += "<DIV class='listtermli_label'><A href='#' onclick='hoverListNode(" + data.nodes[i].id + ");'>" + data.nodes[i].title + "</A></DIV>";
@@ -147,10 +149,7 @@ function listBusinessTerm() {
 function hoverListNode(nodeId) {
     var options = {
       scale: 1.1,
-      animation: {
-        duration: 1000,
-        easingFunction: 'linear'
-      }
+      animation: { duration: 1000, easingFunction: 'linear' }
     };
     network.focus(nodeId, options);
 }

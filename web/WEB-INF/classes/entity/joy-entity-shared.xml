@@ -19,16 +19,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <joy-entities>
 
-    <joy-customquery name="Last Facts Only"> 
+    <joy-entity name="Last Facts Only"> 
         SELECT FRS_PK, JOB_FK, TIM_FK, TRM_FK, ORI_FK, DQX_FK, MET_FK, CON_FK, FRS_VALID_ROWS, FRS_INVALID_ROWS,  FRS_TOTALROWS, FRS_KPI_SCORE, FRS_DATETIME_LOAD, 
                FRS_WEIGHT, FRS_COST, DSO_FK, FRS_METRIC_FUNCKEY
         FROM FACT_GOVERNANCE, 
             (SELECT DISTINCT FIRST_VALUE(frs_pk) OVER(PARTITION BY TRM_FK, MET_FK, DQX_FK, ORI_FK, CON_FK, DSO_FK ORDER BY JOB_FK DESC) As frs_pk_1 FROM FACT_GOVERNANCE) A        
         WHERE FACT_GOVERNANCE.frs_pk = A.frs_pk_1        
-    </joy-customquery>
+    </joy-entity>
     <!--         AND FACT_GOVERNANCE.TRM_FK > 0    -->
     
-    <joy-customquery name="Analytics - Terms Global Score Calculation">
+    <joy-entity name="Analytics - Terms Global Score Calculation">
         select TRM_FK, round(sum(FRS_KPI_SCORE*DQX_WEIGHT)/max(GLOBALSUM.SC), 2) AS GLOBALSCORE
         from (  select * 
                 from FACT_GOVERNANCE, 
@@ -40,9 +40,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         where X.DQX_FK = DIM_DQAXIS.DQX_PK
         group by TRM_FK
         order by X.TRM_FK
-    </joy-customquery>
+    </joy-entity>
     
-    <joy-composite name = "Terms with Glossary information">
+    <joy-entity name = "Terms with Glossary information">
         <joy-entity alias="T">DIM_TERM</joy-entity>
         <joy-join type="LEFT">
             <joy-entity alias="C">DIM_CATEGORY</joy-entity>
@@ -53,17 +53,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <joy-join-key master="GLO_FK" slave="GLO_PK" />
         </joy-join>
         <joy-filter alias="G" field="GLO_PK" operator="&lt;&gt;">0</joy-filter>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Scorecards with Group information">
+    <joy-entity name = "Scorecards with Group information">
         <joy-entity alias="SG1">DIM_SCORECARD_GROUP</joy-entity>
         <joy-join type="LEFT">
             <joy-entity alias="SC1">DIM_SCORECARD</joy-entity>
             <joy-join-key master="SCO_FK" slave="SCO_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Metrics With Scorecard information">
+    <joy-entity name = "Metrics With Scorecard information">
         <joy-entity alias="SG1">DIM_METRIC</joy-entity>
         <joy-join type="LEFT">
             <joy-entity alias="SC1">Scorecards with Group information</joy-entity>
@@ -73,9 +73,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <joy-entity alias="MTY">DIM_METRICTYPE</joy-entity>
             <joy-join-key master="MTY_FK" slave="MTY_PK" />
         </joy-join> 
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Last Facts Only with details">
+    <joy-entity name = "Last Facts Only with details">
         <joy-entity alias="LFO">Last Facts Only</joy-entity>
         <joy-join type="INNER">
             <joy-entity alias="DQ">DIM_DQAXIS</joy-entity>
@@ -105,9 +105,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <joy-entity alias="MSG">Metrics With Scorecard information</joy-entity>
             <joy-join-key master="MET_FK" slave="MET_PK" />
         </joy-join> 
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "All Facts with details">
+    <joy-entity name = "All Facts with details">
         <joy-entity alias="LFO">FACT_GOVERNANCE</joy-entity>
         <joy-join type="INNER">
             <joy-entity alias="DQ">DIM_DQAXIS</joy-entity>
@@ -137,6 +137,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <joy-entity alias="MSG">Metrics With Scorecard information</joy-entity>
             <joy-join-key master="MET_FK" slave="MET_PK" />
         </joy-join> 
-    </joy-composite>
+    </joy-entity>
 
 </joy-entities>

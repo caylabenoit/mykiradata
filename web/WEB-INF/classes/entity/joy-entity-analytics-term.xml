@@ -2,16 +2,16 @@
 
 <joy-entities>
     
-    <joy-composite name = "Check if Terms has score">
+    <joy-entity name = "Check if Terms has score">
         <joy-entity alias="T">FACT_GOVERNANCE</joy-entity>
         <joy-join type="INNER">
             <joy-entity alias="C">DIM_TERM</joy-entity>
             <joy-join-key master="TRM_FK" slave="TRM_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
     <!-- BUSINESS TERMS -->
-    <joy-composite name = "Analytics - Terms Last Runs">
+    <joy-entity name = "Analytics - Terms Last Runs">
         <joy-field as="rundate">MAX(TIM_CALENDAR_DATE)</joy-field>
         <joy-field alias="T">DQX_NAME</joy-field>
         <joy-field alias="T">DQX_WEIGHT</joy-field>
@@ -24,36 +24,36 @@
         <joy-group alias="T">TRM_FK</joy-group>
         <joy-sort alias="T">TRM_FK</joy-sort>
         <joy-sort alias="T">TIM_CALENDAR_DATE</joy-sort>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "Analytics - Terms Context List" distinct="yes">
+    <joy-entity name = "Analytics - Terms Context List" distinct="yes">
         <joy-field alias="T">CON_DESCRIPTION</joy-field>
         <joy-field alias="T">CON_PK</joy-field>
         <joy-field alias="T">TRM_FK</joy-field>
         <joy-entity alias="T">Last Facts Only with details</joy-entity>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "Analytics - Terms DS List" distinct="yes">
+    <joy-entity name = "Analytics - Terms DS List" distinct="yes">
         <joy-field alias="T">DSO_SOURCENAME</joy-field>
         <joy-field alias="T">DSO_CONNECTION</joy-field>
         <joy-field alias="T">DSO_PK</joy-field>
         <joy-field alias="T">TRM_FK</joy-field>
         <joy-entity alias="T">Last Facts Only with details</joy-entity>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "TERM_TYPE_LIST">
+    <joy-entity name = "TERM_TYPE_LIST">
         <joy-field alias="X">TRT_PK</joy-field>
         <joy-field alias="X">TRT_NAME</joy-field>
         <joy-entity alias="X">DIM_TERM_TYPE</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "TERM_LIST">
+    <joy-entity name = "TERM_LIST">
         <joy-field alias="X">TRM_PK</joy-field>
         <joy-field alias="X">TRM_NAME</joy-field>
         <joy-entity alias="X">DIM_TERM</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Analytics - Terms Global Informations">
+    <joy-entity name = "Analytics - Terms Global Informations">
         <joy-field alias="RTM">TRM_CLUSTER_ID</joy-field>
         <joy-field alias="T">TRM_PK</joy-field>
         <joy-field alias="T">TRM_NAME</joy-field>
@@ -89,7 +89,7 @@
             <joy-entity alias="G">DIM_GLOSSARY</joy-entity>
             <joy-join-key master="GLO_FK" slave="GLO_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
 
 
     

@@ -2,7 +2,7 @@
 
 <joy-entities>
     
-    <joy-composite name = "Analytics - Metric Global">
+    <joy-entity name = "Analytics - Metric Global">
         <joy-field alias="MSG">MET_PK</joy-field>
         <joy-field alias="MSG">MET_NAME</joy-field>
         <joy-field alias="MSG">MET_DESCRIPTION</joy-field>
@@ -26,9 +26,9 @@
             <joy-entity alias="T">DIM_TERM</joy-entity>
             <joy-join-key master="TRM_FK" slave="TRM_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Analytics - Metric Last Runs">
+    <joy-entity name = "Analytics - Metric Last Runs">
         <joy-field as="RUNDATE">MAX(TIM_CALENDAR_DATE)</joy-field>
         <joy-field alias="DQX">DQX_NAME</joy-field>
         <joy-field as="SCORE">AVG(FRS_KPI_SCORE)</joy-field>
@@ -47,12 +47,12 @@
         <joy-group alias="LFO">MET_FK</joy-group>
         <joy-sort alias="LFO">MET_FK</joy-sort>
         <joy-sort alias="TIM">TIM_CALENDAR_DATE</joy-sort>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "METRIC_LIST">
+    <joy-entity name = "METRIC_LIST">
         <joy-field alias="X">MET_PK</joy-field>
         <joy-field alias="X">MET_NAME</joy-field>
         <joy-entity alias="X">DIM_METRIC</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
 </joy-entities>

@@ -18,7 +18,7 @@
             username="dgm" 
             password="dgm" 
             maxActive="100" 
-            maxIdle="10" 
+            maxIdle="30" 
             maxWait="-1"/>
   <!--
     Add this parameter to setup a separate (from J2EE tree) app directory (no default values)

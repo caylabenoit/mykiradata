@@ -35,7 +35,7 @@ function fill_header(content) {
     document.getElementById("TRM_USAGE").innerHTML = getFromJoy(content.single, "RM_USAGE");
     document.getElementById("TRM_EXAMPLE").innerHTML = getFromJoy(content.single, "TRM_EXAMPLE");
 
-    document.getElementById("ph_termrel").href = getURLApp() + 'govern/bmap/display.html?nbhops=3&term=' + getFromJoy(content.single, "TRM_PK");
+    document.getElementById("ph_termrel").href = getURLApp() + 'govern/bmap/display.html?hop=3&term=' + getFromJoy(content.single, "TRM_PK");
     
     // A CORRIGER !!!
     document.getElementById("ph_termConfiglink").href = getFromJoy(content.single, "CONFIG_TERM_LINK");

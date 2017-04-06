@@ -4,22 +4,22 @@
 
 <!-- Custom Queries here / never put <;> character ! -->
   
-    <joy-composite name = "List of terms used" distinct="yes">
+    <joy-entity name = "List of terms used" distinct="yes">
         <joy-field alias="Y">TRM_NAME</joy-field>
         <joy-entity alias="X">FACT_GOVERNANCE</joy-entity>
         <joy-join type="INNER">
             <joy-entity alias="Y">DIM_TERM</joy-entity>
             <joy-join-key master="TRM_FK" slave="TRM_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "List of metrics used" distinct="yes">
+    <joy-entity name = "List of metrics used" distinct="yes">
         <joy-field alias="X">MET_NAME</joy-field>
         <joy-entity alias="X">REL_TERM_METRIC</joy-entity>
         <joy-filter alias="X" field="MET_NAME" operator="IS NOT">NULL</joy-filter>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "AXIS_SCORE_HOME_00" distinct="yes">
+    <joy-entity name = "AXIS_SCORE_HOME_00" distinct="yes">
         <joy-field alias="Y">DQX_NAME</joy-field>
         <joy-field as="SCORE">ROUND(AVG(FRS_KPI_SCORE), 2)</joy-field>
         <joy-field alias="Y">DQX_PK</joy-field>
@@ -31,9 +31,9 @@
         <joy-group alias="Y">DQX_NAME</joy-group>
         <joy-group alias="Y">DQX_PK</joy-group>
         <joy-filter alias="Y" field="DQX_PK" operator="&gt;">0</joy-filter>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "GLOBAL_SCORING_HOME_01" distinct="yes">
+    <joy-entity name = "GLOBAL_SCORING_HOME_01" distinct="yes">
         <joy-field alias="Y">GLO_NAME</joy-field>
         <joy-field as="JOBS">'Scores'</joy-field>
         <joy-field as="SCORE">ROUND(AVG(FRS_KPI_SCORE), 2)</joy-field>
@@ -43,9 +43,9 @@
             <joy-join-key master="TRM_FK" slave="TRM_PK" />
         </joy-join>
         <joy-group alias="Y">GLO_NAME</joy-group>
-    </joy-composite>
+    </joy-entity>
      
-    <joy-customquery name="NO_OWNER_HOME_02"> <!-- No owners and no stewards -->
+    <joy-entity name="NO_OWNER_HOME_02"> <!-- No owners and no stewards -->
         SELECT GLO_NAME, 'No Owner' MISSING, count(*) MYVALUE
         FROM DIM_GLOSSARY INNER JOIN DIM_TERM ON (GLO_PK = GLO_FK)
         and TRM_OWNER IS NULL
@@ -55,14 +55,14 @@
         FROM DIM_GLOSSARY INNER JOIN DIM_TERM ON (GLO_PK = GLO_FK)
         and TRM_STEWARD IS NULL
         group by GLO_NAME
-    </joy-customquery>
+    </joy-entity>
 
-    <joy-composite name = "Total Weight for DQ Axis">
+    <joy-entity name = "Total Weight for DQ Axis">
         <joy-field>sum(DQX_WEIGHT)</joy-field>
         <joy-entity alias="X">DIM_DQAXIS</joy-entity>
-    </joy-composite>    
+    </joy-entity>    
     
-    <joy-composite name = "HOME_BEST_TERMS">  <!-- Best terms scores -->
+    <joy-entity name = "HOME_BEST_TERMS">  <!-- Best terms scores -->
         <joy-field alias="T">TRM_NAME</joy-field>
         <joy-field as="GLOBALSCORE">ROUND(SUM(FRS_KPI_SCORE*DQX_WEIGHT)/MAX((SELECT SUM(DQX_WEIGHT) SC FROM DIM_DQAXIS)), 2)</joy-field>
         <joy-field alias="X">TRM_FK</joy-field>
@@ -79,9 +79,9 @@
         <joy-group alias="X">TRM_FK</joy-group>
         <joy-group alias="T">TRM_NAME</joy-group>
         <joy-sort desc="yes">GLOBALSCORE</joy-sort>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "HOME_WORSE_TERMS">  <!-- Worse terms scores -->
+    <joy-entity name = "HOME_WORSE_TERMS">  <!-- Worse terms scores -->
         <joy-field alias="T">TRM_NAME</joy-field>
         <joy-field as="GLOBALSCORE">round(sum(FRS_KPI_SCORE*DQX_WEIGHT)/max((Select sum(DQX_WEIGHT) SC from DIM_DQAXIS)), 2)</joy-field>
         <joy-field alias="X">TRM_FK</joy-field>
@@ -98,14 +98,14 @@
         <joy-group alias="X">TRM_FK</joy-group>
         <joy-group alias="T">TRM_NAME</joy-group>
         <joy-sort desc="no">GLOBALSCORE</joy-sort>
-    </joy-composite> 
+    </joy-entity> 
     
-    <joy-composite name = "SCORING_KPIS">
+    <joy-entity name = "SCORING_KPIS">
         <joy-field as="AVG_SCORE">avg(GLOBALSCORE)</joy-field>
         <joy-field as="MIN_SCORE">min(GLOBALSCORE)</joy-field>
         <joy-field as="MAX_SCORE">max(GLOBALSCORE)</joy-field>
         <joy-entity alias="X">Analytics - Terms Global Score Calculation</joy-entity>
         <joy-filter alias="X" field="TRM_FK" operator="&gt;">0</joy-filter>
-    </joy-composite>  
+    </joy-entity>  
     
 </joy-entities>

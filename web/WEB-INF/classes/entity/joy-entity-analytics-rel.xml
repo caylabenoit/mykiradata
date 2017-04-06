@@ -2,7 +2,7 @@
 
 <joy-entities>
     
-    <joy-composite name = "Analytics - Rel Term Info">
+    <joy-entity name = "Analytics - Rel Term Info">
         <joy-field alias="TRM">TRM_PK</joy-field>
         <joy-field alias="TRM">TRM_NAME</joy-field>
         <joy-field alias="GLO">GLO_NAME</joy-field>
@@ -16,9 +16,9 @@
             <joy-entity alias="ATG">Analytics - Terms Global Score Calculation</joy-entity>
             <joy-join-key master="TRM_PK" slave="TRM_FK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-customquery name="Analytics - Rel Term Relationships"> 
+    <joy-entity name="Analytics - Rel Term Relationships"> 
         SELECT REL_FK,
                REL_NAME,
                DIM_TERM.TRM_NAME AS TERM_SOURCE,
@@ -36,5 +36,5 @@
                INNER JOIN DIM_GLOSSARY ON DIM_TERM_1.GLO_FK = DIM_GLOSSARY.GLO_PK
                INNER JOIN DIM_TERM ON OBJECT_ID_SOURCE = DIM_TERM.OBJECT_ID
                INNER JOIN DIM_GLOSSARY DIM_GLOSSARY_1 ON DIM_TERM.GLO_FK = DIM_GLOSSARY_1.GLO_PK
-    </joy-customquery>
+    </joy-entity>
 </joy-entities>

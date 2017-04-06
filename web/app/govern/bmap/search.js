@@ -44,7 +44,6 @@ function cb_filldatatable(content) {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
     document.getElementById('pleasewait').innerHTML = '';
-    //document.getElementById('searchresult').style.display="block";
     for (i=0; i < content.rowcount; i++) {
         t1.row.add( [
             content.rows[i].items[0].value,

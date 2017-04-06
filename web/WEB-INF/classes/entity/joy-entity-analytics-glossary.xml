@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <joy-entities>
-    <joy-composite name = "Temp - Check if Glossary has score">
+    <joy-entity name = "Temp - Check if Glossary has score">
         <joy-entity alias="T">DIM_TERM</joy-entity>
         <joy-join type="INNER">
             <joy-entity alias="G">DIM_GLOSSARY</joy-entity>
             <joy-join-key master="GLO_FK" slave="GLO_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Check if Glossary has score">
+    <joy-entity name = "Check if Glossary has score">
         <joy-entity alias="T">FACT_GOVERNANCE</joy-entity>
         <joy-join type="INNER">
             <joy-entity alias="G">Temp - Check if Glossary has score</joy-entity>
             <joy-join-key master="TRM_FK" slave="TRM_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "GLOSSARY_LIST">
+    <joy-entity name = "GLOSSARY_LIST">
         <joy-field alias="X">GLO_PK</joy-field>
         <joy-field alias="X">GLO_NAME</joy-field>
         <joy-entity alias="X">DIM_GLOSSARY</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-customquery name="Analytics - Glossary Last Runs"> <!-- Replace RPT_GLO_LASTRUNS -->
+    <joy-entity name="Analytics - Glossary Last Runs"> <!-- Replace RPT_GLO_LASTRUNS -->
         select max(DIM_TIME.TIM_CALENDAR_DATE) AS rundate, 
         DIM_DQAXIS.DQX_NAME, 
         avg(FRS_KPI_SCORE) AS SCORE, 
@@ -36,9 +36,9 @@
         And FACT_GOVERNANCE.TRM_FK = DIM_TERM.TRM_PK
         GROUP BY dqx_name, tim_calendar_date, GLO_FK
         ORDER BY GLO_FK, tim_calendar_date
-    </joy-customquery>
+    </joy-entity>
 
-    <joy-customquery name="Analytics - Glossary Term List"> <!-- Replace RPT_GLO_TERM_LIST -->
+    <joy-entity name="Analytics - Glossary Term List"> <!-- Replace RPT_GLO_TERM_LIST -->
         SELECT AVG (FRS_KPI_SCORE) AS SCORE, AVG (FRS_COST) AS COST, DQX_NAME, TRM_NAME,  TRM_FK, DQX_FUNCKEY, B.GLO_FK
           FROM (select FACT_GOVERNANCE.*, DIM_TERM.CAT_FK, DIM_TERM.GLO_FK
                from FACT_GOVERNANCE, (select distinct FIRST_VALUE(frs_pk) OVER(PARTITION BY TRM_FK, MET_FK, DQX_FK, ORI_FK, CON_FK, DSO_FK ORDER BY JOB_FK DESC) As frs_pk 
@@ -50,9 +50,9 @@
         AND B.TRM_FK = DIM_TERM.TRM_PK
         GROUP BY DQX_NAME, TRM_NAME, TRM_FK,  DQX_FUNCKEY, B.GLO_FK
         ORDER BY TRM_NAME
-    </joy-customquery>
+    </joy-entity>
     
-    <joy-customquery name="Analytics - Glossary Category List"> <!-- Replace RPT_GLO_CATEGORY_LIST -->
+    <joy-entity name="Analytics - Glossary Category List"> <!-- Replace RPT_GLO_CATEGORY_LIST -->
         SELECT DISTINCT DIM_CATEGORY.CAT_PK,
                         B.GLO_FK,
                         DIM_CATEGORY.CAT_NAME,
@@ -68,5 +68,5 @@
          WHERE     B.CAT_FK = DIM_CATEGORY.CAT_PK
                AND B.CAT_FK > 0
                order by B.GLO_FK
-    </joy-customquery>
+    </joy-entity>
 </joy-entities>

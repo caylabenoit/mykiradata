@@ -3,16 +3,16 @@
 
 <joy-entities>
     <!-- Landing tables -->
-    <joy-table name="LND_TERM" />
-    <joy-table name="LND_GLOSSARY" />
-    <joy-table name="LND_CATEGORY" />
-    <joy-table name="LND_TERM_RELATIONSHIPS" />
-    <joy-table name="LND_METRIC" />
-    <joy-table name="LND_SCORECARD" />
-    <joy-table name="LND_SCORECARD_GROUP" />
+    <joy-entity name="LND_TERM" />
+    <joy-entity name="LND_GLOSSARY" />
+    <joy-entity name="LND_CATEGORY" />
+    <joy-entity name="LND_TERM_RELATIONSHIPS" />
+    <joy-entity name="LND_METRIC" />
+    <joy-entity name="LND_SCORECARD" />
+    <joy-entity name="LND_SCORECARD_GROUP" />
 
     <!-- Landing List -->
-    <joy-composite name = "List - Landing Glossary" distinct="yes">
+    <joy-entity name = "List - Landing Glossary" distinct="yes">
         <joy-entity alias="T">LND_GLOSSARY</joy-entity>
         <joy-field as="STATUS">CASE WHEN(GLO_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
         <joy-field alias="T">GLOSSARY_DESCRIPTION</joy-field>
@@ -24,9 +24,9 @@
             <joy-entity alias="C">DIM_GLOSSARY</joy-entity>
             <joy-join-key master="JOYFUNCKEY" slave="GLO_FUNCKEY" />
         </joy-join>
-    </joy-composite>    
+    </joy-entity>    
 
-    <joy-composite name = "List - Landing Category" distinct="yes">
+    <joy-entity name = "List - Landing Category" distinct="yes">
         <joy-entity alias="X">LND_CATEGORY</joy-entity>
         <joy-field as="STATUS">CASE WHEN(CAT_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
         <joy-field alias="X">CATEGORY_NAME</joy-field>
@@ -40,9 +40,9 @@
             <joy-entity alias="C">DIM_CATEGORY</joy-entity>
             <joy-join-key master="JOYFUNCKEY" slave="CAT_FUNCKEY" />
         </joy-join>
-    </joy-composite>  
+    </joy-entity>  
     
-    <joy-composite name = "List - Landing Term" distinct="yes">
+    <joy-entity name = "List - Landing Term" distinct="yes">
         <joy-entity alias="X">LND_TERM</joy-entity>
         <joy-field as="STATUS">CASE WHEN(TRM_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
@@ -66,9 +66,9 @@
             <joy-entity alias="C">DIM_TERM</joy-entity>
             <joy-join-key master="JOYFUNCKEY" slave="TRM_FUNCKEY" />
         </joy-join>
-    </joy-composite>  
+    </joy-entity>  
     
-    <joy-composite name = "List - Landing Relationship" distinct="yes">
+    <joy-entity name = "List - Landing Relationship" distinct="yes">
         <joy-entity alias="X">LND_TERM_RELATIONSHIPS</joy-entity>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
@@ -81,9 +81,9 @@
             <joy-entity alias="C">DIM_TERM_RELLINKS</joy-entity>
             <joy-join-key master="JOYFUNCKEY" slave="TRL_FUNCKEY" />
         </joy-join>
-    </joy-composite>  
+    </joy-entity>  
 
-    <joy-composite name = "List - Landing Scorecard" distinct="yes">
+    <joy-entity name = "List - Landing Scorecard" distinct="yes">
         <joy-entity alias="X">LND_SCORECARD</joy-entity>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
@@ -96,9 +96,9 @@
             <joy-entity alias="C">DIM_SCORECARD</joy-entity>
             <joy-join-key master="JOYFUNCKEY" slave="SCO_FUNCKEY" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "List - Landing Scorecard Group" distinct="yes">
+    <joy-entity name = "List - Landing Scorecard Group" distinct="yes">
         <joy-entity alias="X">LND_SCORECARD_GROUP</joy-entity>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
@@ -110,9 +110,9 @@
             <joy-entity alias="C">DIM_SCORECARD_GROUP</joy-entity>
             <joy-join-key master="JOYFUNCKEY" slave="SCG_FUNCKEY" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "List - Landing Metric" distinct="yes">
+    <joy-entity name = "List - Landing Metric" distinct="yes">
         <joy-entity alias="X">LND_METRIC</joy-entity>
         <joy-field as="STATUS">CASE WHEN(FRS_METRIC_FUNCKEY IS NULL) THEN 'New' ELSE 'Will be updated' END</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
@@ -136,41 +136,41 @@
             <joy-entity alias="C">FACT_GOVERNANCE</joy-entity>
             <joy-join-key master="JOYFUNCKEY" slave="FRS_METRIC_FUNCKEY" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
     <!-- Used for Landing mappings (sources) -->
-    <joy-composite name = "Load - get Terms type" distinct="yes">
+    <joy-entity name = "Load - get Terms type" distinct="yes">
         <joy-field alias="X">TERM_TYPE</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-entity alias="X">LND_TERM</joy-entity>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "Load - get Relationship name" distinct="yes">
+    <joy-entity name = "Load - get Relationship name" distinct="yes">
         <joy-field alias="X">REL_NAME</joy-field>
         <joy-field alias="X">REL_DESCRIPTION</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-entity alias="X">LND_TERM_RELATIONSHIPS</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Load - get Relationship" distinct="yes">
+    <joy-entity name = "Load - get Relationship" distinct="yes">
         <joy-field alias="X">REL_KEY_TERM_SOURCE</joy-field>
         <joy-field alias="X">REL_KEY_TERM_TARGET</joy-field>
         <joy-field alias="X">REL_NAME</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-entity alias="X">LND_TERM_RELATIONSHIPS</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Load - get Glossary" distinct="yes">
+    <joy-entity name = "Load - get Glossary" distinct="yes">
         <joy-field alias="X">GLOSSARY_DESCRIPTION</joy-field>
         <joy-field alias="X">GLOSSARY_NAME</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-entity alias="X">LND_GLOSSARY</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Load - get Category" distinct="yes">
+    <joy-entity name = "Load - get Category" distinct="yes">
         <joy-field alias="X">CATEGORY_NAME</joy-field>
         <joy-field alias="X">CATEGORY_DESCRIPTION</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
@@ -179,9 +179,9 @@
         <joy-field alias="X">CATEGORY_FULLPATH</joy-field>
         <joy-field alias="X">CATEGORY_PARENT_KEY</joy-field>
         <joy-entity alias="X">LND_CATEGORY</joy-entity>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "Load - get Scorecard" distinct="yes">
+    <joy-entity name = "Load - get Scorecard" distinct="yes">
         <joy-field alias="X">SCO_NAME</joy-field>
         <joy-field alias="X">SCO_DESCRIPTION</joy-field>
         <joy-field alias="X">SCO_LASTRUN</joy-field>
@@ -189,9 +189,9 @@
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-entity alias="X">LND_SCORECARD</joy-entity>
-    </joy-composite>
+    </joy-entity>
     
-    <joy-composite name = "Load - get Term" distinct="yes">
+    <joy-entity name = "Load - get Term" distinct="yes">
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
@@ -210,35 +210,35 @@
         <joy-field alias="X">glossary_key</joy-field>
         <joy-field alias="X">category_key</joy-field>
         <joy-entity alias="X">LND_TERM</joy-entity>
-    </joy-composite> 
+    </joy-entity> 
     
-    <joy-composite name = "Load - get Scorecard Group" distinct="yes">
+    <joy-entity name = "Load - get Scorecard Group" distinct="yes">
         <joy-field alias="X">SCGROUP_NAME</joy-field>
         <joy-field alias="X">SCORECARD_KEY</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-entity alias="X">LND_SCORECARD_GROUP</joy-entity>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "Load - get Datasource" distinct="yes">
+    <joy-entity name = "Load - get Datasource" distinct="yes">
         <joy-field alias="X">MET_CONNECTION</joy-field>
         <joy-field alias="X">MET_SOURCENAME</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-entity alias="X">LND_METRIC</joy-entity>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "Load - get Origin" distinct="yes">
+    <joy-entity name = "Load - get Origin" distinct="yes">
         <joy-field alias="X">ORI_NAME</joy-field>
         <joy-field alias="X">JOYLOADDATE</joy-field>
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-field alias="X">JOYFUNCKEY</joy-field>
         <joy-entity alias="X">LND_METRIC</joy-entity>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-composite name = "Load - get Metrics" distinct="yes">
+    <joy-entity name = "Load - get Metrics" distinct="yes">
         <joy-field alias="X">MET_NAME</joy-field>
         <joy-field alias="X">MET_DESCRIPTION</joy-field>
         <joy-field alias="X">MET_WEIGHT</joy-field>
@@ -248,9 +248,9 @@
         <joy-field alias="X">JOYSTATUS</joy-field>
         <joy-entity alias="X">LND_METRIC</joy-entity>
         <joy-sort alias="X" desc="no">MET_NAME</joy-sort>
-    </joy-composite>
+    </joy-entity>
 
-    <joy-customquery name="Load - Facts from landing">
+    <joy-entity name="Load - Facts from landing">
         SELECT TIM_PK, TRM_PK, MET_PK, DQX_PK, DSO_PK, CON_PK, ORI_PK,
                DIM_METRIC.MET_WEIGHT,LND_METRIC.FRS_VALID_ROWS, LND_METRIC.FRS_TOTALROWS, LND_METRIC.FRS_COST,
                FRS_CALCULATION_DATE, FRS_COSTUNIT, MET_SCORE,
@@ -267,10 +267,10 @@
                 LEFT OUTER JOIN REL_SC_CONTEXT ON (LND_METRIC.SCORECARD_KEY = REL_SC_CONTEXT.SCO_NAME)
                     LEFT OUTER JOIN DIM_CONTEXT ON (REL_SC_CONTEXT.CON_DESCRIPTION = DIM_CONTEXT.CON_DESCRIPTION)
         WHERE FACT_GOVERNANCE.FRS_PK IS NULL
-    </joy-customquery>
+    </joy-entity>
 
     <!-- Plugins list -->
-    <joy-composite name = "PLUGINS_LIST_00" distinct="yes">
+    <joy-entity name = "PLUGINS_LIST_00" distinct="yes">
         <joy-field alias="X">API_PK</joy-field>
         <joy-field alias="X">API_DESCRIPTION</joy-field>
         <joy-field alias="X">API_CONTENT</joy-field>
@@ -281,6 +281,6 @@
             <joy-entity alias="Y">APP_PLUGINS_TYPE</joy-entity>
             <joy-join-key master="APT_FK" slave="APT_PK" />
         </joy-join>
-    </joy-composite>
+    </joy-entity>
     
 </joy-entities>

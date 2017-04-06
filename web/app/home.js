@@ -30,12 +30,12 @@ function cb_kpis(content) {
 }
 
 function cb_listWorseTerms(content) {
-    displayGaugeList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+    displayGaugeList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, getURLApp() + 'govern/bterm/display.html?term=');
     end_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
 function cb_listBestTerms(content) {
-    displayGaugeList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_TERM + "&term=");
+    displayGaugeList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, getURLApp() + 'govern/bterm/display.html?term=');
     end_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
 }
 

@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 for the Views or tables :
-<joy-table name="XX" /> 
+<joy-entity name="XX" /> 
 <joy-view name="YY" />
 
 for the custom queries :
-<joy-customquery name="Mandatory name">
+<joy-entity name="Mandatory name">
     SQL Query here
     AND/OR You can add DB specifics by using 
         <POSTGRESQL></POSTGRESQL>
         <ORACLE></ORACLE>
-</joy-customquery>
+</joy-entity>
 -->
 
 <joy-entities>
     
     <!-- Simple table -->
-    <joy-table name="APP_PARAMS">
+    <joy-entity name="APP_PARAMS">
         <joy-init-record>
             <joy-field name="...">...</joy-field>
             <joy-field name="...">...</joy-field>
         </joy-init-record>
-    </joy-table>
+    </joy-entity>
      
     <!-- Direct Query / SQL -->
-    <joy-customquery name="Mandatory name">
+    <joy-entity name="Mandatory name">
         <!-- SQL Query here
         AND/OR You can add DB specifics by using 
             <POSTGRESQL></POSTGRESQL>
             <ORACLE></ORACLE> -->
-    </joy-customquery>
+    </joy-entity>
     
     <!-- Composite object -->
-  <joy-composite name = "Composite name" distinct="yes/no">
+  <joy-entity name = "Composite name" distinct="yes/no">
     <joy-entity alias="[Left Table Alias]" as="[As in Select/To rename the selected field]">...</joy-entity>
   
     <joy-field alias="[Table Alias for selected field]">[Left IEntity]</joy-field>
@@ -55,6 +55,6 @@ for the custom queries :
     <joy-group alias="[Table Alias for grouped field]">[Group Field]</joy-group>
     <joy-group ... />
     
- </joy-composite>
+ </joy-entity>
     
 </joy-entities>
