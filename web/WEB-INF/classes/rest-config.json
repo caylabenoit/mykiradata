@@ -8,12 +8,12 @@
     },
     {
       "name": "relterm",
-      "class": "com.dgm.rest.actions.RESTActionTermsInFolders",
+      "class": "com.dgm.api.RESTActionTermsInFolders",
       "mime": "application/json"
     },
     {
       "name": "globalkpis",
-      "class": "com.dgm.rest.actions.RESTGlobalKpis",
+      "class": "com.dgm.api.RESTGlobalKpis",
       "mime": "application/json"
     },
     {
@@ -28,7 +28,7 @@
     },
     {
       "name": "landingcount",
-      "class": "com.dgm.rest.actions.RESTLandingCount",
+      "class": "com.dgm.api.RESTLandingCount",
       "mime": "application/json"
     },
     {
@@ -43,48 +43,60 @@
     },
     {
       "name": "termsgraph",
-      "class": "com.dgm.rest.actions.RESTActionTermsGraph",
+      "class": "com.dgm.api.RESTActionTermsGraph",
       "mime": "application/json"
     },
     {
       "name": "app",
-      "class": "com.dgm.rest.actions.RESTAppContext",
+      "class": "com.dgm.api.RESTAppContext",
       "mime": "application/json"
     },
     {
       "name": "bterm",
-      "class": "com.dgm.rest.actions.dimensions.RESTBusinessTerm",
+      "class": "com.dgm.api.dimensions.RESTBusinessTerm",
       "mime": "application/json"
     },
     {
       "name": "category",
-      "class": "com.dgm.rest.actions.dimensions.RESTCategory",
+      "class": "com.dgm.api.dimensions.RESTCategory",
       "mime": "application/json"
     },
     {
       "name": "glossary",
-      "class": "com.dgm.rest.actions.dimensions.RESTGlossary",
+      "class": "com.dgm.api.dimensions.RESTGlossary",
       "mime": "application/json"
     },
     {
       "name": "datasource",
-      "class": "com.dgm.rest.actions.dimensions.RESTDataSource",
+      "class": "com.dgm.api.dimensions.RESTDataSource",
       "mime": "application/json"
     },
     {
       "name": "context",
-      "class": "com.dgm.rest.actions.dimensions.RESTContext",
+      "class": "com.dgm.api.dimensions.RESTContext",
       "mime": "application/json"
     },
     {
       "name": "metric",
-      "class": "com.dgm.rest.actions.dimensions.RESTMetric",
+      "class": "com.dgm.api.dimensions.RESTMetric",
       "mime": "application/json"
     },
     {
       "name": "dqaxis",
-      "class": "com.dgm.rest.actions.dimensions.RESTDQAxis",
+      "class": "com.dgm.api.dimensions.RESTDQAxis",
+      "mime": "application/json"
+    },
+    {
+      "name": "parameters",
+      "class": "com.joy.api.ready.RESTParameters",
       "mime": "application/json"
     }
+,
+    {
+      "name": "termtype",
+      "class": "com.dgm.api.src.TermType",
+      "mime": "application/json"
+    }
+    
   ]
 }

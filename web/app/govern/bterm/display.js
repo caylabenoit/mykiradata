@@ -109,7 +109,7 @@ function form_afterLoad(content) {
     setGlypheToClass('datasource', 'glyphedatasource', params);
     
     // Call back declaration here
-    addCBAction(cb_relationShipTree, getURLApi() + 'relterm/3/' + ID, 'tree');
+    addCBAction(cb_relationShipTree, getURLApi() + 'relterm?hop=3&term=' + ID, 'tree');
     addCBAction(cb_global, getURLApi() + 'bterm/' + ID, 'term');
     
     joyExecAction('tree');

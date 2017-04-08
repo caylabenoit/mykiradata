@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions;
+package com.dgm.api;
 
 import com.joy.JOY;
 import com.joy.json.JSONObject;
@@ -32,7 +32,7 @@ public class RESTAppContext extends RESTParameters {
         JSONObject all = new JSONObject();
         
         // Application parameters
-        all.put("parameters", this.getState().getParameters().getJson()); 
+        all.put("parameters", this.getState().getAppParameters().getJson()); 
         
         // Menus
         JSONArray menus = new JSONArray();

@@ -16,23 +16,6 @@
  */
 
 /**
- * Return a Joy URL
- * @param {type} pattern
- * @param {type} object
- * @param {type} actiontype
- * @returns {String}
- */
-function joyURL(pattern, object, actiontype) {
-    if (actiontype != null && object != null)
-        return "." + pattern + "?object=" + object + "&actiontype=" + actiontype;
-    else if (actiontype == null && object != null)
-        return "." + pattern + "?object=" + object;
-    else
-        return "." + pattern;
-}
-
-
-/**
  * Modify the <i> tag to display a glyphe
  * @param {type} name           Glyphe name
  * @param {type} placeHolderID  <I id="?"> id of the place holder

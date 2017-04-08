@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions.dimensions;
+package com.dgm.api.dimensions;
 
 import com.dgm.common.Utils;
 import com.joy.C;
@@ -38,7 +38,7 @@ public class RESTBusinessTerm extends RESTCommonDimension {
         int id = 0;
         try {
             //
-            id = Integer.valueOf(getRestParameter(1));
+            id = Integer.valueOf(this.getCurrentRequest().getAction(1));
         } catch (NumberFormatException e) {}
         if (id == 0) return C.JSON_EMPTY;
         
@@ -65,7 +65,7 @@ public class RESTBusinessTerm extends RESTCommonDimension {
     
     /**
      * Load into the json the global term informations
-     * @param currentTerm current TRM_PK
+     * @param id
      */
     protected void setGlobalData(int id) {
         try {
@@ -90,7 +90,7 @@ public class RESTBusinessTerm extends RESTCommonDimension {
                 // Term icon
                 String icon = Utils.GET_TERM_TYPE_ICON(getState(), rs.getString("TRT_NAME"));
                 this.addSingle("ICON", icon);
-                this.addSingle("IMGICO", (rs.getString("TRT_NAME") == null ? this.getState().getParameters().getParameter("DefaultTermTypeIcon").getValue().toString() : icon));
+                this.addSingle("IMGICO", (rs.getString("TRT_NAME") == null ? this.getState().getAppParameters().getParameter("DefaultTermTypeIcon").getValue().toString() : icon));
                 // Glossary link
                 this.addSingle("GLOSSARY_LINK", JOY.HREF("byglossary", "display", rs.getString("GLO_NAME"), "glossary", String.valueOf(rs.getString("GLO_PK"))));
                 // Category link
@@ -118,7 +118,7 @@ public class RESTBusinessTerm extends RESTCommonDimension {
      * @param currentTerm ID of the current term
      */
     private void setGlobalScore(int currentTerm) {
-        String color = this.getState().getParameters().getParameter("thresold_bad").getValue().toString();
+        String color = this.getState().getAppParameters().getParameter("thresold_bad").getValue().toString();
         IEntity entity = getBOFactory().getEntity("Analytics - Terms Global Score Calculation");
         entity.field("TRM_FK").setKeyValue(currentTerm);
         ResultSet rs = entity.select();

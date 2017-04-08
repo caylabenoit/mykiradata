@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions;
+package com.dgm.api;
 
 import com.dgm.common.Utils;
 import com.joy.JOY;
@@ -55,7 +55,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_LONGTEXT_LABEL, "Business Terms");
         kpi.put(C_BIG_SHORT_TEXT_LABEL, String.valueOf(query.count()) + " / " + String.valueOf(table.count()));
         kpi.put(C_URL, JOY.URL("byterm", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("term").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("term").getValue());
         kpis.add(kpi);
 
         // Metrics
@@ -65,7 +65,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_LONGTEXT_LABEL, "Metrics");
         kpi.put(C_BIG_SHORT_TEXT_LABEL, String.valueOf(query.count()) + " / " + String.valueOf(table.count()));
         kpi.put(C_URL, JOY.URL("bymetric", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
         kpis.add(kpi);
         
         // Glossaries
@@ -74,7 +74,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_LONGTEXT_LABEL, "Glossaries");
         kpi.put(C_BIG_SHORT_TEXT_LABEL, String.valueOf(table.count()));
         kpi.put(C_URL, JOY.URL("byglossary", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("glossary").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("glossary").getValue());
         kpis.add(kpi);
         
         // DQ Dimensions
@@ -83,7 +83,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_LONGTEXT_LABEL, "Dimensions");
         kpi.put(C_BIG_SHORT_TEXT_LABEL, String.valueOf(table.count(true)));
         kpi.put(C_URL, JOY.URL("bydqaxis", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("dqaxis").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("dqaxis").getValue());
         kpis.add(kpi);
         
         // Scorecards
@@ -92,7 +92,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_LONGTEXT_LABEL, "Scorecards");
         kpi.put(C_BIG_SHORT_TEXT_LABEL, String.valueOf(table.count()));
         kpi.put(C_URL, JOY.URL("byscorecard", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("dashboard").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("dashboard").getValue());
         kpis.add(kpi);
         
         // Contexts
@@ -101,7 +101,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_LONGTEXT_LABEL, "Contexts");
         kpi.put(C_BIG_SHORT_TEXT_LABEL, String.valueOf(table.count()));
         kpi.put(C_URL, JOY.URL("bycontext", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("context").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("context").getValue());
         kpis.add(kpi);
         
         
@@ -124,7 +124,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_BIG_SHORT_TEXT_LABEL, avgScore );
         kpi.put(C_LONGTEXT_LABEL, "Average");
         kpi.put(C_URL, JOY.URL("byterm", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
         kpis.add(kpi);
         
         // score min & Max
@@ -132,7 +132,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_BIG_SHORT_TEXT_LABEL, minScore);
         kpi.put(C_LONGTEXT_LABEL, "Min");
         kpi.put(C_URL, JOY.URL("byterm", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
         kpis.add(kpi);
         
         // score max
@@ -140,7 +140,7 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_BIG_SHORT_TEXT_LABEL, maxScore);
         kpi.put(C_LONGTEXT_LABEL, "Max");
         kpi.put(C_URL, JOY.URL("byterm", "search"));
-        kpi.put(C_GLYPHE, this.getState().getParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
+        kpi.put(C_GLYPHE, this.getState().getAppParameters().getParameter("ApplicationIconsBSGlyphe").get("metric").getValue());
         kpis.add(kpi);
         
         
@@ -148,8 +148,8 @@ public class RESTGlobalKpis extends ActionTypeREST {
         kpi.put(C_KPIS, kpis);
         
         // Add global informations for display
-        kpi.put("THRESOLD_BAD", this.getState().getParameters().getParameter("thresold_bad").getValue().toString());
-        kpi.put("THRESOLD_GOOD", this.getState().getParameters().getParameter("thresold_good").getValue().toString());
+        kpi.put("THRESOLD_BAD", this.getState().getAppParameters().getParameter("thresold_bad").getValue().toString());
+        kpi.put("THRESOLD_GOOD", this.getState().getAppParameters().getParameter("thresold_good").getValue().toString());
         kpi.put("URLBASIS_DQAXIS", JOY.URL("bydqaxis", "display"));
         kpi.put("URLBASIS_TERM", JOY.URL("byterm", "display"));
         

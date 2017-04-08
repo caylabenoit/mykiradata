@@ -70,11 +70,11 @@ function form_afterLoad(content) {
     URLBASIS_TERM = joyURL(params.urlpattern, "byterm", "display");
     
     // Call back declaration here
-    addCBAction(cb_chartPolar, getURLApi() + 'charts/sds/AXIS_SCORE_HOME_00', 'AXIS_SCORE_HOME_00');
-    addCBAction(cb_chartBar, getURLApi() + 'charts/mds/GLOBAL_SCORING_HOME_01', 'GLOBAL_SCORING_HOME_01');
+    addCBAction(cb_chartPolar, getURLApi() + 'charts/AXIS_SCORE_HOME_00/sds', 'AXIS_SCORE_HOME_00');
+    addCBAction(cb_chartBar, getURLApi() + 'charts/GLOBAL_SCORING_HOME_01/mds', 'GLOBAL_SCORING_HOME_01');
     addCBAction(cb_listAxisScore, getURLApi() + 'entity/AXIS_SCORE_HOME_00', 'AXIS_SCORE_HOME_001');
-    addCBAction(cb_listBestTerms, getURLApi() + 'entity/HOME_BEST_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_BEST_TERMS');
-    addCBAction(cb_listWorseTerms, getURLApi() + 'entity/HOME_WORSE_TERMS/ROWCOUNT/' + LIST_ROWMAX, 'HOME_WORSE_TERMS');
+    addCBAction(cb_listBestTerms, getURLApi() + 'entity/HOME_BEST_TERMS?ROWCOUNT=' + LIST_ROWMAX, 'HOME_BEST_TERMS');
+    addCBAction(cb_listWorseTerms, getURLApi() + 'entity/HOME_WORSE_TERMS?ROWCOUNT=' + LIST_ROWMAX, 'HOME_WORSE_TERMS');
     addCBAction(cb_kpis, getURLApi() + 'globalkpis', 'globalkpis');
     
     joyExecAction('AXIS_SCORE_HOME_00');

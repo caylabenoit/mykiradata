@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions.dimensions;
+package com.dgm.api.dimensions;
 
 import com.dgm.common.Utils;
 import com.joy.JOY;
@@ -46,11 +46,11 @@ public class RESTCommonDimension extends ActionTypeREST {
      */
     private ChartCounterData setCounterOptions(ChartCounterData myChart) {
         try {
-            myChart.setThresolds(Integer.valueOf(this.getState().getParameters().getParameter("thresold_bad").getValue().toString()), 
-                                 Integer.valueOf(this.getState().getParameters().getParameter("thresold_good").getValue().toString()));
-            myChart.setColors(JOY.RGBA(this.getState().getParameters().getParameter("ColorBad").getValue().toString(), "1"), 
-                              JOY.RGBA(this.getState().getParameters().getParameter("ColorWarning").getValue().toString(), "1"), 
-                              JOY.RGBA(this.getState().getParameters().getParameter("ColorGood").getValue().toString(), "1"));
+            myChart.setThresolds(Integer.valueOf(this.getState().getAppParameters().getParameter("thresold_bad").getValue().toString()), 
+                                 Integer.valueOf(this.getState().getAppParameters().getParameter("thresold_good").getValue().toString()));
+            myChart.setColors(JOY.RGBA(this.getState().getAppParameters().getParameter("ColorBad").getValue().toString(), "1"), 
+                              JOY.RGBA(this.getState().getAppParameters().getParameter("ColorWarning").getValue().toString(), "1"), 
+                              JOY.RGBA(this.getState().getAppParameters().getParameter("ColorGood").getValue().toString(), "1"));
         } catch (Exception e) {
             getLog().warning(e.toString());
         }
@@ -74,9 +74,9 @@ public class RESTCommonDimension extends ActionTypeREST {
         boolean takethisrow;
         List<String> Axis = new ArrayList();
         List<Float> Values = new ArrayList();
-        ChartWithDataset radar = new ChartWithDataset(this.getState().getParameters().getParameter("ChartsColors").getList(), this.getState().getParameters().getParameter("transparency").getValue().toString());
+        ChartWithDataset radar = new ChartWithDataset(this.getState().getAppParameters().getParameter("ChartsColors").getList(), this.getState().getAppParameters().getParameter("transparency").getValue().toString());
         Collection<JSONObject> matrixLastValues = new ArrayList<>();
-        ChartWithDataset chartbar = new ChartWithDataset(this.getState().getParameters().getParameter("ChartsColors").getList(), this.getState().getParameters().getParameter("transparency").getValue().toString()); 
+        ChartWithDataset chartbar = new ChartWithDataset(this.getState().getAppParameters().getParameter("ChartsColors").getList(), this.getState().getAppParameters().getParameter("transparency").getValue().toString()); 
         JSONObject data = new JSONObject();
         
         try {
@@ -175,8 +175,7 @@ public class RESTCommonDimension extends ActionTypeREST {
     /**
      * Build the metric list 
      * @param KeyValue
-     * @param KeyName
-     * @return 
+     * @param KeyName 
      */
     protected void setMetrics(int KeyValue, String KeyName) {
         JoyJsonMatrix matrix = new JoyJsonMatrix();
@@ -321,7 +320,9 @@ public class RESTCommonDimension extends ActionTypeREST {
     
     /**
      * Check if the current glossary has at least one score
-     * @param currentTerm TRM_PK
+     * @param entityName
+     * @param fieldName
+     * @param Key
      * @return false if no score
      */
     protected boolean hasAtLeastOneScore(String entityName, String fieldName, int Key) {

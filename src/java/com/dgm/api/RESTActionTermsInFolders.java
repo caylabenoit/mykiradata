@@ -14,31 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions;
+package com.dgm.api;
 
-import com.dgm.termrelationship.mapview.Term;
+import com.dgm.termrelationship.folderview.TermTree;
+import com.dgm.termrelationship.folderview.TermNode;
 import com.joy.api.ActionTypeREST;
 
 /**
  * @author Benoit CAYLA (benoit@famillecayla.fr)
- * retourne la hiérarchie du terme avec ses relations pour un affichage avec vis.js
- * http://localhost:18180/dgm/rest/termsgraph/[depth]/[Term Key]
- * http://localhost:18080/dgm/rest/termsgraph/3/1
+ * retourne la hiérarchie du terme avec ses relations pour un affichage bootstrap
+ * http://[...]/api/relterm?hop=X&term=Y
  */
-public class RESTActionTermsGraph extends ActionTypeREST {
+public class RESTActionTermsInFolders extends ActionTypeREST {
 
     @Override
     public String restGet() {
-        try {
-            Term term = new Term(this.getState(), 
-                                 Integer.valueOf(this.getRestParameter(2)), 
-                                 Integer.valueOf(this.getRestParameter(1)),
-                                 true);
-
-            return term.getJSONTree();
-        } catch (Exception e) {
-            return "[ {\"text\": \"No data\"} ]";
-        }
+        
+        String stream = "[ {\"text\": \"Nothing\"} ]";
+        TermTree mytree = new TermTree(this.getBOFactory());
+        TermNode ars = mytree.build(Integer.valueOf(this.getCurrentRequest().getParameter("term").getValue()), 
+                                    Integer.valueOf(this.getCurrentRequest().getParameter("hop").getValue()));
+        stream = "[ " + ars.getJSONObject().toString() + "]"; 
+        
+        return stream;
     }
     
 }

@@ -72,7 +72,7 @@ public class TermTree extends joyClassTemplate {
     }
     
     /**
-     * Build the terms & relationship tree beginning by the TRM_PK = myTerm ID
+     * Build the terms and relationship tree beginning by the TRM_PK = myTerm ID
      * @param myTermID        Origin's term PK
      * @param levelMax      Max Depth
      * @return 

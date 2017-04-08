@@ -131,7 +131,7 @@ public class TASKCommonLoad extends ActionTypeTASK {
             MappingSpecification mapping;
 
             MappingFactory maps = new MappingFactory();
-            maps.init(getJoyState().getParameters().getMapping("landing"));
+            maps.init(getJoyState().getAppParameters().getMapping("landing"));
 
             // Execute the mappings for the dimensions...
             this.resetMessages();

@@ -1,0 +1,46 @@
+DGM Restful API description here 
+--------------------------------
+
+API global calls
+GET [URL]/api/[...]
+
+--------------------------------
+Boostrap treeview data
+--------------------------------
+Return the term tree for a boostrap treeview
+    GET [URL]/api/relterm?term=[value]&hop=[depth]
+
+--------------------------------
+vis.js graph data
+--------------------------------
+Return the term graph for vis.js library
+    GET [URL]/api/termsgraph?term=[value]&hop=[depth]
+
+--------------------------------
+Returns the global KPIs
+--------------------------------
+    GET [URL]/api/globalkpis
+
+--------------------------------
+Returns the content of each landing tables
+--------------------------------
+    GET [URL]/api/landingcount
+
+--------------------------------
+Returns app parameters & menus
+--------------------------------
+    GET [URL]/api/app
+
+--------------------------------
+Return the term data
+--------------------------------
+return all the details of business term with id=[ID]
+    read -> GET [URL]/api/bterm/[ID]
+
+Idem for :
+    * Glossary : GET [URL]/api/glossary/[ID]
+    * Category : GET [URL]/api/category/[ID]
+    * datasource : GET [URL]/api/datasource/[ID]
+    * context : GET [URL]/api/context/[ID]
+    * metric : GET [URL]/api/metric/[ID]
+    * dqaxis : GET [URL]/api/dqaxis/[ID]

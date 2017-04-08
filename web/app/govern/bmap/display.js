@@ -20,9 +20,9 @@ var idTerm = getRequestParameter('term');
 var nbHop = 2; 
 nbHop = getRequestParameter('hop');
 
-var nameTerm = "My term" ; //'<joy:ActionValueTag name="TRM_NAME" />';
-var basicURL =  getURLApp() + "govern/bterm/display.html"; //'<joy:JoyBasicURL actiontype="display" object="byterm" />';
-var basicURLZoom = getURLApp() + "govern/bmap/display.html"; //<joy:JoyBasicURL actiontype="display" object="mapbyterm" />';
+var nameTerm = "My term" ; 
+var basicURL =  getURLApp() + "govern/bterm/display.html"; 
+var basicURLZoom = getURLApp() + "govern/bmap/display.html"; 
 var data = null;
 var network = null;
 
@@ -175,7 +175,7 @@ function cb_ComboTerm(content) {
 function reload() {
     idTerm = document.getElementById('term').value;
     nbHop = document.getElementById('nbhops').value;
-    addCBAction(cb_global, getURLApi() + 'termsgraph/' + nbHop + '/' + idTerm, 'map_' + idTerm + "_" + nbHop);
+    addCBAction(cb_global, getURLApi() + 'termsgraph?hop=' + nbHop + '&term=' + idTerm, 'map_' + idTerm + "_" + nbHop);
     joyExecAction('map_' + idTerm + "_" + nbHop);
 }
 

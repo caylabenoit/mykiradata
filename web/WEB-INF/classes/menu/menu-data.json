@@ -83,8 +83,7 @@
             "glyphe": "fa fa-random fa-fw",
             "id": "DATA13",
             "label": "External Plugins",
-            "object": "pluginsinterface",
-            "actiontype": "list"
+            "url": "data/import/plugins.html"
           }
         ]
       }

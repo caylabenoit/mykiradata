@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions.dimensions;
+package com.dgm.api.dimensions;
 
 import com.joy.C;
-import com.joy.JOY;
 import com.joy.bo.IEntity;
 import com.joy.charts.chartjs.ChartWithDataset;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
+ * REST API call for business term
+ * http://[...]/api/bterm/[ID]
  * @author benoit
  */
 public class RESTMetric extends RESTCommonDimension {
@@ -33,7 +33,7 @@ public class RESTMetric extends RESTCommonDimension {
     public String restGet() {
         int id = 0;
         try {
-            id = Integer.valueOf(getRestParameter(1));
+            id = Integer.valueOf(this.getCurrentRequest().getAction(1));
         } catch (NumberFormatException e) {}
         if (id == 0) return C.JSON_EMPTY;
         
@@ -72,7 +72,7 @@ public class RESTMetric extends RESTCommonDimension {
             entity.field(KeyName).setKeyValue(KeyValue);
             ResultSet rs = entity.select();
 
-            ChartWithDataset chartbar = new ChartWithDataset(this.getState().getParameters().getParameter("ChartsColors").getList(), this.getState().getParameters().getParameter("transparency").getValue().toString());    
+            ChartWithDataset chartbar = new ChartWithDataset(this.getState().getAppParameters().getParameter("ChartsColors").getList(), this.getState().getAppParameters().getParameter("transparency").getValue().toString());    
             while (rs.next()) {
                 chartbar.add("Job run (" + rs.getDate("RUNDATE").toString() + ")", 
                              rs.getString("DQX_NAME"), 

@@ -17,7 +17,7 @@
 package com.dgm.scheduler;
 
 import com.joy.common.JoyReadStream;
-import com.dgm.common.providers.ParamProvider;
+import com.dgm.params.ParamProvider;
 import com.joy.JOY;
 import com.joy.common.joyClassTemplate;
 import java.io.IOException;

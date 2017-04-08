@@ -15,33 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function cb_refresh(content) {
-    var t1 = $('#Entitycheck').DataTable();
-    for (i=0; i < content.EntityCheck.length; i++) {
-        t1.row.add( [
-            content.EntityCheck[i].Check.Entity,
-            content.EntityCheck[i].Check.Status,
-            content.EntityCheck[i].Check.Count,
-            content.EntityCheck[i].Check.Message
-        ] ).draw( false );
-    }
-
-    var t2 = $('#TableCheck').DataTable();
-    for (i=0; i < content.TableCheck.length; i++) {
-        t2.row.add( [
-            content.TableCheck[i].Check.Entity,
-            content.TableCheck[i].Check.Status
-        ] ).draw( false );
-    }
-}
-
-function refresh() {
-    addCBAction(cb_refresh, getURLApi() + "checks", "checks");
-    joyExecAction("checks");
-}
-
-$( "#btn1" ).button();
-
 function form_afterLoad(content) {
     init_menus(content, "admin");
 }

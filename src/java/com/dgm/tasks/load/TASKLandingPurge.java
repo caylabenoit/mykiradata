@@ -16,7 +16,7 @@
  */
 package com.dgm.tasks.load;
 
-import com.dgm.common.providers.ParamProvider;
+import com.dgm.params.ParamProvider;
 import com.joy.tasks.JoyTaskStatus;
 
 /**

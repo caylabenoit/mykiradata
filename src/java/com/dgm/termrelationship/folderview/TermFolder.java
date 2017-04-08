@@ -56,8 +56,7 @@ public class TermFolder {
 
     /**
      * For bootstrap tree viewing 
-     * @param URI
-     * @return 
+     * @return json tree
      */
     public JSONObject getJSONBootstrapTreeStream() {
         Collection<JSONObject> items = new ArrayList<>();

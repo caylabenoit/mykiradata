@@ -29,3 +29,6 @@ Charts
 https://github.com/caprica/jquery-orgchart
 https://github.com/wesnolte/jOrgChart
 
+-------- logging
+https://kodejava.org/how-do-i-create-a-custom-logger-formatter/
+

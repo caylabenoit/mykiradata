@@ -14,35 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions.dimensions;
+package com.dgm.api.dimensions;
 
 import com.joy.C;
 
 /**
  *
- * @author Benoit Cayla (benoit@famillecayla.fr)
+ * @author benoit
  */
-public class RESTGlossary extends RESTCommonDimension {
+public class RESTDQAxis extends RESTCommonDimension {
+    
     @Override
     public String restGet() {
         int id = 0;
         try {
-            id = Integer.valueOf(getRestParameter(1));
+            id = Integer.valueOf(this.getCurrentRequest().getAction(1));
         } catch (NumberFormatException e) {}
         if (id == 0) return C.JSON_EMPTY;
         
         // Get global informations
-        setGlobalData(id, "DIM_GLOSSARY", "GLO_PK");
-
-        boolean hasScore = this.hasAtLeastOneScore("Check if Glossary has score", "GLO_FK", id);
-        if (hasScore) {
-            this.addOther("charts", getDQVectorsValAndTrends(id, "Analytics - Glossary Last Runs" ,  "GLO_FK"));
-            setMetrics(id, "GLO_PK");
-            setTermsList(id, "GLO_FK", "Analytics - Glossary Term List");
-            setCategoryList(id, "GLO_FK", "Analytics - Glossary Category List");
-        }
-        this.addSingle("hasscoring", (hasScore ? "yes" : "no"));
-        this.addMatrix("glossaries", this.getBOFactory().getEntity("DIM_GLOSSARY"));
+        setGlobalData(id, "DIM_DQAXIS", "DQX_PK");
+        setMetrics(id, "DQX_PK");
         
         return this.getData().toString();
     }

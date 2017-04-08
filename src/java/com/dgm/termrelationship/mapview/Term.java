@@ -18,7 +18,6 @@ package com.dgm.termrelationship.mapview;
 
 import com.joy.JOY;
 import com.joy.common.state.JoyState;
-import com.joy.bo.BOFactory;
 import com.joy.bo.IEntity;
 import com.joy.common.joyClassTemplate;
 import com.joy.json.JSONObject;
@@ -30,7 +29,7 @@ import java.util.List;
 
 /**
  * Build the graph view for vis.js viewing
- * @author Benoit CAYLA <benoit@famillecayla.fr>
+ * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
 public class Term extends joyClassTemplate {
     JoyState state;             // data connection
@@ -51,7 +50,7 @@ public class Term extends joyClassTemplate {
         this.state = state;
         this.childsDepth = childDepth;
         this.initial = initial;
-        INIT_TEMPLATES(state.getParameters().getParameter("svg_box_template").getValue().toString());
+        INIT_TEMPLATES(state.getAppParameters().getParameter("svg_box_template").getValue().toString());
         init();
     }
 
@@ -202,21 +201,21 @@ public class Term extends joyClassTemplate {
      * @return 
      */
     private String getBoxColor(float myScore) {
-        String myColor = state.getParameters().getParameter("ColorBad").getValue().toString();
+        String myColor = state.getAppParameters().getParameter("ColorBad").getValue().toString();
         if (myScore > 0) {
             int iBad = 30;
             int iWarning = 50;
             try {
-                iBad = (state.getParameters().getParameter("thresold_bad") == null ? 30 : Integer.parseInt(state.getParameters().getParameter("thresold_bad").getValue().toString()));
-                iWarning = (state.getParameters().getParameter("thresold_good") == null ? 50 : Integer.parseInt(state.getParameters().getParameter("thresold_good").getValue().toString()));
+                iBad = (state.getAppParameters().getParameter("thresold_bad") == null ? 30 : Integer.parseInt(state.getAppParameters().getParameter("thresold_bad").getValue().toString()));
+                iWarning = (state.getAppParameters().getParameter("thresold_good") == null ? 50 : Integer.parseInt(state.getAppParameters().getParameter("thresold_good").getValue().toString()));
             } catch (NumberFormatException e) {}
-            myColor = state.getParameters().getParameter("ColorBad").getValue().toString();
+            myColor = state.getAppParameters().getParameter("ColorBad").getValue().toString();
             if (myScore >= iBad && myScore < iWarning) 
-                myColor = state.getParameters().getParameter("ColorWarning").getValue().toString();
+                myColor = state.getAppParameters().getParameter("ColorWarning").getValue().toString();
             else if (myScore >= iWarning)
-                myColor = state.getParameters().getParameter("ColorGood").getValue().toString();
+                myColor = state.getAppParameters().getParameter("ColorGood").getValue().toString();
         } else { // Score not calculated
-            myColor = state.getParameters().getParameter("ColorNoMove").getValue().toString();
+            myColor = state.getAppParameters().getParameter("ColorNoMove").getValue().toString();
         }
         return JOY.RGBA(myColor, "1");
     }
@@ -304,7 +303,7 @@ public class Term extends joyClassTemplate {
         // Box attributes
         JSONObject node = new JSONObject();
         node.put("id", curTerm.getKey());
-        if (state.getParameters().getParameter("svg_support").getValue().toString().equalsIgnoreCase("TRUE")) {
+        if (state.getAppParameters().getParameter("svg_support").getValue().toString().equalsIgnoreCase("TRUE")) {
             // Use SVG for viewing the boxes
             node.put("image", getSVGImage(curTerm));
             node.put("shape", "image");
@@ -360,7 +359,7 @@ public class Term extends joyClassTemplate {
             edge.put("to", link.getTarget().getKey());
             edge.put("label", link.getLabel());
             edge.put("arrows", "to");
-            edge.put("length", state.getParameters().getParameter("node_distance").getValue().toString());
+            edge.put("length", state.getAppParameters().getParameter("node_distance").getValue().toString());
             _allEdges.add(edge); 
             
             Term myNode = (curTerm.getKey() == link.getSource().getKey() ? link.getTarget() : link.getSource());

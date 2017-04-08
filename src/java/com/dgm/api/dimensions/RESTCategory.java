@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.rest.actions.dimensions;
+package com.dgm.api.dimensions;
 
 import com.joy.C;
 import com.joy.JOY;
@@ -34,7 +34,7 @@ public class RESTCategory extends RESTCommonDimension {
     public String restGet() {
         int id = 0;
         try {
-            id = Integer.valueOf(getRestParameter(1));
+            id = Integer.valueOf(this.getCurrentRequest().getAction(1));
         } catch (NumberFormatException e) {}
         if (id == 0) return C.JSON_EMPTY;
         

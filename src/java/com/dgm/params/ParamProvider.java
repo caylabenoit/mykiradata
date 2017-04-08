@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dgm.common.providers;
+package com.dgm.params;
 
-import com.dgm.beans.ParamBean;
 import com.dgm.common.Constants;
 import com.joy.JOY;
 import com.joy.bo.BOFactory;

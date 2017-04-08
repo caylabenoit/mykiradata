@@ -124,10 +124,10 @@ public class TASKCommonRAZ extends ActionTypeTASK {
         
         // Calendar initialization
         try {
-            int iYear = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_year_begin").getValue().toString());
-            int iMonth = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_month_begin").getValue().toString());
-            int iDay = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_day_begin").getValue().toString());
-            iNbRecords = Integer.parseInt(getJoyState().getParameters().getParameter("dimtime_nb_records").getValue().toString());
+            int iYear = Integer.parseInt(getJoyState().getAppParameters().getParameter("dimtime_year_begin").getValue().toString());
+            int iMonth = Integer.parseInt(getJoyState().getAppParameters().getParameter("dimtime_month_begin").getValue().toString());
+            int iDay = Integer.parseInt(getJoyState().getAppParameters().getParameter("dimtime_day_begin").getValue().toString());
+            iNbRecords = Integer.parseInt(getJoyState().getAppParameters().getParameter("dimtime_nb_records").getValue().toString());
             cal.set(iYear, iMonth, iDay);
         } catch (NumberFormatException e) { 
             cal.set(2010, 00, 01);

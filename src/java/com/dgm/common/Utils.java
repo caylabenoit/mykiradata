@@ -40,7 +40,7 @@ public class Utils {
     
     /**
      * retourne la ligne de commande d'exécution d'un workflow
-     * @param infacmd infacmd.bat path & filename
+     * @param infacmd infacmd.bat path and filename
      * @param infadomain
      * @param infadis
      * @param infauser
@@ -73,7 +73,7 @@ public class Utils {
     
     /**
      * Return the Term's icon (image)
-     * @param entities data connection
+     * @param state
      * @param termType term type name
      * @return 
     */
@@ -87,13 +87,13 @@ public class Utils {
             if (rs.next()) 
                 result = rs.getString("GIO_ICON_PATHNAME");
             else
-                result =  state.getParameters().getParameter("DefaultTermTypeIcon").getValue().toString();
+                result =  state.getAppParameters().getParameter("DefaultTermTypeIcon").getValue().toString();
             
             state.getBOFactory().closeResultSet(rs);
             return result;
             
         } catch (SQLException e) {
-            return state.getParameters().getParameter("DefaultTermTypeIcon").getValue().toString();
+            return state.getAppParameters().getParameter("DefaultTermTypeIcon").getValue().toString();
         }
     } 
     
@@ -103,15 +103,15 @@ public class Utils {
      * @return color code like XXX,XXX,XXX
      */
     public static String GET_COLOR_FOR_SCORE(JoyState state, String myScore) {
-        String finalColor = state.getParameters().getParameter("ColorGood").getValue().toString();
+        String finalColor = state.getAppParameters().getParameter("ColorGood").getValue().toString();
         try {
             float myFloatScore = Float.valueOf(myScore);
-            float tBad = Float.valueOf(state.getParameters().getParameter("thresold_bad").getValue().toString());
-            float tGood = Float.valueOf(state.getParameters().getParameter("thresold_good").getValue().toString());
+            float tBad = Float.valueOf(state.getAppParameters().getParameter("thresold_bad").getValue().toString());
+            float tGood = Float.valueOf(state.getAppParameters().getParameter("thresold_good").getValue().toString());
             if (myFloatScore < tBad) 
-                finalColor = state.getParameters().getParameter("ColorBad").getValue().toString();
+                finalColor = state.getAppParameters().getParameter("ColorBad").getValue().toString();
             else if (myFloatScore < tGood) 
-                finalColor = state.getParameters().getParameter("ColorWarning").getValue().toString();
+                finalColor = state.getAppParameters().getParameter("ColorWarning").getValue().toString();
         } catch (NumberFormatException e) {} 
         return finalColor;
     }

@@ -75,15 +75,6 @@ for the custom queries :
         <!-- /entity/joy-entity-search.xml -->
         <joy-entity name="SEARCH_TERM" type="composite" file ="/entity/joy-entity-search.xml" />
         
-        <!-- /entity/joy-entity-analytics-term.xml -->
-        <joy-entity name="Check if Terms has score" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
-        <joy-entity name="Analytics - Terms Last Runs" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
-        <joy-entity name="Analytics - Terms Context List" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
-        <joy-entity name="Analytics - Terms DS List" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
-        <joy-entity name="TERM_TYPE_LIST" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
-        <joy-entity name="TERM_LIST" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
-        <joy-entity name="Analytics - Terms Global Informations" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
-
         <!-- /entity/joy-entity-analytics-rel.xml -->
         <joy-entity name="Analytics - Rel Term Info" type="composite" file ="/entity/joy-entity-analytics-rel.xml" />
         <joy-entity name="Analytics - Rel Term Relationships" type="query" file ="/entity/joy-entity-analytics-rel.xml" />
@@ -130,6 +121,63 @@ for the custom queries :
         <joy-entity name="Load - Facts from landing" type="composite" file ="/entity/joy-entity-landing.xml" />
         <joy-entity name="PLUGINS_LIST_00" type="composite" file ="/entity/joy-entity-landing.xml" />
         
+        <!-- /entity/joy-entity-analytics-term.xml -->
+        <joy-entity name="Check if Terms has score" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
+        <joy-entity name="Analytics - Terms Last Runs" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
+        <joy-entity name="Analytics - Terms Context List" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
+        <joy-entity name="Analytics - Terms DS List" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
+        <joy-entity name="TERM_TYPE_LIST" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
+        <joy-entity name="TERM_LIST" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
+        <joy-entity name="Analytics - Terms Global Informations" type="composite" file ="/entity/joy-entity-analytics-term.xml" />
+
+       <!-- /entity/joy-entity-analytics-category.xml -->
+       <joy-entity name="Temp - Check if Category has score" type="composite" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Check if Category has score" type="composite" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category Last Runs" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category Context List" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category DS List" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="CATEGORY_LIST" type="composite" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category List" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category Term List" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category Glossary List" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category Parent List" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       <joy-entity name="Analytics - Category Child List" type="query" file ="/entity/joy-entity-analytics-category.xml" />
+       
+       <!-- /entity/joy-entity-analytics-context.xml -->
+       <joy-entity name="Analytics - Context Last Runs" type="query" file ="/entity/joy-entity-analytics-context.xml" />
+       <joy-entity name="Analytics - Context Term List" type="query" file ="/entity/joy-entity-analytics-context.xml" />
+       <joy-entity name="CONTEXT_LIST" type="composite" file ="/entity/joy-entity-analytics-context.xml" />
+       
+       <!-- /entity/joy-entity-analytics-glossary.xml -->
+       <joy-entity name="Temp - Check if Glossary has score" type="composite" file ="/entity/joy-entity-analytics-glossary.xml" />
+       <joy-entity name="Check if Glossary has score" type="composite" file ="/entity/joy-entity-analytics-glossary.xml" />
+       <joy-entity name="GLOSSARY_LIST" type="composite" file ="/entity/joy-entity-analytics-glossary.xml" />
+       <joy-entity name="Analytics - Glossary Last Runs" type="query" file ="/entity/joy-entity-analytics-glossary.xml" />
+       <joy-entity name="Analytics - Glossary Term List" type="query" file ="/entity/joy-entity-analytics-glossary.xml" />
+       <joy-entity name="Analytics - Glossary Category List" type="query" file ="/entity/joy-entity-analytics-glossary.xml" />
+       
+       <!-- /entity/joy-entity-analytics-datasource.xml -->
+       <joy-entity name="Analytics - DataSource Last Runs" type="query" file ="/entity/joy-entity-analytics-datasource.xml" />
+       <joy-entity name="Analytics - DataSource Term List" type="query" file ="/entity/joy-entity-analytics-datasource.xml" />
+       <joy-entity name="DATASOURCE_LIST" type="composite" file ="/entity/joy-entity-analytics-datasource.xml" />
+
+       <!-- /entity/joy-entity-analytics-global-costs.xml -->
+       <joy-entity name="ANAGLOBCSTDQAXIS" type="query" file ="/entity/joy-entity-analytics-global-costs.xml" />
+       <joy-entity name="ANAGLOBCSTDQAXISOK" type="query" file ="/entity/joy-entity-analytics-global-costs.xml" />
+       <joy-entity name="ANAGLOBCSTCONTEXT" type="query" file ="/entity/joy-entity-analytics-global-costs.xml" />
+       <joy-entity name="ANAGLOBCSTDS" type="query" file ="/entity/joy-entity-analytics-global-costs.xml" />
+       <joy-entity name="ANAGLOBCSTTERM" type="query" file ="/entity/joy-entity-analytics-global-costs.xml" />
+       
+       <!-- /entity/joy-entity-analytics-global-invalids.xml -->
+       <joy-entity name="ANAGLOBDQAXIS" type="query" file ="/entity/joy-entity-analytics-global-invalids.xml" />
+       <joy-entity name="ANAGLOBCONTEXT" type="query" file ="/entity/joy-entity-analytics-global-invalids.xml" />
+       <joy-entity name="ANAGLOBDS" type="query" file ="/entity/joy-entity-analytics-global-invalids.xml" />
+       <joy-entity name="ANAGLOBTERM" type="query" file ="/entity/joy-entity-analytics-global-invalids.xml" />
+
+        <!-- /entity/joy-entity-analytics-metric.xml -->
+       <joy-entity name="Analytics - Metric Global" type="composite" file ="/entity/joy-entity-analytics-metric.xml" />
+       <joy-entity name="Analytics - Metric Last Runs" type="composite" file ="/entity/joy-entity-analytics-metric.xml" />
+       <joy-entity name="METRIC_LIST" type="composite" file ="/entity/joy-entity-analytics-metric.xml" />
 
     </joy-registry> 
     

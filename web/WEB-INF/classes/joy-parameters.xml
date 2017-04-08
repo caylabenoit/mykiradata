@@ -19,7 +19,7 @@
 <!-- MANDATORY PARAMETERS -->
 
     <!-- Must be equal to the url-pattern tag value in web.xml -->
-    <default-url-pattern>/joy</default-url-pattern>
+    <api-start-path>api</api-start-path>
     
     <!-- property file prefix for all the messages -->
     <bundle-message>dgm</bundle-message>

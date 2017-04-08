@@ -34,56 +34,6 @@ import com.joy.bo.IEntity;
 public class SrcTermTypeAction extends ActionTypeForm {
     
     @Override
-    public String list() {
-        try {
-            JoyFormMatrix matrix = new JoyFormMatrix();
-            IEntity Entity = this.getBOFactory().getEntity("SRC_TERMTYPE");
-            ResultSet rs = Entity.select();
-            while (rs.next()) {
-                JoyFormVector columns = new JoyFormVector();
-                columns.addItem("GIO_PK", rs.getInt("GIO_PK"));
-                columns.addItem("GIO_TERMTYPE_NAME", rs.getString("GIO_TERMTYPE_NAME"));
-                columns.addItem("GIO_ICON_PATHNAME", rs.getString("GIO_ICON_PATHNAME"));
-                matrix.addRow(columns);
-            }
-            this.getBOFactory().closeResultSet(rs);
-            this.addMatrix("LIST", matrix);
-            
-        } catch (SQLException e) {
-            JOY.LOG().error( e);
-        }
-        return super.list(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String edit() {
-        String uid = getStrArgumentValue("GIO_PK");
-        if (!uid.equalsIgnoreCase("")) {
-            try {
-                IEntity Entity = this.getBOFactory().getEntity("SRC_TERMTYPE");
-                Entity.reset();
-                Entity.field("GIO_PK").setKeyValue(uid);
-                ResultSet rs = Entity.select();
-
-                if (rs.next()) {
-                    this.addSingle("GIO_PK", rs.getInt("GIO_PK"));
-                    this.addSingle("GIO_TERMTYPE_NAME", rs.getString("GIO_TERMTYPE_NAME"));
-                    this.addSingle("GIO_ICON_PATHNAME", rs.getString("GIO_ICON_PATHNAME"));
-                }
-                this.getBOFactory().closeResultSet(rs);
-
-            } catch (SQLException e) {
-                JOY.LOG().error( e);
-            }
-        }
-        
-        loadCBOGlossaries(this.getSingle("GIO_TERMTYPE_NAME").getStrValue());
-        loadCBOAvailableIcons(this.getSingle("GIO_ICON_PATHNAME").getStrValue());
-        
-        return super.edit(); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
     public String delete() {
         
         int uid = getIntArgumentValue("GIO_PK");

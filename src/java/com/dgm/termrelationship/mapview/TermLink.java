@@ -18,7 +18,7 @@ package com.dgm.termrelationship.mapview;
 
 /**
  *
- * @author Benoit CAYLA <benoit@famillecayla.fr>
+ * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
 public class TermLink {
     private Term source;

@@ -26,9 +26,15 @@ var cbs = new classCallbacks();             // Callbacks object management
  * @fname : REST call
  * @tag : tag switch in case of multiple calls in the same page
  */
-function callAJAXAsync(fname, tag) {
+function callAjax(method, fname, tag, params) {
     var xhr=createXHR();
-    xhr.open("GET", fname, true);
+    xhr.open(method, fname, true);
+    if (method === "POST") {
+        //Send the proper header information along with the request
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.setRequestHeader("Content-length", params.length);
+        http.setRequestHeader("Connection", "close");
+    }
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status !== 404) {
@@ -40,7 +46,15 @@ function callAJAXAsync(fname, tag) {
             }
         }
     };
-    xhr.send(null);
+    xhr.send(params);
+}
+
+function callAjaxGET(fname, tag) {
+    callAjax("GET", fname, tag, null);
+}
+
+function callAjaxPOST(fname, tag, params) {
+    callAjax("POST", fname, tag, "lorem=ipsum&name=binny");
 }
 
 /**
@@ -67,10 +81,10 @@ function cb_Success(content, tag) {
  * @returns {undefined}
  */
 function callAllLoadAsync() {
-    // make callAJAXAsync() call for each cb
+    // make callAjaxGET() call for each cb
     for (i = 0; i < cbs.length(); i++) 
         if (cbs.get(i).tagtype == TAG_TYPE_LOAD) // Launch only the load cb
-            callAJAXAsync(cbs.get(i).thisresturl, cbs.get(i).tag);
+            callAjaxGET(cbs.get(i).thisresturl, cbs.get(i).tag);
 }
 
 /**
@@ -145,7 +159,7 @@ function joyExecAction(tag) {
         var index = cbs.getIndexFromTag(tag);
         if (index >= 0) 
             if (cbs.get(index).tagtype == TAG_TYPE_ACTION)
-                callAJAXAsync(cbs.get(index).thisresturl, tag);
+                callAjaxGET(cbs.get(index).thisresturl, tag);
     }
 }
 
