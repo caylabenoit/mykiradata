@@ -5,19 +5,19 @@
         "glyphe": "fa fa-unlock-alt fa-fw",
         "id": "ADM04",
         "label": "Check application",
-        "url": "admin/checkapp.html",
+        "tag" : "checkapp"
       },
       {
         "glyphe": "fa fa-unlock-alt fa-fw",
         "id": "ADM05",
         "label": "Backup configuration",
-        "url": "admin/backup.html",
+        "tag" : "backupconfig"
       },
       {
         "glyphe": "fa fa-random fa-fw",
         "id": "ADM07",
         "label": "Tasks",
-        "url": "admin/tasks.html"
+        "tag" : "tasks"
       }
     ]
 }

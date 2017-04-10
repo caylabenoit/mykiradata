@@ -16,7 +16,7 @@
  */
 
 var ID = getRequestParameter('term');
-var params = null;
+var appContext = null;
 
 $(document).ready(function() {
     $( "#btn1" ).button();
@@ -27,7 +27,7 @@ function cb_global(content) {
 }
 
 function form_afterLoad(content) {
-    params = content.parameters; // Global application parameters
+    appContext = content; // Global application parameters
     init_menus(content, "govern");
     // Call back declaration here
     // Call back declaration here

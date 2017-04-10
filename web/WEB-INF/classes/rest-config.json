@@ -48,7 +48,7 @@
     },
     {
       "name": "app",
-      "class": "com.dgm.api.RESTAppContext",
+      "class": "com.joy.api.ready.RESTAppContext",
       "mime": "application/json"
     },
     {

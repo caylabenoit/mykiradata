@@ -261,19 +261,19 @@ function displayDQAxisPanel(divID, content, params) {
         var trend = getFromJoy(content.rows[i].items, 'trend');
         switch (trend) {
             case "up":
-                myTrendGlyphe = getGlyphe("trend-up" , params);
+                myTrendGlyphe = JOY.getGlyphe("trend-up");
                 myTrendcolor = params.ColorGood;
                 break;
             case "down":
-                myTrendGlyphe = getGlyphe("trend-down" , params);
+                myTrendGlyphe = JOY.getGlyphe("trend-down");
                 myTrendcolor = params.ColorBad;
                 break;
             case "equal":
-                myTrendGlyphe = getGlyphe("trend-stable" , params);
+                myTrendGlyphe = JOY.getGlyphe("trend-stable");
                 myTrendcolor = params.ColorNoMove;
                 break;
             default:
-                myTrendGlyphe = getGlyphe("trend-new" , params);
+                myTrendGlyphe = JOY.getGlyphe("trend-new");
                 myTrendcolor = params.ColorNoMove;
         }
         if (myTrendcolor == "") myTrendcolor = "220,220,220";

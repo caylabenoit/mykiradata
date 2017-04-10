@@ -28,7 +28,7 @@
     <default-dateformat>yyyy-mm-dd HH:mm:ss</default-dateformat>
     
     <!-- Joy Version -->
-    <joy-version>0.1.5.6</joy-version>
+    <joy-version>0.2.0.0</joy-version>
     <joy-app-name>myKiraData</joy-app-name>
 
     <!-- Deactive or not the mandatory login process yes/no -->
@@ -38,6 +38,18 @@
     <joy-entities>
         <joy-entity name="Governance">joy-entity.xml</joy-entity>
     </joy-entities>
+    
+    <!-- Joy menus -->
+    <joy-menus>
+        <joy-menu name="topleft">menu/menu-top-left.json</joy-menu>
+        <joy-menu name="govern">menu/menu-govern.json</joy-menu>
+        <joy-menu name="admin">menu/menu-admin.json</joy-menu>
+        <joy-menu name="config">menu/menu-config.json</joy-menu>
+        <joy-menu name="data">menu/menu-data.json</joy-menu>
+    </joy-menus>
+    
+    <!-- Navigation configuration file -->
+    <joy-navi>navi-config.json</joy-navi>
     
     <!-- Joy mapping -->
     <joy-mappings>
@@ -53,9 +65,6 @@
     <!-- custom application parameters -->
     
     <app-parameter name="logo" type="value">./images/logo.png</app-parameter>
-    
-    <!-- Dashboards config here-->
-    <app-parameter name="dashboardconfig" type="value">dashboard/joy-dashboard-personnal.xml</app-parameter>
     
     <!-- Transparency for charts display -->
     <app-parameter name="transparency" type="value">0.5</app-parameter> 

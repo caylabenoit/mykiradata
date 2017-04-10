@@ -37,7 +37,7 @@ function fillCategories(id, content) {
     var t1 = $("#" + id).DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + "display.html" + "?category=" + getFromJoy(content.rows[i].items, "CAT_FK") + "'>" + getFromJoy(content.rows[i].items, "CAT_NAME") + "</a>";
+        var myLink = "<a href='display.html" + "?category=" + getFromJoy(content.rows[i].items, "CAT_FK") + "'>" + getFromJoy(content.rows[i].items, "CAT_NAME") + "</a>";
         t1.row.add( [
             myLink,
             getFromJoy(content.rows[i].items, "CAT_DESCRIPTION")

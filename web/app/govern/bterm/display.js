@@ -35,25 +35,26 @@ $(document).ready(function() {
     } );
 });
 
-var ID = getRequestParameter('term');
-var params = null;
+//var ID = getRequestParameter('term');
+var ID = JOY.getParameter('term');
+var appContext = null;
 
 function fillDatasource(content) {
     var t1 = $('#tableDatasource').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + getURLApp() + "govern/datasource/display.html?ds=" + getFromJoy(content.rows[i].items, "dso_pk") + "'>" + getFromJoy(content.rows[i].items, "dso_sourcename") + "</a>";
+        var myLink = "<a href='" + getNavi(JOY.context.navi, "datasourcedisplay") + "?ds=" + getFromJoy(content.rows[i].items, "dso_pk") + "'>" + getFromJoy(content.rows[i].items, "dso_sourcename") + "</a>";
         t1.row.add( [
             myLink
         ] ).draw( false );
     }
 }
-
+ //getURLApp() + "govern/datasource/display.html
 function fillContext(content) {
     var t1 = $('#tableContext').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + getURLApp() + "govern/context/display.html?ds=" + getFromJoy(content.rows[i].items, "con_pk") + "'>" + getFromJoy(content.rows[i].items, "con_description") + "</a>";
+        var myLink = "<a href='" + getNavi(JOY.context.navi, "contextdisplay") +  "?context=" + getFromJoy(content.rows[i].items, "con_pk") + "'>" + getFromJoy(content.rows[i].items, "con_description") + "</a>";
         t1.row.add( [
             myLink
         ] ).draw( false );
@@ -64,7 +65,7 @@ function fillMetrics(content) {
     var t1 = $('#tableMetric').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='"  + getURLApp() + "govern/metric/display.html?metric=" + getFromJoy(content.rows[i].items, "MET_FK") + "'>" + getFromJoy(content.rows[i].items, "MET_NAME") + "</a>";
+        var myLink = "<a href='"  + getNavi(JOY.context.navi, "metricsdisplay") + "?metric=" + getFromJoy(content.rows[i].items, "MET_FK") + "'>" + getFromJoy(content.rows[i].items, "MET_NAME") + "</a>";
         t1.row.add( [
             myLink,
             getFromJoy(content.rows[i].items, "DQX_NAME"),
@@ -84,37 +85,19 @@ function cb_global(content) {
         fill_header(content);
 }
 
-function form_preInitialize() {
+JoyPage.prototype.form_beforeLoad = function() {
     start_waitMessage("panel_treeview", "div_Wait_treeview");
     start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
     start_waitMessage("panel_Wait_radar", "div_Wait_radar");
     start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
 }
 
-function form_afterLoad(content) {
-    params = content.parameters; // Global application parameters
-    init_menus(content, "govern");
-    
-    // Set the glyphes
-    setGlypheToClass('status', 'glyphestatus', params);
-    setGlypheToClass('user', 'glypheuser', params);
-    setGlypheToClass('term', 'glypheterm', params);
-    setGlypheToClass('businessmap', 'glyphebusmap', params);
-    setGlypheToClass('common-configuration', 'glyphecommon', params);
-    setGlypheToClass('glossary', 'glypheglossary', params);
-    setGlypheToClass('relationship', 'glypherelationship', params);
-    setGlypheToClass('dqaxis', 'glyphedqaxis', params);
-    setGlypheToClass('common-chart', 'glyphechart', params);
-    setGlypheToClass('context', 'glyphecontext', params);
-    setGlypheToClass('datasource', 'glyphedatasource', params);
+JoyPage.prototype.form_afterLoad = function() {
+    init_menus(JOY.context, "govern");
     
     // Call back declaration here
-    addCBAction(cb_relationShipTree, getURLApi() + 'relterm?hop=3&term=' + ID, 'tree');
-    addCBAction(cb_global, getURLApi() + 'bterm/' + ID, 'term');
-    
-    joyExecAction('tree');
-    joyExecAction('term');
+    JOY.exec(cb_relationShipTree, getURLApi() + 'relterm?hop=3&term=' + ID);
+    JOY.exec(cb_global, getURLApi() + 'bterm/' + ID);
 }
 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+JOY.init();

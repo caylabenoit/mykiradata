@@ -23,7 +23,6 @@
  */
 function menu_topLeft(divId, context) {
     var myMenu = getFromJoy(context.menus, "topleft");
-    var params = context.parameters;
     var out = "<UL class='nav navbar-nav'>";
     var active = "";
     var activeMenuId = document.getElementById(divId).getAttribute("selected");
@@ -37,14 +36,14 @@ function menu_topLeft(divId, context) {
         
         if (mainItem.items == null) { // Display direct link
             out += "<LI class='" + active + "'>";
-            out += "<A class='active' HREF='" + getURLApp() + mainItem.url + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
+            out += "<A class='active' HREF='" + getNavi(context.navi, mainItem.tag) + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
             out += "<LI>";
         } else { // Display dropdown
             out += "<LI class='dropdown " + active + "'>";
             out += "<A  class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'  HREF='#'><I class='fa fa-unlock-alt fa-fw'></I>&nbsp;" + mainItem.label + "</A>";
             out += "<UL class='dropdown-menu dropdown-shortcuts'>";
             for (var j=0; j <mainItem.items.length; j++) { // Go through the 2nd level items 
-                out += "<LI><A  HREF='" + getURLApp() + mainItem.items[j].url + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
+                out += "<LI><A  HREF='" + getNavi(context.navi, mainItem.items[j].tag) + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
             }
             out += "</UL>";
             out += "</LI>";
@@ -74,17 +73,17 @@ function menu_topRightShortcuts(divId, context) {
         var mainItem = myMenu.items[i];
 
         if (mainItem.shortcut == 'true')
-            out += "<LI><A href=" + getURLApp() + mainItem.url + "><div><p><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</p></div></A></LI>";
+            out += "<LI><A href=" + getNavi(context.navi, mainItem.tag) + "><div><p><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</p></div></A></LI>";
         if (mainItem.items != null) { // Go through the 2nd level 
             for (var j=0; j <mainItem.items.length; j++) { // Go through the 2nd level items 
                 if (mainItem.items[j].shortcut == 'true')
-                    out += "<LI><A href=" + getURLApp() + mainItem.items[j].url + "><div><p><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</p></div></A></LI>";
+                    out += "<LI><A href=" + getNavi(context.navi, mainItem.items[j].tag) + "><div><p><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</p></div></A></LI>";
             }
         }
     }
     
     out += "<li class='divider'></li>";
-    out += "<LI><A href=" + joyURL(params.urlpattern, 'homepage') + "><div><p align='center'>Home</p></div></A></LI>";
+    out += "<LI><A href=" + getNavi(context.navi, "home") + "><div><p align='center'>Home</p></div></A></LI>";
     out += "</UL>";
     document.getElementById(divId).innerHTML = out;
 }
@@ -96,7 +95,6 @@ function menu_topRightShortcuts(divId, context) {
  * @param {type} context JSON data with all the application informations           
  */
 function menu_topRightUserManagement(divId, context) {
-    var params = context.parameters;
     var session = context.session;
     var out = "<a class='dropdown-toggle' data-toggle='dropdown' href='#'>  <i class='fa fa-user fa-fw'></i><i class='fa fa-caret-down'></i></a>";
     
@@ -106,9 +104,9 @@ function menu_topRightUserManagement(divId, context) {
     out += "<li><a href='#'><i class='fa fa-gear fa-fw'></i> Settings</a></li>";
     out += "<li class='divider'></li>";
     if (session.connected == "true")
-        out += "<li><a href='"+ joyURL(params.urlpattern, "login", "logout") + "'><i class='fa fa-sign-out fa-fw'></i> Logout</a>  </li>";  
+        out += "<li><a href='"+ getNavi(context.navi, "login") + "'><i class='fa fa-sign-out fa-fw'></i> Logout</a>  </li>";  
     else
-        out += "<li><a href='"+ joyURL(params.urlpattern, "login", "request") + "'><i class='fa fa-sign-out fa-fw'></i> Login</a>  </li>";  
+        out += "<li><a href='"+ getNavi(context.navi, "login")  + "'><i class='fa fa-sign-out fa-fw'></i> Login</a>  </li>";  
     out += "<UL>";
     document.getElementById(divId).innerHTML = out;
 }
@@ -120,9 +118,8 @@ function menu_topRightUserManagement(divId, context) {
  * @param {type} context JSON data with all the application informations           
  * @param {type} menuTag tag for the menu to display   
  */
-function menu_left(divId, context, menuTag) {
+function menu_sideleft(divId, context, menuTag) {
     var myMenu = getFromJoy(context.menus, menuTag);
-    var params = context.parameters;
     var out = "";
     var activeMenuId = document.getElementById(divId).getAttribute("selected");
     
@@ -144,7 +141,7 @@ function menu_left(divId, context, menuTag) {
                     activeBloc = active;
                 }
                 bloc2nd += "<LI " + active + ">";
-                bloc2nd += "<A aria-expanded='false' " + active + " href='" + getURLApp() + mainItem.items[j].url + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
+                bloc2nd += "<A aria-expanded='false' " + active + " href='" + getNavi(context.navi, mainItem.items[j].tag) + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
                 bloc2nd += "</LI>";
             }
 
@@ -157,7 +154,7 @@ function menu_left(divId, context, menuTag) {
             if (activeMenuId == mainItem.id)
                 active += "class='active'";
             out += "<LI " + active + ">";
-            out += "<A " + active + " aria-expanded='false' href='" + getURLApp() + mainItem.url + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
+            out += "<A " + active + " aria-expanded='false' href='" + getNavi(context.navi, mainItem.tag) + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
             out += "</LI>";
         }
         
@@ -173,12 +170,12 @@ function menu_left(divId, context, menuTag) {
  */
 function init_menus(context, leftmenuname) {
     document.getElementById("src_logo").src = getURLRoot() + context.parameters.logo;
-    document.getElementById("href_about").href = getURLApp() + "about.html";
-    //makeHref("href_about", "about");
+    document.getElementById("href_about").href = getNavi(context.navi, "about");
+
     menu_topLeft("menu_top_left", context);
     menu_topRightShortcuts("menu_right_shortcuts", context);
     menu_topRightUserManagement("menu_right_user", context);
-    menu_left("menu_left", context, leftmenuname);
+    menu_sideleft("menu_left", context, leftmenuname);
     $("#side-menu").metisMenu();
 }
 

@@ -15,13 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var params = null;
-var THRESOLD_BAD = null;
-var THRESOLD_GOOD = null;
-var URLBASIS_DQAXIS = null;
-var URLBASIS_TERM = null; 
 var LIST_ROWMAX = 5;
-
 var myGraph1;
 var myGraph0;
 
@@ -30,17 +24,26 @@ function cb_kpis(content) {
 }
 
 function cb_listWorseTerms(content) {
-    displayGaugeList(content, 'div_HOME_WORSE_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, getURLApp() + 'govern/bterm/display.html?term=');
+    displayGaugeList(content, 'div_HOME_WORSE_TERMS', 'fa-book', 
+                     JOY.context.parameters.thresold_bad, 
+                     JOY.context.parameters.thresold_good, 
+                     getNavi(JOY.context.navi, "btermdisplay") + 'term=');
     end_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
 function cb_listBestTerms(content) {
-    displayGaugeList(content, 'div_HOME_BEST_TERMS', 'fa-book', THRESOLD_BAD, THRESOLD_GOOD, getURLApp() + 'govern/bterm/display.html?term=');
+    displayGaugeList(content, 'div_HOME_BEST_TERMS', 'fa-book', 
+                     JOY.context.parameters.thresold_bad, 
+                     JOY.context.parameters.thresold_good, 
+                     getNavi(JOY.context.navi, "btermdisplay") + '?term=');
     end_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
 }
 
 function cb_listAxisScore(content) {
-    displayGaugeList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', THRESOLD_BAD, THRESOLD_GOOD, URLBASIS_DQAXIS + "&dqaxis=");
+    displayGaugeList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', 
+                     JOY.context.parameters.thresold_bad, 
+                     JOY.context.parameters.thresold_good, 
+                     getNavi(JOY.context.navi, "dqaxisdisplay")  + "&dqaxis=");
     end_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
 }
 
@@ -54,7 +57,7 @@ function cb_chartPolar(content) {
     end_waitMessage("graph0", "div_graph0");
 }
 
-function form_preLoad() {
+JoyPage.prototype.form_beforeLoad = function() {
     start_waitMessage("graph0", "div_graph0");
     start_waitMessage("graph1", "div_graph1");
     start_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
@@ -62,36 +65,17 @@ function form_preLoad() {
     start_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
-function form_afterLoad(content) {
-    params = content.parameters;
-    THRESOLD_BAD = params.thresold_bad;
-    THRESOLD_GOOD = params.thresold_good;
-    URLBASIS_DQAXIS = joyURL(params.urlpattern, "bydqaxis", "display"); // content.url.dqaxis;
-    URLBASIS_TERM = joyURL(params.urlpattern, "byterm", "display");
-    
-    // Call back declaration here
-    addCBAction(cb_chartPolar, getURLApi() + 'charts/AXIS_SCORE_HOME_00/sds', 'AXIS_SCORE_HOME_00');
-    addCBAction(cb_chartBar, getURLApi() + 'charts/GLOBAL_SCORING_HOME_01/mds', 'GLOBAL_SCORING_HOME_01');
-    addCBAction(cb_listAxisScore, getURLApi() + 'entity/AXIS_SCORE_HOME_00', 'AXIS_SCORE_HOME_001');
-    addCBAction(cb_listBestTerms, getURLApi() + 'entity/HOME_BEST_TERMS?ROWCOUNT=' + LIST_ROWMAX, 'HOME_BEST_TERMS');
-    addCBAction(cb_listWorseTerms, getURLApi() + 'entity/HOME_WORSE_TERMS?ROWCOUNT=' + LIST_ROWMAX, 'HOME_WORSE_TERMS');
-    addCBAction(cb_kpis, getURLApi() + 'globalkpis', 'globalkpis');
-    
-    joyExecAction('AXIS_SCORE_HOME_00');
-    joyExecAction('GLOBAL_SCORING_HOME_01');
-    joyExecAction('AXIS_SCORE_HOME_001');
-    joyExecAction('HOME_BEST_TERMS');
-    joyExecAction('HOME_WORSE_TERMS');
-    joyExecAction('globalkpis');
-    
+JoyPage.prototype.form_afterLoad = function() {
+
+    JOY.exec(cb_chartPolar, JOY.getAPICall('charts/AXIS_SCORE_HOME_00/sds'));
+    JOY.exec(cb_chartBar, JOY.getAPICall('charts/GLOBAL_SCORING_HOME_01/mds'));
+    JOY.exec(cb_listAxisScore, JOY.getAPICall('entity/AXIS_SCORE_HOME_00'));
+    JOY.exec(cb_listBestTerms, JOY.getAPICall('entity/HOME_BEST_TERMS?ROWCOUNT=' + LIST_ROWMAX));
+    JOY.exec(cb_listWorseTerms, JOY.getAPICall('entity/HOME_WORSE_TERMS?ROWCOUNT=' + LIST_ROWMAX));
+    JOY.exec(cb_kpis, JOY.getAPICall('globalkpis'));
+
     // Menus
-    init_menus(content, "govern");
-    
-    // Glyphes
-    setGlypheToClass('dqaxis', 'glyphedqaxis', params);
-    setGlypheToClass('dashboard', 'glyphedashboard', params);
+    init_menus(JOY.context, "govern");
 }
 
-form_preLoad();
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+JOY.init();

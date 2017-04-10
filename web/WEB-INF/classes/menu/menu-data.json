@@ -5,8 +5,6 @@
         "glyphe": "fa fa-star fa-fw",
         "id": "DATA01",
         "label": "Datamart Metrics",
-        "object": "dtmlist",
-        "actiontype": "list",
         "pn1": "list",
         "pv1": "all"
       },
@@ -14,57 +12,42 @@
         "glyphe": "fa fa-th fa-fw",
         "id": "DATA02",
         "label": "Landing Area",
-        "object": "landing",
-        "actiontype": "list",
         "items": [
           {
             "glyphe": "fa fa-book fa-fw",
             "id": "DATA03",
-            "label": "Business Term",
-            "object": "lndterms",
-            "actiontype": "list"
+            "label": "Business Term"
           },
           {
             "glyphe": "fa fa-folder-open fa-fw",
             "id": "DATA04",
-            "label": "Category",
-            "object": "lndcategory",
-            "actiontype": "list"
+            "label": "Category"
           },
           {
             "glyphe": "fa fa-database fa-fw",
             "id": "DATA05",
-            "label": "Glossary",
-            "object": "lndglossary",
-            "actiontype": "list"
+            "label": "Glossary"
           },
           {
             "glyphe": "fa fa-pagelines fa-fw",
             "id": "DATA06",
             "label": "Terms Relationships",
-            "object": "lndtermsrel",
-            "actiontype": "list"
+            "object": "lndtermsrel"
           },
           {
             "glyphe": "fa fa-bookmark-o fa-fw",
             "id": "DATA07",
-            "label": "Metrics",
-            "object": "lndmetric",
-            "actiontype": "list"
+            "label": "Metrics"
           },
           {
             "glyphe": "fa fa-dashboard fa-fw",
             "id": "DATA08",
-            "label": "Scorecards",
-            "object": "lndsc",
-            "actiontype": "list"
+            "label": "Scorecards"
           },
           {
             "glyphe": "fa fa-dashboard fa-fw",
             "id": "DATA09",
-            "label": "Groups",
-            "object": "lndscgrp",
-            "actiontype": "list"
+            "label": "Groups"
           }
         ]
       },
@@ -77,13 +60,13 @@
             "glyphe": "fa fa-random fa-fw",
             "id": "DATA12",
             "label": "From Landing",
-            "url": "data/import/process.html"
+            "tag": "import"
           },
           {
             "glyphe": "fa fa-random fa-fw",
             "id": "DATA13",
             "label": "External Plugins",
-            "url": "data/import/plugins.html"
+            "tag": "plugins"
           }
         ]
       }

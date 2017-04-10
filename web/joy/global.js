@@ -16,16 +16,17 @@
  */
 
 /* GLOBAL VARIABLES */
-
 var URLROOT = '/mykiradata/';
 var URLAPPROOT = URLROOT + 'app/';
 var URLAPIROOT = URLROOT + 'api/';
 var URLAPITASK = URLROOT + 'task/';
+/* EOF GLOBAL VARIABLES */
 
-/* END OF GLOBAL VARIABLES */
+/* Joy Init API Call */
+var JOYAPPCONTEXTCALL = URLAPIROOT + 'app'
+/* EOF Joy Init API Call */
 
 /* JAVASCRIPT & CSS INCLUDES */
-
 var joyIncludes = {
     "js": [ 
         "joy-external/bootstrap/components/jquery/dist/jquery.min.js",
@@ -42,12 +43,11 @@ var joyIncludes = {
         "joy-external/bootstrap/components/bootstrap-treeview-master/dist/bootstrap-treeview.min.js",
         "joy-external/Chart.js/dist/Chart.bundle.min.js",
         "joy-external/gauge.js/gauge.min.js",
-        "joy/ajax.js",
-        "joy/callbacks.js",
+        "joy/joy.js",
         "joy/common.js",
         "joy/menu.js",
         "theme/js/dgmtaskmenu.js",
-        "theme/js/dgmcharts.js",
+        "joy/charts.js",
         "theme/js/dgmwait.js",
         "joy-external/bootstrap/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js",
         "joy-external/vis-4.17.0/vis.min.js"
@@ -69,5 +69,4 @@ var joyIncludes = {
         "theme/css/theme.css"
     ]
 };
-
-/* END OF JAVASCRIPT & CSS INCLUDES */
+/* EOF JAVASCRIPT & CSS INCLUDES */

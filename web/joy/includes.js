@@ -39,3 +39,17 @@ function includeAllCSS() {
         document.write("<LINK href='" + getURLRoot() + joyIncludes.styles[i]+"' rel='stylesheet' type='text/css' />" );
     }
 }
+
+/**
+ * Returns the URL for a give configuration tag
+ * @param {type} navis
+ * @param {type} tag
+ * @returns {unresolved}
+ */
+function getNavi(navis, tag) {
+    for (var i=0; i<navis.list.length; i++) {
+        if (navis.list[i].tag == tag)
+            return getURLApp() + navis.list[i].url;
+    }
+    return navis.default;
+}

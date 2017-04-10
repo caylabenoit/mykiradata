@@ -5,7 +5,8 @@
         "glyphe": "fa fa-home fa-fw",
         "id": "Home",
         "label": "Home",
-        "url": "home.html"
+        "url": "home.html",
+        "tag" : "home"
       },
       {
         "glyphe": "fa fa-database fa-fw",
@@ -17,19 +18,19 @@
             "id": "Analytics-BG-Term",
             "label": "By Term",
             "shortcut": "true",
-            "url": "govern/bterm/search.html"
+            "tag" : "btermsearch"
           },
           {
             "glyphe": "fa fa-folder-open fa-fw",
             "id": "Analytics-BG-Category",
             "label": "By Category",
-            "url": "govern/category/search.html"
+            "tag": "categorysearch"
           },
           {
             "glyphe": "fa fa-database fa-fw",
             "id": "Analytics-BG-Glossary",
             "label": "By Glossary",
-            "url": "govern/glossary/search.html"
+            "tag": "glossarysearch"
           }
         ]
       },
@@ -42,26 +43,26 @@
             "glyphe": "fa fa-bookmark-o fa-fw",
             "id": "Analytics-S-Metric",
             "label": "By Metric",
-            "url": "govern/metric/search.html",
+            "tag": "metricsearch",
             "shortcut": "true"
           },
           {
             "glyphe": "fa fa-briefcase fa-fw",
             "id": "Analytics-S-Context",
             "label": "By Context",
-            "url": "govern/context/search.html"
+            "tag": "contextsearch"
           },
           {
             "glyphe": "fa fa-flag-checkered fa-fw",
             "id": "Analytics-S-QV",
             "label": "By Quality Dimension",
-            "url": "govern/dqaxis/display.html"
+            "tag": "dqaxisdisplay"
           },
           {
             "glyphe": "fa fa-cubes fa-fw",
             "id": "Analytics-S-DS",
             "label": "By Data Source",
-            "url": "govern/datasource/search.html"
+            "tag": "datasourcesearch"
           }
         ]
       },
@@ -69,20 +70,20 @@
         "glyphe": "fa fa-bar-chart-o fa-fw",
         "id": "Analytics-G-Costs",
         "label": "Costs",
-        "url": "govern/global/costs.html"
+        "tag": "costs"
       },
       {
         "glyphe": "fa fa-bar-chart-o fa-fw",
         "id": "Analytics-G-ID",
         "label": "Invalid Data",
-        "url": "govern/global/invalids.html",
+        "tag": "invalids",
         "shortcut": "true"
       },
       {
         "glyphe": "fa fa-pagelines fa-fw",
         "id": "Analytics-BM-Relationships",
         "label": "Business Map",
-        "url": "govern/bmap/search.html",
+        "tag": "businessmap",
         "shortcut": "true"
       }
     ]

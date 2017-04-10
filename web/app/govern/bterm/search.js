@@ -27,7 +27,8 @@ $(document).ready(function() {
 });
 
 function goto(term)  {
-    window.open("./display.html?term=" + term, "_self");
+    JOY.navigate("btermdisplay", "?term=" + term);
+    //window.open("./display.html?term=" + term, "_self");
 }
 
 function evt_search() {
@@ -64,16 +65,13 @@ function cb_ComboTerm(content) {
     $( '#term' ).select2({ placeholder: "Select an Term" });
 }
 
-function form_preInitialize() {}
+JoyPage.prototype.form_beforeLoad = function() {}
 
-function form_afterLoad(content) {
-    params = content.parameters;
-    init_menus(content, "govern");
-    setGlypheToClass('term', 'glypheterm', params);
+JoyPage.prototype.form_afterLoad = function() {
+    init_menus(JOY.context, "govern");
+    JOY.exec(cb_ComboTermTypes, JOY.getAPICall('entity/TERM_TYPE_LIST'));
+    JOY.exec(cb_ComboTerm, JOY.getAPICall('entity/TERM_LIST'));
 }
 
-addCBLoad(cb_ComboTermTypes, getURLApi() + 'entity/TERM_TYPE_LIST'); 
-addCBLoad(cb_ComboTerm, getURLApi() + 'entity/TERM_LIST'); 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+JOY.init();
 

@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "default": "home.html",
+  "list": [
+    { "tag": "home", "url": "home.html" },
+    { "tag": "about", "url": "about.html" },
+    { "tag": "login", "url": "login.html" },
+    { "tag": "checkapp", "url": "admin/checkapp.html" },
+    { "tag": "backupconfig", "url": "admin/backup.html" },
+    { "tag": "tasks", "url": "admin/tasks.html" },
+    { "tag": "btermsearch", "url": "govern/bterm/search.html" },
+    { "tag": "btermdisplay", "url": "govern/bterm/display.html" },
+    { "tag": "categorysearch", "url": "govern/category/search.html" },
+    { "tag": "glossarysearch", "url": "govern/glossary/search.html" },
+    { "tag": "metricsearch", "url": "govern/metric/search.html" },
+    { "tag": "metricsdisplay", "url": "govern/metric/display.html" },
+    { "tag": "contextsearch", "url": "govern/context/search.html" },
+    { "tag": "contextdisplay", "url": "govern/context/display.html" },
+    { "tag": "dqaxisdisplay", "url": "govern/dqaxis/display.html" },
+    { "tag": "datasourcesearch", "url": "govern/datasource/search.html" },
+    { "tag": "datasourcedisplay", "url": "govern/datasource/display.html" },
+    { "tag": "costs", "url": "govern/global/costs.html" },
+    { "tag": "invalids", "url": "govern/global/invalids.html" },
+    { "tag": "businessmap", "url": "govern/bmap/search.html" },
+    { "tag": "businessmapdisplay", "url": "govern/bmap/display.html" },
+    { "tag": "plugins", "url": "data/import/plugins.html" },
+    { "tag": "import", "url": "data/import/process.html" }
+  ]
+}

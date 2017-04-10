@@ -16,62 +16,6 @@
  */
 
 /**
- * Modify the <i> tag to display a glyphe
- * @param {type} name           Glyphe name
- * @param {type} placeHolderID  <I id="?"> id of the place holder
- * @param {type} params         Array of parameters (application given)
- * @returns {undefined}         Nothing
- */
-function setGlypheToID(name, placeHolderID, params) {
-    var glyphes = params.ApplicationIconsBSGlyphe;
-    for (var i=0; i < glyphes.length; i++) {
-        if (glyphes[i].name == name) {
-            var myObject = document.getElementById(placeHolderID);
-            myObject.classList.add("fa");
-            myObject.classList.add(glyphes[i].value);
-            myObject.classList.add("fa-fw");
-            return;
-        }
-    }
-}
-
-function getGlyphe(name, params) {
-    var glyphes = params.ApplicationIconsBSGlyphe;
-    for (var i=0; i < glyphes.length; i++) {
-        if (glyphes[i].name == name) {
-            return glyphes[i].value;
-        }
-    }
-    return null;
-}
-
-/**
- * Modify the <i> tag to display a glyphe for all the object with the class
- * @param {type} name           Glyphe name
- * @param {type} className      <I class="?"> class of the place holder
- * @param {type} params         Array of parameters (application given)
- * @returns {undefined}         Nothing
- */
-function setGlypheToClass(name, className, params) {
-    var glyphes = params.ApplicationIconsBSGlyphe;
-    var goodGlyphe = "";
-    
-    // search for the good glyphe code
-    for (var i=0; i < glyphes.length; i++) {
-        if (glyphes[i].name == name) 
-            goodGlyphe = glyphes[i].value;
-    }
-    
-    // Search for all the <i> with the class specified
-    var myObjectClasses = document.getElementsByClassName(className);
-    for (var j=0; j < myObjectClasses.length; j++) {
-        myObjectClasses[j].classList.add("fa");
-        myObjectClasses[j].classList.add(goodGlyphe);
-        myObjectClasses[j].classList.add("fa-fw");
-    }
-}
-
-/**
  * Dynamically build the combobox items with the JSON Object (coming from standard Joy REST API)
  * @param {type} selectID   ID of the <select> tag
  * @param {type} data       JSON object which contains data

@@ -16,7 +16,8 @@
  */
 
 function evt_changeTerm() {
-    window.open("./display.html?term=" + term.value, "_self");
+    window.open(getNavi(JOY.context.navi, "btermdisplay") + "?term=" + term.value, "_self");
+    //window.open("./display.html?term=" + term.value, "_self");
 }
 
 function cb_relationShipTree(content) {
@@ -34,8 +35,7 @@ function fill_header(content) {
     document.getElementById("TRM_DESCRIPTION").innerHTML = getFromJoy(content.single, "TRM_DESCRIPTION");
     document.getElementById("TRM_USAGE").innerHTML = getFromJoy(content.single, "RM_USAGE");
     document.getElementById("TRM_EXAMPLE").innerHTML = getFromJoy(content.single, "TRM_EXAMPLE");
-
-    document.getElementById("ph_termrel").href = getURLApp() + 'govern/bmap/display.html?hop=3&term=' + getFromJoy(content.single, "TRM_PK");
+    document.getElementById("ph_termrel").href = getNavi(JOY.context.navi, "businessmapdisplay") + '?hop=3&term=' + getFromJoy(content.single, "TRM_PK");
     
     // A CORRIGER !!!
     document.getElementById("ph_termConfiglink").href = getFromJoy(content.single, "CONFIG_TERM_LINK");
@@ -55,7 +55,7 @@ function fill_header(content) {
         displayRadar("radar", 'Synthesis per Data Quality Dimension', content.other[0].value.radar);
         displayGauge('canvasScore', getFromJoy(content.single, 'GLOBALSCORE_COLOR'), getFromJoy(content.single, 'GLOBALSCORE'));
         // DQ Axis panel
-        displayDQAxisPanel("dqpanel", getFromJoy(content.matrix, 'trends'), params);
+        displayDQAxisPanel("dqpanel", getFromJoy(content.matrix, 'trends'), JOY.context.parameters);
         // tables
         fillDatasource(getFromJoy(content.matrix, 'datasources'));
         fillContext(getFromJoy(content.matrix, 'contexts'));
