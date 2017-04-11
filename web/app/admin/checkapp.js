@@ -36,15 +36,12 @@ function cb_refresh(content) {
 }
 
 function refresh() {
-    addCBAction(cb_refresh, getURLApi() + "checks", "checks");
-    joyExecAction("checks");
+    $$.ajax("GET", cb_refresh, $$.getAPICall('checks'));
 }
 
 $( "#btn1" ).button();
 
-function form_afterLoad(content) {
-    init_menus(content, "admin");
+$$.form_afterLoad = function() {
+    init_menus("admin");
 }
-
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();

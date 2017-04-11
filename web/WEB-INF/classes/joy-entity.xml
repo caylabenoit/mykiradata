@@ -38,7 +38,7 @@ for the custom queries :
         <joy-entity name="Scorecards with Group information" type="composite" file ="/entity/joy-entity-shared.xml" />
         <joy-entity name="Metrics With Scorecard information" type="composite" file ="/entity/joy-entity-shared.xml" />
         <joy-entity name="Last Facts Only with details" type="composite" file ="/entity/joy-entity-shared.xml" />
-        <joy-entity name="All Facts with details" type="query" file ="/entity/joy-entity-shared.xml" />
+        <joy-entity name="All Facts with details" type="composite" file ="/entity/joy-entity-shared.xml" />
         
         <!-- /entity/joy-entity-star.xml -->
         <joy-entity name="DIM_CATEGORY" type="table" file ="/entity/joy-entity-star.xml" />
@@ -118,7 +118,7 @@ for the custom queries :
         <joy-entity name="Load - get Datasource" type="composite" file ="/entity/joy-entity-landing.xml" />
         <joy-entity name="Load - get Origin" type="composite" file ="/entity/joy-entity-landing.xml" />
         <joy-entity name="Load - get Metrics" type="composite" file ="/entity/joy-entity-landing.xml" />
-        <joy-entity name="Load - Facts from landing" type="composite" file ="/entity/joy-entity-landing.xml" />
+        <joy-entity name="Load - Facts from landing" type="query" file ="/entity/joy-entity-landing.xml" />
         <joy-entity name="PLUGINS_LIST_00" type="composite" file ="/entity/joy-entity-landing.xml" />
         
         <!-- /entity/joy-entity-analytics-term.xml -->

@@ -22,23 +22,18 @@ $(document).ready(function(){
 });
 
 function goto(id)  {
-    window.open("./display.html?datasource=" + id, "_self");
+    $$.navigate("datasourcedisplay", { "datasource" : id} );
 }
 
 function cb_Combo(content) {
-    fillComboboxFromJoyVector("datasource", content);
+    $$.fillComboboxFromJoyVector("datasource", content);
     $( '#datasource' ).select2({ placeholder: "Select an datasource" });
 }
 
-function form_preInitialize() {}
-
-function form_afterLoad(content) {
-    params = content.parameters;
-    init_menus(content, "govern");
-    setGlypheToClass('datasource', 'glyphedatasource', params);
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_Combo, $$.getAPICall('entity/DATASOURCE_LIST'));
 }
 
-addCBLoad(cb_Combo, getURLApi() + 'entity/DATASOURCE_LIST'); 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();
 

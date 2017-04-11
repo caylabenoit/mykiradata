@@ -15,13 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function form_afterLoad(content) {
-    document.getElementById("src_logo_big").src = getURLRoot() + content.parameters.logo;
-    document.getElementById("app_name").innerHTML = content.parameters.appname;
-    document.getElementById("version").innerHTML = content.parameters.version;
-
-    init_menus(content, "govern");
+$$.form_afterLoad = function() {
+    document.getElementById("src_logo_big").src = $$.getURLRoot() + $$.getContext().parameters.logo;
+    document.getElementById("app_name").innerHTML = $$.getContext().parameters.appname;
+    document.getElementById("version").innerHTML = $$.getContext().parameters.version;
+    init_menus("govern");
 }
-
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();

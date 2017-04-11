@@ -15,18 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function getURLRoot() { return URLROOT; }
-function getURLApp() { return URLAPPROOT; }
-function getURLApi() { return URLAPIROOT; }
-function getURLTask() { return URLAPITASK; }
-
 /**
  * includes all the Javascript files into the DOM
  * @param {type} backRootPath path to the root folder
  */
 function includeAllJS() {
     for (var i=0; i<joyIncludes.js.length; i++) {
-        document.write("<SCRIPT type='text/javascript' src='" + getURLRoot() + joyIncludes.js[i]+"'></SCRIPT>" );
+        document.write("<SCRIPT type='text/javascript' src='" + URLROOT + joyIncludes.js[i]+"'></SCRIPT>" );
     }
 }
 
@@ -36,20 +31,6 @@ function includeAllJS() {
  */
 function includeAllCSS() {
     for (var i=0; i<joyIncludes.styles.length; i++) {
-        document.write("<LINK href='" + getURLRoot() + joyIncludes.styles[i]+"' rel='stylesheet' type='text/css' />" );
+        document.write("<LINK href='" + URLROOT + joyIncludes.styles[i]+"' rel='stylesheet' type='text/css' />" );
     }
-}
-
-/**
- * Returns the URL for a give configuration tag
- * @param {type} navis
- * @param {type} tag
- * @returns {unresolved}
- */
-function getNavi(navis, tag) {
-    for (var i=0; i<navis.list.length; i++) {
-        if (navis.list[i].tag == tag)
-            return getURLApp() + navis.list[i].url;
-    }
-    return navis.default;
 }

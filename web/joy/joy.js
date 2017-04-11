@@ -15,62 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var TAG_TYPE_ACTION = 'action_'; // the cb associated can be launched after init (not during load)
-
-/**
- * Object/Class
- * This class manage all the informations about a callback
- * @param {type} myTag          Ajax callback tag switcher
- * @param {type} myFunction     Callback function pointer
- * @param {type} rest           Rest URL to call in Ajax
- * @returns {classCallback}     Nothing
- */
-function classCallback(myTag, myFunction, rest, myTagType) {
-    this.tag = myTag;
-    this.tagtype = myTagType;
-    this.thisresturl = rest;
-    this.callbackFunction = myFunction;
-}
-
-/**
- * This Class/object manages all the callbacks in the page
- * Note : LOAD cb are used only during the loading phase
- * ACTION cb can be launched after load
- * @returns {classCallbacks} Nothing
- */
-function classCallbacks() {
-    this.cb = new Array(); // array of callback objects
-    this.callbackobj = null;
-    
-    this.addAction = function(myFunction, rest, tag) {
-        var internalTag = TAG_TYPE_ACTION + this.cb.length;
-        if (tag != null)
-            internalTag = tag;
-        this.cb[this.cb.length] = new classCallback(internalTag, myFunction, rest, TAG_TYPE_ACTION);
-        return internalTag;
-    };
-    
-    this.get = function(index) {
-      return this.cb[index];  
-    };
-    
-    this.length = function() {
-      return this.cb.length;  
-    };
-    
-    /**
-     * Return the index for a given tag in the cbs array
-     * @param {type} tag name
-     * @returns {Number|i}
-     */
-    this.getIndexFromTag = function(tag) {
-        for (var i = 0; i < cbs.length(); i++) 
-            if (cbs.get(i).tag == tag)
-                return i;
-        return -1;
-    };
-}
-
+(function(){  
 
 /************** Page Parameters Management ******************/
 
@@ -82,9 +27,10 @@ function classParameter(name, value) {
 /************** Joy Page Object ******************/
 
 function JoyPage () {
-    this.callbacksList = new classCallbacks();
-    this.context = null;
+    var context = null;
 
+    this.getContext = function() { return context; };
+    this.setContext = function(cxt) { context = cxt; };
     this.getURLRoot = function() { return URLROOT; };
     this.getURLApp = function() { return URLAPPROOT; };
     this.getURLApi = function() { return URLAPIROOT; };
@@ -98,25 +44,7 @@ function JoyPage () {
         return this.getURLTask() + task;
     };
     
-    this.addAction = function (myFunction, rest, tag) {
-        return this.callbacksList.addAction(myFunction, rest, tag);
-    };
-    
-    this.execAction = function(tag) {
-        if (tag != null) {
-            var index = this.getIndexFromTag(tag);
-            if (index >= 0) 
-                if (this.callbacksList.get(index).tagtype == TAG_TYPE_ACTION)
-                    this.callAjaxGET(this.callbacksList.get(index).thisresturl, tag);
-        }
-    };
-    
-    this.exec = function (myFunction, restcall) {
-        var tag = this.addAction (myFunction, restcall, null);
-        this.execAction(tag);
-    }
-    
-    this.createXHR = function() {
+    function createXHR () {
         var request = false;
             try {
                 request = new ActiveXObject('Msxml2.XMLHTTP');
@@ -135,92 +63,76 @@ function JoyPage () {
     };
 
     /**
-     * Asynchronous call via REST and return JSON object
-     * @fname : REST call
-     * @tag : tag switch in case of multiple calls in the same page
+     * AJAX asynchronous Call
+     * Example : 
+     * $$.ajax("GET", cb_chartPolar, [rest url]);
+     * $$.ajax("POST", cb_chartPolar, [rest url], { "param1" : "val1", "param2": "val2" });
+     * @param {type} m = GET or POST
+     * @param {type} cb callback function to call
+     * @param {type} url    rest URL call
+     * @param {type} valObj list all the parameters in json format here (not in the URL direclty)
      */
-    this.ajaxCall = function(method, fname, tag, params) {
-        var xhr=this.createXHR();
-        xhr.open(method, fname, true);
-        if (method === "POST") {
-            //Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            http.setRequestHeader("Content-length", params.length);
-            http.setRequestHeader("Connection", "close");
-        }
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status !== 404) {
-                    // URL caller xhr.responseURL
-                    var data = eval("(" + xhr.responseText + ")");
-                    JOY.cb_Success(data, tag);
-                } else {
-                    JOY.cb_Error(tag);
-                }
+    this.ajax = function(m, cb, url, valObj) {
+	var myxhr = createXHR();
+	var values ='?';
+	for(var k in valObj)
+            values+= encodeURIComponent(k) + '=' + encodeURIComponent(valObj[k]) + '&';
+	if(m === 'GET') {
+            url+=values;
+            values= null;
+	}
+	myxhr.open(m,url,true);
+	if(m=='POST') {
+            values=values.substring(1,values.length-1);
+            myxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	}
+	myxhr.send(values);
+	myxhr.onreadystatechange = function() {
+            if(myxhr.readyState==4){
+                switch(myxhr.status) {
+                    case 200: cb(eval("(" + myxhr.responseText + ")")); break;
+                    case 403, 404, 503 :  callObj(null); break;
+                    default:  callObj(null);	
+		}
             }
-        };
-        xhr.send(params);
-    };
-
-    this.callAjaxGET = function (fname, tag) {
-        this.ajaxCall("GET", fname, tag, null);
-    };
-
-    this.callAjaxPOST = function(fname, tag, params) {
-        this.ajaxCall("POST", fname, tag, "lorem=ipsum&name=binny");
-    };
+	}
+    };    
 
     /**
-     * Replace the callbackSuccess function to automatically manage the two-steps init process
-     *  1) first step : initialization phase - automatic call of form_preInitialize()
-     *  2) second step : automatic call of form_afterInit()
-     * @param {type} content json content
-     * @param {type} tag    tag to manage
-     * @returns {undefined} Nothing
-     */
-    this.cb_Success = function(content, tag) {
-        var index = JOY.getIndexFromTag(tag);
-        if (index >= 0)
-            JOY.callbacksList.get(index).callbackFunction(content);
-    };
-    
-    /**
-     * Return the index for a given tag in the cbs array
-     * @param {type} tag name
-     * @returns {Number|i}
-     */
-    this.getIndexFromTag = function(tag) {
-        for (var i = 0; i < JOY.callbacksList.length(); i++) 
-            if (JOY.callbacksList.get(i).tag == tag)
-                return i;
-        return -1;
-    };
-
-    /**
-     * Returns the URL for a give configuration tag
-     * @param {type} navis
-     * @param {type} tag
+     * Returns the URL for a given configuration tag
+     * @param {type} tag  to retrieve the URL
+     * @param {type} params parameters in JSON format
      * @returns {unresolved}
      */
-    this.getNaviURL = function(tag) {
-        var navis = this.context.navi;
+    this.getNaviURL = function(tag, params) {
+        var navis = context.navi;
         for (var i=0; i< navis.list.length; i++) {
-            if (navis.list[i].tag == tag)
-                return getURLApp() + navis.list[i].url;
+            if (navis.list[i].tag == tag) {
+                var url =  this.getURLApp() + navis.list[i].url;
+            	var values ='?';
+                for(var k in params)
+                    values+= encodeURIComponent(k) + '=' + encodeURIComponent(params[k]) + '&';
+                return url + values;
+            }
         }
         return navis.default;
-    }
+    };
 
+    /**
+     * Navigate to the tag destination
+     * @param {type} tag  to retrieve the URL
+     * @param {type} params params parameters in JSON format
+     * @returns {undefined}
+     */
     this.navigate = function(tag, params) {
-        var url = this.getNaviURL(tag) + params;
+        var url = this.getNaviURL(tag, params);
         window.open(url, "_self");
-    }
+    };
 }
 
 // To override directly into the page code
 JoyPage.prototype.form_beforeLoad = function() {};
 JoyPage.prototype.form_afterLoad = function() {};
-JoyPage.prototype.cb_Error = function(tag) {};
 
 // Page Parameter management
 JoyPage.prototype.getParameters = function() {
@@ -249,7 +161,7 @@ JoyPage.prototype.getParameter = function(name) {
 
 JoyPage.prototype.init = function() {
     this.form_beforeLoad();
-    this.exec(this.form_joy_afterLoad, JOYAPPCONTEXTCALL);
+    this.ajax("GET", this.form_joy_afterLoad, JOYAPPCONTEXTCALL, null);
 }
 
 /**
@@ -257,7 +169,7 @@ JoyPage.prototype.init = function() {
  * @param {type} params
  */
 JoyPage.prototype.setAllGlyphes = function() {
-    var glyphes = this.context.parameters.ApplicationIconsBSGlyphe;
+    var glyphes = this.getContext().parameters.ApplicationIconsBSGlyphe;
     var goodGlyphe = "";
     
     // Search for all the <i> with the class specified
@@ -281,7 +193,7 @@ JoyPage.prototype.setAllGlyphes = function() {
 }
 
 JoyPage.prototype.getGlyphe = function(name) {
-    var glyphes = this.context.parameters.ApplicationIconsBSGlyphe;
+    var glyphes = this.getContext().parameters.ApplicationIconsBSGlyphe;
     for (var i=0; i < glyphes.length; i++) {
         if (glyphes[i].name == name) {
             return glyphes[i].value;
@@ -291,7 +203,7 @@ JoyPage.prototype.getGlyphe = function(name) {
 }
 
 /**
- * Joy single values to set to the <SPAN> tags
+ * automacically set to the <SPAN> text to all the span elements with the same id as the id in the singles joy array
  * @param {type} singles values
  */
 JoyPage.prototype.setJoyDataSingles = function(singles) {
@@ -321,13 +233,37 @@ JoyPage.prototype.getData = function(content, fieldname) {
 }
 
 JoyPage.prototype.form_joy_afterLoad = function(content) {
-    JOY.context = content;
+    JOY.setContext(content);
     // Glyphes
     JOY.setAllGlyphes();
     // call customized function (in page)
     JOY.form_afterLoad();
 };
 
+/**
+ * Dynamically build the combobox items with the JSON Object (coming from standard Joy REST API)
+ * @param {type} selectID   ID of the <select> tag
+ * @param {type} data       JSON object which contains data
+ * @returns {undefined}     Nothing
+ */
+JoyPage.prototype.fillComboboxFromJoyVector = function(selectID, data, orderText, orderValue) {
+    var oText, oValue;
+    var cboObject = document.getElementById(selectID);
+    if (orderText == null) oText = 1; else oText = orderText;
+    if (orderValue == null) oValue = 0;  else oValue = orderValue;
+    for (var i=0; i < data.rowcount; i++) {
+        var myoption = document.createElement("option");
+        myoption.text = data.rows[i].items[oText].value;
+        myoption.value = data.rows[i].items[oValue].value;
+        //cboObject.value = vector.selected;
+        cboObject.add(myoption, null);
+    }
+}
+
+
 
 /* JOY unique Object instance */
 var JOY = new JoyPage ();
+
+if(!window.$$){window.$$=JOY;} 
+})();

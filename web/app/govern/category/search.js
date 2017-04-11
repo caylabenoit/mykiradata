@@ -18,30 +18,22 @@
 var params = null;
 
 $(document).ready(function(){
-    $( '#category' ).select2({
-        placeholder: "Select an Category"
-    });
     $( "#btn1" ).button();
 });
 
 function goto(id)  {
-    window.open("./display.html?category=" + id, "_self");
+    $$.navigate("categorydisplay", { "category" : id });
 }
 
 function cb_ComboCategory(content) {
-    fillComboboxFromJoyVector("category", content);
+    $$.fillComboboxFromJoyVector("category", content);
     $( '#category' ).select2({ placeholder: "Select an Category" });
 }
 
-function form_preInitialize() {}
-
-function form_afterLoad(content) {
-    params = content.parameters;
-    init_menus(content, "govern");
-    setGlypheToClass('category', 'glyphecategory', params);
+$$.form_afterLoad = function() {
+    $$.ajax("GET", cb_ComboCategory, $$.getAPICall('entity/CATEGORY_LIST'));
+    init_menus("govern");
 }
 
-addCBLoad(cb_ComboCategory, getURLApi() + 'entity/CATEGORY_LIST'); 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();
 

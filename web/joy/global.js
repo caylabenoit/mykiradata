@@ -44,10 +44,10 @@ var joyIncludes = {
         "joy-external/Chart.js/dist/Chart.bundle.min.js",
         "joy-external/gauge.js/gauge.min.js",
         "joy/joy.js",
-        "joy/common.js",
         "joy/menu.js",
         "theme/js/dgmtaskmenu.js",
         "joy/charts.js",
+        "theme/js/dgmCharts.js",
         "theme/js/dgmwait.js",
         "joy-external/bootstrap/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js",
         "joy-external/vis-4.17.0/vis.min.js"

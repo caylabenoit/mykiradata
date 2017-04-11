@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var ID = getRequestParameter('term');
-var appContext = null;
+var ID = $$.getParameter('term');
 
 $(document).ready(function() {
     $( "#btn1" ).button();
@@ -26,17 +25,10 @@ function cb_global(content) {
     fill_header(content);
 }
 
-function form_afterLoad(content) {
-    appContext = content; // Global application parameters
-    init_menus(content, "govern");
-    // Call back declaration here
-    // Call back declaration here
-    addCBAction(cb_relationShipTree, getURLApi() + 'relterm/3/' + ID, 'tree');
-    addCBAction(cb_global, getURLApi() + 'bterm/' + ID, 'term');
-    
-    joyExecAction('tree');
-    joyExecAction('term');
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_relationShipTree, $$.getAPICall('relterm'), { "hop":"3" , "term": ID });
+    $$.ajax("GET", cb_global, $$.getAPICall('bterm/' + ID));
 }
 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();

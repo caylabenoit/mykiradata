@@ -16,43 +16,20 @@
  */
 
 $(document).ready(function() {
-    $('#matablelist').DataTable({
-        responsive: true
-    });
-    $('#matablelist2').DataTable({
-        responsive: true
-    });
+    $('#matablelist').DataTable({responsive: true});
+    $('#matablelist2').DataTable({responsive: true});
     $( "#btn1" ).button();
 });
 
-var ID = getRequestParameter('glossary');
-var params = null;
+var ID = $$.getParameter('glossary');
 
 function cb_global(content) {
     fill_header(content);
 }
 
-function form_afterLoad(content) {
-    params = content.parameters; // Global application parameters
-    init_menus(content, "govern");
-    
-    // Set the glyphes
-    setGlypheToClass('status', 'glyphestatus', params);
-    setGlypheToClass('user', 'glypheuser', params);
-    setGlypheToClass('term', 'glypheterm', params);
-    setGlypheToClass('businessmap', 'glyphebusmap', params);
-    setGlypheToClass('common-configuration', 'glyphecommon', params);
-    setGlypheToClass('glossary', 'glypheglossary', params);
-    setGlypheToClass('relationship', 'glypherelationship', params);
-    setGlypheToClass('dqaxis', 'glyphedqaxis', params);
-    setGlypheToClass('common-chart', 'glyphechart', params);
-    setGlypheToClass('context', 'glyphecontext', params);
-    setGlypheToClass('datasource', 'glyphedatasource', params);
-    
-    // Call back declaration here
-    addCBAction(cb_global, getURLApi() + 'glossary/' + ID, 'glossary');
-    joyExecAction('glossary');
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_global, $$.getAPICall('glossary/' + ID));
 }
 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();

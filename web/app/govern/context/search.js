@@ -22,23 +22,18 @@ $(document).ready(function(){
 });
 
 function goto(id)  {
-    window.open("./display.html?context=" + id, "_self");
+    $$.navigate("contextdisplay", { "context" : id} );
 }
 
 function cb_Combo(content) {
-    fillComboboxFromJoyVector("context", content);
+    $$.fillComboboxFromJoyVector("context", content);
     $( '#context' ).select2({ placeholder: "Select an context" });
 }
 
-function form_preInitialize() {}
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_Combo, $$.getAPICall('entity/CONTEXT_LIST'));
 
-function form_afterLoad(content) {
-    params = content.parameters;
-    init_menus(content, "govern");
-    setGlypheToClass('context', 'glyphecontext', params);
 }
 
-addCBLoad(cb_Combo, getURLApi() + 'entity/CONTEXT_LIST'); 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
-
+$$.init();

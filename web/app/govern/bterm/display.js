@@ -16,45 +16,34 @@
  */
 
 $(document).ready(function() {
-    $('#tableMetric').DataTable({
-            responsive: true
-    });
-    $('#tableContext').DataTable({
-            responsive: true
-    });
-    $('#tableDatasource').DataTable({
-            responsive: true
-    });
-    $( '#term' ).select2({
-        placeholder: "Select an Term"
-    });
+    $('#tableMetric').DataTable({ responsive: true });
+    $('#tableContext').DataTable({ responsive: true });
+    $('#tableDatasource').DataTable({ responsive: true });
+    $( '#term' ).select2({ placeholder: "Select an Term" });
     $( "#btn1" ).button();
-    
     $('a[data-toggle="Metrics"]').on( 'shown.bs.tab', function (e) {
         $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
     } );
 });
 
-//var ID = getRequestParameter('term');
-var ID = JOY.getParameter('term');
-var appContext = null;
+var ID = $$.getParameter('term');
 
 function fillDatasource(content) {
     var t1 = $('#tableDatasource').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + getNavi(JOY.context.navi, "datasourcedisplay") + "?ds=" + getFromJoy(content.rows[i].items, "dso_pk") + "'>" + getFromJoy(content.rows[i].items, "dso_sourcename") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("datasourcedisplay", { "ds" : $$.getData(content.rows[i].items, "dso_pk") }) + "'>" + $$.getData(content.rows[i].items, "dso_sourcename") + "</a>";
         t1.row.add( [
             myLink
         ] ).draw( false );
     }
 }
- //getURLApp() + "govern/datasource/display.html
+
 function fillContext(content) {
     var t1 = $('#tableContext').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + getNavi(JOY.context.navi, "contextdisplay") +  "?context=" + getFromJoy(content.rows[i].items, "con_pk") + "'>" + getFromJoy(content.rows[i].items, "con_description") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("contextdisplay", { "context" : $$.getData(content.rows[i].items, "con_pk") }) + "'>" + $$.getData(content.rows[i].items, "con_description") + "</a>";
         t1.row.add( [
             myLink
         ] ).draw( false );
@@ -65,39 +54,37 @@ function fillMetrics(content) {
     var t1 = $('#tableMetric').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='"  + getNavi(JOY.context.navi, "metricsdisplay") + "?metric=" + getFromJoy(content.rows[i].items, "MET_FK") + "'>" + getFromJoy(content.rows[i].items, "MET_NAME") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("metricsdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }) + "'>" + $$.getData(content.rows[i].items, "MET_NAME") + "</a>";
         t1.row.add( [
             myLink,
-            getFromJoy(content.rows[i].items, "DQX_NAME"),
-            getFromJoy(content.rows[i].items, "FRS_TOTALROWS"),
-            getFromJoy(content.rows[i].items, "FRS_INVALID_ROWS"),
-            getFromJoy(content.rows[i].items, "FRS_KPI_SCORE"),
-            getFromJoy(content.rows[i].items, "SCO_NAME")
+            $$.getData(content.rows[i].items, "DQX_NAME"),
+            $$.getData(content.rows[i].items, "FRS_TOTALROWS"),
+            $$.getData(content.rows[i].items, "FRS_INVALID_ROWS"),
+            $$.getData(content.rows[i].items, "FRS_KPI_SCORE"),
+            $$.getData(content.rows[i].items, "SCO_NAME")
         ] ).draw( false );
     }
 }
 
 function cb_global(content) {
     // fill the form data
-    if (getFromJoy(content.single, "hasscoring") == "no") 
-        window.open("nodata.html?term=" + ID, "_self");
+    if ($$.getData(content.single, "hasscoring") == "no") 
+        $$.navigate("btermnodata" , { "term" : ID });
     else
         fill_header(content);
 }
 
-JoyPage.prototype.form_beforeLoad = function() {
+$$.form_beforeLoad = function() {
     start_waitMessage("panel_treeview", "div_Wait_treeview");
     start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
     start_waitMessage("panel_Wait_radar", "div_Wait_radar");
     start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
 }
 
-JoyPage.prototype.form_afterLoad = function() {
-    init_menus(JOY.context, "govern");
-    
-    // Call back declaration here
-    JOY.exec(cb_relationShipTree, getURLApi() + 'relterm?hop=3&term=' + ID);
-    JOY.exec(cb_global, getURLApi() + 'bterm/' + ID);
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_relationShipTree, $$.getAPICall('relterm'), { "hop":"3" , "term": ID });
+    $$.ajax("GET", cb_global, $$.getAPICall('bterm/' + ID));
 }
 
-JOY.init();
+$$.init();

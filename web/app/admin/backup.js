@@ -15,9 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function form_afterLoad(content) {
-    init_menus(content, "admin");
+$$.form_afterLoad = function() {
+    init_menus("admin");
 }
 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();

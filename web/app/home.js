@@ -25,25 +25,25 @@ function cb_kpis(content) {
 
 function cb_listWorseTerms(content) {
     displayGaugeList(content, 'div_HOME_WORSE_TERMS', 'fa-book', 
-                     JOY.context.parameters.thresold_bad, 
-                     JOY.context.parameters.thresold_good, 
-                     getNavi(JOY.context.navi, "btermdisplay") + 'term=');
+                     $$.getContext().parameters.thresold_bad, 
+                     $$.getContext().parameters.thresold_good, 
+                     $$.getNaviURL("btermdisplay") + 'term=');
     end_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
 function cb_listBestTerms(content) {
     displayGaugeList(content, 'div_HOME_BEST_TERMS', 'fa-book', 
-                     JOY.context.parameters.thresold_bad, 
-                     JOY.context.parameters.thresold_good, 
-                     getNavi(JOY.context.navi, "btermdisplay") + '?term=');
+                     $$.getContext().parameters.thresold_bad, 
+                     $$.getContext().parameters.thresold_good, 
+                     $$.getNaviURL("btermdisplay") + 'term=');
     end_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
 }
 
 function cb_listAxisScore(content) {
     displayGaugeList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', 
-                     JOY.context.parameters.thresold_bad, 
-                     JOY.context.parameters.thresold_good, 
-                     getNavi(JOY.context.navi, "dqaxisdisplay")  + "&dqaxis=");
+                     $$.getContext().parameters.thresold_bad, 
+                     $$.getContext().parameters.thresold_good, 
+                     $$.getNaviURL("dqaxisdisplay")  + "dqaxis=");
     end_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
 }
 
@@ -57,7 +57,7 @@ function cb_chartPolar(content) {
     end_waitMessage("graph0", "div_graph0");
 }
 
-JoyPage.prototype.form_beforeLoad = function() {
+$$.form_beforeLoad = function() {
     start_waitMessage("graph0", "div_graph0");
     start_waitMessage("graph1", "div_graph1");
     start_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
@@ -65,17 +65,18 @@ JoyPage.prototype.form_beforeLoad = function() {
     start_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
-JoyPage.prototype.form_afterLoad = function() {
+$$.form_afterLoad = function() {
 
-    JOY.exec(cb_chartPolar, JOY.getAPICall('charts/AXIS_SCORE_HOME_00/sds'));
-    JOY.exec(cb_chartBar, JOY.getAPICall('charts/GLOBAL_SCORING_HOME_01/mds'));
-    JOY.exec(cb_listAxisScore, JOY.getAPICall('entity/AXIS_SCORE_HOME_00'));
-    JOY.exec(cb_listBestTerms, JOY.getAPICall('entity/HOME_BEST_TERMS?ROWCOUNT=' + LIST_ROWMAX));
-    JOY.exec(cb_listWorseTerms, JOY.getAPICall('entity/HOME_WORSE_TERMS?ROWCOUNT=' + LIST_ROWMAX));
-    JOY.exec(cb_kpis, JOY.getAPICall('globalkpis'));
+    //$$.exec(cb_chartPolar, $$.getAPICall('charts/AXIS_SCORE_HOME_00/sds'));
+    $$.ajax("GET", cb_chartPolar, $$.getAPICall('charts/AXIS_SCORE_HOME_00/sds'), null);
+    $$.ajax("GET", cb_chartBar, $$.getAPICall('charts/GLOBAL_SCORING_HOME_01/mds'));
+    $$.ajax("GET", cb_listAxisScore, $$.getAPICall('entity/AXIS_SCORE_HOME_00'));
+    $$.ajax("GET", cb_listBestTerms, $$.getAPICall('entity/HOME_BEST_TERMS'), { "ROWCOUNT" : LIST_ROWMAX});
+    $$.ajax("GET", cb_listWorseTerms, $$.getAPICall('entity/HOME_WORSE_TERMS'), { "ROWCOUNT" : LIST_ROWMAX});
+    $$.ajax("GET", cb_kpis, $$.getAPICall('globalkpis'));
 
     // Menus
-    init_menus(JOY.context, "govern");
+    init_menus("govern");
 }
 
-JOY.init();
+$$.init();

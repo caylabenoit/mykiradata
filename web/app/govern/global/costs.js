@@ -20,13 +20,6 @@ var myGraph2;
 var myGraph3;
 var myGraph0;
 
-function form_preLoad() {
-    start_waitMessage("panel1", "MyBars1");
-    start_waitMessage("panel2", "MyBars2");
-    start_waitMessage("panel3", "MyBars3");
-    start_waitMessage("panel4", "MyBars4");
-}
-
 function cb_chartBar1(content) {
     myGraph1 =displayBar("MyBars1", 'Global cost', content);
     end_waitMessage("panel1", "MyBars1");
@@ -47,24 +40,19 @@ function cb_chartBar4(content) {
     end_waitMessage("panel4", "MyBars4");
 }
 
-function form_afterLoad(content) {
-    params = content.parameters;
-    
-    // Menus
-    init_menus(content, "govern");
-    
-    // Call back declaration here
-    addCBAction(cb_chartBar1, getURLApi() + 'charts/sds/ANAGLOBCSTDQAXIS', 'ANAGLOBDQAXIS');
-    addCBAction(cb_chartBar2, getURLApi() + 'charts/sds/ANAGLOBCSTCONTEXT', 'ANAGLOBCONTEXT');
-    addCBAction(cb_chartBar3, getURLApi() + 'charts/sds/ANAGLOBCSTDS', 'ANAGLOBDS');
-    addCBAction(cb_chartBar4, getURLApi() + 'charts/sds/ANAGLOBCSTTERM', 'ANAGLOBTERM');
-    
-    joyExecAction('ANAGLOBDQAXIS');
-    joyExecAction('ANAGLOBCONTEXT');
-    joyExecAction('ANAGLOBDS');
-    joyExecAction('ANAGLOBTERM');
+$$.form_beforeLoad = function() {
+    start_waitMessage("panel1", "MyBars1");
+    start_waitMessage("panel2", "MyBars2");
+    start_waitMessage("panel3", "MyBars3");
+    start_waitMessage("panel4", "MyBars4");
 }
 
-form_preLoad();
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_chartBar1, $$.getAPICall('charts/ANAGLOBCSTDQAXIS/sds'));
+    $$.ajax("GET", cb_chartBar2, $$.getAPICall('charts/ANAGLOBCSTCONTEXT/sds'));
+    $$.ajax("GET", cb_chartBar3, $$.getAPICall('charts/ANAGLOBCSTDS/sds/'));
+    $$.ajax("GET", cb_chartBar4, $$.getAPICall('charts/ANAGLOBCSTTERM/sds/'));
+}
+
+$$.init();

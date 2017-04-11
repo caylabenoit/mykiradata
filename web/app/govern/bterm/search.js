@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var params = null;
 
 $(document).ready(function() {
     $( "#btn1" ).button();
@@ -26,19 +25,18 @@ $(document).ready(function() {
     });
 });
 
-function goto(term)  {
-    JOY.navigate("btermdisplay", "?term=" + term);
-    //window.open("./display.html?term=" + term, "_self");
-}
-
 function evt_search() {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
     t1.draw();
     document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
-    var myurlsearch = getURLApi() + 'entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value;
-    addCBAction(cb_filldatatable, myurlsearch,"search");
-    joyExecAction("search");
+    //var myurlsearch = getURLApi() + 'entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value;
+    var myurlsearch = $$.getAPICall('entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value);
+    $$.ajax("GET", cb_filldatatable, myurlsearch);
+}
+
+function goto(valSelected) {
+    $$.navigate("btermdisplay", { "term" : valSelected });
 }
 
 function cb_filldatatable(content) {
@@ -56,22 +54,20 @@ function cb_filldatatable(content) {
 }
 
 function cb_ComboTermTypes(content) {
-    fillComboboxFromJoyVector("termtypes", content);
+    $$.fillComboboxFromJoyVector("termtypes", content);
     $('#termtypes').select2({ placeholder: "Select an Term type" });
 }
 
 function cb_ComboTerm(content) {
-    fillComboboxFromJoyVector("term", content);
+    $$.fillComboboxFromJoyVector("term", content);
     $( '#term' ).select2({ placeholder: "Select an Term" });
 }
 
-JoyPage.prototype.form_beforeLoad = function() {}
-
-JoyPage.prototype.form_afterLoad = function() {
-    init_menus(JOY.context, "govern");
-    JOY.exec(cb_ComboTermTypes, JOY.getAPICall('entity/TERM_TYPE_LIST'));
-    JOY.exec(cb_ComboTerm, JOY.getAPICall('entity/TERM_LIST'));
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_ComboTermTypes, $$.getAPICall('entity/TERM_TYPE_LIST'));
+    $$.ajax("GET", cb_ComboTerm, $$.getAPICall('entity/TERM_LIST'));
 }
 
-JOY.init();
+$$.init();
 

@@ -38,15 +38,21 @@ function cb_landingCount(content) {
     }
 }
 
-function form_afterLoad(content) {
-    addCBAction(cb_landingCount, getURLApi() + "landingcount", "landingcount");
-    addCBAction(cb_landingPurge, getURLTask() + "landingpurge", "landingpurge");
-    addCBAction(cb_dtmPurge, getURLTask() + "dtmpurge", "dtmpurge");
-    addCBAction(cb_landingLoad, getURLTask() + "landingload", "landingload");
-    
-    joyExecAction("landingcount");
-    init_menus(content, "data");
+function landingload() {
+    $$.ajax("GET", cb_landingLoad, $$.getAPICall("landingload"));
 }
 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+function landingPurge() {
+    $$.ajax("GET", cb_landingPurge, $$.getAPICall("landingpurge"));
+}
+
+function dtmPurge() {
+    $$.ajax("GET", cb_dtmPurge, $$.getAPICall("dtmpurge"));
+}
+
+$$.form_afterLoad = function() {
+    $$.ajax("GET", cb_landingCount, $$.getAPICall("landingcount"));
+    init_menus("data");
+}
+
+$$.init();

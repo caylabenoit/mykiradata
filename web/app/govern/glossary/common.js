@@ -16,42 +16,42 @@
  */
 
 function evt_change() {
-    window.open("./display.html?glossary=" + glossary.value, "_self");
+    $$.navigate("glossarydisplay", { "glossary" : glossary.value} );
 }
 
 function fillTerms(content) {
     var t1 = $('#tableTerm').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + getURLApp() + "govern/bterm/display.html" + "?term=" + getFromJoy(content.rows[i].items, "TRM_FK") + "'>" + getFromJoy(content.rows[i].items, "TRM_NAME") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("btermdisplay", { "bterm" : $$.getData(content.rows[i].items, "TRM_FK") }) + "'>" + $$.getData(content.rows[i].items, "TRM_NAME") + "</a>";
         t1.row.add( [
             myLink,
-            getFromJoy(content.rows[i].items, "DQX_NAME"),
-            getFromJoy(content.rows[i].items, "SCORE"),
-            getFromJoy(content.rows[i].items, "COST")
+            $$.getData(content.rows[i].items, "DQX_NAME"),
+            $$.getData(content.rows[i].items, "SCORE"),
+            $$.getData(content.rows[i].items, "COST")
         ] ).draw( false );
     }
 }
 
 function fill_header(content) {
-    document.getElementById("GLO_NAME").innerHTML = getFromJoy(content.single, "glo_name");
-    document.getElementById("GLO_DESCRIPTION").innerHTML = getFromJoy(content.single, "glo_description");
+    document.getElementById("GLO_NAME").innerHTML = $$.getData(content.single, "glo_name");
+    document.getElementById("GLO_DESCRIPTION").innerHTML = $$.getData(content.single, "glo_description");
 
     // fill and display the terms cbo
-    fillComboboxFromJoyVector('glossary', getFromJoy(content.matrix, "glossaries"), 2, 0);
+    $$.fillComboboxFromJoyVector('glossary', $$.getData(content.matrix, "glossaries"), 2, 0);
     $('#glossary').select2({ placeholder: "Select an Glossary" });
     
-    fillTerms(getFromJoy(content.matrix, 'terms')); 
+    fillTerms($$.getData(content.matrix, 'terms')); 
     
     // Scoring data only
-    if (getFromJoy(content.single, "hasscoring") == "yes") {
+    if ($$.getData(content.single, "hasscoring") == "yes") {
         // charts
         displayBar("LastRun", 'Last runs (grouped per day)', content.other[0].value.lastruns);
         displayRadar("radar", 'Synthesis per Data Quality Dimension', content.other[0].value.radar);
-        displayDQAxisPanel("dqpanel", getFromJoy(content.matrix, 'trends'), params);
+        displayDQAxisPanel("dqpanel", $$.getData(content.matrix, 'trends'), $$.getContext().parameters);
         
         // tables
-        fillMetrics(getFromJoy(content.matrix, 'metrics')); 
+        fillMetrics($$.getData(content.matrix, 'metrics')); 
 
         end_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
         end_waitMessage("panel_Wait_radar", "div_Wait_radar");

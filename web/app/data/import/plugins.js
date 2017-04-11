@@ -16,12 +16,11 @@
  */
 
 function refreshlist() {
-    addCBAction(cb_refreshList, getURLApi() + "entity/PLUGINS_LIST_00", "refresh");
     var t1 = $('#pluginslist').DataTable();
     t1.clear();
     t1.draw();
     document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
-    joyExecAction("refresh");
+    $$.ajax("GET", cb_refreshList, $$.getAPICall('entity/PLUGINS_LIST_00'));
 }
 
 function cb_refreshList(content) {
@@ -46,14 +45,12 @@ function cb_load(content) {
 }
 
 function launchPlugin(id) {
-    addCBAction(cb_load, getURLTask() + "plugin/" + id, "load");
-    joyExecAction("load");
+    $$.ajax("GET", cb_load, $$.getAPICall("plugin/" + id));
 }
 
-function form_afterLoad(content) {
-    init_menus(content, "data");
+$$.form_afterLoad = function() {
+    init_menus("data");
     refreshlist();
 }
 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();

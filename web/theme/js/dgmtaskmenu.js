@@ -16,34 +16,13 @@
  */
 
 /**
- * Ask for refreshing the task list
- * @param {type} url
- * @returns {undefined}
- */
-function refreshTaskList(url) {	
-    var xhr=createXHR();
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status !== 404) {
-                // Success
-                var data = eval("(" + xhr.responseText + ")");
-                tasklistDisplay( data );
-            } else 
-                tasklistFail();
-        }
-    };
-    xhr.send(null);
-}
-
-/**
  * Click Event on task list (top right menu)
  */
 $( "#dropdown-tasks" ).click(function() {
     $("#lutasklist").empty();
     WaitForTaskRefresh();
     // ask for resfresh / rest call
-    refreshTaskList(getURLApi() + 'taskslist/5');
+    $$.ajax("GET", tasklistDisplay, $$.getAPICall('taskslist/5'));
 });
 
 /*
@@ -54,6 +33,11 @@ $( "#dropdown-tasks" ).click(function() {
  * 
  */
 function tasklistDisplay(data) {
+    if (data == null) {
+        tasklistFail();
+        return;
+    }
+        
     $("#lutasklist").empty();   // Empty the task list
     
     if (data.length == 0) {

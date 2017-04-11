@@ -15,33 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var params = null;
-
 $(document).ready(function(){
-    $( '#glossary' ).select2({
-        placeholder: "Select an Glossary"
-    });
+    $( '#glossary' ).select2({ placeholder: "Select an Glossary" });
     $( "#btn1" ).button();
 });
 
 function goto(id)  {
-    window.open("./display.html?glossary=" + id, "_self");
+    $$.navigate("glossarydisplay", { "glossary" : id });
 }
 
 function cb_Combo(content) {
-    fillComboboxFromJoyVector("glossary", content);
+    $$.fillComboboxFromJoyVector("glossary", content);
     $( '#glossary' ).select2({ placeholder: "Select an Glossary" });
 }
 
-function form_preInitialize() {}
-
-function form_afterLoad(content) {
-    params = content.parameters;
-    init_menus(content, "govern");
-    setGlypheToClass('glossary', 'glypheglossary', params);
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_Combo, $$.getAPICall('entity/GLOSSARY_LIST'));
 }
 
-addCBLoad(cb_Combo, getURLApi() + 'entity/GLOSSARY_LIST'); 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
-
+$$.init();

@@ -23,7 +23,6 @@ function cb_filldatatable(content) {
         for (j=0; j < content[i].trace.length; j++) {
             tracetmp = tracetmp + content[i].trace[j].message + "<BR>";
         }
-        
         t1.row.add( [
             content[i].name,
             content[i].status,
@@ -39,16 +38,14 @@ function cb_filldatatable(content) {
 function refresh() {
     var t1 = $('#tasks').DataTable();
     t1.clear();
-    joyExecAction("search");
+    $$.ajax("GET", cb_filldatatable, $$.getAPICall("taskslist/5"));
 }
 
-function form_afterLoad(content) {
-    addCBAction(cb_filldatatable, getURLApi() + "taskslist/5", "search");
-    joyExecAction("search");
-    init_menus(content, "admin");
+$$.form_afterLoad = function() {
+    init_menus("admin");
+    $$.ajax("GET", cb_filldatatable, $$.getAPICall("taskslist/5"));
 }
+$$.init();
 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
 
 $( "#btn1" ).button();

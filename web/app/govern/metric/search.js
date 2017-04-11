@@ -15,33 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var params = null;
-
 $(document).ready(function(){
-    $( '#glossary' ).select2({
-        placeholder: "Select an Metric"
-    });
+    $( '#glossary' ).select2({ placeholder: "Select an Metric" });
     $( "#btn1" ).button();
 });
 
 function goto(id)  {
-    window.open("./display.html?metric=" + id, "_self");
+    $$.navigate("metricsdisplay", { "metric" : id });
 }
 
 function cb_Combo(content) {
-    fillComboboxFromJoyVector("metric", content);
+    $$.fillComboboxFromJoyVector("metric", content);
     $( '#metric' ).select2({ placeholder: "Select an Metric" });
 }
 
-function form_preInitialize() {}
-
-function form_afterLoad(content) {
-    params = content.parameters;
-    init_menus(content, "govern");
-    setGlypheToClass('metric', 'glyphemetric', params);
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_Combo, $$.getAPICall('entity/METRIC_LIST'));
 }
 
-addCBLoad(cb_Combo, getURLApi() + 'entity/METRIC_LIST'); 
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();
 

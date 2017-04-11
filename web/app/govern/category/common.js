@@ -16,14 +16,14 @@
  */
 
 function evt_changeCategory() {
-    window.open("./display.html?category=" + category.value, "_self");
+    $$.navigate("categorydisplay", { "category" : category.value} );
 }
 
 function fillTerms(content) {
     var t1 = $('#tableTerm').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + getURLApp() + "govern/bterm/display.html" + "?term=" + getFromJoy(content.rows[i].items, "TRM_FK") + "'>" + getFromJoy(content.rows[i].items, "TRM_NAME") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("btermdisplay", { "bterm" : $$.getData(content.rows[i].items, "TRM_FK") }) + "'>" + $$.getData(content.rows[i].items, "TRM_NAME") + "</a>";
         t1.row.add( [
             myLink,
             getFromJoy(content.rows[i].items, "DQX_NAME"),
@@ -37,7 +37,7 @@ function fillCategories(id, content) {
     var t1 = $("#" + id).DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='display.html" + "?category=" + getFromJoy(content.rows[i].items, "CAT_FK") + "'>" + getFromJoy(content.rows[i].items, "CAT_NAME") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("categorydisplay", { "category" : $$.getData(content.rows[i].items, "CAT_FK") }) + "'>" + $$.getData(content.rows[i].items, "CAT_NAME") + "</a>";
         t1.row.add( [
             myLink,
             getFromJoy(content.rows[i].items, "CAT_DESCRIPTION")
@@ -46,27 +46,27 @@ function fillCategories(id, content) {
 }
 
 function fill_header(content) {
-    document.getElementById("CAT_NAME").innerHTML = getFromJoy(content.single, "cat_name");
-    document.getElementById("GLO_LINK").innerHTML = getFromJoy(content.single, "glo_link");
-    document.getElementById("CAT_DESCRIPTION").innerHTML = getFromJoy(content.single, "cat_description");
+    document.getElementById("CAT_NAME").innerHTML = $$.getData(content.single, "cat_name");
+    document.getElementById("GLO_LINK").innerHTML = $$.getData(content.single, "glo_link");
+    document.getElementById("CAT_DESCRIPTION").innerHTML = $$.getData(content.single, "cat_description");
 
     // fill and display the terms cbo
-    fillComboboxFromJoyVector('category', getFromJoy(content.matrix, "categories"));
+    $$.fillComboboxFromJoyVector('category', $$.getData(content.matrix, "categories"));
     $('#category').select2({ placeholder: "Select an Category" });
     
-    fillCategories("tableparents", getFromJoy(content.matrix, 'parents'));
-    fillCategories("tableChilds", getFromJoy(content.matrix, 'childs'));
-    fillTerms(getFromJoy(content.matrix, 'terms')); 
+    fillCategories("tableparents", $$.getData(content.matrix, 'parents'));
+    fillCategories("tableChilds", $$.getData(content.matrix, 'childs'));
+    fillTerms($$.getData(content.matrix, 'terms')); 
     
     // Scoring data only
-    if (getFromJoy(content.single, "hasscoring") == "yes") {
+    if ($$.getData(content.single, "hasscoring") == "yes") {
         // charts
         displayBar("LastRun", 'Last runs (grouped per day)', content.other[0].value.lastruns);
         displayRadar("radar", 'Synthesis per Data Quality Dimension', content.other[0].value.radar);
-        displayDQAxisPanel("dqpanel", getFromJoy(content.matrix, 'trends'), params);
+        displayDQAxisPanel("dqpanel", $$.getData(content.matrix, 'trends'), $$.getContext().parameters);
         
         // tables
-        fillMetrics(getFromJoy(content.matrix, 'metrics')); 
+        fillMetrics($$.getData(content.matrix, 'metrics')); 
 
         end_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
         end_waitMessage("panel_Wait_radar", "div_Wait_radar");

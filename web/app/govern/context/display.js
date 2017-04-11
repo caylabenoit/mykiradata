@@ -21,83 +21,74 @@ $(document).ready(function() {
     $( "#btn1" ).button();
 });
 
-var ID = getRequestParameter('context');
-var params = null;
-
-function form_preInitialize() {
-    start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
-    start_waitMessage("panel_Wait_radar", "div_Wait_radar");
-    start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
-}
+var ID = $$.getParameter('context');
 
 function fillMetrics(content) {
     var t1 = $('#tableMetric').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='"  + getURLApp() + "govern/metric/display.html" + "?metric=" + getFromJoy(content.rows[i].items, "MET_FK") + "'>" + getFromJoy(content.rows[i].items, "MET_NAME") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("metricsdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }) + "'>" + $$.getData(content.rows[i].items, "MET_NAME") + "</a>";
         t1.row.add( [
             myLink,
-            getFromJoy(content.rows[i].items, "DQX_NAME"),
-            getFromJoy(content.rows[i].items, "FRS_TOTALROWS"),
-            getFromJoy(content.rows[i].items, "FRS_INVALID_ROWS"),
-            getFromJoy(content.rows[i].items, "FRS_KPI_SCORE"),
-            getFromJoy(content.rows[i].items, "SCO_NAME")
+            $$.getData(content.rows[i].items, "DQX_NAME"),
+            $$.getData(content.rows[i].items, "FRS_TOTALROWS"),
+            $$.getData(content.rows[i].items, "FRS_INVALID_ROWS"),
+            $$.getData(content.rows[i].items, "FRS_KPI_SCORE"),
+            $$.getData(content.rows[i].items, "SCO_NAME")
         ] ).draw( false );
     }
 }
 
 function evt_change() {
-    window.open("./display.html?context=" + context.value, "_self");
+    $$.navigate("contextdisplay", { "context" : context.value} );
 }
 
 function fillTerms(content) {
     var t1 = $('#tableTerm').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + getURLApp() + "govern/bterm/display.html" + "?term=" + getFromJoy(content.rows[i].items, "TRM_FK") + "'>" + getFromJoy(content.rows[i].items, "TRM_NAME") + "</a>";
+        var myLink = "<a href='" + $$.getNaviURL("btermdisplay", { "term" : $$.getData(content.rows[i].items, "TRM_FK") }) + "'>" + $$.getData(content.rows[i].items, "TRM_NAME") + "</a>";
         t1.row.add( [
             myLink,
-            getFromJoy(content.rows[i].items, "DQX_NAME"),
-            getFromJoy(content.rows[i].items, "SCORE"),
-            getFromJoy(content.rows[i].items, "COST")
+            $$.getData(content.rows[i].items, "DQX_NAME"),
+            $$.getData(content.rows[i].items, "SCORE"),
+            $$.getData(content.rows[i].items, "COST")
         ] ).draw( false );
     }
 }
 
 function cb_global(content) {
-    setJoyFieldValues(content.single);
+    $$.setJoyDataSingles(content.single);
     
     // fill and display the terms cbo
-    fillComboboxFromJoyVector('context', getFromJoy(content.matrix, "contexts"), 1, 0);
+    $$.fillComboboxFromJoyVector('context', $$.getData(content.matrix, "contexts"), 1, 0);
     $('#context').select2({ placeholder: "Select a context" });
     $("#context").val(ID).trigger("change");
     
-    fillTerms(getFromJoy(content.matrix, 'terms')); 
+    fillTerms($$.getData(content.matrix, 'terms')); 
     
     // charts
     displayBar("LastRun", 'Last runs (grouped per day)', content.other[0].value.lastruns);
     displayRadar("radar", 'Synthesis per Data Quality Dimension', content.other[0].value.radar);
-    displayDQAxisPanel("dqpanel", getFromJoy(content.matrix, 'trends'), params);
+    displayDQAxisPanel("dqpanel", $$.getData(content.matrix, 'trends'), $$.getContext().parameters);
 
     // tables
-    fillMetrics(getFromJoy(content.matrix, 'metrics')); 
+    fillMetrics($$.getData(content.matrix, 'metrics')); 
 
     end_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
     end_waitMessage("panel_Wait_radar", "div_Wait_radar");
     end_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
 }
 
-function form_afterLoad(content) {
-    params = content.parameters; // Global application parameters
-    init_menus(content, "govern");
-    
-    // Set the glyphes
-    
-    // Call back declaration here
-    addCBAction(cb_global, getURLApi() + 'context/' + ID, 'context');
-    joyExecAction('context');
+$$.form_beforeLoad = function() {
+    start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
+    start_waitMessage("panel_Wait_radar", "div_Wait_radar");
+    start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
 }
 
-form_preInitialize();
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.form_afterLoad = function() {
+    init_menus("govern");
+    $$.ajax("GET", cb_global, $$.getAPICall('context/' + ID));
+}
+
+$$.init();
