@@ -19,14 +19,14 @@ function refreshlist() {
     var t1 = $('#pluginslist').DataTable();
     t1.clear();
     t1.draw();
-    document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
+    $("#pleasewait").html('<P>Please wait while searching ...</P> ');
     $$.ajax("GET", cb_refreshList, $$.getAPICall('entity/PLUGINS_LIST_00'));
 }
 
 function cb_refreshList(content) {
     var t1 = $('#pluginslist').DataTable();
     t1.clear();
-    document.getElementById('pleasewait').innerHTML = '';
+    $("#pleasewait").html('');
     //document.getElementById('searchresult').style.display="block";
     for (i=0; i < content.rows.length; i++) {
         var myButton = "<center><button type='button' class='btn btn-primary btn-circle' onclick='launchPlugin(" + content.rows[i].items[0].value + ");'><i class='fa fa-play'></i></button></center>";

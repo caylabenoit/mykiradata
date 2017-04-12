@@ -67,54 +67,6 @@ function displayGaugeList(jsonflow, didID, glyphe, badthresold, goodthresold, ur
 }
 
 /**
- * Display the Spots with all the informations inside the jsonFlow
- * @param {type} jsonFlow json content
- * @param {type} didID DIV Container
- * @returns {undefined} nothing
- */
-function displaySpot(jsonFlow, didID) {
-    var divContainer = document.getElementById(didID);
-    var innerHtml = "";
-    var nbColToShow = jsonFlow.kpis.length;
-    
-    // build the column repartition
-    var cols = null;
-    switch (nbColToShow) {
-        case 1: cols = [12]; break;
-        case 2: cols = [6,6]; break;   
-        case 3: cols = [4,4,4]; break;
-        case 4: cols = [3,3,3,3]; break;   
-        case 5: cols = [2,2,2,3,3]; break;
-        case 6: cols = [2,2,2,2,2,2]; break;   
-        case 7: cols = [2,2,2,2,2,1,1]; break;
-        case 8: cols = [2,2,2,2,1,1,1,1];  break;   
-        case 9: cols = [2,2,2,1,1,1,1,1,1];  break;
-        case 10: cols = [2,2,1,1,1,1,1,1,1,1]; break;   
-        case 11: cols = [2,1,1,1,1,1,1,1,1,1,1];  break;
-        case 12:
-        default: cols = [1,1,1,1,1,1,1,1,1,1,1,1];
-    }
-    
-    for (var i=0; i<nbColToShow; i++) {
-        innerHtml += "<DIV class='col-lg-" + cols[i] + "' style='padding: 0 0 0 0;'>";
-        innerHtml += "<DIV class='panel spot'>";
-        innerHtml += "<DIV class='panel-heading'><DIV class='row'>";
-        innerHtml += "<DIV class='col-xs-4'><I class='fa " + jsonFlow.kpis[i].glyphe + " fa-2x'></I></DIV>";
-        innerHtml += "<DIV class='col-xs-8 text-right' style='border-color-left:white;'>";
-        innerHtml += "<A href='" + jsonFlow.kpis[i].url + "'>";
-        innerHtml += "<DIV style='font-size: 17px;'>" + jsonFlow.kpis[i].bigshorttext + "</DIV>";
-        innerHtml += "</A>";
-        innerHtml += "</DIV>";
-        innerHtml += "</DIV>"; // border-top-style: solid;border-top-width: 1px;
-        innerHtml += "<DIV style='font-size: 17px;font-weight: bold;text-align: right;padding-top: 4px;'>" + jsonFlow.kpis[i].longtext + "</DIV>";
-        innerHtml += "</DIV></DIV>";
-        innerHtml += "</DIV>";
-        innerHtml += "</DIV>";
-    }
-    divContainer.innerHTML = innerHtml;
-}
-
-/**
  * Display the Gauge
  * @param {type} canvasId   Canvas ID
  * @param {type} colorGauge Gauge Color

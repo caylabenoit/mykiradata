@@ -26,7 +26,7 @@ function goto(id)  {
 }
 
 function cb_ComboCategory(content) {
-    $$.fillComboboxFromJoyVector("category", content);
+    $$.fillComboboxFromJoyEntity("category", content);
     $( '#category' ).select2({ placeholder: "Select an Category" });
 }
 

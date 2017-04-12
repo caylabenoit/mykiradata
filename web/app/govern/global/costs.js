@@ -22,29 +22,29 @@ var myGraph0;
 
 function cb_chartBar1(content) {
     myGraph1 =displayBar("MyBars1", 'Global cost', content);
-    end_waitMessage("panel1", "MyBars1");
+    $$.removeWaitIntoContainer("panel1", "MyBars1");
 }
 
 function cb_chartBar2(content) {
     myGraph2 =displayBar("MyBars2", 'Global cost', content);
-    end_waitMessage("panel2", "MyBars2");
+    $$.removeWaitIntoContainer("panel2", "MyBars2");
 }
 
 function cb_chartBar3(content) {
     myGraph3 =displayBar("MyBars3", 'Global cost', content);
-    end_waitMessage("panel3", "MyBars3");
+    $$.removeWaitIntoContainer("panel3", "MyBars3");
 }
 
 function cb_chartBar4(content) {
     myGraph4 =displayBar("MyBars4", 'Global cost', content);
-    end_waitMessage("panel4", "MyBars4");
+    $$.removeWaitIntoContainer("panel4", "MyBars4");
 }
 
 $$.form_beforeLoad = function() {
-    start_waitMessage("panel1", "MyBars1");
-    start_waitMessage("panel2", "MyBars2");
-    start_waitMessage("panel3", "MyBars3");
-    start_waitMessage("panel4", "MyBars4");
+    $$.displayWaitIntoContainer("panel1");
+    $$.displayWaitIntoContainer("panel2");
+    $$.displayWaitIntoContainer("panel3");
+    $$.displayWaitIntoContainer("panel4");
 }
 
 $$.form_afterLoad = function() {

@@ -44,7 +44,7 @@ function search()  {
 }
 
 function cb_Combo(content) {
-    $$.fillComboboxFromJoyVector("dqaxis", content, 3, 0);
+    $$.fillComboboxFromJoyEntity("dqaxis", content, 3, 0);
     $( '#dqaxis' ).select2({ placeholder: "Select an Data Quality Dimension" });
 }
 

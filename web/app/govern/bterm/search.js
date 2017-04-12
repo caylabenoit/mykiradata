@@ -29,9 +29,8 @@ function evt_search() {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
     t1.draw();
-    document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
-    //var myurlsearch = getURLApi() + 'entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value;
-    var myurlsearch = $$.getAPICall('entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value);
+    $("#pleasewait").html('<P>Please wait while searching ...</P> ');
+    var myurlsearch = $$.getAPICall('entity/SEARCH_TERM' , { "TRT_FK" : $("#termtypes").val() } );
     $$.ajax("GET", cb_filldatatable, myurlsearch);
 }
 
@@ -42,7 +41,7 @@ function goto(valSelected) {
 function cb_filldatatable(content) {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
-    document.getElementById('pleasewait').innerHTML = '';
+    $("#pleasewait").html('');
     //document.getElementById('searchresult').style.display="block";
     for (i=0; i < content.rowcount; i++) {
         t1.row.add( [
@@ -54,12 +53,12 @@ function cb_filldatatable(content) {
 }
 
 function cb_ComboTermTypes(content) {
-    $$.fillComboboxFromJoyVector("termtypes", content);
+    $$.fillComboboxFromJoyEntity("termtypes", content);
     $('#termtypes').select2({ placeholder: "Select an Term type" });
 }
 
 function cb_ComboTerm(content) {
-    $$.fillComboboxFromJoyVector("term", content);
+    $$.fillComboboxFromJoyEntity("term", content);
     $( '#term' ).select2({ placeholder: "Select an Term" });
 }
 

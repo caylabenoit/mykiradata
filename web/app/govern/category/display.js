@@ -30,12 +30,6 @@ function cb_global(content) {
         fill_header(content);
 }
 
-function form_preInitialize() {
-    start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
-    start_waitMessage("panel_Wait_radar", "div_Wait_radar");
-    start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
-}
-
 function fillMetrics(content) {
     var t1 = $('#tableMetric').DataTable();
     t1.clear();
@@ -50,6 +44,12 @@ function fillMetrics(content) {
             $$.getData(content.rows[i].items, "SCO_NAME")
         ] ).draw( false );
     }
+}
+
+$$.form_beforeLoad = function() {
+    $$.displayWaitIntoContainer("panel_Wait_LastRun");
+    $$.displayWaitIntoContainer("panel_Wait_radar");
+    $$.displayWaitIntoContainer("panel_Wait_dqpanel");
 }
 
 $$.form_afterLoad = function() {

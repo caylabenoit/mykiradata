@@ -16,8 +16,6 @@
  */
 
 var LIST_ROWMAX = 5;
-var myGraph1;
-var myGraph0;
 
 function cb_kpis(content) {
     displaySpot(content, "spots");
@@ -28,7 +26,7 @@ function cb_listWorseTerms(content) {
                      $$.getContext().parameters.thresold_bad, 
                      $$.getContext().parameters.thresold_good, 
                      $$.getNaviURL("btermdisplay") + 'term=');
-    end_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
+    $$.removeWaitIntoContainer("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
 function cb_listBestTerms(content) {
@@ -36,7 +34,7 @@ function cb_listBestTerms(content) {
                      $$.getContext().parameters.thresold_bad, 
                      $$.getContext().parameters.thresold_good, 
                      $$.getNaviURL("btermdisplay") + 'term=');
-    end_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
+    $$.removeWaitIntoContainer("HOME_BEST_TERMS");
 }
 
 function cb_listAxisScore(content) {
@@ -44,39 +42,35 @@ function cb_listAxisScore(content) {
                      $$.getContext().parameters.thresold_bad, 
                      $$.getContext().parameters.thresold_good, 
                      $$.getNaviURL("dqaxisdisplay")  + "dqaxis=");
-    end_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
+    $$.removeWaitIntoContainer("AXIS_SCORE_HOME_00");
 }
 
 function cb_chartBar(content) {
-    myGraph1 =displayBar("div_graph1", 'Global scoring by Glossary', content);
-    end_waitMessage("graph1", "div_graph1");
+    displayBar("div_graph1", 'Global scoring by Glossary', content);
+    $$.removeWaitIntoContainer("graph1");
 }
 
 function cb_chartPolar(content) {
-    myGraph0 = displayChartPolar("div_graph0", 'Global scoring per Data Quality Dimension', content);
-    end_waitMessage("graph0", "div_graph0");
+    displayChartPolar("div_graph0", 'Global scoring per Data Quality Dimension', content);
+    $$.removeWaitIntoContainer("graph0");
 }
 
 $$.form_beforeLoad = function() {
-    start_waitMessage("graph0", "div_graph0");
-    start_waitMessage("graph1", "div_graph1");
-    start_waitMessage("AXIS_SCORE_HOME_00", "div_AXIS_SCORE_HOME_00");
-    start_waitMessage("HOME_BEST_TERMS", "div_HOME_BEST_TERMS");
-    start_waitMessage("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
-}
+    $$.displayWaitIntoContainer("graph0");
+    $$.displayWaitIntoContainer("graph1");
+    $$.displayWaitIntoContainer("AXIS_SCORE_HOME_00");
+    $$.displayWaitIntoContainer("HOME_BEST_TERMS");
+    $$.displayWaitIntoContainer("HOME_WORSE_TERMS");
+};
 
 $$.form_afterLoad = function() {
-
-    //$$.exec(cb_chartPolar, $$.getAPICall('charts/AXIS_SCORE_HOME_00/sds'));
     $$.ajax("GET", cb_chartPolar, $$.getAPICall('charts/AXIS_SCORE_HOME_00/sds'), null);
     $$.ajax("GET", cb_chartBar, $$.getAPICall('charts/GLOBAL_SCORING_HOME_01/mds'));
     $$.ajax("GET", cb_listAxisScore, $$.getAPICall('entity/AXIS_SCORE_HOME_00'));
     $$.ajax("GET", cb_listBestTerms, $$.getAPICall('entity/HOME_BEST_TERMS'), { "ROWCOUNT" : LIST_ROWMAX});
     $$.ajax("GET", cb_listWorseTerms, $$.getAPICall('entity/HOME_WORSE_TERMS'), { "ROWCOUNT" : LIST_ROWMAX});
     $$.ajax("GET", cb_kpis, $$.getAPICall('globalkpis'));
-
-    // Menus
     init_menus("govern");
-}
+};
 
 $$.init();

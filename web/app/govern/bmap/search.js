@@ -26,22 +26,21 @@ $(document).ready(function() {
 
 function goto(term)  {
     $$.navigate("businessmapdisplay", { "term" : term });
-    //window.open("./display.html?term=" + term, "_self");
 }
 
 function evt_search() {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
     t1.draw();
-    document.getElementById('pleasewait').innerHTML = '<P>Please wait while searching ...</P> ';
-    var myurlsearch = $$.getAPICall('entity/SEARCH_TERM/TRT_FK/' + document.getElementById('termtypes').value);
+    $("#pleasewait").html('<P>Please wait while searching ...</P> '); 
+    var myurlsearch = $$.getAPICall('entity/SEARCH_TERM' , { "TRT_FK" : $("#termtypes").val() } );
     $$.ajax("GET", cb_filldatatable, myurlsearch);
 }
 
 function cb_filldatatable(content) {
     var t1 = $('#searchresult').DataTable();
     t1.clear();
-    document.getElementById('pleasewait').innerHTML = '';
+    $("#pleasewait").html(''); 
     for (i=0; i < content.rowcount; i++) {
         t1.row.add( [
             content.rows[i].items[0].value,
@@ -52,12 +51,12 @@ function cb_filldatatable(content) {
 }
 
 function cb_ComboTermTypes(content) {
-    fillComboboxFromJoyVector("termtypes", content);
+    $$.fillComboboxFromJoyEntity("termtypes", content);
     $('#termtypes').select2({ placeholder: "Select an Term type" });
 }
 
 function cb_ComboTerm(content) {
-    fillComboboxFromJoyVector("term", content);
+    $$.fillComboboxFromJoyEntity("term", content);
     $( '#term' ).select2({ placeholder: "Select an Term" });
 }
 

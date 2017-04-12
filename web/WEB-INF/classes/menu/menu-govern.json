@@ -5,7 +5,6 @@
         "glyphe": "fa fa-home fa-fw",
         "id": "Home",
         "label": "Home",
-        "url": "home.html",
         "tag" : "home"
       },
       {

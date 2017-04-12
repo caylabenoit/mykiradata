@@ -17,7 +17,6 @@
 
 var ID = $$.getParameter('metric');
 
-
 $(document).ready(function(){
     $( "#btn1" ).button();
 });
@@ -28,19 +27,15 @@ function evt_change() {
 
 function cb_global(content) {
     $$.setJoyDataSingles(content.single);
-    document.getElementById("link").href = $$.getNaviURL("btermdisplay", { "term" : $$.getData(content.single, "trm_fk")}); //getURLApp() + 'govern/bterm/display.html?term='+ getFromJoy(content.single, "trm_fk");
-
+    $("#link").attr("href", $$.getNaviURL("btermdisplay", { "term" : $$.getData(content.single, "trm_fk")})); //getURLApp() + 'govern/bterm/display.html?term='+ getFromJoy(content.single, "trm_fk"));
     displayBar("LastRun", 'Last runs (grouped per day)', content.other[0].value);
-
-    // fill and display the terms cbo
-    $$.fillComboboxFromJoyVector('metric', $$.getData(content.matrix, "metrics"), 3, 0);
-    $( '#metric' ).select2({  placeholder: "Select an Metric" });
-    
-    end_waitMessage("panel_LastRun", "LastRun");
+    $$.fillComboboxFromJoyEntity('metric', $$.getData(content.matrix, "metrics"), 3, 0);
+    $('#metric').select2({  placeholder: "Select an Metric" });
+    $$.removeWaitIntoContainer("panel_LastRun");
 }
 
 $$.form_beforeLoad = function() {
-    start_waitMessage("panel_LastRun", "LastRun");
+    $$.displayWaitIntoContainer("panel_LastRun");
 }
 
 $$.form_afterLoad = function() {

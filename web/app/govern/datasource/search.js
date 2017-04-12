@@ -26,7 +26,7 @@ function goto(id)  {
 }
 
 function cb_Combo(content) {
-    $$.fillComboboxFromJoyVector("datasource", content);
+    $$.fillComboboxFromJoyEntity("datasource", content);
     $( '#datasource' ).select2({ placeholder: "Select an datasource" });
 }
 

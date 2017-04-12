@@ -36,8 +36,14 @@ function JoyPage () {
     this.getURLApi = function() { return URLAPIROOT; };
     this.getURLTask = function() { return URLAPITASK; };
 
-    this.getAPICall = function(api) {
-        return this.getURLApi() + api;
+    this.getAPICall = function(api, params) {
+        var paramlist ='';
+        if (params != null) {
+            paramlist ='?';
+            for(var k in params)
+                paramlist+= encodeURIComponent(k) + '=' + encodeURIComponent(params[k]) + '&';
+        }
+        return this.getURLApi() + api + paramlist;
     };
     
     this.getTASKCall = function(task) {
@@ -82,8 +88,8 @@ function JoyPage () {
             values= null;
 	}
 	myxhr.open(m,url,true);
-	if(m=='POST') {
-            values=values.substring(1,values.length-1);
+	if(m !=='GET') {
+            values=values.substring(1, values.length-1);
             myxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	}
 	myxhr.send(values);
@@ -241,26 +247,90 @@ JoyPage.prototype.form_joy_afterLoad = function(content) {
 };
 
 /**
- * Dynamically build the combobox items with the JSON Object (coming from standard Joy REST API)
+ * Dynamically build the combobox items with the JSON Object (coming from standard Joy REST API get Entity)
  * @param {type} selectID   ID of the <select> tag
- * @param {type} data       JSON object which contains data
+ * @param {type} data       JSON object which contains data (coming from a GET REST  Entity
  * @returns {undefined}     Nothing
  */
-JoyPage.prototype.fillComboboxFromJoyVector = function(selectID, data, orderText, orderValue) {
+JoyPage.prototype.fillComboboxFromJoyEntity = function(selectID, data, orderText, orderValue) {
     var oText, oValue;
     var cboObject = document.getElementById(selectID);
+    this.emptyCombobox(selectID);
     if (orderText == null) oText = 1; else oText = orderText;
     if (orderValue == null) oValue = 0;  else oValue = orderValue;
     for (var i=0; i < data.rowcount; i++) {
         var myoption = document.createElement("option");
         myoption.text = data.rows[i].items[oText].value;
         myoption.value = data.rows[i].items[oValue].value;
-        //cboObject.value = vector.selected;
         cboObject.add(myoption, null);
     }
 }
 
+JoyPage.prototype.fillComboboxFromJoyVector = function(selectID, data) {
+    var cboObject = document.getElementById(selectID);
+    this.emptyCombobox(selectID);
+    for (var i=0; i < data.itemcount; i++) {
+        var myoption = document.createElement("option");
+        myoption.text = data.items[i].name;
+        myoption.value = data.items[i].value;
+        cboObject.add(myoption, null);
+    }
+}
 
+JoyPage.prototype.emptyCombobox = function(selectID) {
+    var cboObject = document.getElementById(selectID);
+    while (cboObject.options.length > 0) {                
+        cboObject.remove(0);
+    }   
+}
+
+/**
+ * Insert a wait message dynamically during a div load (hiden while end_waitMessage is not called).
+ * @param {type} contenerID    Div Contener (would be a bootstrap panel)
+ * @returns {undefined}     Nothing
+ */
+JoyPage.prototype.displayWaitIntoContainer = function (contenerID) {
+    // Hide all the elements into the container
+    var nodes = document.getElementById(contenerID).childNodes;
+    for (i=0; i<nodes.length; i++) {
+        if (nodes[i].nodeType == 1) // it's a element
+            nodes[i].style.display="none"; // hide the working div
+    }
+    
+    // create the please wait message
+    var divImg = document.createElement("DIV");
+    divImg.classList.add("divTaskImage");
+    divImg.id = "wait_" + contenerID;
+    
+    var divTxt = document.createElement("DIV");
+    divTxt.classList.add("divTaskDesc");
+    
+    var content = document.createTextNode(" Please wait ...");
+    divTxt.appendChild(content);
+    divImg.appendChild(divTxt);
+
+    document.getElementById(contenerID).appendChild(divImg);
+};
+
+/**
+ * remove the wait message dynamically
+ * @param {type} contenerID    Div Contener (would be a bootstrap panel)
+ * @returns {undefined}     Nothing
+ */
+JoyPage.prototype.removeWaitIntoContainer = function(contenerID) {
+    var nodes = document.getElementById(contenerID).childNodes;
+    for (i=0; i<nodes.length; i++) {
+        if (nodes[i].nodeType == 1) {// it's a element
+            if (nodes[i].style.display=="none") { // it's hidden
+                var panelItem = document.getElementById("wait_" + contenerID);
+                if (nodes[i] != null && panelItem != null) {
+                    nodes[i].style.display="initial";
+                    panelItem.style.display="none";
+                }
+            }
+        }
+    }
+};
 
 /* JOY unique Object instance */
 var JOY = new JoyPage ();

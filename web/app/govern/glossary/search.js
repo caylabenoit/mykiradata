@@ -25,7 +25,7 @@ function goto(id)  {
 }
 
 function cb_Combo(content) {
-    $$.fillComboboxFromJoyVector("glossary", content);
+    $$.fillComboboxFromJoyEntity("glossary", content);
     $( '#glossary' ).select2({ placeholder: "Select an Glossary" });
 }
 

@@ -16,9 +16,9 @@
  */
 
 $$.form_afterLoad = function() {
-    document.getElementById("src_logo_big").src = $$.getURLRoot() + $$.getContext().parameters.logo;
-    document.getElementById("app_name").innerHTML = $$.getContext().parameters.appname;
-    document.getElementById("version").innerHTML = $$.getContext().parameters.version;
+    $("#src_logo_big").attr('src', $$.getURLRoot() + $$.getContext().parameters.logo);
+    $("#app_name").html($$.getContext().parameters.appname);
+    $("#version").html($$.getContext().parameters.version);
     init_menus("govern");
 }
 $$.init();

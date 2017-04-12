@@ -90,8 +90,7 @@
       "name": "parameters",
       "class": "com.joy.api.ready.RESTParameters",
       "mime": "application/json"
-    }
-,
+    },
     {
       "name": "termtype",
       "class": "com.dgm.api.src.TermType",

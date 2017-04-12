@@ -61,7 +61,7 @@ function cb_global(content) {
     $$.setJoyDataSingles(content.single);
     
     // fill and display the terms cbo
-    $$.fillComboboxFromJoyVector('context', $$.getData(content.matrix, "contexts"), 1, 0);
+    $$.fillComboboxFromJoyEntity('context', $$.getData(content.matrix, "contexts"), 1, 0);
     $('#context').select2({ placeholder: "Select a context" });
     $("#context").val(ID).trigger("change");
     
@@ -75,15 +75,15 @@ function cb_global(content) {
     // tables
     fillMetrics($$.getData(content.matrix, 'metrics')); 
 
-    end_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
-    end_waitMessage("panel_Wait_radar", "div_Wait_radar");
-    end_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
+    $$.removeWaitIntoContainer("panel_Wait_LastRun");
+    $$.removeWaitIntoContainer("panel_Wait_radar");
+    $$.removeWaitIntoContainer("panel_Wait_dqpanel");
 }
 
 $$.form_beforeLoad = function() {
-    start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
-    start_waitMessage("panel_Wait_radar", "div_Wait_radar");
-    start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
+    $$.displayWaitIntoContainer("panel_Wait_LastRun");
+    $$.displayWaitIntoContainer("panel_Wait_radar");
+    $$.displayWaitIntoContainer("panel_Wait_dqpanel");
 }
 
 $$.form_afterLoad = function() {

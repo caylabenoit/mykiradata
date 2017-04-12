@@ -19,8 +19,7 @@
         "glyphe": "fa fa-gears fa-fw",
         "id": "CONFIG04",
         "label": "Term Types",
-        "object": "termtype",
-        "actiontype": "list"
+        "tag": "configtermtypelist"
       },
       {
         "glyphe": "fa fa-gears fa-fw",

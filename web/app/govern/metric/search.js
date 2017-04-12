@@ -25,7 +25,7 @@ function goto(id)  {
 }
 
 function cb_Combo(content) {
-    $$.fillComboboxFromJoyVector("metric", content);
+    $$.fillComboboxFromJoyEntity("metric", content);
     $( '#metric' ).select2({ placeholder: "Select an Metric" });
 }
 

@@ -26,9 +26,9 @@ function fillTerms(content) {
         var myLink = "<a href='" + $$.getNaviURL("btermdisplay", { "bterm" : $$.getData(content.rows[i].items, "TRM_FK") }) + "'>" + $$.getData(content.rows[i].items, "TRM_NAME") + "</a>";
         t1.row.add( [
             myLink,
-            getFromJoy(content.rows[i].items, "DQX_NAME"),
-            getFromJoy(content.rows[i].items, "SCORE"),
-            getFromJoy(content.rows[i].items, "COST")
+            $$.getData(content.rows[i].items, "DQX_NAME"),
+            $$.getData(content.rows[i].items, "SCORE"),
+            $$.getData(content.rows[i].items, "COST")
         ] ).draw( false );
     }
 }
@@ -40,18 +40,18 @@ function fillCategories(id, content) {
         var myLink = "<a href='" + $$.getNaviURL("categorydisplay", { "category" : $$.getData(content.rows[i].items, "CAT_FK") }) + "'>" + $$.getData(content.rows[i].items, "CAT_NAME") + "</a>";
         t1.row.add( [
             myLink,
-            getFromJoy(content.rows[i].items, "CAT_DESCRIPTION")
+            $$.getData(content.rows[i].items, "CAT_DESCRIPTION")
         ] ).draw( false );
     }
 }
 
 function fill_header(content) {
-    document.getElementById("CAT_NAME").innerHTML = $$.getData(content.single, "cat_name");
-    document.getElementById("GLO_LINK").innerHTML = $$.getData(content.single, "glo_link");
-    document.getElementById("CAT_DESCRIPTION").innerHTML = $$.getData(content.single, "cat_description");
+    $("#CAT_NAME").html($$.getData(content.single, "cat_name"));
+    $("#GLO_LINK").html($$.getData(content.single, "glo_link"));
+    $("#CAT_DESCRIPTION").html($$.getData(content.single, "cat_description"));
 
     // fill and display the terms cbo
-    $$.fillComboboxFromJoyVector('category', $$.getData(content.matrix, "categories"));
+    $$.fillComboboxFromJoyEntity('category', $$.getData(content.matrix, "categories"));
     $('#category').select2({ placeholder: "Select an Category" });
     
     fillCategories("tableparents", $$.getData(content.matrix, 'parents'));
@@ -68,8 +68,8 @@ function fill_header(content) {
         // tables
         fillMetrics($$.getData(content.matrix, 'metrics')); 
 
-        end_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
-        end_waitMessage("panel_Wait_radar", "div_Wait_radar");
-        end_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
+        $$.removeWaitIntoContainer("panel_Wait_LastRun");
+        $$.removeWaitIntoContainer("panel_Wait_radar");
+        $$.removeWaitIntoContainer("panel_Wait_dqpanel");
     }
 }

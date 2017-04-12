@@ -27,44 +27,6 @@ fa-arrow-down       decrease            <i class="fa fa-arrow-down fa-fw"></i>&n
 fa-arrow-right      stable              <i class="fa fa-arrow-right fa-fw"></i>&nbsp;
 fa-plus-circle      new                 <i class="fa fa-plus-circle fa-fw"></i>&nbsp;
 
-------------------------------
-Boutons
-------------------------------
-Add button:
-<joy:JoyFormButtonTag id="btn1" label="<i class='fa fa-plus-circle'></i>" CSSClass="btn btn-success btn-circle" onclick="ValidateForm();" />
-<script>
-function ValidateForm() {
-    if(document.forms['frmEditItem'].TRM_NAME.value == '') { 
-        alert('Please enter a business term'); 
-    } else {
-        document.forms['frmEditItem'].submit();
-    }
-} 
-</script>
-
-Delete button:
-<button type="button" class="btn btn-danger btn-circle" onclick="Delete('URL');"><i class="fa fa-times"></i></button>
-<script>
-function Delete(link) {
-    if (confirm('Are you sure you want to delete this Business Term ?')) {
-        window.open(link, '_self');
-    } 
-} 
-</script>
-
-**************************
-
-Edit button:
-<button type="button" class="btn btn-primary btn-circle" onclick="window.open('#', '_self');"><i class="fa fa-edit"></i></button>
-
-**************************
-
-URLS test
-http://localhost:18080/dgm/rest/taskslist
-
-http://localhost:18080/dgm/task/infawf/wf_10_Full_Delta_SC
-
-
 **************************
 aller voir http://getbootstrap.com/javascript/
 
@@ -107,6 +69,31 @@ bootbox.prompt({
   }
 });
 
-*********************************
-Ajouter bouton
-<joy:JoyFormButtonTag id="btn1" label="Modify parameters"  CSSClass="btn btn-default" link="true" object="parameters" actiontype="list" />
+-------------------- SELECT2 ---------------
+
+Modifier taille combo
+$('#gio_termtype_name').select2({ placeholder: "...", width: '100%'  });
+
+récupérer le texte d'une combo :
+    var t = document.getElementById("termtypes");
+    var _termtype = t.options[t.selectedIndex].text;
+
+Modifier la valeur selectionnée d'une combo
+    $("#nbhops").val(nbHop).trigger("change");
+
+------------------- MEMO JQUERY ---------------------------
+
+Changer img.src
+$("#src_logo_big").attr('src', [img url]); --ie--> document.getElementById("src_logo_big").src = [img url];
+
+Changer href
+$("#ph_termrel").attr("href", [url]) --ie--> document.getElementById("ph_termrel").href 
+
+Changer innerHTML
+$("#version").html([html contenu]); --ie--> document.getElementById("version").innerHTML = [html contenu];
+
+Récupérer valeur
+Combo : $("#termtypes").val(); --ie--> document.getElementById('termtypes').value
+
+Changer de style
+$("#score_color").css({ "color" :  [value] }); --ie--> document.getElementById('score_color').style.cssText = "color :" + [value];

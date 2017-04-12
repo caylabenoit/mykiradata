@@ -34,11 +34,11 @@ function fillTerms(content) {
 }
 
 function fill_header(content) {
-    document.getElementById("GLO_NAME").innerHTML = $$.getData(content.single, "glo_name");
-    document.getElementById("GLO_DESCRIPTION").innerHTML = $$.getData(content.single, "glo_description");
+    $("#GLO_NAME").html($$.getData(content.single, "glo_name"));
+    $("#GLO_DESCRIPTION").html($$.getData(content.single, "glo_description"));
 
     // fill and display the terms cbo
-    $$.fillComboboxFromJoyVector('glossary', $$.getData(content.matrix, "glossaries"), 2, 0);
+    $$.fillComboboxFromJoyEntity('glossary', $$.getData(content.matrix, "glossaries"), 2, 0);
     $('#glossary').select2({ placeholder: "Select an Glossary" });
     
     fillTerms($$.getData(content.matrix, 'terms')); 
@@ -53,8 +53,8 @@ function fill_header(content) {
         // tables
         fillMetrics($$.getData(content.matrix, 'metrics')); 
 
-        end_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
-        end_waitMessage("panel_Wait_radar", "div_Wait_radar");
-        end_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
+        $$.removeWaitIntoContainer("panel_Wait_LastRun");
+        $$.removeWaitIntoContainer("panel_Wait_radar");
+        $$.removeWaitIntoContainer("panel_Wait_dqpanel");
     }
 }

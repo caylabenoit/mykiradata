@@ -58,7 +58,7 @@
         {
           "id": "TL11",
           "label": "Term Types",
-          "tag": "",
+          "tag": "configtermtypelist",
           "glyphe": "fa fa-gears fa-fw"
         },
         {

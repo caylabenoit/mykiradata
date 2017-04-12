@@ -1,11 +1,7 @@
 Pratique
 --------------------
 
-récupérer le texte d'une combo :
-    var t = document.getElementById("termtypes");
-    var _termtype = t.options[t.selectedIndex].text;
-Modifier la valeur selectionnée d'une combo
-    $("#nbhops").val(nbHop).trigger("change");
+
 
 
 -----------------
@@ -31,4 +27,3 @@ https://github.com/wesnolte/jOrgChart
 
 -------- logging
 https://kodejava.org/how-do-i-create-a-custom-logger-formatter/
-

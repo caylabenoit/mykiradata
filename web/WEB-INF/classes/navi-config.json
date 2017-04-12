@@ -29,6 +29,7 @@
     { "tag": "businessmap", "url": "govern/bmap/search.html" },
     { "tag": "businessmapdisplay", "url": "govern/bmap/display.html" },
     { "tag": "plugins", "url": "data/import/plugins.html" },
-    { "tag": "import", "url": "data/import/process.html" }
+    { "tag": "import", "url": "data/import/process.html" },
+    { "tag": "configtermtypelist", "url": "configuration/termtype/list.html" }
   ]
 }

@@ -75,10 +75,10 @@ function cb_global(content) {
 }
 
 $$.form_beforeLoad = function() {
-    start_waitMessage("panel_treeview", "div_Wait_treeview");
-    start_waitMessage("panel_Wait_LastRun", "div_Wait_LastRun");
-    start_waitMessage("panel_Wait_radar", "div_Wait_radar");
-    start_waitMessage("panel_Wait_dqpanel", "div_Wait_dqpanel");
+    $$.displayWaitIntoContainer("panel_treeview");
+    $$.displayWaitIntoContainer("panel_Wait_LastRun");
+    $$.displayWaitIntoContainer("panel_Wait_radar");
+    $$.displayWaitIntoContainer("panel_Wait_dqpanel");
 }
 
 $$.form_afterLoad = function() {

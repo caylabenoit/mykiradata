@@ -156,12 +156,12 @@ function cb_global(content) {
 }
 
 function cb_ComboTermTypes(content) {
-    fillComboboxFromJoyVector("termtypes", content);
+    fillComboboxFromJoyEntity("termtypes", content);
     $('#termtypes').select2({ placeholder: "Select an Term type" });
 }
 
 function cb_ComboTerm(content) {
-    fillComboboxFromJoyVector("term", content);
+    fillComboboxFromJoyEntity("term", content);
     $( '#term' ).select2({
         placeholder: "Select an Term",
         width: '100%'
