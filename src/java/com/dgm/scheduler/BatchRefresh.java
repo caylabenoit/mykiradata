@@ -19,14 +19,14 @@ package com.dgm.scheduler;
 import com.joy.common.JoyReadStream;
 import com.dgm.params.ParamProvider;
 import com.joy.JOY;
-import com.joy.common.joyClassTemplate;
+import com.joy.common.JoyClassTemplate;
 import java.io.IOException;
 
 /**
  *
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class BatchRefresh extends joyClassTemplate implements Runnable  {
+public class BatchRefresh extends JoyClassTemplate implements Runnable  {
 
     private static String LOCK_REFRESHDELTA = "REFRESHDELTA";
     

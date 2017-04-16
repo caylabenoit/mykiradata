@@ -68,4 +68,9 @@
         </joy-join>
     </joy-entity>
 
+    <joy-entity name = "AVAILABLE_TERMTYPES">
+        select distinct DIM_GLOSSARY.glo_name from DIM_GLOSSARY 
+        where DIM_GLOSSARY.glo_name not in (SELECT gio_termtype_name FROM "public".src_termtype)
+    </joy-entity>
+    
 </joy-entities>

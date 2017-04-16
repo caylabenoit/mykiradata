@@ -36,7 +36,7 @@ public class TASKCommonRAZ extends ActionTypeTASK {
     protected void purgeTable(String Table) {
         IEntity entity = (IEntity)getJoyState().getBOFactory().getEntity(Table);
         entity.resetKeys();
-        if (!entity.delete())
+        if (entity.delete() > 0)
             this.addTrace(Table + " not purged successfully");
     }
     

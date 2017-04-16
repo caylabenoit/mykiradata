@@ -83,12 +83,12 @@ function JoyPage () {
 	var values ='?';
 	for(var k in valObj)
             values+= encodeURIComponent(k) + '=' + encodeURIComponent(valObj[k]) + '&';
-	if(m === 'GET') {
+	if(m !== 'POST') {
             url+=values;
             values= null;
 	}
 	myxhr.open(m,url,true);
-	if(m !=='GET') {
+	if(m === 'POST') {
             values=values.substring(1, values.length-1);
             myxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	}
@@ -97,8 +97,8 @@ function JoyPage () {
             if(myxhr.readyState==4){
                 switch(myxhr.status) {
                     case 200: cb(eval("(" + myxhr.responseText + ")")); break;
-                    case 403, 404, 503 :  callObj(null); break;
-                    default:  callObj(null);	
+                    case 403, 404, 503 :  cb(null); break;
+                    default:  cb(null);	
 		}
             }
 	}
@@ -266,7 +266,7 @@ JoyPage.prototype.fillComboboxFromJoyEntity = function(selectID, data, orderText
     }
 }
 
-JoyPage.prototype.fillComboboxFromJoyVector = function(selectID, data) {
+JoyPage.prototype.fillComboboxFromJoyVector = function(selectID, data, withemptyoption) {
     var cboObject = document.getElementById(selectID);
     this.emptyCombobox(selectID);
     for (var i=0; i < data.itemcount; i++) {
@@ -274,6 +274,11 @@ JoyPage.prototype.fillComboboxFromJoyVector = function(selectID, data) {
         myoption.text = data.items[i].name;
         myoption.value = data.items[i].value;
         cboObject.add(myoption, null);
+    }
+    // Add an empty value to the list if requested
+    if (withemptyoption == true) {
+        var o = $("<option/>", {value: 0, text: " "});
+        $('#' + selectID).append(o);
     }
 }
 

@@ -1,6 +1,5 @@
 <i class="fa XXX fa-fw"></i>&nbsp;LABEL
 <i class="fa fa-plus-circle fa-fw fa-5x" style="color:black"></i>
-<UI:dgmGlyphe name="XXX" /> Cf. joyparameter.xml
 
 fa-flag             status                <i class="fa fa-flag fa-fw"></i>&nbsp;
 fa-book             business term       <i class="fa fa-book fa-fw"></i>&nbsp;
@@ -28,7 +27,13 @@ fa-arrow-right      stable              <i class="fa fa-arrow-right fa-fw"></i>&
 fa-plus-circle      new                 <i class="fa fa-plus-circle fa-fw"></i>&nbsp;
 
 **************************
-aller voir http://getbootstrap.com/javascript/
+http://getbootstrap.com/javascript/
+diagramming
+https://www.jgraph.com/
+https://github.com/jgraph/mxgraph
+**************************
+
+-------------------- BOOTBOX ---------------
 
 Alert
 
@@ -36,13 +41,11 @@ bootbox.alert("Hello world!", function() {
   Example.show("Hello world callback");
 });
 
-
 Confirm
 
 bootbox.confirm("Are you sure?", function(result) {
   Example.show("Confirm result: "+result);
 }); 
-
 
 Prompt
 
@@ -53,7 +56,6 @@ bootbox.prompt("What is your name?", function(result) {
     Example.show("Hi <b>"+result+"</b>");                          
   }
 });
-
 
 Prompt with default value
 
@@ -80,6 +82,13 @@ récupérer le texte d'une combo :
 
 Modifier la valeur selectionnée d'une combo
     $("#nbhops").val(nbHop).trigger("change");
+
+Disable control
+$("#gio_termtype_name").prop("disabled", true);
+
+Add an option into the list
+var o = $("<option/>", {value: 0, text: " "});
+$('#' + selectID).append(o);
 
 ------------------- MEMO JQUERY ---------------------------
 

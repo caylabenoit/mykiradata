@@ -21,13 +21,13 @@ import com.joy.bo.BOFactory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.joy.bo.IEntity;
-import com.joy.common.joyClassTemplate;
+import com.joy.common.JoyClassTemplate;
 
 /**
  *
  * @author Benoit CAYLA (benoit@famillecayla.fr) 
  */
-public class TermTree extends joyClassTemplate {
+public class TermTree extends JoyClassTemplate {
     BOFactory entities;
 
     public TermTree(BOFactory entities) {

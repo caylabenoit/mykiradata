@@ -19,7 +19,7 @@ package com.dgm.termrelationship.mapview;
 import com.joy.JOY;
 import com.joy.common.state.JoyState;
 import com.joy.bo.IEntity;
-import com.joy.common.joyClassTemplate;
+import com.joy.common.JoyClassTemplate;
 import com.joy.json.JSONObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +31,7 @@ import java.util.List;
  * Build the graph view for vis.js viewing
  * @author Benoit CAYLA (benoit@famillecayla.fr)
  */
-public class Term extends joyClassTemplate {
+public class Term extends JoyClassTemplate {
     JoyState state;             // data connection
     private List<TermLink> links;   // links (parents & childs)
     private String type;            // Term type

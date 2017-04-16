@@ -34,7 +34,7 @@
         <!-- Navigation -->
         <NAV class="navdgm navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <DIV class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">";
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -94,7 +94,7 @@
                                         </table>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-default" onclick=""><i class="fa fa-arrow-circle-right "></i>&nbsp;Add new Term's type</button><p>
+                                        <button type="button" class="btn btn-default" onclick="evt_requestInsert();"><i class="fa fa-arrow-circle-right "></i>&nbsp;Add new Term's type</button><p>
                                     </div>     
                                 </div>
                             </div>
@@ -116,6 +116,7 @@
                 <h4 class="modal-title">Modify Term's type</h4>
             </div>
             <div class="modal-body">
+                <span id="errormessages"></span>
                 <div class="form-group form-inline">
                     <label>&nbsp;Identifier:&nbsp;</label>
                     <span id="GIO_PK"></span>
@@ -131,7 +132,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="upsert();">Save</button>
+                <button type="button" class="btn btn-primary" onclick="evt_popupSave();">Save</button>
             </div>
         </div>
     </div>
@@ -139,7 +140,7 @@
 <!-- Enf of Modal popup to update data -->
 
 <script>includeAllJS();</script>
-<script type="text/javascript" src="list.js"></script>
+<script type="text/javascript" src="termtype.js"></script>
 
 </body>
 </html>
