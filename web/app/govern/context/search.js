@@ -26,7 +26,7 @@ function goto(id)  {
 }
 
 function cb_Combo(content) {
-    $$.fillComboboxFromJoyEntity("context", content);
+    $$.fillComboboxFromJoyEntity("context", content, "CON_DESCRIPTION", "CON_PK");
     $( '#context' ).select2({ placeholder: "Select an context" });
 }
 

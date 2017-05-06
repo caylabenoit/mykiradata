@@ -23,7 +23,7 @@ function fillTerms(content) {
     var t1 = $('#tableTerm').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("btermdisplay", { "bterm" : $$.getData(content.rows[i].items, "TRM_FK") }) + "'>" + $$.getData(content.rows[i].items, "TRM_NAME") + "</a>";
+        var myLink = $$.getAHref("btermdisplay", { "bterm" : $$.getData(content.rows[i].items, "TRM_FK") }, $$.getData(content.rows[i].items, "TRM_NAME"), null);
         t1.row.add( [
             myLink,
             $$.getData(content.rows[i].items, "DQX_NAME"),
@@ -37,7 +37,7 @@ function fillCategories(id, content) {
     var t1 = $("#" + id).DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("categorydisplay", { "category" : $$.getData(content.rows[i].items, "CAT_FK") }) + "'>" + $$.getData(content.rows[i].items, "CAT_NAME") + "</a>";
+        var myLink = $$.getAHref("categorydisplay", { "category" : $$.getData(content.rows[i].items, "CAT_FK") }, $$.getData(content.rows[i].items, "CAT_NAME"), null);
         t1.row.add( [
             myLink,
             $$.getData(content.rows[i].items, "CAT_DESCRIPTION")
@@ -51,7 +51,7 @@ function fill_header(content) {
     $("#CAT_DESCRIPTION").html($$.getData(content.single, "cat_description"));
 
     // fill and display the terms cbo
-    $$.fillComboboxFromJoyEntity('category', $$.getData(content.matrix, "categories"));
+    $$.fillComboboxFromJoyEntity('category', $$.getData(content.matrix, "categories"), "CAT_NAME", "CAT_PK");
     $('#category').select2({ placeholder: "Select an Category" });
     
     fillCategories("tableparents", $$.getData(content.matrix, 'parents'));

@@ -45,7 +45,7 @@
                 </DIV>
             </DIV>
             <DIV class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>  
-                <DIV id="menu_top_left" selected="TL08"></DIV>
+                <DIV id="menu_top_left" selected="TL09"></DIV>
                 <UL class="nav navbar-top-links navbar-right">
                     <LI id="menu_right_shortcuts"></LI>
                     <LI id="dropdown-tasks" class="dropdown">
@@ -60,7 +60,7 @@
                 </UL>
             </DIV>
             <DIV class='navbar-default sidebar' role='navigation' >
-                <DIV class='sidebar-nav navbar-collapse' id="menu_left" selected="CONFIG04"></DIV>
+                <DIV class='sidebar-nav navbar-collapse' id="menu_left" selected="CONFIG02"></DIV>
             </DIV>
         </NAV>
         <!-- Enf of Navigation -->
@@ -70,7 +70,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Term's types</h1>
+                        <h1 class="page-header">Manage Data Quality Axis</h1>
                     </div>
                 </div>
                 
@@ -86,15 +86,15 @@
                                             <thead>
                                                 <tr>
                                                     <th style="width: 10%;">Identifier</th>
-                                                    <th style="width: 40%;">Term Type Name</th>
-                                                    <th style="width: 40%;">Image-Icon</th>
-                                                    <th style="width: 10%;">Delete</th>
+                                                    <th style="width: 40%;">Name</th>
+                                                    <th style="width: 40%;">Weight</th>
+                                                    <th style="width: 10%;"  class="dt-body-right">Delete</th>
                                                 </tr>
                                             </thead>
                                         </table>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-default" onclick="evt_requestInsert();"><i class="fa fa-arrow-circle-right "></i>&nbsp;Add new Term's type</button><p>
+                                        <button type="button" class="btn btn-default" onclick="evt_requestInsert();"><i class="fa fa-arrow-circle-right "></i>&nbsp;Add new DQ Axis</button><p>
                                     </div>     
                                 </div>
                             </div>
@@ -108,39 +108,72 @@
     </div><!-- /#wrapper -->
 
 <!-- Modal popup to update data -->
-<div id="myModal" class="modal fade">
+
+<DIV id="myModal" class="modal fade">
+    <FORM id="popupform" data-toggle="validator">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modify Term's type</h4>
+                <h4 class="modal-title">Modify Data Quality Axis</h4>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" id="errormessages"></div>
-                <div class="form-group form-inline">
+                <div class="form-group">
                     <label>&nbsp;Identifier:&nbsp;</label>
-                    <span id="GIO_PK"></span>
+                    <span id="DQX_PK"></span>
                 </div>
-                <div class="form-group form-inline">
-                    <label>&nbsp;Term's type name</label>
-                    <SELECT class="js-states form-control" id="gio_termtype_name"></SELECT>
-                </div>
-                <div class="form-group form-inline">
-                    <label>&nbsp;Path name</label>
-                    <SELECT class="js-states form-control" id="gio_icon_pathname"></SELECT>
-                </div>
+                <DIV class="form-group">
+                    <label class="control-label">&nbsp;Axis Code:&nbsp;</label>
+                    <DIV class='form-group'>
+                        <DIV class='input-group'>
+                            <SPAN class='input-group-addon'><SPAN class='glyphicon glyphicon-star' aria-hidden='true'></SPAN></SPAN>
+                            <INPUT id="DQX_FUNCKEY" class="form-control" required="yes" maxlength="10" type="text" placeholder="DQ Axis Name" ariadescribedby="basic-addon2" freetagasis="data-minlength='5'" data-error="Please enter a value or correct this field."/>
+                        </DIV>
+                        <DIV class="help-block with-errors"></DIV>
+                    </DIV>
+                    <label class="control-label">&nbsp;Axis weight:&nbsp;</label>
+                    <DIV class='form-group'>
+                        <DIV class='input-group'>
+                            <SPAN class='input-group-addon'><SPAN class='glyphicon glyphicon-star' aria-hidden='true'></SPAN></SPAN>
+                            <INPUT id="DQX_WEIGHT" class="form-control" required="yes" maxlength="2" type="number" placeholder="Weight" ariadescribedby="basic-addon2" freetagasis="data-minlength='1'" data-error="Please enter a value or correct this field."/>
+                        </DIV>
+                        <DIV class="help-block with-errors"></DIV>
+                    </DIV>
+                    <label class="control-label">&nbsp;Axis Label:&nbsp;</label>
+                    <DIV class='form-group'>
+                        <DIV class='input-group'>
+                            <SPAN class='input-group-addon'><SPAN class='glyphicon glyphicon-star' aria-hidden='true'></SPAN></SPAN>
+                            <INPUT id="DQX_LABEL" class="form-control" required="yes" maxlength="250" type="text" placeholder="DQ Axis Name" ariadescribedby="basic-addon2" freetagasis="data-minlength='5'" data-error="Please enter a value or correct this field."/>
+                        </DIV>
+                        <DIV class="help-block with-errors"></DIV>
+                    </DIV>
+                    <label>&nbsp;Axis Description:&nbsp;</label>
+                    <textarea class="form-control" rows="3" id="DQX_DESCRIPTION"></textarea>
+                    <label class="control-label">&nbsp;Axis Status:&nbsp;</label>
+                    <DIV class='form-group'>
+                        <DIV class='input-group'>
+                            <INPUT id="DQX_STATUS" class="form-control" maxlength="1" type="text"  ariadescribedby="basic-addon2" />
+                        </DIV>
+                        <DIV class="help-block with-errors"></DIV>
+                    </DIV>
+                </DIV>
+
             </div>
-            <div class="modal-footer">
+            <div class="form-group modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" onclick="evt_popupSave();">Save</button>
             </div>
         </div>
     </div>
+    </FORM>
 </div>
+
+
 <!-- Enf of Modal popup to update data -->
 
 <script>includeAllJS();</script>
-<script type="text/javascript" src="termtype.js"></script>
+<script type="text/javascript" src="axis.js"></script>
 
 </body>
 </html>

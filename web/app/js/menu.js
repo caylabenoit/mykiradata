@@ -36,14 +36,14 @@ function menu_topLeft(divId) {
         
         if (mainItem.items == null) { // Display direct link
             out += "<LI class='" + active + "'>";
-            out += "<A class='active' HREF='" + $$.getNaviURL(mainItem.tag) + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
+            out += $$.getAHref(mainItem.tag, null, "<I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label, "class='active'");
             out += "<LI>";
         } else { // Display dropdown
             out += "<LI class='dropdown " + active + "'>";
             out += "<A  class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'  HREF='#'><I class='fa fa-unlock-alt fa-fw'></I>&nbsp;" + mainItem.label + "</A>";
             out += "<UL class='dropdown-menu dropdown-shortcuts'>";
             for (var j=0; j <mainItem.items.length; j++) { // Go through the 2nd level items 
-                out += "<LI><A  HREF='" + $$.getNaviURL(mainItem.items[j].tag) + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
+                out +=  "<LI>" + $$.getAHref(mainItem.items[j].tag, null, "<I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label, null) + "</LI>";
             }
             out += "</UL>";
             out += "</LI>";
@@ -72,17 +72,16 @@ function menu_topRightShortcuts(divId) {
         var mainItem = myMenu.items[i];
 
         if (mainItem.shortcut == 'true')
-            out += "<LI><A href=" + $$.getNaviURL(mainItem.tag) + "><div><p><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</p></div></A></LI>";
+            out += "<LI>" + $$.getAHref(mainItem.tag, null, "<div><p><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</p></div>", null) + "</LI>";
         if (mainItem.items != null) { // Go through the 2nd level 
             for (var j=0; j <mainItem.items.length; j++) { // Go through the 2nd level items 
                 if (mainItem.items[j].shortcut == 'true')
-                    out += "<LI><A href=" + $$.getNaviURL(mainItem.items[j].tag) + "><div><p><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</p></div></A></LI>";
+                    out += "<LI>" + $$.getAHref(mainItem.items[j].tag, null, "<div><p><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</p></div>", null) + "</LI>";
             }
         }
     }
-    
     out += "<li class='divider'></li>";
-    out += "<LI><A href=" + $$.getNaviURL("home") + "><div><p align='center'>Home</p></div></A></LI>";
+    out += "<LI>" + $$.getAHref("home", null, "<div><p align='center'>Home</p></div></A>", null) + "</LI>";
     out += "</UL>";
     document.getElementById(divId).innerHTML = out;
 }
@@ -103,9 +102,9 @@ function menu_topRightUserManagement(divId) {
     out += "<li><a href='#'><i class='fa fa-gear fa-fw'></i> Settings</a></li>";
     out += "<li class='divider'></li>";
     if (session.connected == "true")
-        out += "<li><a href='"+ $$.getNaviURL("login") + "'><i class='fa fa-sign-out fa-fw'></i> Logout</a>  </li>";  
+        out += "<LI>" + $$.getAHref("login", null, "<i class='fa fa-sign-out fa-fw'></i> Logout</a>", null) + "</LI>";
     else
-        out += "<li><a href='"+ $$.getNaviURL("login")  + "'><i class='fa fa-sign-out fa-fw'></i> Login</a>  </li>";  
+        out += "<LI>" + $$.getAHref("login", null, "<i class='fa fa-sign-out fa-fw'></i> Login</a>", null) + "</LI>";
     out += "<UL>";
     document.getElementById(divId).innerHTML = out;
 }
@@ -128,7 +127,7 @@ function menu_sideleft(divId, menuTag) {
         
         if (mainItem.items != null) { // 2nd level 
             var bloc2nd = "";
-            bloc2nd += "<A aria-expanded='false'  href='#'><I class='" + mainItem.glyphe + "'></I>&nbsp;<SPAN class='fa arrow'></SPAN>" + mainItem.label + "</A>";
+            bloc2nd += "<A aria-expanded='false' href='#'><I class='" + mainItem.glyphe + "'></I>&nbsp;<SPAN class='fa arrow'></SPAN>" + mainItem.label + "</A>";
             // Build the second level bloc
             bloc2nd += "<UL class='nav nav-second-level' aria-expanded='false'>";
             
@@ -140,7 +139,7 @@ function menu_sideleft(divId, menuTag) {
                     activeBloc = active;
                 }
                 bloc2nd += "<LI " + active + ">";
-                bloc2nd += "<A aria-expanded='false' " + active + " href='" + $$.getNaviURL(mainItem.items[j].tag) + "'><I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label + "</A></LI>";
+                bloc2nd += $$.getAHref(mainItem.items[j].tag, null, "<I class='" + mainItem.items[j].glyphe + "'></I>&nbsp;" + mainItem.items[j].label, "aria-expanded='false' " + active);
                 bloc2nd += "</LI>";
             }
 
@@ -153,7 +152,7 @@ function menu_sideleft(divId, menuTag) {
             if (activeMenuId == mainItem.id)
                 active += "class='active'";
             out += "<LI " + active + ">";
-            out += "<A " + active + " aria-expanded='false' href='" + $$.getNaviURL(mainItem.tag) + "'><I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label + "</A>";
+            out += $$.getAHref(mainItem.tag, null, "<I class='" + mainItem.glyphe + "'></I>&nbsp;" + mainItem.label, "aria-expanded='false' " + active);
             out += "</LI>";
         }
         
@@ -169,7 +168,8 @@ function menu_sideleft(divId, menuTag) {
  */
 function init_menus(leftmenuname) {
     document.getElementById("src_logo").src = $$.getURLRoot() + $$.getContext().parameters.logo;
-    document.getElementById("href_about").href = $$.getNaviURL( "about");
+    $("#href_about").attr('onclick', '$$.navigate("about")');
+    $("#href_about").attr("href", "#");
 
     menu_topLeft("menu_top_left");
     menu_topRightShortcuts("menu_right_shortcuts");

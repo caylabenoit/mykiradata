@@ -33,6 +33,18 @@ https://www.jgraph.com/
 https://github.com/jgraph/mxgraph
 **************************
 
+-------------------- Hyperliens ---------------
+
+document.getElementById("href_about").href = "#";
+document.getElementById('href_about').setAttribute('onclick', '$$.navigate("about")');
+ou en jquery
+    $("#href_about").attr('onclick', '$$.navigate("about")');
+    $("#href_about").attr("href", "#");
+
+ou utiliser
+$$.navigate();
+$$.getAHref();
+
 -------------------- BOOTBOX ---------------
 
 Alert
@@ -106,3 +118,29 @@ Combo : $("#termtypes").val(); --ie--> document.getElementById('termtypes').valu
 
 Changer de style
 $("#score_color").css({ "color" :  [value] }); --ie--> document.getElementById('score_color').style.cssText = "color :" + [value];
+
+Show/Hide un div
+$("#errormessages").show();
+$("#errormessages").hide();
+
+------------------- ALIGNEMENT horizontal element formulaire ---------------------------
+
+<div class="form-group form-inline">
+ou non aligné (empilement vertical)
+<div class="form-group">
+
+------------------- VALIDATOR ---------------------------
+
+Cf. https://1000hz.github.io/bootstrap-validator/#validator
+
+Exemple :
+<FORM role="form" data-toggle="validator">
+    <DIV class='form-group'>
+        <DIV class='input-group'>
+            <SPAN class='input-group-addon'><SPAN class='glyphicon glyphicon-star' aria-hidden='true'></SPAN></SPAN>
+            <INPUT id="DQX_FUNCKEY" class="form-control" required="yes" maxlength="10" placeholder="DQ Axis Name" ariadescribedby="basic-addon2" glypheicon="glyphicon-star"  freetagasis="data-minlength='5'" dataerror="Please enter a value or correct this field."/>
+        </DIV>
+        <DIV class="help-block with-errors"></DIV>
+    </DIV>
+...
+</FORM>

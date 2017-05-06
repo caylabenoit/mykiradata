@@ -27,7 +27,8 @@ function cb_relationShipTree(content) {
 function fill_header(content) {
     $$.setJoyDataSingles(content.single);
     $("#IMGICO").attr('src', $$.getURLRoot() + '/images/glossary/' + $$.getData(content.single, "IMGICO"));
-    $("#ph_termrel").attr("href", $$.getNaviURL("businessmapdisplay", { "hop" : 3, "term" : $$.getData(content.single, "TRM_PK")}));
+    $("#ph_termrel").attr('onclick', '$$.navigate("businessmapdisplay", { "hop" : 3, "term" : ' + $$.getData(content.single, "TRM_PK") + '})');
+    $("#ph_termrel").attr("href", "#");
     $("#ph_termConfiglink").attr("href", $$.getData(content.single, "CONFIG_TERM_LINK")); // FAUX
 
     // fill and display the terms cbo

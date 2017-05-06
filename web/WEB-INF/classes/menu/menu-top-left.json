@@ -46,7 +46,7 @@
         {
           "id": "TL09",
           "label": "Quality Dimensions",
-          "tag": "",
+          "tag": "configaxislist",
           "glyphe": "fa fa-gears fa-fw"
         },
         {

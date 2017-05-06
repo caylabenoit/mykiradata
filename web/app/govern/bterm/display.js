@@ -32,7 +32,7 @@ function fillDatasource(content) {
     var t1 = $('#tableDatasource').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("datasourcedisplay", { "ds" : $$.getData(content.rows[i].items, "dso_pk") }) + "'>" + $$.getData(content.rows[i].items, "dso_sourcename") + "</a>";
+        var myLink = $$.getAHref("datasourcedisplay", { "ds" : $$.getData(content.rows[i].items, "dso_pk") }, $$.getData(content.rows[i].items, "dso_sourcename"), null);
         t1.row.add( [
             myLink
         ] ).draw( false );
@@ -43,7 +43,7 @@ function fillContext(content) {
     var t1 = $('#tableContext').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("contextdisplay", { "context" : $$.getData(content.rows[i].items, "con_pk") }) + "'>" + $$.getData(content.rows[i].items, "con_description") + "</a>";
+        var myLink = $$.getAHref("contextdisplay", { "ds" : $$.getData(content.rows[i].items, "con_pk") }, $$.getData(content.rows[i].items, "con_description"), null);
         t1.row.add( [
             myLink
         ] ).draw( false );
@@ -54,7 +54,7 @@ function fillMetrics(content) {
     var t1 = $('#tableMetric').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("metricsdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }) + "'>" + $$.getData(content.rows[i].items, "MET_NAME") + "</a>";
+        var myLink = $$.getAHref("metricsdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }, $$.getData(content.rows[i].items, "MET_NAME"), null);
         t1.row.add( [
             myLink,
             $$.getData(content.rows[i].items, "DQX_NAME"),

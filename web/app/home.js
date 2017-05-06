@@ -25,7 +25,7 @@ function cb_listWorseTerms(content) {
     displayGaugeList(content, 'div_HOME_WORSE_TERMS', 'fa-book', 
                      $$.getContext().parameters.thresold_bad, 
                      $$.getContext().parameters.thresold_good, 
-                     $$.getNaviURL("btermdisplay") + 'term=');
+                     "btermdisplay" , "term");
     $$.removeWaitIntoContainer("HOME_WORSE_TERMS", "div_HOME_WORSE_TERMS");
 }
 
@@ -33,7 +33,7 @@ function cb_listBestTerms(content) {
     displayGaugeList(content, 'div_HOME_BEST_TERMS', 'fa-book', 
                      $$.getContext().parameters.thresold_bad, 
                      $$.getContext().parameters.thresold_good, 
-                     $$.getNaviURL("btermdisplay") + 'term=');
+                     "btermdisplay", "term");
     $$.removeWaitIntoContainer("HOME_BEST_TERMS");
 }
 
@@ -41,7 +41,7 @@ function cb_listAxisScore(content) {
     displayGaugeList(content, 'div_AXIS_SCORE_HOME_00', 'fa-flag-checkered', 
                      $$.getContext().parameters.thresold_bad, 
                      $$.getContext().parameters.thresold_good, 
-                     $$.getNaviURL("dqaxisdisplay")  + "dqaxis=");
+                     "dqaxisdisplay", "dqaxis");
     $$.removeWaitIntoContainer("AXIS_SCORE_HOME_00");
 }
 

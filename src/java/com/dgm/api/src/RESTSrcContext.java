@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 Benoit CAYLA (benoit@famillecayla.fr)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,26 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.dgm.api.src;
 
-var params = null;
+/**
+ *
+ * @author Benoit Cayla (benoit@famillecayla.fr)
+ */
+public class RESTSrcContext extends RESTSrcCommon {
 
-$(document).ready(function(){
-    $( "#btn1" ).button();
-});
-
-function goto(id)  {
-    $$.navigate("categorydisplay", { "category" : id });
+    public RESTSrcContext() {
+        this.setTable("SRC_CONTEXT");
+        this.setTableFieldKey("CON_PK");
+    }
+    
 }
-
-function cb_ComboCategory(content) {
-    $$.fillComboboxFromJoyEntity("category", content, "CAT_NAME", "CAT_PK");
-    $( '#category' ).select2({ placeholder: "Select an Category" });
-}
-
-$$.form_afterLoad = function() {
-    $$.ajax("GET", cb_ComboCategory, $$.getAPICall('entity/CATEGORY_LIST'));
-    init_menus("govern");
-}
-
-$$.init();
-

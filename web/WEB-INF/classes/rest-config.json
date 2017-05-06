@@ -92,10 +92,19 @@
       "mime": "application/json"
     },
     {
-      "name": "termtype",
-      "class": "com.dgm.api.src.TermType",
+      "name": "srctermtype",
+      "class": "com.dgm.api.src.RESTSrcTermType",
+      "mime": "application/json"
+    },
+    {
+      "name": "srcdqaxis",
+      "class": "com.dgm.api.src.RESTSrcDQAxis",
+      "mime": "application/json"
+    },
+    {
+      "name": "srccontext",
+      "class": "com.dgm.api.src.RESTSrcContext",
       "mime": "application/json"
     }
-    
   ]
 }

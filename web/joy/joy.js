@@ -32,7 +32,7 @@ function JoyPage () {
     this.getContext = function() { return context; };
     this.setContext = function(cxt) { context = cxt; };
     this.getURLRoot = function() { return URLROOT; };
-    this.getURLApp = function() { return URLAPPROOT; };
+    function getURLApp() { return URLAPPROOT; };
     this.getURLApi = function() { return URLAPIROOT; };
     this.getURLTask = function() { return URLAPITASK; };
 
@@ -92,6 +92,7 @@ function JoyPage () {
             values=values.substring(1, values.length-1);
             myxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	}
+        myxhr.setRequestHeader("Authorization", "Joy Client Authorization Token");
 	myxhr.send(values);
 	myxhr.onreadystatechange = function() {
             if(myxhr.readyState==4){
@@ -110,13 +111,13 @@ function JoyPage () {
      * @param {type} params parameters in JSON format
      * @returns {unresolved}
      */
-    this.getNaviURL = function(tag, params) {
+    function getNaviURL (tag, params) {
         var navis = context.navi;
         for (var i=0; i< navis.list.length; i++) {
             if (navis.list[i].tag == tag) {
-                var url =  this.getURLApp() + navis.list[i].url;
+                var url =  getURLApp() + navis.list[i].url;
             	var values ='?';
-                for(var k in params)
+                for (var k in params)
                     values+= encodeURIComponent(k) + '=' + encodeURIComponent(params[k]) + '&';
                 return url + values;
             }
@@ -125,20 +126,47 @@ function JoyPage () {
     };
 
     /**
+     * return a complete HREF html link with $$.navigate onlick way of nagigating
+     * @param {type} tag        joy tag navi
+     * @param {type} params     nafigation parameters (json format)
+     * @param {type} text       text link
+     * @param {type} cssAttributes   CSS attributes like class, styles, etc.
+     * @returns {String}
+     */
+    this.getAHref = function(tag, params, text, cssAttributes) {
+        var href = "";
+        if (params != null) {
+            var paramStr = "{";
+            /*var i=0;
+            while (i <= params.length-1) {
+                paramStr += params[i] + ':' + params[i+1] + ",";
+                i += 2;
+            }
+            */
+            for (var k in params)
+               paramStr += k + ':' + params[k] + ",";
+           
+            paramStr = paramStr.substring(0, paramStr.length-1) + "}";
+            href = "<A href='#' " + (cssAttributes==null?"":"" + cssAttributes) + " onclick=\"$$.navigate('" + tag + "', " + paramStr + ");\">" + text + "</a>";
+        } else
+            href =  "<A href='#' " + (cssAttributes==null?"":"" +cssAttributes) + " onclick=\"$$.navigate('" + tag + "');\">" + text + "</a>";
+        return href;
+    }
+
+    /**
      * Navigate to the tag destination
      * @param {type} tag  to retrieve the URL
      * @param {type} params params parameters in JSON format
      * @returns {undefined}
      */
     this.navigate = function(tag, params) {
-        var url = this.getNaviURL(tag, params);
-        window.open(url, "_self");
+        window.open(getNaviURL(tag, params), "_self");
     };
 }
 
 // To override directly into the page code
-JoyPage.prototype.form_beforeLoad = function() {};
-JoyPage.prototype.form_afterLoad = function() {};
+JoyPage.prototype.form_beforeLoad = function() {};  // Manage things to do before load the JS in the page (getting context, etc.)
+JoyPage.prototype.form_afterLoad = function() {};   // Manage things to do after getting the Joy context
 
 // Page Parameter management
 JoyPage.prototype.getParameters = function() {
@@ -232,7 +260,7 @@ JoyPage.prototype.setJoyDataSingles = function(singles) {
  */
 JoyPage.prototype.getData = function(content, fieldname) {
     for (var i=0; i < content.length; i++) {
-        if (content[i].name == fieldname)
+        if (content[i].name.toUpperCase() == fieldname.toUpperCase())
             return content[i].value;
     }
     return null;
@@ -250,18 +278,34 @@ JoyPage.prototype.form_joy_afterLoad = function(content) {
  * Dynamically build the combobox items with the JSON Object (coming from standard Joy REST API get Entity)
  * @param {type} selectID   ID of the <select> tag
  * @param {type} data       JSON object which contains data (coming from a GET REST  Entity
+ * @param {type} orderText  Index or fieldname of the text (displayed) value
+ * @param {type} orderValue Index or fieldname of the value/id (not displayed)
  * @returns {undefined}     Nothing
  */
 JoyPage.prototype.fillComboboxFromJoyEntity = function(selectID, data, orderText, orderValue) {
     var oText, oValue;
+    var idx_value, idx_text;
     var cboObject = document.getElementById(selectID);
     this.emptyCombobox(selectID);
-    if (orderText == null) oText = 1; else oText = orderText;
-    if (orderValue == null) oValue = 0;  else oValue = orderValue;
+    
+    if (typeof orderText === 'string') {
+        for (var j=0; j< data.colnames.length; j++) 
+            if (data.colnames[j].toUpperCase() == orderText.toUpperCase())
+                idx_text = j;
+    } else
+        if (orderText == null) idx_text = 1; else idx_text = orderText;
+
+    if (typeof orderValue === 'string') {
+        for (var k=0; k< data.colnames.length; k++) 
+            if (data.colnames[k].toUpperCase() == orderValue.toUpperCase())
+                idx_value = k;
+    } else
+        if (orderValue == null) idx_value = 1; else idx_value = orderValue;
+
     for (var i=0; i < data.rowcount; i++) {
         var myoption = document.createElement("option");
-        myoption.text = data.rows[i].items[oText].value;
-        myoption.value = data.rows[i].items[oValue].value;
+        myoption.text = data.rows[i].items[idx_text].value;
+        myoption.value = data.rows[i].items[idx_value].value;
         cboObject.add(myoption, null);
     }
 }
@@ -336,6 +380,16 @@ JoyPage.prototype.removeWaitIntoContainer = function(contenerID) {
         }
     }
 };
+
+JoyPage.prototype.getFormattedErrorMessages = function(content) {
+    var message = "";
+    if (content.status != 'OK') {
+        for (var i=0; i<content.messages.length; i++) 
+            message += content.messages[i] + '\n';
+    }
+    return message;
+}
+
 
 /* JOY unique Object instance */
 var JOY = new JoyPage ();

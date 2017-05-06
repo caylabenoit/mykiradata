@@ -27,7 +27,7 @@ function fillMetrics(content) {
     var t1 = $('#tableMetric').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("metricsdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }) + "'>" + $$.getData(content.rows[i].items, "MET_NAME") + "</a>";
+        var myLink = $$.getAHref("metricsdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }, $$.getData(content.rows[i].items, "MET_NAME"), null);
         t1.row.add( [
             myLink,
             $$.getData(content.rows[i].items, "DQX_NAME"),
@@ -47,7 +47,7 @@ function fillTerms(content) {
     var t1 = $('#tableTerm').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("btermdisplay", { "term" : $$.getData(content.rows[i].items, "TRM_FK") }) + "'>" + $$.getData(content.rows[i].items, "TRM_NAME") + "</a>";
+        var myLink = $$.getAHref("btermdisplay", { "term" : $$.getData(content.rows[i].items, "TRM_FK") }, $$.getData(content.rows[i].items, "TRM_NAME"), null);
         t1.row.add( [
             myLink,
             $$.getData(content.rows[i].items, "DQX_NAME"),
@@ -61,7 +61,7 @@ function cb_global(content) {
     $$.setJoyDataSingles(content.single);
     
     // fill and display the terms cbo
-    $$.fillComboboxFromJoyEntity('context', $$.getData(content.matrix, "contexts"), 1, 0);
+    $$.fillComboboxFromJoyEntity('context', $$.getData(content.matrix, "contexts"), "CON_DESCRIPTION", "CON_PK");
     $('#context').select2({ placeholder: "Select a context" });
     $("#context").val(ID).trigger("change");
     

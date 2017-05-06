@@ -34,23 +34,28 @@ function cb_delete_return(content) {
 
 function evt_popupSave () {
     var postParams = {
-        "GIO_PK" : $("#GIO_PK").html(),
-        "GIO_TERMTYPE_NAME" : $("#gio_termtype_name").val(),
-        "GIO_ICON_PATHNAME" : $("#gio_icon_pathname").val()
+        "DQX_PK" : $("#DQX_PK").html(),
+        "DQX_FUNCKEY" : $("#DQX_FUNCKEY").val(),
+        "DQX_LABEL" : $("#DQX_LABEL").val(),
+        "DQX_DESCRIPTION" : $("#DQX_DESCRIPTION").val(),
+        "DQX_STATUS" : $("#DQX_STATUS").val(),
+        "DQX_WEIGHT" : $("#DQX_WEIGHT").val()
     };
     // Update or create the item
-    $$.ajax("POST", cb_update_return, $$.getAPICall("srctermtype"), postParams);
+    $$.ajax("POST", cb_update_return, $$.getAPICall("srcdqaxis"), postParams);
 }
 
 function cb_displayBoxWithData(itemdata) {
     init_popupControl();
     // Identifier
-    $("#GIO_PK").html($$.getData(itemdata.single, "gio_pk"));
-    // Combo term's type names
-    $("#gio_termtype_name").val($$.getData(itemdata.single, "gio_termtype_name")).trigger("change");
-    $("#gio_termtype_name").prop("disabled", true); // disable the combo !
-    // Combo path names
-    $("#gio_icon_pathname").val($$.getData(itemdata.single, "gio_icon_pathname")).trigger("change");
+    $("#DQX_PK").html($$.getData(itemdata.single, "DQX_PK"));
+    // Other fields ...
+    $("#DQX_FUNCKEY").val($$.getData(itemdata.single, "DQX_FUNCKEY"));
+    $("#DQX_LABEL").val($$.getData(itemdata.single, "DQX_LABEL"));
+    $("#DQX_DESCRIPTION").val($$.getData(itemdata.single, "DQX_DESCRIPTION"));
+    $("#DQX_STATUS").val($$.getData(itemdata.single, "DQX_STATUS"));
+    $("#DQX_WEIGHT").val($$.getData(itemdata.single, "DQX_WEIGHT"));
+    
     // Display modal
     $("#myModal").modal('show');
 }
@@ -58,65 +63,59 @@ function cb_displayBoxWithData(itemdata) {
 function init_popupControl() {
     $("#errormessages").hide();
     $("#errormessages").html("");
-    $('#gio_termtype_name').select2({ placeholder: "Select an Term type", width: '100%'  });
-    $('#gio_icon_pathname').select2({ placeholder: "Select an icon", width: '100%'  });
 }
 
 function evt_requestInsert() {
     init_popupControl();
-    $("#GIO_PK").html("");
-    $("#gio_termtype_name").val("").trigger("change");
-    $("#gio_termtype_name").prop("disabled", false); // enable the combo !
-    $("#gio_icon_pathname").val("").trigger("change");
+    $("#DQX_PK").html("");
+    // Other fields ...
+    $("#DQX_FUNCKEY").val("");
+    $("#DQX_LABEL").val("");
+    $("#DQX_DESCRIPTION").val("");
+    $("#DQX_STATUS").val("");
+    $("#DQX_WEIGHT").val("1");
     // Display modal
     $("#myModal").modal('show');
 }
 
 function evt_requestUpdate(id) {
-    $$.ajax("GET", cb_displayBoxWithData, $$.getAPICall("srctermtype", { "GIO_PK" : id }));
+    $$.ajax("GET", cb_displayBoxWithData, $$.getAPICall("srcdqaxis", { "DQX_PK" : id }));
 }
 
 function evt_requestDelete(id) {
-    $$.ajax("DELETE", cb_delete_return, $$.getAPICall("srctermtype", { "GIO_PK" : id }));
+    $$.ajax("DELETE", cb_delete_return, $$.getAPICall("srcdqaxis", { "DQX_PK" : id }));
 }
 
 function cb_refreshList(content) {
     var t1 = $('#myList').DataTable();
-    var tableContent = $$.getData(content.matrix, "SRC_TERMTYPE");
+    var tableContent = $$.getData(content.matrix, "SRC_DQAXIS");
     t1.clear();
     $("#pleasewait").html('');
     for (i=0; i < tableContent.rowcount; i++) {
-        var id = tableContent.rows[i].items[0].value;
+        var id = tableContent.rows[i].items[4].value;
         t1.row.add( [
             id,
             "<A href='#' onClick='evt_requestUpdate(" + id + ")'>" + tableContent.rows[i].items[1].value + "</a>",
-            tableContent.rows[i].items[2].value,
+            tableContent.rows[i].items[5].value,
             "<A href='#' onClick='evt_requestDelete(" + id + ")'>[delete]</a>"
         ] ).draw( false );
     }
     
-    // Init cbo term's from parameter data
-    var cboObject = document.getElementById("gio_icon_pathname");
-    for (var i=0; i < $$.getContext().parameters.TermTypeIcons.length; i++) {
-        var myoption = document.createElement("option");
-        myoption.text = $$.getContext().parameters.TermTypeIcons[i].value;
-        myoption.value = $$.getContext().parameters.TermTypeIcons[i].value;
-        cboObject.add(myoption, null);
-    }
 }
 
-function cb_initComboboxTermsList(content) {
-    $$.fillComboboxFromJoyEntity("gio_termtype_name", content, "glo_name", "glo_name"); 
-}
+$('#popupform').validator().on('validated.bs.validator', function (e) {
+
+})
 
 function refreshList() {
-    $$.ajax("GET", cb_refreshList, $$.getAPICall('srctermtype'));
+    $$.ajax("GET", cb_refreshList, $$.getAPICall('srcdqaxis'));
 }
 
 $$.form_afterLoad = function() {
     init_menus("config");
-    $('#myList').DataTable({ responsive: true });
-    $$.ajax("GET", cb_initComboboxTermsList, $$.getAPICall('entity/DIM_GLOSSARY'));
+    $('#myList').DataTable({ 
+        responsive: true 
+    });
     refreshList();
 }
 

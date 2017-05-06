@@ -51,12 +51,12 @@ function cb_filldatatable(content) {
 }
 
 function cb_ComboTermTypes(content) {
-    $$.fillComboboxFromJoyEntity("termtypes", content);
+    $$.fillComboboxFromJoyEntity("termtypes", content, "TRT_NAME", "TRT_PK");
     $('#termtypes').select2({ placeholder: "Select an Term type" });
 }
 
 function cb_ComboTerm(content) {
-    $$.fillComboboxFromJoyEntity("term", content);
+    $$.fillComboboxFromJoyEntity("term", content, "TRM_NAME", "TRM_PK");
     $( '#term' ).select2({ placeholder: "Select an Term" });
 }
 

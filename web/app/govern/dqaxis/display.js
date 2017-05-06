@@ -26,7 +26,7 @@ function cb_result(data) {
     var t1 = $('#matablelist').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("metricdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }) + "'>" + $$.getData(content.rows[i].items, "MET_NAME") + "</a>";
+        var myLink = $$.getAHref("metricdisplay", { "metric" : $$.getData(content.rows[i].items, "MET_FK") }, $$.getData(content.rows[i].items, "MET_NAME"), null);
         t1.row.add( [
             myLink,
             $$.getData(content.rows[i].items, "FRS_TOTALROWS"),

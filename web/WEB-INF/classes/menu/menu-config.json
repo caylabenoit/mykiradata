@@ -5,8 +5,7 @@
         "glyphe": "fa fa-gears fa-fw",
         "id": "CONFIG02",
         "label": "Quality Dimensions",
-        "object": "dqaxis",
-        "actiontype": "list"
+        "tag": "configaxislist"
       },
       {
         "glyphe": "fa fa-gears fa-fw",

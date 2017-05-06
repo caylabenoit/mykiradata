@@ -62,8 +62,7 @@ var joyIncludes = {
         "joy-external/bootstrap/components/bootstrap-treeview-master/dist/bootstrap-treeview.min.css",
         "joy-external/jquery-ui/dist/jquery-ui.theme.min.css",
         "joy-external/bootstrap/components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css",
-        "theme/css/dgmtaskmenu.css",
-        "theme/css/global.css",
+        "theme/css/noless.css",
         "joy-external/vis-4.17.0/vis.min.css",
         "theme/css/theme.css"
     ]

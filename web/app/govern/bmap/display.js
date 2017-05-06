@@ -73,13 +73,13 @@ function draw() {
     // Double Click on node
     network.on("doubleClick", function (params) {
         if (params.nodes != "cidCluster") {
-            var url = $$.getNaviURL("btermdisplay", { "term": params.nodes});
-            var url2 = $$.getNaviURL("businessmapdisplay", { "term": params.nodes});
-            var msg = '<i class="fa fa-sign-out fa-fw fa-2x"></i>&nbsp;<A href="' + url + '">Open Business Term Page</A><P>&nbsp;<P>';
-            var msg2 = '<i class="fa fa-search-plus fa-fw fa-2x"></i>&nbsp;<A href="' + url2 + '">Zoom on this Business Term</A>';
+            var link1 = $$.getAHref("btermdisplay", { "term" : params.nodes[0] }, "Open Business Term Page", null);
+            var link2 = $$.getAHref("businessmapdisplay", { "term" : params.nodes[0] }, "Zoom on this Business Term", null);
+            var msg = '<i class="fa fa-sign-out fa-fw fa-2x"></i>&nbsp;' + link1;
+            var msg2 = '<i class="fa fa-search-plus fa-fw fa-2x"></i>&nbsp;'+ link2;
             var dialog = bootbox.dialog({
                 title: 'Business Term Action',
-                message: msg + msg2,
+                message: msg + "<P>&nbsp;<P>" + msg2,
                 closeButton: true
             });
             dialog.modal();
@@ -156,12 +156,12 @@ function cb_global(content) {
 }
 
 function cb_ComboTermTypes(content) {
-    fillComboboxFromJoyEntity("termtypes", content);
+    $$.fillComboboxFromJoyEntity("termtypes", content, "TRT_NAME", "TRT_PK");
     $('#termtypes').select2({ placeholder: "Select an Term type" });
 }
 
 function cb_ComboTerm(content) {
-    fillComboboxFromJoyEntity("term", content);
+    $$.fillComboboxFromJoyEntity("term", content, "TRM_NAME", "TRM_PK");
     $( '#term' ).select2({
         placeholder: "Select an Term",
         width: '100%'
@@ -174,16 +174,15 @@ function reload(_hop, _term) {
 }
 
 function refresh() {
-    nbHop = document.getElementById('nbhops').value;
-    term = document.getElementById('term').value;
+    nbHop = $("#nbhops").val();
+    term = $("#term").val();
     reload(nbHop, term);
 }
 
 $$.form_afterLoad = function() {
     init_menus("govern");
-    if (nbHop == null) nbHop = 3;
     
-    // Force Combo values
+    if (nbHop == null) nbHop = 3;
     $("#nbhops").val(nbHop).trigger("change");
     
     $$.ajax("GET", cb_ComboTermTypes, $$.getAPICall('entity/TERM_TYPE_LIST'));

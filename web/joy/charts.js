@@ -25,10 +25,11 @@
  * @param {type} glyphe         Glyphe to use
  * @param {type} badthresold    bad thresold (progress bar color)
  * @param {type} goodthresold   good thresold (progress bar color) 
- * @param {type} urlbasis       URL basics
+ * @param {type} tag            URL tag
+ * @param {type} paramName      param name ID
  * @returns {undefined}         Nothing
  */
-function displayGaugeList(jsonflow, didID, glyphe, badthresold, goodthresold, urlbasis) {
+function displayGaugeList(jsonflow, didID, glyphe, badthresold, goodthresold, tag, paramName) {
     var divContainer = document.getElementById(didID);
     var innerHtml = "";
     for(var i=0; i < jsonflow.rowcount; i++) {
@@ -48,8 +49,8 @@ function displayGaugeList(jsonflow, didID, glyphe, badthresold, goodthresold, ur
         if (glyphe != null)
             innerHtml += "  <STRONG><i class='fa " + glyphe + " fa-fw'></i>&nbsp;";
         
-        if (urlbasis != null) 
-            innerHtml += "<A href='" + urlbasis + id + "'>" + label + "</a>";
+        if (tag != null) 
+            innerHtml += "<A href='#' onclick=\"$$.navigate('" + tag + "', { '" + paramName + "' : '" + id + "' } );\">" + label + "</a>";    
         else
             innerHtml += label;
         

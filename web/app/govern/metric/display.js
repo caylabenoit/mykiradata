@@ -27,7 +27,9 @@ function evt_change() {
 
 function cb_global(content) {
     $$.setJoyDataSingles(content.single);
-    $("#link").attr("href", $$.getNaviURL("btermdisplay", { "term" : $$.getData(content.single, "trm_fk")})); //getURLApp() + 'govern/bterm/display.html?term='+ getFromJoy(content.single, "trm_fk"));
+    $("#link").attr('onclick', '$$.navigate("btermdisplay", { "term" : ' + $$.getData(content.single, "trm_fk") + '})');
+    $("#link").attr("href", "#");
+    
     displayBar("LastRun", 'Last runs (grouped per day)', content.other[0].value);
     $$.fillComboboxFromJoyEntity('metric', $$.getData(content.matrix, "metrics"), 3, 0);
     $('#metric').select2({  placeholder: "Select an Metric" });

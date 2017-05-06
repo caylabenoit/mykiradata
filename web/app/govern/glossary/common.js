@@ -23,7 +23,7 @@ function fillTerms(content) {
     var t1 = $('#tableTerm').DataTable();
     t1.clear();
     for (i=0; i < content.rowcount; i++) {
-        var myLink = "<a href='" + $$.getNaviURL("btermdisplay", { "bterm" : $$.getData(content.rows[i].items, "TRM_FK") }) + "'>" + $$.getData(content.rows[i].items, "TRM_NAME") + "</a>";
+        var myLink = $$.getAHref("btermdisplay", { "bterm" : $$.getData(content.rows[i].items, "TRM_FK") }, $$.getData(content.rows[i].items, "TRM_NAME"), null);
         t1.row.add( [
             myLink,
             $$.getData(content.rows[i].items, "DQX_NAME"),
