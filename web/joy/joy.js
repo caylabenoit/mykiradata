@@ -28,7 +28,8 @@ function classParameter(name, value) {
 
 function JoyPage () {
     var context = null;
-
+    var JOY_SESSION_COOKIE_NAME = 'JOYSESSIONCOOKIENAME';
+    
     this.getContext = function() { return context; };
     this.setContext = function(cxt) { context = cxt; };
     this.getURLRoot = function() { return URLROOT; };
@@ -45,6 +46,10 @@ function JoyPage () {
         }
         return this.getURLApi() + api + paramlist;
     };
+    
+    this.getLOGINCall = function() {
+        return this.getURLRoot() + "auth";
+    }
     
     this.getTASKCall = function(task) {
         return this.getURLTask() + task;
@@ -69,16 +74,51 @@ function JoyPage () {
     };
 
     /**
-     * AJAX asynchronous Call
+     * set token as cookie with the informations returnd by joy login (json object)
+     * @param {type} cookie like { status : "[0,1]", user : "", token : "" }
+     */
+    this.setToken = function (cookie) {
+        var content = cookie.status + "|" + cookie.user + "|" + cookie.token;
+        this.setSessionCookie(content);
+    }
+    
+    /**
+     * Return the session token (in the cookie)
+     * @returns {unresolved} data like { status : "[0,1]", user : "", token : "" }
+     */
+    this.getToken = function () {
+        return this.getSessionCookie();
+    }
+
+    this.getTokenStatus = function () {
+        var sessionToken = this.getToken();
+        var tokenparsed = sessionToken.split("|");
+        return (tokenparsed == null ? 0 : tokenparsed[0]);
+    }
+
+    this.delToken = function () {
+        this.delCookie(JOY_SESSION_COOKIE_NAME);
+    }
+    
+
+    /**
+     * AJAX asynchronous Call through all http methods
      * Example : 
-     * $$.ajax("GET", cb_chartPolar, [rest url]);
-     * $$.ajax("POST", cb_chartPolar, [rest url], { "param1" : "val1", "param2": "val2" });
+     *  $$.ajax("GET", cb_chartPolar, [rest url]);
+     *  $$.ajax("POST", cb_chartPolar, [rest url], { "param1" : "val1", "param2": "val2" });
      * @param {type} m = GET or POST
      * @param {type} cb callback function to call
      * @param {type} url    rest URL call
      * @param {type} valObj list all the parameters in json format here (not in the URL direclty)
      */
     this.ajax = function(m, cb, url, valObj) {
+        // Get the session cookie
+        var myCookie = this.getToken();
+        if (myCookie == null) { 
+            // NO SESSION ...
+        }
+        
+        // effective AJAX Call
 	var myxhr = createXHR();
 	var values ='?';
 	for(var k in valObj)
@@ -92,18 +132,60 @@ function JoyPage () {
             values=values.substring(1, values.length-1);
             myxhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	}
-        myxhr.setRequestHeader("Authorization", "Joy Client Authorization Token");
+        myxhr.setRequestHeader("Authorization", myCookie);
 	myxhr.send(values);
 	myxhr.onreadystatechange = function() {
             if(myxhr.readyState==4){
                 switch(myxhr.status) {
                     case 200: cb(eval("(" + myxhr.responseText + ")")); break;
                     case 403, 404, 503 :  cb(null); break;
+                    case 401: JOY.navigate("login"); break; // Redirect login page
                     default:  cb(null);	
 		}
             }
 	}
-    };    
+    };
+
+    this.setSessionCookie = function(valeur) {
+        this.setCookie(JOY_SESSION_COOKIE_NAME, valeur, 1);
+    }
+    
+    this.getSessionCookie = function() {
+        return this.getCookie(JOY_SESSION_COOKIE_NAME);
+    }
+    
+    /**
+     * Create a new cookie
+     * @param {type} nom
+     * @param {type} valeur
+     * @param {type} jours
+     * @returns {undefined}
+     */
+    this.setCookie = function(nom, valeur, jours) {
+        if (jours) {
+            var date = new Date();
+            date.setTime(date.getTime()+(jours*24*60*60*1000));
+            var expire = "; expire="+date.toGMTString();
+        }
+        // Aucune valeur de jours spécifiée
+        else var expire = "";
+        document.cookie = nom+"="+valeur+expire+"; path=/";
+    }
+
+    this.getCookie = function(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+    }
+    
+    this.delCookie = function(nom) {
+        this.setCookie(nom, "", -1);
+    }
 
     /**
      * Returns the URL for a given configuration tag
@@ -137,14 +219,8 @@ function JoyPage () {
         var href = "";
         if (params != null) {
             var paramStr = "{";
-            /*var i=0;
-            while (i <= params.length-1) {
-                paramStr += params[i] + ':' + params[i+1] + ",";
-                i += 2;
-            }
-            */
             for (var k in params)
-               paramStr += k + ':' + params[k] + ",";
+               paramStr += k + ":'" + params[k] + "',";
            
             paramStr = paramStr.substring(0, paramStr.length-1) + "}";
             href = "<A href='#' " + (cssAttributes==null?"":"" + cssAttributes) + " onclick=\"$$.navigate('" + tag + "', " + paramStr + ");\">" + text + "</a>";

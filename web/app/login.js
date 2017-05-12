@@ -15,25 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Effective Login
- * @returns {undefined}
- */
+function cb_login_return(content) {
+    if(content.status == 1) {
+        $("#errormessages").hide();
+        $$.setToken(content);
+        $$.navigate("home");
+    } else {
+        $("#errormessages").show();
+        $("#errormessages").html("Login failed, please retry");
+    }
+}
+
 function login() {
-    var myurl = getURLApi() + 'login?user=' + document.getElementById('user').value;
-    myurl += '&password=' + document.getElementById('password').value;
-    addCBAction(cb_loginResult, myurl, "login");
-    joyExecAction("login");
+    var postParams = {
+        "user" : $("#joyuser").val(),
+        "password" : $("#joypassword").val()
+    };
+    $$.ajax("POST", cb_login_return, $$.getLOGINCall(), postParams);
 }
 
-function cb_loginResult(content) {
-    
+$$.form_afterLoad = function() {
+    if ($$.getParameter('action') == "logout") {
+        $$.delToken(); // remove the session cookie
+    }
+    $("#errormessages").hide();
+    $("#src_logo_big").attr('src', $$.getURLRoot() + $$.getContext().parameters.logo);
+    $("#app_name").html($$.getContext().parameters.appname);
+    $("#version").html($$.getContext().parameters.version);
 }
 
-function form_afterLoad(content) {
-    document.getElementById("src_logo_big").src = getURLRoot() + content.parameters.logo;
-    document.getElementById("app_name").innerHTML = "&nbsp;Login to " + content.parameters.appname + " v" + content.parameters.version ;
-}
-
-addCBLoad(form_afterLoad, getURLApi() + 'app');
-joyLoadExec();
+$$.init();

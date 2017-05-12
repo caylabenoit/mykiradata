@@ -44,7 +44,7 @@ var joyIncludes = {
         "joy-external/Chart.js/dist/Chart.bundle.min.js",
         "joy-external/gauge.js/gauge.min.js",
         "joy/joy.js",
-        "app/js/menu.js",
+        "app/js/dgmmenu.js",
         "app/js/dgmtaskmenu.js",
         "joy/charts.js",
         "app/js/dgmCharts.js",

@@ -1,6 +1,7 @@
 {
   "version": "1.0",
   "default": "home.html",
+  "error": "error.html",
   "list": [
     { "tag": "home", "url": "home.html" },
     { "tag": "about", "url": "about.html" },
