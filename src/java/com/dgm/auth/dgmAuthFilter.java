@@ -27,18 +27,13 @@ import com.joy.auth.FilterAuthenticate;
 public class dgmAuthFilter extends FilterAuthenticate {
 
     @Override
-    protected String buildTokenContent(JoyApiRequest request) {
+    protected String getPublicKey(JoyApiRequest request) {
         return request.getParameter(C.REQ_PARAM_USER_TAG).getValue();
     }
     
     @Override
     protected boolean checkLogin(JoyApiRequest request) {
         return (request.getParameter(C.REQ_PARAM_USER_TAG).getValue() != null && request.getParameter(C.REQ_PARAM_PWD_TAG).getValue() != null);
-    }
-    
-    @Override
-    protected String getUser(JoyApiRequest request) {
-        return request.getParameter(C.REQ_PARAM_USER_TAG).getValue();
     }
     
 }

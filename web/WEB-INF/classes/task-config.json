@@ -3,19 +3,19 @@
   "services": [
     {
       "name": "plugin",
-      "class": "com.dgm.tasks.load.TASKPluginImport",
+      "class": "com.dgm.tasks.load.TASKPluginImport"
     },
     {
       "name": "dtmpurge",
-      "class": "com.dgm.tasks.load.TASKDtmPurge",
+      "class": "com.dgm.tasks.load.TASKDtmPurge"
     },
     {
       "name": "landingpurge",
-      "class": "com.dgm.tasks.load.TASKLandingPurge",
+      "class": "com.dgm.tasks.load.TASKLandingPurge"
     },
     {
       "name": "landingload",
-      "class": "com.dgm.tasks.load.TASKLoadProcess",
+      "class": "com.dgm.tasks.load.TASKLoadProcess"
     }
   ]
 }

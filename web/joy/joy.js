@@ -75,25 +75,18 @@ function JoyPage () {
 
     /**
      * set token as cookie with the informations returnd by joy login (json object)
-     * @param {type} cookie like { status : "[0,1]", user : "", token : "" }
+     * @param {type} cookie like { user : "", token : "" }
      */
     this.setToken = function (cookie) {
-        var content = cookie.status + "|" + cookie.user + "|" + cookie.token;
-        this.setSessionCookie(content);
+        this.setSessionCookie(cookie.token);
     }
     
     /**
      * Return the session token (in the cookie)
-     * @returns {unresolved} data like { status : "[0,1]", user : "", token : "" }
+     * @returns {unresolved} data like { user : "", token : "" }
      */
     this.getToken = function () {
         return this.getSessionCookie();
-    }
-
-    this.getTokenStatus = function () {
-        var sessionToken = this.getToken();
-        var tokenparsed = sessionToken.split("|");
-        return (tokenparsed == null ? 0 : tokenparsed[0]);
     }
 
     this.delToken = function () {

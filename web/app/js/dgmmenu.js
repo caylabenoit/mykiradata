@@ -98,7 +98,7 @@ function menu_topRightUserManagement(divId) {
     
     out += "<UL class='dropdown-menu dropdown-user'>";
     if (session.status == "1")
-        out += "<li><a href='#'><i class='fa fa-user fa-fw'></i> " + session.user + " Profile</a></li>";
+        out += "<li><a href='#'><i class='fa fa-user fa-fw'></i> " + session.publickey + " Profile</a></li>";
     out += "<li><a href='#'><i class='fa fa-gear fa-fw'></i> Settings</a></li>";
     out += "<li class='divider'></li>";
     if (session.status == "1")
