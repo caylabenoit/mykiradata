@@ -78,7 +78,7 @@ function JoyPage () {
      * @param {type} cookie like { user : "", token : "" }
      */
     this.setToken = function (cookie) {
-        this.setSessionCookie(cookie.token);
+        this.setCookie(JOY_SESSION_COOKIE_NAME, cookie.token, 1);
     }
     
     /**
@@ -86,7 +86,7 @@ function JoyPage () {
      * @returns {unresolved} data like { user : "", token : "" }
      */
     this.getToken = function () {
-        return this.getSessionCookie();
+        return this.getCookie(JOY_SESSION_COOKIE_NAME);
     }
 
     this.delToken = function () {
@@ -138,14 +138,6 @@ function JoyPage () {
             }
 	}
     };
-
-    this.setSessionCookie = function(valeur) {
-        this.setCookie(JOY_SESSION_COOKIE_NAME, valeur, 1);
-    }
-    
-    this.getSessionCookie = function() {
-        return this.getCookie(JOY_SESSION_COOKIE_NAME);
-    }
     
     /**
      * Create a new cookie

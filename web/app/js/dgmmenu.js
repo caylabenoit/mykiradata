@@ -97,11 +97,11 @@ function menu_topRightUserManagement(divId) {
     var out = "<a class='dropdown-toggle' data-toggle='dropdown' href='#'>  <i class='fa fa-user fa-fw'></i><i class='fa fa-caret-down'></i></a>";
     
     out += "<UL class='dropdown-menu dropdown-user'>";
-    if (session.status == "1")
-        out += "<li><a href='#'><i class='fa fa-user fa-fw'></i> " + session.publickey + " Profile</a></li>";
+    if (session.publickey != null)
+        out += "<li><a href='#'><i class='fa fa-user fa-fw'></i> Profile</a></li>";
     out += "<li><a href='#'><i class='fa fa-gear fa-fw'></i> Settings</a></li>";
     out += "<li class='divider'></li>";
-    if (session.status == "1")
+    if (session.publickey != null)
         out += "<LI>" + $$.getAHref("login", { "action" : "logout" }, "<i class='fa fa-sign-out fa-fw'></i> Logout</a>", null) + "</LI>";
     else
         out += "<LI>" + $$.getAHref("login", { "action" : "login" }, "<i class='fa fa-sign-out fa-fw'></i> Login</a>", null) + "</LI>";

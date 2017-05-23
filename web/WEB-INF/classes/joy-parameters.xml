@@ -34,6 +34,9 @@
     <!-- Deactive or not the mandatory login process yes/no -->
     <no-login>yes</no-login>
     
+    <!-- encryption private key -->
+    <auth-private-key>Z8LSq0wWwB5v+6YJzurcP463H3F12iZh74fDj4S74oUH4EONkiKb2FmiWUbtFh97GG/c/lbDE47mvw6j94yXxKHOpoqu6zpLKMKPcOoSppcVWb2q34qENBJkudXUh4MWcreondLmLL2UyydtFKuU9Sa5VgY/CzGaVGJABK2ZR94=</auth-private-key>
+    
     <!-- datasources/entities configuration file here-->
     <joy-entities>
         <joy-entity name="Governance">joy-entity.xml</joy-entity>
@@ -56,7 +59,7 @@
         <joy-mapping name="landing">joy-mappings.xml</joy-mapping>
     </joy-mappings>
     
-    <joy-session-timeout>20</joy-session-timeout> <!-- in minutes -->
+    <joy-session-timeout>10</joy-session-timeout> <!-- in minutes -->
     
     <!-- locale defaults -->
     <joy-localelanguage>en</joy-localelanguage>
