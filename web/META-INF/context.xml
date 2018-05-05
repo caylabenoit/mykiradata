@@ -10,16 +10,7 @@
             url="jdbc:oracle:thin:@localhost:1521:orcl" 
             username="DGM"/>
   -->
-  <Resource name="jdbc/GOVERNANCE" 
-            auth="Container"
-            type="javax.sql.DataSource" 
-            driverClassName="org.postgresql.Driver"
-            url="jdbc:postgresql://localhost:5432/dgm"
-            username="dgm" 
-            password="dgm" 
-            maxActive="100" 
-            maxIdle="30" 
-            maxWait="-1"/>
+  <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="100" maxIdle="30" maxWait="-1" name="jdbc/GOVERNANCE" password="dgm" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/dgm" username="dgm"/>
   <!--
     Add this parameter to setup a separate (from J2EE tree) app directory (no default values)
     in this directory you must have the files :
@@ -32,5 +23,5 @@
   <!--    
 <Parameter name="joy-appdir" value="C:/Dropbox/DGM/appdir/dgm" override="true"/>
 -->
-<Parameter name="joy-rest" value="rest-config.json" override="true"/>
+  <Parameter name="joy-rest" override="true" value="rest-config.json"/>
 </Context>
